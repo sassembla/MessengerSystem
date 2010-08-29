@@ -13,7 +13,7 @@
 - (id) init {
 	if (self = [super init]) {
 		messenger = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:@"child_0" withParent:@"Parentだよ"];
-		[messenger postToMyParent];
+		[messenger inputToMyParent];
 	}
 	return self;
 }
@@ -22,13 +22,17 @@
 - (id) init2 {
 	if (self = [super init]) {
 		messenger = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:@"child_1" withParent:@"Parent2だよ"];
-		[messenger postToMyParent];
+		[messenger inputToMyParent];
 	}
 	return self;
 }
 
 
 - (void)test:(NSNotification * )notification {
+	
+	NSLog(@"test_notification_%@",notification);
+	
+	//あとは好きにして！
 	
 	
 }

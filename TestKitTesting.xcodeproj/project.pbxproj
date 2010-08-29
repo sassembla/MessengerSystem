@@ -24,8 +24,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		13455128122A3E5C00E348F5 /* UnderTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnderTest.h; sourceTree = "<group>"; };
-		13455129122A3E5C00E348F5 /* UnderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnderTest.m; sourceTree = "<group>"; };
 		134551B1122A4D0200E348F5 /* MessengerSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessengerSystem.h; sourceTree = "<group>"; };
 		134551B2122A4D0200E348F5 /* MessengerSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessengerSystem.m; sourceTree = "<group>"; };
 		134551B4122A4D1600E348F5 /* MessengerSystemTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessengerSystemTest.m; sourceTree = "<group>"; };
@@ -72,8 +70,6 @@
 			children = (
 				1D3623240D0F684500981E51 /* TestKitTestingAppDelegate.h */,
 				1D3623250D0F684500981E51 /* TestKitTestingAppDelegate.m */,
-				13455128122A3E5C00E348F5 /* UnderTest.h */,
-				13455129122A3E5C00E348F5 /* UnderTest.m */,
 				13455449122A6A0A00E348F5 /* coTestObject.h */,
 				1345544A122A6A0A00E348F5 /* coTestObject.m */,
 			);

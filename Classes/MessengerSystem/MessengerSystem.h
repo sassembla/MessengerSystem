@@ -13,8 +13,12 @@
 
 
 #define MS_COMMAND	(@"MESSENGER_SYSTEM_COMMAND")//コマンドに類するキー
-	#define COMMAND_PARENTSEARCH	(@"MESSENGER_SYSTEM_COMMAND:PARENT_SEARCH")//親探索
 	#define COMMAND_CALLED			(@"MESSENGER_SYSTEM_COMMAND:CALLED")//呼び出し
+	#define COMMAND_PARENTSEARCH	(@"MESSENGER_SYSTEM_COMMAND:PARENT_SEARCH")//親探索
+
+#define MS_ADDRESS		(@"MESSENGER_SYSTEM_COMMAND:ADDRESS")//宛先
+#define MS_EXECUTE		(@"MESSENGER_SYSTEM_COMMAND:EXECUTE")//実行内容名
+
 
 #define MS_PARENTNAME	(@"MESSENGER_SYSTEM_COMMAND:PARENT_NAME")//親の名前に類するキー
 #define MS_PARENTMSID	(@"MESSENGER_SYSTEM_COMMAND:PARENT_MSID")//親の固有IDに類するキー
@@ -51,13 +55,7 @@
 	
 	
 	//子供の名前とIDを保存する辞書	NSMutableDictionary
-	
-	
-	
-	
-	
-	
-	
+	NSMutableDictionary * childDict;
 	
 }
 
@@ -81,8 +79,31 @@
 /**
  内部実行メソッド
  */
-- (void) innerPerform:(NSNotification * )notification;
-- (void) postToMyParent;//親への通知用メソッド
+- (void) innerPerform:(NSNotification * )notification;//内部実装メソッド、システムな動作とbodyへのメソッド伝達を行う。
+- (void) inputToMyParent;//親への登録メソッド
+
+
+- (void) call:(NSString * )name withExec:(NSString * )exec, ...;//特定の子への通信用メソッド
+- (void) callChild:(NSString * )childName withMSID:(NSString * ) withCommand:(NSString * )exec, ...;//特定の子への通信用メソッド childのMSIDを用いる。
+- (void) callParent:(NSString * )exec, ...;//親への通信用メソッド
+
+- (void) sendPerform:(NSMutableDictionary * )dict;//パフォーマンス実装
+
+
+
+
+/**
+ 子供辞書に子供のmyName,myMSIDを保存する
+ */
+- (void) setChildDictChildNameAsValue:(NSString * )senderName withMSIDAsKey:(NSString * )senderMSID;
+- (NSMutableDictionary * ) getChildDict;
+
+
+/**
+ タグシステム
+ */
+- (NSDictionary * ) tag:(id)obj_tag val:(id)obj_value;
+
 
 
 

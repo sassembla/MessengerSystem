@@ -64,37 +64,52 @@
 }
 
 
-/*
- 親と子の間の通信を確認する
- 子→親の設定確認
- 
- 双方がメッセージセンターを持ち、かつ子から親へと向けたメッセージを親が受信する。
- 子は自分自身へのメッセージを無視する？　IDが振られるまでは特定のコマンド以外受信しない
+/**
+ ParentInputへのテスト
  */
-- (void) testChildCall {
-	[child_0 postToMyParent];	
-	STAssertEquals([child_0 getMyParentMSID], [parent getMyMSID], [NSString stringWithFormat:@"親のIDが想定と違う/child_0_%@, parent_%@", [child_0 getMyParentMSID], [parent getMyMSID]]);
+//- (void) testInputToParent {
+//	[child_0 inputToMyParent];
+//	STAssertEquals([child_0 getMyParentMSID], [parent getMyMSID], [NSString stringWithFormat:@"親のIDが想定と違う/child_0_%@, parent_%@", [child_0 getMyParentMSID], [parent getMyMSID]]);
+//}
+
+
+/**
+ 子供から親を登録し、登録内容の返りを確認する
+ 子供リストの内容を取得、確認する
+ */
+//- (void) testGetChildDict {
+//	[child_0 inputToMyParent];
+//	
+//	NSMutableDictionary * dict = [parent getChildDict];
+//	STAssertNil(!dict, [NSString stringWithFormat:@"nilっぽい_%@", dict]);
+//	STAssertEquals([dict valueForKey:[child_0 getMyName]], [child_0 getMyMSID], [NSString stringWithFormat:@"多分なにやらまちがえたんかも_%@", dict]);
+//}
+
+
+/**
+ 他のMessenger読み出しのテストを行う
+ */
+- (void) testCall {
+	[child_0 inputToMyParent];
+
+	[parent call:TEST_CHILD_NAME_0 withExec:@"yeah!", nil];
 }
+
 
 
 /**
  必ずアサートが発生して失敗するテスト！
  */
-- (void) testFailChildCall {
+//- (void) testFailChildCall {
 //	[child_0 setMyParentName:TEST_FAIL_PARENT_NAME];
 //	[child_0 postToMyParent];
 //	
 //	STAssertEquals([child_0 getMyParentMSID], [parent getMyMSID], [NSString stringWithFormat:@"親のIDが想定と違う/child_0_%@, parent_%@", [child_0 getMyParentMSID], [parent getMyMSID]]);
-}
+//}
 
 
 
-/**
- 子供リストの名称を取得する
- */
-- (void) testGetChildList {
-//	NSMutableArray * array = [messenger getChildList];
-}
+
 
 
 

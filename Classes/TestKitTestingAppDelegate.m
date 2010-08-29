@@ -22,14 +22,28 @@
    // coTestObject * cTest = [[coTestObject alloc] init];
 	
 	MessengerSystem * paren = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:@"Parentだよ"];
-	NSLog(@"paren_%@", [paren getMyMSID]);
+//	NSLog(@"paren_%@", [paren getMyMSID]);
+	//[paren inputToMyParent];
+	
 	
 	coTestObject * cTest = [[coTestObject alloc] init];
 	
-//	coTestObject * cTest2 = [[coTestObject alloc] init];
+	coTestObject * cTest2 = [[coTestObject alloc] init];
 //	coTestObject * cTest3 = [[coTestObject alloc] init];
 	
 	//coTestObject * cTest4 = [[coTestObject alloc] init2];
+	
+	[paren call:@"child_0" withExec:@"yeah!", 
+	 [paren tag:@"one" val:@"1"],
+	 [paren tag:@"two" val:@"2"],
+	 [paren tag:@"three" val:@"3"],nil];
+	
+	
+	
+	[paren call:@"Parentだよ" withExec:@"yeah!", 
+	 [paren tag:@"one" val:@"1"],
+	 [paren tag:@"two" val:@"2"],
+	 [paren tag:@"three" val:@"3"],nil];
 	
 	
 	
@@ -37,12 +51,16 @@
 	
 	return YES;
 }
+
+
+
 - (void)test:(NSNotification * )notification {
-	
+	NSLog(@"到着！！！！_%@", notification);
 }
-- (void)test2:(NSNotification * )notification {
-	
-}
+
+
+
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     /*
