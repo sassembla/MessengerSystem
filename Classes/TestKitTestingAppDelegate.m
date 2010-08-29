@@ -19,14 +19,17 @@
 #pragma mark Application lifecycle
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
-    
+   // coTestObject * cTest = [[coTestObject alloc] init];
+	
 	MessengerSystem * paren = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:@"Parentだよ"];
+	NSLog(@"paren_%@", [paren getMyMSID]);
 	
 	coTestObject * cTest = [[coTestObject alloc] init];
+	
 //	coTestObject * cTest2 = [[coTestObject alloc] init];
 //	coTestObject * cTest3 = [[coTestObject alloc] init];
-//	
-//	coTestObject * cTest4 = [[coTestObject alloc] init2];
+	
+	//coTestObject * cTest4 = [[coTestObject alloc] init2];
 	
 	
 	

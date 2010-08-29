@@ -13,13 +13,19 @@
 
 
 #define MS_COMMAND	(@"MESSENGER_SYSTEM_COMMAND")//コマンドに類するキー
-	#define COMMAND_PARENTSEARCH	(@"MESSENGER_SYSTEM_COMMAND:PARENT_SEARCH")
-	#define COMMAND_CALLED			(@"MESSENGER_SYSTEM_COMMAND:CALLED")
+	#define COMMAND_PARENTSEARCH	(@"MESSENGER_SYSTEM_COMMAND:PARENT_SEARCH")//親探索
+	#define COMMAND_CALLED			(@"MESSENGER_SYSTEM_COMMAND:CALLED")//呼び出し
 
 #define MS_PARENTNAME	(@"MESSENGER_SYSTEM_COMMAND:PARENT_NAME")//親の名前に類するキー
+#define MS_PARENTMSID	(@"MESSENGER_SYSTEM_COMMAND:PARENT_MSID")//親の固有IDに類するキー
+
+#define MS_SENDERID		(@"MESSENGER_SYSTEM_COMMAND:SENDER_ID")//自分固有のIDに類するキー
 #define MS_SENDERNAME	(@"MESSENGER_SYSTEM_COMMAND:SENDER_NAME")//自分の名前に類するキー
+#define MS_SENDERMSID	(@"MESSENGER_SYSTEM_COMMAND:SENDER_MSID")//自分固有のMSIDに類するキー
+
 #define MS_SEARCHNAME	(@"MESSENGER_SYSTEM_COMMAND:SEARCH_NAME")//宛先の名前に類するキー
 
+#define MS_RETURN		(@"MESSENGER_SYSTEM_COMMAND:RETURN")//フック実行メソッドの指定
 
 
 @interface MessengerSystem : NSObject {
@@ -27,7 +33,7 @@
 	id myBodyID;
 	
 	//本体のセレクタ
-	SEL bodySelector;//メッセージ受け取り時に叩かれるセレクタ、最低一つの引数を持つ必要がある。
+	SEL myBodySelector;//メッセージ受け取り時に叩かれるセレクタ、最低一つの引数を持つ必要がある。
 	
 	
 	//自分の名前	NSString
@@ -38,10 +44,10 @@
 	
 	
 	//親の名前	NSString
-	NSString * parentName;
+	NSString * myParentName;
 	
 	//親のID		NSString
-	NSString * parentMSID;
+	NSString * myParentMSID;
 	
 	
 	//子供の名前とIDを保存する辞書	NSMutableDictionary
@@ -76,12 +82,26 @@
  内部実行メソッド
  */
 - (void) innerPerform:(NSNotification * )notification;
-- (void) postToParent;//親への通知用メソッド
+- (void) postToMyParent;//親への通知用メソッド
 
+
+
+- (void) setMyBodyID:(id)bodyID;
+- (id) getMyBodyID;
+
+- (void) setMyBodySelector:(SEL)body_selector;
+- (SEL) getMyBodySelector;
+
+- (void)setMyName:(NSString * )name;
 - (NSString * )getMyName;
+
+- (void)initMyMSID;
 - (NSString * )getMyMSID;
 
-- (NSString * )getParentName;
-- (NSString * )getParentMSID;
+- (void) setMyParentName:(NSString * )parent;
+- (NSString * )getMyParentName;
+
+- (void) setMyParentMSID:(NSString * )parentMSID;
+- (NSString * )getMyParentMSID;
 
 @end

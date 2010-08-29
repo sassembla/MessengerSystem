@@ -13,6 +13,10 @@
 #import "MessengerSystem.h"
 
 
+#define TEST_PARENT_NAME (@"parentName")
+#define TEST_CHILD_NAME_0 (@"child_0")
+#define TEST_FAIL_PARENT_NAME (@"failParent")
+
 
 @interface MessengerSystemTest : SenTestCase
 {
@@ -29,10 +33,8 @@
  */
 - (void) setUp {
 	NSLog(@"%@ setUp", self.name);
-	parent = [[MessengerSystem alloc] initWithBodyID:self withSelector:nil withName:@"ParentName"];
-	
-	//messenger = [[MessengerSystem new] retain];
-//	STAssertNotNil(messenger, @"Cannot create Calculator instance");
+	parent = [[MessengerSystem alloc] initWithBodyID:self withSelector:nil withName:TEST_PARENT_NAME];
+	child_0 = [[MessengerSystem alloc]initWithBodyID:self withSelector:nil withName:TEST_CHILD_NAME_0 withParent:TEST_PARENT_NAME];
 }
 
 /* The tearDown method is called automatically after each test-case method (methods whose name starts with 'test').
@@ -50,7 +52,7 @@
  IDとかがゲットできる筈。
  */
 - (void) testInitializeParent {
-	STAssertEquals([parent getMyName],@"ParentName", @"bagu!");//すげー、文字列一致も見れてる。
+	STAssertEquals([parent getMyName],TEST_PARENT_NAME, @"自分で設定した名前がこの時点で異なる！");
 }
 
 
@@ -58,8 +60,7 @@
  親の名前を取得する
  */
 - (void) testGetParentName {
-	child_0 = [[MessengerSystem alloc]initWithBodyID:self withSelector:nil withName:@"child_0" withParent:@"ParentName"];
-	STAssertEquals([child_0 getParentName], @"ParentName", @"親の名前が想定と違う");
+	STAssertEquals([child_0 getMyParentName], TEST_PARENT_NAME, @"親の名前が想定と違う");
 }
 
 
@@ -69,18 +70,22 @@
  
  双方がメッセージセンターを持ち、かつ子から親へと向けたメッセージを親が受信する。
  子は自分自身へのメッセージを無視する？　IDが振られるまでは特定のコマンド以外受信しない
- 
- 
  */
 - (void) testChildCall {
-	child_0 = [[MessengerSystem alloc]initWithBodyID:self withSelector:nil withName:@"child_0" withParent:@"ParentName"];
-	[child_0 postToParent];//この処理が完了した時点で、親からの返り値が帰ってくるようにする。
-	
-	STAssertEquals([child_0 getParentMSID], [parent getMyMSID], @"親のIDが想定と違う");
+	[child_0 postToMyParent];	
+	STAssertEquals([child_0 getMyParentMSID], [parent getMyMSID], [NSString stringWithFormat:@"親のIDが想定と違う/child_0_%@, parent_%@", [child_0 getMyParentMSID], [parent getMyMSID]]);
 }
 
 
-
+/**
+ 必ずアサートが発生して失敗するテスト！
+ */
+- (void) testFailChildCall {
+//	[child_0 setMyParentName:TEST_FAIL_PARENT_NAME];
+//	[child_0 postToMyParent];
+//	
+//	STAssertEquals([child_0 getMyParentMSID], [parent getMyMSID], [NSString stringWithFormat:@"親のIDが想定と違う/child_0_%@, parent_%@", [child_0 getMyParentMSID], [parent getMyMSID]]);
+}
 
 
 
