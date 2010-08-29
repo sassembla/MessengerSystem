@@ -23,6 +23,10 @@
 	MessengerSystem * paren = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:@"Parentだよ"];
 	
 	coTestObject * cTest = [[coTestObject alloc] init];
+//	coTestObject * cTest2 = [[coTestObject alloc] init];
+//	coTestObject * cTest3 = [[coTestObject alloc] init];
+//	
+//	coTestObject * cTest4 = [[coTestObject alloc] init2];
 	
 	
 	

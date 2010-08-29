@@ -12,11 +12,21 @@
 @implementation coTestObject
 - (id) init {
 	if (self = [super init]) {
-		messenger = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:@"child_0" withParent:@"paren"];
-
+		messenger = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:@"child_0" withParent:@"Parentだよ"];
+		[messenger postToParent];
 	}
 	return self;
 }
+
+
+- (id) init2 {
+	if (self = [super init]) {
+		messenger = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:@"child_1" withParent:@"Parentだよ"];
+		[messenger postToParent];
+	}
+	return self;
+}
+
 
 - (void)test:(NSNotification * )notification {
 	

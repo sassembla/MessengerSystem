@@ -11,12 +11,14 @@
 
 #define MESSENGER_SYSTEM_VERSION (20100829)
 
-#define MS_COMMAND (@"MESSENGER_SYSTEM_COMMAND")//コマンドに類するキー
 
-#define COMMAND_PARENTSEARCH (@"MESSENGER_SYSTEM_COMMAND:PARENT_SEARCH")
+#define MS_COMMAND	(@"MESSENGER_SYSTEM_COMMAND")//コマンドに類するキー
+	#define COMMAND_PARENTSEARCH	(@"MESSENGER_SYSTEM_COMMAND:PARENT_SEARCH")
+	#define COMMAND_CALLED			(@"MESSENGER_SYSTEM_COMMAND:CALLED")
 
-#define MS_PARENTNAME (@"MESSENGER_SYSTEM_COMMAND:PARENT_NAME")//親の名前に類するキー
-#define MS_MYNAME (@"MESSENGER_SYSTEM_COMMAND:MY_NAME")//自分の名前に類するキー
+#define MS_PARENTNAME	(@"MESSENGER_SYSTEM_COMMAND:PARENT_NAME")//親の名前に類するキー
+#define MS_SENDERNAME	(@"MESSENGER_SYSTEM_COMMAND:SENDER_NAME")//自分の名前に類するキー
+#define MS_SEARCHNAME	(@"MESSENGER_SYSTEM_COMMAND:SEARCH_NAME")//宛先の名前に類するキー
 
 
 
@@ -32,12 +34,14 @@
 	NSString * myName;
 	
 	//自分のID	NSString
+	NSString * myMSID;
 	
 	
 	//親の名前	NSString
 	NSString * parentName;
 	
 	//親のID		NSString
+	NSString * parentMSID;
 	
 	
 	//子供の名前とIDを保存する辞書	NSMutableDictionary
@@ -72,11 +76,12 @@
  内部実行メソッド
  */
 - (void) innerPerform:(NSNotification * )notification;
-- (void) postToParent;
+- (void) postToParent;//親への通知用メソッド
 
+- (NSString * )getMyName;
+- (NSString * )getMyMSID;
 
-- (NSString * )getName;
 - (NSString * )getParentName;
-
+- (NSString * )getParentMSID;
 
 @end

@@ -14,4 +14,8 @@
 }
 - (void)test:(NSNotification * )notification;
 
+- (id) init;
+- (id) init2;
+
+
 @end
