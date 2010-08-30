@@ -47,6 +47,9 @@
 	
 	
 	
+	//[paren call:@"Parentだよ" withExec:@"yeah2!", nil];
+
+	
     [window makeKeyAndVisible];
 	
 	return YES;

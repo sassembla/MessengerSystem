@@ -9,10 +9,8 @@
 /* Begin PBXBuildFile section */
 		134551B3122A4D0200E348F5 /* MessengerSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 134551B2122A4D0200E348F5 /* MessengerSystem.m */; };
 		134551B5122A4D1600E348F5 /* MessengerSystemTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 134551B4122A4D1600E348F5 /* MessengerSystemTest.m */; };
-		134553E3122A66B100E348F5 /* TestKitTestingAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* TestKitTestingAppDelegate.m */; };
 		1345540B122A68A500E348F5 /* MessengerSystem.h in Sources */ = {isa = PBXBuildFile; fileRef = 134551B1122A4D0200E348F5 /* MessengerSystem.h */; };
 		1345540C122A68A500E348F5 /* MessengerSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 134551B2122A4D0200E348F5 /* MessengerSystem.m */; };
-		1345544B122A6A0A00E348F5 /* coTestObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 1345544A122A6A0A00E348F5 /* coTestObject.m */; };
 		13455453122A6AB400E348F5 /* coTestObject.h in Sources */ = {isa = PBXBuildFile; fileRef = 13455449122A6A0A00E348F5 /* coTestObject.h */; };
 		13455454122A6AB400E348F5 /* coTestObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 1345544A122A6A0A00E348F5 /* coTestObject.m */; };
 		1D3623260D0F684500981E51 /* TestKitTestingAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* TestKitTestingAppDelegate.m */; };
@@ -234,10 +232,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				134553E3122A66B100E348F5 /* TestKitTestingAppDelegate.m in Sources */,
 				134551B3122A4D0200E348F5 /* MessengerSystem.m in Sources */,
 				134551B5122A4D1600E348F5 /* MessengerSystemTest.m in Sources */,
-				1345544B122A6A0A00E348F5 /* coTestObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

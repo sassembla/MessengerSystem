@@ -15,7 +15,11 @@
 
 #define TEST_PARENT_NAME (@"parentName")
 #define TEST_CHILD_NAME_0 (@"child_0")
+#define TEST_CHILD_NAME_1 (@"child_1")
+
 #define TEST_FAIL_PARENT_NAME (@"failParent")
+
+
 
 
 @interface MessengerSystemTest : SenTestCase
@@ -23,26 +27,37 @@
 	MessengerSystem * parent;
 	MessengerSystem * child_0;
 }
+
+- (void) testParent:(NSNotification * )notification;
+- (void) testChild:(NSNotification * )notification;
+
 @end
 
 
 
 @implementation MessengerSystemTest
 
-/* The setUp method is called automatically before each test-case method (methods whose name starts with 'test').
+/* 
+ セットアップ
  */
 - (void) setUp {
 	NSLog(@"%@ setUp", self.name);
-	parent = [[MessengerSystem alloc] initWithBodyID:self withSelector:nil withName:TEST_PARENT_NAME];
-	child_0 = [[MessengerSystem alloc]initWithBodyID:self withSelector:nil withName:TEST_CHILD_NAME_0 withParent:TEST_PARENT_NAME];
+	parent = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(testParent:) withName:TEST_PARENT_NAME];
+	child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(testChild:) withName:TEST_CHILD_NAME_0];
+
+
 }
 
-/* The tearDown method is called automatically after each test-case method (methods whose name starts with 'test').
+
+/* 
+ ティアダウン
  */
 - (void) tearDown {
+	
 	[parent release];
 	[child_0 release];
-	NSLog(@"%@ tearDown", self.name);
+	NSLog(@"終了！！！！");
+	
 }
 
 
@@ -55,11 +70,17 @@
 	STAssertEquals([parent getMyName],TEST_PARENT_NAME, @"自分で設定した名前がこの時点で異なる！");
 }
 
+- (void) testParent:(NSNotification * )notification {
+}
+- (void) testChild:(NSNotification * )notification {
+}
+
 
 /*
  親の名前を取得する
  */
 - (void) testGetParentName {
+	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];
 	STAssertEquals([child_0 getMyParentName], TEST_PARENT_NAME, @"親の名前が想定と違う");
 }
 
@@ -67,34 +88,94 @@
 /**
  ParentInputへのテスト
  */
-//- (void) testInputToParent {
-//	[child_0 inputToMyParent];
-//	STAssertEquals([child_0 getMyParentMSID], [parent getMyMSID], [NSString stringWithFormat:@"親のIDが想定と違う/child_0_%@, parent_%@", [child_0 getMyParentMSID], [parent getMyMSID]]);
-//}
+- (void) testInputToParent {
+	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];
+	STAssertEquals([child_0 getMyParentMSID], [parent getMyMSID], [NSString stringWithFormat:@"親のIDが想定と違う/child_0_%@, parent_%@", [child_0 getMyParentMSID], [parent getMyMSID]]);
+}
 
 
 /**
  子供から親を登録し、登録内容の返りを確認する
  子供リストの内容を取得、確認する
  */
-//- (void) testGetChildDict {
-//	[child_0 inputToMyParent];
-//	
-//	NSMutableDictionary * dict = [parent getChildDict];
-//	STAssertNil(!dict, [NSString stringWithFormat:@"nilっぽい_%@", dict]);
-//	STAssertEquals([dict valueForKey:[child_0 getMyName]], [child_0 getMyMSID], [NSString stringWithFormat:@"多分なにやらまちがえたんかも_%@", dict]);
-//}
+- (void) testGetChildDict {
+	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];
+	
+	NSMutableDictionary * dict = [parent getChildDict];
+	STAssertEquals([dict valueForKey:[child_0 getMyMSID]], [child_0 getMyName], [NSString stringWithFormat:@"多分なにやらまちがえたんかも_%@", dict]);
+}
+
 
 
 /**
+ 親から子へ、指定してメッセージを送信
  他のMessenger読み出しのテストを行う
  */
 - (void) testCall {
-	[child_0 inputToMyParent];
-
+	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];
+	
+	MessengerSystem * child_1 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(testChild:) withName:TEST_CHILD_NAME_1];
+	
 	[parent call:TEST_CHILD_NAME_0 withExec:@"yeah!", nil];
+	
+	
+	NSLog(@"value_%d,	%@", [[parent getMyMSID] intValue], [parent getMyMSID]);
+	
+	//確認するには、どうすればいいかな。
+	
+	//parentからchild_0へとメッセージが行き、child_以外には届かない、という事を確認したい。
+	//parent本人にも届いてはいけない。
+	
+	//関係のないchild_1にも届いてはいけない。
+	
+	//ログを取るようにしようか。 
 }
 
+
+/*
+ MSIDを数値化する事ができるっぽい。いいねえ。だとしたら、そういうテーブルを作っておいて、switchでつかう、とかできそうね。
+ 
+ */
+
+
+//banする機構ってあるの？　→ 無い！ そんな不完全な機構作らん。
+
+
+
+/**
+ 二人目の子供
+ 2つのキャパシティがあり、それぞれキーがMSID、バリューとして名前が各自のもの、という状態で入っているはず。
+ */
+- (void) testAddChild {
+	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];
+	
+	MessengerSystem * child_1 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(testChild:) withName:TEST_CHILD_NAME_1];
+	[child_1 inputToMyParentWithName:TEST_PARENT_NAME];
+	
+	NSMutableDictionary * dict = [parent getChildDict];
+	
+	STAssertEquals([dict valueForKey:[child_0 getMyMSID]], [child_0 getMyName], @"child_0の親登録が違った");
+	STAssertEquals([dict valueForKey:[child_1 getMyMSID]], [child_1 getMyName], @"child_1の親登録が違った");
+}
+
+
+/**
+ 一人目の子供の子供
+ */
+- (void) testChild_child {
+	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];
+	
+	MessengerSystem * child_1 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(testChild:) withName:TEST_CHILD_NAME_1];
+	[child_1 inputToMyParentWithName:[child_0 getMyName]];
+	
+	//child_0の子供としてchild_1をセットした際、child_0の名前がchild_1のmyParentにセットしてあるはず。
+	NSMutableDictionary * dict1 = [child_0 getChildDict];
+	STAssertEquals([dict1 valueForKey:[child_1 getMyMSID]], [child_1 getMyName], @"child_1の親登録が違った");
+	
+	
+	//親に送る系の命令は、child_1からは0、0からはparentに行くはず。
+	
+}
 
 
 /**

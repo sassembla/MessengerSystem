@@ -73,14 +73,12 @@
  初期化メソッド
  */
 - (id) initWithBodyID:(id)body_id withSelector:(SEL)body_selector withName:(NSString * )name;
-- (id) initWithBodyID:(id)body_id withSelector:(SEL)body_selector withName:(NSString * )name withParent:(NSString * )parent;
-
 
 /**
  内部実行メソッド
  */
 - (void) innerPerform:(NSNotification * )notification;//内部実装メソッド、システムな動作とbodyへのメソッド伝達を行う。
-- (void) inputToMyParent;//親への登録メソッド
+- (void) inputToMyParentWithName:(NSString * )parent;//親への登録メソッド
 
 
 - (void) call:(NSString * )name withExec:(NSString * )exec, ...;//特定の子への通信用メソッド
@@ -105,6 +103,10 @@
 - (NSDictionary * ) tag:(id)obj_tag val:(id)obj_value;
 
 
+/**
+ ストリングの数値化
+ */
+- (int) changeStrToNumber:(NSString * )str;
 
 
 - (void) setMyBodyID:(id)bodyID;
