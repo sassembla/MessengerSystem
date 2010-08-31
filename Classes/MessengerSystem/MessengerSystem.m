@@ -49,9 +49,15 @@
 	NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:1];
 	
 	[dict setValue:COMMAND_PARENTSEARCH forKey:MS_COMMAND];
+	
 	[dict setValue:[self getMyParentName] forKey:MS_PARENTNAME];
-	[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
-	[dict setValue:[self getMyMSID] forKey:MS_SENDERMSID];
+	
+	
+	//この部分、ログ用としてまとめる事が出来そうだ。それ用のキーにしよう。
+	[dict setValue:[self getMyName] forKey:MS_LOG_SENDERNAME];
+	[dict setValue:[self getMyMSID] forKey:MS_LOG_SENDERMSID];
+	
+	
 	[dict setValue:self forKey:MS_SENDERID];
 	
 	//フック
@@ -87,21 +93,29 @@
 	
 	//NSLog(@"commandName_%@", commandName);
 	
-	
-	NSString * senderName = [dict valueForKey:MS_SENDERNAME];
-	if (!senderName) {//送信者不詳であれば無視する
-		NSLog(@"送信者NAME不詳");
-		return;
+	NSDictionary * logDict = [dict valueForKey:MS_LOGDICTIONARY];
+	//ログ関連
+	if (!logDict) {
+		
+		//ログが不完全系
+		//メッセージID(この時作成)、	タイプ(new)、	コマンド名、タイムスタンプ、送信者ID、送信者名
+		
+		
+		NSString * senderName = [logDict valueForKey:MS_LOG_SENDERNAME];
+		if (!senderName) {//送信者不詳であれば無視する
+			NSLog(@"送信者NAME不詳");
+			return;
+		}
+		
+		
+		NSString * senderMSID = [logDict valueForKey:MS_LOG_SENDERMSID];
+		if (!senderMSID) {//送信者不詳であれば無視する
+			NSLog(@"送信者ID不詳");
+			return;
+		}
+		
+		
 	}
-	
-	
-	
-	NSString * senderMSID = [dict valueForKey:MS_SENDERMSID];
-	if (!senderMSID) {//送信者不詳であれば無視する
-		NSLog(@"送信者ID不詳");
-		return;
-	}
-	
 	
 	
 	
@@ -110,7 +124,7 @@
 	if ([commandName isEqualToString:COMMAND_PARENTSEARCH]) {
 		NSLog(@"サーチへの受け取り完了");
 		//送信者が自分であれば無視する
-		if ([senderMSID isEqualToString:[self getMyMSID]]) {
+		if ([[logDict valueForKey:MS_LOG_SENDERMSID] isEqualToString:[self getMyMSID]]) {
 //			NSLog(@"自分が送信者なので無視する_%@", [self getMyMSID]);
 			return;
 		}
@@ -125,7 +139,7 @@
 		NSLog(@"自分以外の誰かが、parentを求めて通信してきている。_%@", calledParentName);
 		if ([calledParentName isEqualToString:[self getMyName]]) {//それが自分だったら
 			
-			id senderID = [dict valueForKey:MS_SENDERID];
+			id senderID = [dict valueForKey:MS_LOG_SENDERID];
 			if (!senderID) {
 //				NSLog(@"senderID(送信者のselfポインタ)が無い");
 				return;
@@ -240,8 +254,9 @@
 		[dict setValue:COMMAND_CALLED forKey:MS_COMMAND];
 		[dict setValue:name forKey:MS_ADDRESS];
 		[dict setValue:exec forKey:MS_EXECUTE];
-		[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
-		[dict setValue:[self getMyMSID] forKey:MS_SENDERMSID];
+		
+		[dict setValue:[self getMyName] forKey:MS_LOG_SENDERNAME];
+		[dict setValue:[self getMyMSID] forKey:MS_LOG_SENDERMSID];
 		
 		
 		va_list ap;
@@ -279,8 +294,9 @@
 			[dict setValue:COMMAND_CALLED forKey:MS_COMMAND];
 			[dict setValue:name forKey:MS_ADDRESS];
 			[dict setValue:exec forKey:MS_EXECUTE];
-			[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
-			[dict setValue:[self getMyMSID] forKey:MS_SENDERMSID];
+			
+			[dict setValue:[self getMyName] forKey:MS_LOG_SENDERNAME];
+			[dict setValue:[self getMyMSID] forKey:MS_LOG_SENDERMSID];
 			
 			
 			va_list ap;
@@ -318,14 +334,64 @@
  特定の子への通信を行うメソッド、特にMSIDを使い、相手を最大限特定する。
  */
 - (void) callChild:(NSString * )childName withMSID:(NSString * ) withCommand:(NSString * )exec, ... {
-	//
+	
 }
+
+
 
 /**
  親への通信を行うメソッド
  */
 - (void) callParent:(NSString * )exec, ... {
-	//parentがいない場合は呼んでは駄目、Assert
+	
+	//親が居たら
+	if ([self getMyParentName]) {
+		NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:5];
+		
+		
+		[dict setValue:COMMAND_CALLED forKey:MS_COMMAND];
+		[dict setValue:[self getMyParentName] forKey:MS_ADDRESS];
+		[dict setValue:exec forKey:MS_EXECUTE];
+		
+		[dict setValue:[self getMyName] forKey:MS_LOG_SENDERNAME];
+		[dict setValue:[self getMyMSID] forKey:MS_LOG_SENDERMSID];
+		
+		
+		//tag付けされた要素以外は無視するように設定
+		//可変長配列に与えられた要素を処理する。
+		
+		va_list vp;//可変引数のポインタになる変数
+		id kvDict;//可変長引数から辞書を取り出すときに使用するポインタ
+		
+		//NSLog(@"start_%@", exec);
+		
+		va_start(vp, exec);//vpを可変長配列のポインタとして初期化する
+		kvDict = va_arg(vp, id);//vpから現在の可変長配列のヘッドにあるidを抽出し、kvDictに代入。この時点でkvDictは可変長配列のトップの要素のidを持っている。
+		
+		while (kvDict) {//存在していなければnull、可変長引数の終了の合図。
+			
+			//NSLog(@"kvDict_%@", kvDict);
+			
+			for (id key in kvDict) {
+				
+				//NSLog(@"[kvDict valueForKey:key]_%@, key_%@", [kvDict valueForKey:key], key);
+				//型チェック、kvDict型で無ければ無視する
+				if (true) [dict setValue:[kvDict valueForKey:key] forKey:key];
+			
+			}
+			
+			kvDict = va_arg(vp, id);//次の値を読み出す
+		}
+		
+		va_end(vp);//終了処理
+		
+		
+		//最終送信を行う
+		[self sendPerform:dict];
+		return;			
+		
+	}
+	
 }
 
 
@@ -375,7 +441,7 @@
 	sscanf(tokenstring, "%d", &i);//INT値に変換する(大文字小文字、数字全て)
 	
 	NSLog(@"Integer:  = %d", i );
-	NSAssert1(false,@"integer____%d\n",i);
+	//NSAssert1(false,@"integer____%d\n",i);
 	
 	return -1;
 }

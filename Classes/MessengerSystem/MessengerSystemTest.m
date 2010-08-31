@@ -70,10 +70,16 @@
 	STAssertEquals([parent getMyName],TEST_PARENT_NAME, @"自分で設定した名前がこの時点で異なる！");
 }
 
+
+/**
+ テスト用にたたかれるメソッド
+ */
 - (void) testParent:(NSNotification * )notification {
 }
 - (void) testChild:(NSNotification * )notification {
 }
+
+
 
 
 /*
@@ -107,6 +113,40 @@
 
 
 
+
+
+/**
+ ログの作成テスト
+ */
+- (void) testCreateLog {
+	//ログファイルがもくろみ通り作成されているかのテスト
+	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];
+	//この時点で、子供は親へと宣言を送ったというログを持っているはず。
+	
+	NSMutableDictiona[child_0 readLog];
+}
+
+/**
+ ログの読み出し機能のテスト
+ */
+- (void) testReadLog {
+	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];
+	//この時点で、子供は親へと宣言を送ったというログを持っているはず。
+	
+}
+
+/**
+ ログの追加機能のチェック
+ */
+- (void) testAddLog {
+	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];
+	//この時点で、子供は親へと宣言を送ったというログを持っているはず。
+	
+}
+
+
+
+
 /**
  親から子へ、指定してメッセージを送信
  他のMessenger読み出しのテストを行う
@@ -132,6 +172,24 @@
 }
 
 
+/**
+ 子から親へ
+ */
+- (void) testCallParent {
+	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];
+	
+	MessengerSystem * child_1 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(testChild:) withName:TEST_CHILD_NAME_1];
+	
+	[parent call:TEST_CHILD_NAME_0 withExec:@"yeah2!", nil];
+	
+	
+	NSLog(@"value_%d,	%@", [[parent getMyMSID] intValue], [parent getMyMSID]);
+	
+	[child_0 callParent:@"hooh!", nil];
+	
+}
+
+
 /*
  MSIDを数値化する事ができるっぽい。いいねえ。だとしたら、そういうテーブルを作っておいて、switchでつかう、とかできそうね。
  
@@ -139,6 +197,10 @@
 
 
 //banする機構ってあるの？　→ 無い！ そんな不完全な機構作らん。
+
+
+
+
 
 
 
