@@ -54,8 +54,8 @@
 	
 	
 	//この部分、ログ用としてまとめる事が出来そうだ。それ用のキーにしよう。
-	[dict setValue:[self getMyName] forKey:MS_LOG_SENDERNAME];
-	[dict setValue:[self getMyMSID] forKey:MS_LOG_SENDERMSID];
+	[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
+	[dict setValue:[self getMyMSID] forKey:MS_SENDERMSID];
 	
 	
 	[dict setValue:self forKey:MS_SENDERID];
@@ -64,9 +64,16 @@
 	//特定のメソッドの実行を命令づける、リタンダンシー設定
 	//IMP func = [self methodForSelector:@selector(setMyParentMSID:)];
 	//(*func)(self,@selector(setMyParentMSID:),@"ついた");
+	
+	//NSInvocationでの実装
 	[dict setValue:[self methodSignatureForSelector:@selector(setMyParentMSID:)] forKey:MS_RETURN];
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:OBSERVER_ID object:nil userInfo:(id)dict];
+	
+	//ログを作成する
+	[dict setValue:[self createLogForNew] forKey:MS_LOGDICTIONARY];
+	
+	//最終送信処理
+	[self sendPerform:dict];
 	
 	NSAssert1([self getMyParentMSID], @"親が存在しないようです。parentに指定している名前を確認してください_現在指定されているparentは_%@",[self getMyParentName]);
 }
@@ -83,39 +90,53 @@
 	NSMutableDictionary * dict = (NSMutableDictionary *)[notification userInfo];
 	
 	
+	
+	//コマンド名について確認
 	NSString * commandName = [dict valueForKey:MS_COMMAND];
 	if (!commandName) {
 		NSLog(@"コマンドが無いため、何の処理も行われずに帰る");
 		return;
 	}
 	
-	
-	
-	//NSLog(@"commandName_%@", commandName);
-	
-	NSDictionary * logDict = [dict valueForKey:MS_LOGDICTIONARY];
-	//ログ関連
-	if (!logDict) {
-		
-		//ログが不完全系
-		//メッセージID(この時作成)、	タイプ(new)、	コマンド名、タイムスタンプ、送信者ID、送信者名
-		
-		
-		NSString * senderName = [logDict valueForKey:MS_LOG_SENDERNAME];
-		if (!senderName) {//送信者不詳であれば無視する
-			NSLog(@"送信者NAME不詳");
-			return;
-		}
-		
-		
-		NSString * senderMSID = [logDict valueForKey:MS_LOG_SENDERMSID];
-		if (!senderMSID) {//送信者不詳であれば無視する
-			NSLog(@"送信者ID不詳");
-			return;
-		}
-		
-		
+	//送信者名
+	NSString * senderName = [dict valueForKey:MS_SENDERNAME];
+	if (!senderName) {//送信者不詳であれば無視する
+		NSLog(@"送信者NAME不詳");
+		return;
 	}
+	
+	
+	//送信者MSID
+	NSString * senderMSID = [dict valueForKey:MS_SENDERMSID];
+	if (!senderMSID) {//送信者不詳であれば無視する
+		NSLog(@"送信者ID不詳");
+		return;
+	}
+	
+	
+	
+	//ログ関連
+	NSDictionary * logDict = [dict valueForKey:MS_LOGDICTIONARY];
+	if (!logDict) {
+		NSLog(@"ログが無いので受け付けない");
+		return;
+	} else {
+		
+		
+		
+		
+		//メッセージIDについて確認
+		NSString * messageID = [logDict valueForKey:MS_LOG_MESSAGEID];
+		if (!messageID) {
+			NSLog(@"メッセージIDが無いため、何の処理も行われずに帰る");
+			return;
+		}
+				
+		
+		//受信時にログに受信記録を付け、保存する
+		[self saveLogForReceived:logDict];
+	}
+	
 	
 	
 	
@@ -124,7 +145,7 @@
 	if ([commandName isEqualToString:COMMAND_PARENTSEARCH]) {
 		NSLog(@"サーチへの受け取り完了");
 		//送信者が自分であれば無視する
-		if ([[logDict valueForKey:MS_LOG_SENDERMSID] isEqualToString:[self getMyMSID]]) {
+		if ([[logDict valueForKey:MS_SENDERMSID] isEqualToString:[self getMyMSID]]) {
 //			NSLog(@"自分が送信者なので無視する_%@", [self getMyMSID]);
 			return;
 		}
@@ -139,7 +160,7 @@
 		NSLog(@"自分以外の誰かが、parentを求めて通信してきている。_%@", calledParentName);
 		if ([calledParentName isEqualToString:[self getMyName]]) {//それが自分だったら
 			
-			id senderID = [dict valueForKey:MS_LOG_SENDERID];
+			id senderID = [dict valueForKey:MS_SENDERID];
 			if (!senderID) {
 //				NSLog(@"senderID(送信者のselfポインタ)が無い");
 				return;
@@ -150,13 +171,22 @@
 			[self setChildDictChildNameAsValue:senderName withMSIDAsKey:senderMSID];
 			NSLog(@"辞書作成まで完了");
 			
+			
+			
 			//送り届けられたメソッドを使い、Child宛に登録した旨の返答を行う。
+			/*
+			 代替案。
+			 void (*setter)(id, SEL, BOOL);
+			 setter = (void (*)(id, SEL, BOOL))[self methodForSelector:@selector(inputToMyParentWithName:)];//関数ポインタに切り替えてる
+			 setter(self, @selector(inputToMyParentWithName:), YES);//関数として実行			 
+			 */
 			id signature;
 			id invocation;
 			
 			signature = [dict valueForKey:MS_RETURN];
 //			NSLog(@"signature_%@", signature);
 			
+			//NSInvocationを使った実装
 			invocation = [NSInvocation invocationWithMethodSignature:signature];
 			[invocation setSelector:@selector(setMyParentMSID:)];//ここは直書きしかないのか！？　じゃあ意味なくね？ 特にselectorだけ渡すとかしないといけないのか？
 			[invocation setTarget:senderID];
@@ -180,13 +210,13 @@
 	//特定の相手に向けてのコールを受け取った
 	if ([commandName isEqualToString:COMMAND_CALLED]) {//自分か、子供に送る。
 		
+		//宛名確認
 		NSString * address = [dict valueForKey:MS_ADDRESS];
-		
-		//宛名が無い
 		if (!address) {
 			NSLog(@"宛名が無い");
 			return;
 		}
+		
 		
 		//宛名が自分の事でなかったら帰る
 		if (![address isEqualToString:[self getMyName]]) {
@@ -200,6 +230,7 @@
 		IMP func = [[self getMyBodyID] methodForSelector:[self getMyBodySelector]];
 		(*func)([self getMyBodyID], [self getMyBodySelector], notification);
 		NSLog(@"bodyメソッドの実行を完了");
+		
 		
 		return;
 	}
@@ -228,6 +259,7 @@
 
 
 
+
 /**
  tag valueメソッド
  値にnilが入る事、
@@ -242,50 +274,56 @@
 
 
 /**
+ 自分自身のmessengerへと通信を行うメソッド
+ */
+- (void) callMyself:(NSString * )exec, ... {
+	NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:5];
+	
+	[dict setValue:COMMAND_CALLED forKey:MS_COMMAND];
+	[dict setValue:[self getMyName] forKey:MS_ADDRESS];
+	
+	[dict setValue:exec forKey:MS_EXECUTE];
+	[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
+	[dict setValue:[self getMyMSID] forKey:MS_SENDERMSID];
+	
+	va_list ap;
+	id kvDict;
+	
+	//NSLog(@"start_%@", exec);
+	
+	va_start(ap, exec);
+	kvDict = va_arg(ap, id);
+	
+	while (kvDict) {
+		//NSLog(@"kvDict_%@", kvDict);
+		
+		for (id key in kvDict) {
+			//					NSLog(@"[kvDict valueForKey:key]_%@, key_%@", [kvDict valueForKey:key], key);
+			[dict setValue:[kvDict valueForKey:key] forKey:key];
+		}
+		
+		kvDict = va_arg(ap, id);
+	}
+	va_end(ap);
+	
+	
+	//ログを作成する
+	[dict setValue:[self createLogForNew] forKey:MS_LOGDICTIONARY];
+	
+	
+	[self sendPerform:dict];
+}
+
+
+/**
  特定の名前のmessengerへの通信を行うメソッド
+ 親から子限定
+ 
+ 子供辞書を持っており、かつ、nameに該当する子供がいる
  */
 - (void) call:(NSString * )name withExec:(NSString * )exec, ... {
-	//キーに対応する物があれば、IDを問わずに送り出す。コマンドは適当な文字列。
 	
-	if ([name isEqualToString:[self getMyName]]) {//自分自身に対する物は最優先で処理
-		
-		NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:5];
-		
-		[dict setValue:COMMAND_CALLED forKey:MS_COMMAND];
-		[dict setValue:name forKey:MS_ADDRESS];
-		[dict setValue:exec forKey:MS_EXECUTE];
-		
-		[dict setValue:[self getMyName] forKey:MS_LOG_SENDERNAME];
-		[dict setValue:[self getMyMSID] forKey:MS_LOG_SENDERMSID];
-		
-		
-		va_list ap;
-		id kvDict;
-		
-		//NSLog(@"start_%@", exec);
-		
-		va_start(ap, exec);
-		kvDict = va_arg(ap, id);
-		
-		while (kvDict) {
-			//NSLog(@"kvDict_%@", kvDict);
-			
-			for (id key in kvDict) {
-				//					NSLog(@"[kvDict valueForKey:key]_%@, key_%@", [kvDict valueForKey:key], key);
-				[dict setValue:[kvDict valueForKey:key] forKey:key];
-			}
-			
-			kvDict = va_arg(ap, id);
-		}
-		va_end(ap);
-
-		
-		[self sendPerform:dict];
-		return;
-	}
-	
-	
-	//子供辞書が存在するか否か、で分かれる。
+	//親から子
 	for (id key in childDict) {
 		//NSLog(@"key: %@, value: %@", key, [childDict objectForKey:key]);//この件数分だけ出す必要は無い！　一件出せればいい。特に限定が必要な場合もそう。
 		if ([[childDict objectForKey:key] isEqualToString:name]) {//一つでも合致する内容のものがあれば、メッセージを送る対象として見る。
@@ -293,11 +331,10 @@
 			
 			[dict setValue:COMMAND_CALLED forKey:MS_COMMAND];
 			[dict setValue:name forKey:MS_ADDRESS];
+			
 			[dict setValue:exec forKey:MS_EXECUTE];
-			
-			[dict setValue:[self getMyName] forKey:MS_LOG_SENDERNAME];
-			[dict setValue:[self getMyMSID] forKey:MS_LOG_SENDERMSID];
-			
+			[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
+			[dict setValue:[self getMyMSID] forKey:MS_SENDERMSID];
 			
 			va_list ap;
 			id kvDict;
@@ -318,6 +355,10 @@
 				kvDict = va_arg(ap, id);
 			}
 			va_end(ap);
+			
+			
+			//ログを作成する
+			[dict setValue:[self createLogForNew] forKey:MS_LOGDICTIONARY];
 			
 			
 			//最終送信を行う
@@ -351,10 +392,10 @@
 		
 		[dict setValue:COMMAND_CALLED forKey:MS_COMMAND];
 		[dict setValue:[self getMyParentName] forKey:MS_ADDRESS];
-		[dict setValue:exec forKey:MS_EXECUTE];
 		
-		[dict setValue:[self getMyName] forKey:MS_LOG_SENDERNAME];
-		[dict setValue:[self getMyMSID] forKey:MS_LOG_SENDERMSID];
+		[dict setValue:exec forKey:MS_EXECUTE];
+		[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
+		[dict setValue:[self getMyMSID] forKey:MS_SENDERMSID];
 		
 		
 		//tag付けされた要素以外は無視するように設定
@@ -386,10 +427,14 @@
 		va_end(vp);//終了処理
 		
 		
+		
+		//ログを作成する
+		[dict setValue:[self createLogForNew] forKey:MS_LOGDICTIONARY];
+		
+		
 		//最終送信を行う
 		[self sendPerform:dict];
-		return;			
-		
+		return;
 	}
 	
 }
@@ -403,6 +448,61 @@
 	//NSLog(@"dict_%@", dict);
 	[[NSNotificationCenter defaultCenter] postNotificationName:OBSERVER_ID object:self userInfo:(id)dict];
 }
+
+
+/**
+ メッセージ発生時のログ書き込み、ログ初期化
+ 
+ メッセージIDを作成、いろいろな情報をまとめる
+ 
+ */
+- (NSDictionary * ) createLogForNew {
+	//ログタイプ、タイムスタンプを作成
+
+		
+	NSDictionary * LogDictionary;//ログ内容を初期化する
+	LogDictionary = [NSDictionary dictionaryWithObject:@"仮のmessageID" forKey:MS_LOG_MESSAGEID];
+	return LogDictionary;
+}
+
+/**
+ 受け取り時のログ書き込み
+ 
+ 受信したメッセージからログを受け取り、
+ ログの末尾に含まれているメッセージIDでもって、過去に受け取ったことがあるかどうか判定、
+ ログストアに保存する。
+ */
+- (void) saveLogForReceived:(NSDictionary * )logDict {
+	//ログタイプ、タイムスタンプを作成
+	
+}
+
+/**
+ 返信時のログ書き込み
+ 
+ どこからか取得したメッセージIDでもって、
+ 保存していたログストアからログデータを読み出し、
+ 最新の「送信しました」記録を行い、
+ 記録をログ末尾に付け加えたログを返す。
+ */
+- (NSDictionary * ) createLogForReply {
+	//ログタイプ、タイムスタンプを作成
+
+	NSDictionary * LogDictionary;//ログ内容を返信するものを付けた上で初期化する
+	LogDictionary = [NSDictionary dictionaryWithObject:@"仮のmessageID" forKey:MS_LOG_MESSAGEID];
+	return LogDictionary;
+}
+
+/**
+ 観察用にこのmessengerに書かれているログを取得するメソッド
+ */
+- (NSDictionary * ) getLog {
+	NSDictionary * LogDictionary;//ログ内容を返信するものを付けた上で初期化する
+	LogDictionary = [NSDictionary dictionaryWithObject:@"仮の3" forKey:@"物です3"];
+	return LogDictionary;
+}
+
+
 
 
 

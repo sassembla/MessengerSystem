@@ -15,32 +15,36 @@
 #define MS_SENDERID		(@"MESSENGER_SYSTEM_COMMAND:SENDER_ID")//自分固有のObjective-C IDに類するキー
 
 
-
-//log系タグ
-#define MS_LOGDICTIONARY	(@"MESSENGER_SYSTEM_COMMAND:LOG")
-	#define MS_LOG_SENDERNAME	(@"MESSENGER_SYSTEM_COMMAND:LOGGED_SENDER_NAME")//自分の名前に類するキー
-	#define MS_LOG_SENDERMSID	(@"MESSENGER_SYSTEM_COMMAND:LOGGED_SENDER_MSID")//自分固有のMSIDに類するキー
-
 //コマンド系タグ
 #define MS_COMMAND	(@"MESSENGER_SYSTEM_COMMAND")//コマンドに類するキー
 	#define COMMAND_CALLED			(@"MESSENGER_SYSTEM_COMMAND:CALLED")//呼び出し
 	#define COMMAND_PARENTSEARCH	(@"MESSENGER_SYSTEM_COMMAND:PARENT_SEARCH")//親探索
 
-
+#define MS_SENDERNAME	(@"MESSENGER_SYSTEM_COMMAND:LOGGED_SENDER_NAME")//自分の名前に類するキー
+#define MS_SENDERMSID	(@"MESSENGER_SYSTEM_COMMAND:LOGGED_SENDER_MSID")//自分固有のMSIDに類するキー
 
 //実行内容に関するタグ
 #define MS_ADDRESS		(@"MESSENGER_SYSTEM_COMMAND:ADDRESS")//宛先
 #define MS_EXECUTE		(@"MESSENGER_SYSTEM_COMMAND:EXECUTE")//実行内容名
 
 
-//Parentに関すタグ
+//Parentに関するタグ
 #define MS_PARENTNAME	(@"MESSENGER_SYSTEM_COMMAND:PARENT_NAME")//親の名前に類するキー
 #define MS_PARENTMSID	(@"MESSENGER_SYSTEM_COMMAND:PARENT_MSID")//親の固有IDに類するキー
 
+//遠隔メソッド実行に関するタグ
+#define MS_RETURN		(@"MESSENGER_SYSTEM_COMMAND:RETURN")//フック実行メソッドの指定オプションに類するキー
 
-#define MS_SEARCHNAME	(@"MESSENGER_SYSTEM_COMMAND:SEARCH_NAME")//宛先の名前に類するキー
 
-#define MS_RETURN		(@"MESSENGER_SYSTEM_COMMAND:RETURN")//フック実行メソッドの指定
+
+//logに関するタグ
+#define MS_LOGDICTIONARY	(@"MESSENGER_SYSTEM_COMMAND:LOG")
+#define MS_LOG_MESSAGEID	(@"MESSENGER_SYSTEM_COMMAND:LOGGED_MESSAGE_ID")//メッセージ発生時割り振られるIDに類するキー
+#define MS_LOG_LOGTYPE_NEW	(@"MESSENGER_SYSTEM_COMMAND:LOGGED_TYPE_NEW")//メッセージ作成時に設定される記録タイプに類するキー
+#define MS_LOG_LOGTYPE_REC	(@"MESSENGER_SYSTEM_COMMAND:LOGGED_TYPE_RECEIVED")//メッセージ受取時に設定される記録タイプに類するキー
+#define MS_LOG_LOGTYPE_REP	(@"MESSENGER_SYSTEM_COMMAND:LOGGED_TYPE_REPLIED")//メッセージ返送時に設定される記録タイプに類するキー
+#define MS_LOG_TIMESTAMP	(@"MESSENGER_SYSTEM_COMMAND:LOGGED_TIMESTAMP")//タイムスタンプに類するキー
+
 
 
 
@@ -92,10 +96,11 @@
 - (void) innerPerform:(NSNotification * )notification;//内部実装メソッド、システムな動作とbodyへのメソッド伝達を行う。
 - (void) inputToMyParentWithName:(NSString * )parent;//親への登録メソッド
 
-
+- (void) callMyself:(NSString * )exec, ...;
 - (void) call:(NSString * )name withExec:(NSString * )exec, ...;//特定の子への通信用メソッド
 - (void) callChild:(NSString * )childName withMSID:(NSString * ) withCommand:(NSString * )exec, ...;//特定の子への通信用メソッド childのMSIDを用いる。
 - (void) callParent:(NSString * )exec, ...;//親への通信用メソッド
+
 
 - (void) sendPerform:(NSMutableDictionary * )dict;//パフォーマンス実装
 
@@ -113,6 +118,16 @@
  タグシステム
  */
 - (NSDictionary * ) tag:(id)obj_tag val:(id)obj_value;
+
+
+/**
+ ログシステム
+ */
+- (NSDictionary * ) createLogForNew;//メッセージ初期作成ログを内部に保存する/返すメソッド
+- (void) saveLogForReceived:(NSDictionary * )logDict;//受信時に付与するログを内部に保存するメソッド
+- (NSDictionary * ) createLogForReply;//返答送信時に付与するログを内部に保存する/返すメソッド
+- (NSDictionary * ) getLog;//ログを一覧で取得するメソッド
+
 
 
 /**

@@ -80,7 +80,17 @@
 }
 
 
-
+/**
+ 自分自身へのテスト
+ */
+- (void) testCallMyself {
+	[parent callMyself:@"To Myself!!",nil];
+	
+	//送信記録と受信記録が残る筈。
+	NSDictionary * logDict = [parent getLog];
+	
+	
+}
 
 /*
  親の名前を取得する
@@ -92,7 +102,7 @@
 
 
 /**
- ParentInputへのテスト
+ ParentInputのテスト
  */
 - (void) testInputToParent {
 	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];
@@ -123,7 +133,7 @@
 	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];
 	//この時点で、子供は親へと宣言を送ったというログを持っているはず。
 	
-	NSMutableDictiona[child_0 readLog];
+	NSDictionary * logDict = [child_0 getLog];
 }
 
 /**
