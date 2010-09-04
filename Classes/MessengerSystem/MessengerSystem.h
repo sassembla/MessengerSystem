@@ -15,10 +15,10 @@
 #define MS_SENDERID		(@"MESSENGER_SYSTEM_COMMAND:SENDER_ID")//自分固有のObjective-C IDに類するキー
 
 
-//コマンド系タグ
-#define MS_COMMAND	(@"MESSENGER_SYSTEM_COMMAND")//コマンドに類するキー
-	#define COMMAND_CALLED			(@"MESSENGER_SYSTEM_COMMAND:CALLED")//呼び出し
-	#define COMMAND_PARENTSEARCH	(@"MESSENGER_SYSTEM_COMMAND:PARENT_SEARCH")//親探索
+//カテゴリ系タグ メッセージの種類を用途ごとに分ける
+#define MS_CATEGOLY	(@"MESSENGER_SYSTEM_COMMAND")//コマンドに類するキー
+	#define MS_CATEGOLY_CALL			(@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_CALLED")//呼び出し
+	#define MS_CATEGOLY_PARENTSEARCH	(@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_PARENTSEARCH")//親探索
 
 #define MS_SENDERNAME	(@"MESSENGER_SYSTEM_COMMAND:LOGGED_SENDER_NAME")//自分の名前に類するキー
 #define MS_SENDERMSID	(@"MESSENGER_SYSTEM_COMMAND:LOGGED_SENDER_MSID")//自分固有のMSIDに類するキー
@@ -73,6 +73,9 @@
 	//子供の名前とIDを保存する辞書	NSMutableDictionary
 	NSMutableDictionary * childDict;
 	
+	
+	//ログ取り用の辞書
+	NSMutableDictionary * logDict;
 }
 
 
@@ -126,7 +129,7 @@
 - (NSDictionary * ) createLogForNew;//メッセージ初期作成ログを内部に保存する/返すメソッド
 - (void) saveLogForReceived:(NSDictionary * )logDict;//受信時に付与するログを内部に保存するメソッド
 - (NSDictionary * ) createLogForReply;//返答送信時に付与するログを内部に保存する/返すメソッド
-- (NSDictionary * ) getLog;//ログを一覧で取得するメソッド
+- (NSDictionary * ) getLog;//保存されたログ一覧を取得するメソッド
 
 
 

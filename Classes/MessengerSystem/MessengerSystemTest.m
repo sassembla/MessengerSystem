@@ -131,9 +131,20 @@
 - (void) testCreateLog {
 	//ログファイルがもくろみ通り作成されているかのテスト
 	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];
-	//この時点で、子供は親へと宣言を送ったというログを持っているはず。
 	
+	//この時点で、子供は親へと宣言を送ったというログを持っているはず。
 	NSDictionary * logDict = [child_0 getLog];
+	NSLog(@"logDict_%@", logDict);
+	
+	STAssertTrue([logDict count] == 1, [NSString stringWithFormat:@"内容が合致しません_%d", [logDict count]]);
+//	STAssertTrue([logDict valueForKey:<#(NSString *)key#>]);//内容、送信した記録があるはず。
+	
+	
+	
+//	//さらにこの時点で、親は子供から通信が来たというログを持っているはず。
+//	NSDictionary * logDict2 = [parent getLog];
+//	NSLog(@"logDict_%@", logDict2);
+
 }
 
 /**
