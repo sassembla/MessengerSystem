@@ -13,7 +13,7 @@
 - (id) init {
 	if (self = [super init]) {
 		messenger = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:@"child_0"];
-		[messenger inputToMyParent:@"Parentだよ"];
+		[messenger inputToMyParentWithName:@"Parentだよ"];
 	}
 	return self;
 }
@@ -22,7 +22,7 @@
 - (id) init2 {
 	if (self = [super init]) {
 		messenger = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:@"child_1"];
-		[messenger inputToMyParent:@"Parentだよ"];
+		[messenger inputToMyParentWithName:@"Parentだよ"];
 	}
 	return self;
 }

@@ -19,6 +19,9 @@
 
 #define TEST_FAIL_PARENT_NAME (@"failParent")
 
+#define TEST_EXEC (@"testExec")
+#define TEST_EXEC_2 (@"testExec_2")
+#define TEST_EXEC_3 (@"testExec_3")
 
 
 
@@ -28,8 +31,8 @@
 	MessengerSystem * child_0;
 }
 
-- (void) testParent:(NSNotification * )notification;
-- (void) testChild:(NSNotification * )notification;
+- (void) m_testParent:(NSNotification * )notification;
+- (void) m_testChild:(NSNotification * )notification;
 
 @end
 
@@ -42,8 +45,8 @@
  */
 - (void) setUp {
 	NSLog(@"%@ setUp", self.name);
-	parent = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(testParent:) withName:TEST_PARENT_NAME];
-	child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(testChild:) withName:TEST_CHILD_NAME_0];
+	parent = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testParent:) withName:TEST_PARENT_NAME];
+	child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild:) withName:TEST_CHILD_NAME_0];
 
 
 }
@@ -56,7 +59,7 @@
 	
 	[parent release];
 	[child_0 release];
-	NSLog(@"終了！！！！");
+	NSLog(@"tearDown");
 	
 }
 
@@ -74,9 +77,27 @@
 /**
  テスト用にたたかれるメソッド
  */
-- (void) testParent:(NSNotification * )notification {
+- (void) m_testParent:(NSNotification * )notification {
 }
-- (void) testChild:(NSNotification * )notification {
+
+/**
+ テスト用に叩かれるメソッド、
+ 子供用。
+ 
+ */
+- (void) m_testChild:(NSNotification * )notification {
+	NSLog(@"testChild_%@",notification);
+	
+	NSMutableDictionary * dict = (NSMutableDictionary *)[notification userInfo];
+	
+	NSString * exec = [dict valueForKey:MS_EXECUTE];
+	NSLog(@"exec_%@",exec);
+	
+	if ([exec isEqualToString:TEST_EXEC_2]) {
+		[child_0 callParent:TEST_EXEC_3,
+		 [child_0 tag:@"届いたら" val:@"いいな"],nil];
+	}
+	
 }
 
 
@@ -87,7 +108,7 @@
 	[parent callMyself:@"To Myself!!",nil];
 	
 	//送信記録と受信記録が残る筈。
-	NSDictionary * logDict = [parent getLog];
+	NSDictionary * logDict = [parent getLogStore];
 	
 	
 }
@@ -108,6 +129,18 @@
 	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];
 	STAssertEquals([child_0 getMyParentMSID], [parent getMyMSID], [NSString stringWithFormat:@"親のIDが想定と違う/child_0_%@, parent_%@", [child_0 getMyParentMSID], [parent getMyMSID]]);
 }
+
+
+
+/**
+ わざと存在しない親の名前を指定した際のテスト
+ こういうのは、failになるような条件で書いて、Failかどうかを判定するのがいいんだろうか。判断を考えないとな。
+ */
+//- (void) testInputToParentfailure {
+//	[child_0 inputToMyParentWithName:TEST_FAIL_PARENT_NAME];
+//	STFail(@"到達してはいけない");
+//}
+
 
 
 /**
@@ -132,19 +165,10 @@
 	//ログファイルがもくろみ通り作成されているかのテスト
 	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];
 	
-	//この時点で、子供は親へと宣言を送ったというログを持っているはず。
-	NSDictionary * logDict = [child_0 getLog];
-	NSLog(@"logDict_%@", logDict);
+	//この時点で、子供は親へと宣言を送った、さらに親がそれを受け止めて返した、というログを持っているはず。
+	NSDictionary * logDict = [child_0 getLogStore];
 	
-	STAssertTrue([logDict count] == 1, [NSString stringWithFormat:@"内容が合致しません_%d", [logDict count]]);
-//	STAssertTrue([logDict valueForKey:<#(NSString *)key#>]);//内容、送信した記録があるはず。
-	
-	
-	
-//	//さらにこの時点で、親は子供から通信が来たというログを持っているはず。
-//	NSDictionary * logDict2 = [parent getLog];
-//	NSLog(@"logDict_%@", logDict2);
-
+	STAssertTrue([logDict count] == 2, [NSString stringWithFormat:@"内容が合致しません_%d", [logDict count]]);
 }
 
 /**
@@ -173,23 +197,58 @@
  他のMessenger読み出しのテストを行う
  */
 - (void) testCall {
-	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];
+	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];//発信、親認定で+2件
+	
+	NSDictionary * logDict = [child_0 getLogStore];
+	STAssertTrue([logDict count] == 2, [NSString stringWithFormat:@"子供認定2 内容が合致しません_%d", [logDict count]]);
 	
 	MessengerSystem * child_1 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(testChild:) withName:TEST_CHILD_NAME_1];
 	
-	[parent call:TEST_CHILD_NAME_0 withExec:@"yeah!", nil];
 	
 	
-	NSLog(@"value_%d,	%@", [[parent getMyMSID] intValue], [parent getMyMSID]);
+	[parent call:TEST_CHILD_NAME_0 withExec:TEST_EXEC, nil];//(親の送信、)子供の受け取りで+1件 3
+	STAssertTrue([logDict count] == 3, [NSString stringWithFormat:@"親から子への送信3 内容が合致しません_%d", [logDict count]]);
 	
-	//確認するには、どうすればいいかな。
 	
-	//parentからchild_0へとメッセージが行き、child_以外には届かない、という事を確認したい。
-	//parent本人にも届いてはいけない。
+	[parent call:TEST_CHILD_NAME_0 withExec:TEST_EXEC_2, nil];//(親の送信、)子供の受け取り、子供の送信で+2件 5
+	STAssertTrue([logDict count] == 5, [NSString stringWithFormat:@"親から子への送信5_内容が合致しません_%d", [logDict count]]);
 	
-	//関係のないchild_1にも届いてはいけない。
 	
-	//ログを取るようにしようか。 
+	//親の辞書には、子供からの通信で1件、子供への書き込みで0件、子供への最初の書き込みで1件、子供への２回目の書き込みで1件、子供からの受け取りで1件 4
+	NSDictionary * parentLogDict = [parent getLogStore];
+	STAssertTrue([parentLogDict count] == 4, [NSString stringWithFormat:@"親の内容4_内容が合致しません_%d", [parentLogDict count]]);
+	[child_1 release];
+}
+
+/**
+ 親から子へ
+ 設定されていない子へと届いてはいけないし、ログ内容に残ってはいけない。
+ */
+- (void) testCallToNotChild {
+	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];//発信、親認定で+2件
+	
+	MessengerSystem * child_1 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(testChild:) withName:TEST_CHILD_NAME_1];
+	
+	[parent call:TEST_CHILD_NAME_1 withExec:TEST_EXEC, nil];
+	
+	NSDictionary * parentLogDict = [parent getLogStore];//親の辞書には、子供Aからの通信で1件、存在しない子供Bへの最初の書き込みで0件 1
+	STAssertTrue([parentLogDict count] == 1, [NSString stringWithFormat:@"親の内容1_内容が合致しません_%d", [parentLogDict count]]);
+	
+	
+	[child_1 inputToMyParentWithName:TEST_PARENT_NAME];//発信、親認定で+2件
+	
+	//親の辞書には、子供Bからの通信で１件　+1 2
+	STAssertTrue([parentLogDict count] == 2, [NSString stringWithFormat:@"親の内容1_内容が合致しません_%d", [parentLogDict count]]);
+	
+	
+	[parent call:TEST_CHILD_NAME_1 withExec:TEST_EXEC_2, nil];//子供Bへの通信で１件 +1 3
+//	STAssertTrue([parentLogDict count] == 3, [NSString stringWithFormat:@"親の内容1_内容が合致しません_%d", [parentLogDict count]]);
+//	[child_1 release];
+	
+//	//親の辞書には、子供からの通信で1件、子供への最初の書き込みで0件、子供への２回目の書き込みで0件 1
+//	NSDictionary * parentLogDict = [parent getLogStore];
+//	STAssertTrue([parentLogDict count] == 1, [NSString stringWithFormat:@"親の内容1_内容が合致しません_%d", [parentLogDict count]]);
+//	
 }
 
 

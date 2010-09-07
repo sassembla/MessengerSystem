@@ -127,23 +127,19 @@
 	}
 	
 	
-	
 	//ログ関連
-	NSDictionary * logDict = [dict valueForKey:MS_LOGDICTIONARY];
-	if (!logDict) {
+	NSDictionary * recievedLogDict = [dict valueForKey:MS_LOGDICTIONARY];
+	if (!recievedLogDict) {
 		NSLog(@"ログが無いので受け付けない");
 		return;
 	} else {
 		//メッセージIDについて確認
-		NSString * messageID = [logDict valueForKey:MS_LOG_MESSAGEID];
+		NSString * messageID = [recievedLogDict valueForKey:MS_LOG_MESSAGEID];
 		if (!messageID) {
 			NSLog(@"メッセージIDが無いため、何の処理も行われずに帰る");
 			return;
 		}		
 	}
-
-	
-	
 	
 	
 	
@@ -151,7 +147,7 @@
 	if ([commandName isEqualToString:MS_CATEGOLY_PARENTSEARCH]) {
 //		NSLog(@"サーチへの受け取り完了");
 		//送信者が自分であれば無視する 自分から自分へのメッセージの無視
-		if ([[logDict valueForKey:MS_SENDERMSID] isEqualToString:[self getMyMSID]]) {
+		if ([[recievedLogDict valueForKey:MS_SENDERMSID] isEqualToString:[self getMyMSID]]) {
 //			NSLog(@"自分が送信者なので無視する_%@", [self getMyMSID]);
 			return;
 		}
@@ -159,7 +155,7 @@
 		
 		NSString * calledParentName = [dict valueForKey:MS_PARENTNAME];
 		if (!calledParentName) {
-			
+//			NSLog(@"親の名称に入力が無ければ無視！");
 			return;//値が無ければ無視する
 		}
 		
@@ -168,13 +164,13 @@
 			
 			id senderID = [dict valueForKey:MS_SENDERID];
 			if (!senderID) {
-//				NSLog(@"senderID(送信者のselfポインタ)が無い");
+				NSLog(@"senderID(送信者のselfポインタ)が無い");
 				return;
 			}
 			
 			
 			//受信時にログに受信記録を付け、保存する
-			[self saveLogForReceived:logDict];
+			[self saveLogForReceived:recievedLogDict];
 			
 			
 //			NSLog(@"自分に対して子供から親になる宣言をされた、辞書作成直前");
@@ -206,6 +202,7 @@
 			
 			[invocation invoke];
 			
+			
 			return;
 		}
 		
@@ -227,7 +224,7 @@
 		}
 		
 		//受信時にログに受信記録を付け、保存する
-		[self saveLogForReceived:logDict];
+		[self saveLogForReceived:recievedLogDict];
 		
 		//設定されたbodyのメソッドを実行
 		IMP func = [[self getMyBodyID] methodForSelector:[self getMyBodySelector]];
@@ -374,7 +371,7 @@
 		}
 	}
 	
-	NSAssert1(false, @"callメソッドに指定したmessenger名称が存在しないか、未知のものです。本messengerを親とした設定を行うよう、子から親を指定してください。_%@",name);
+	//NSAssert1(false, @"callメソッドに指定したmessenger名称が存在しないか、未知のものです。本messengerを親とした設定を行うよう、子から親を指定してください。_%@",name);
 }
 
 
@@ -423,7 +420,7 @@
 			for (id key in kvDict) {
 				
 				//NSLog(@"[kvDict valueForKey:key]_%@, key_%@", [kvDict valueForKey:key], key);
-				//型チェック、kvDict型で無ければ無視する
+				//型チェック、kvDict型で無ければ無視する必要がある。
 				if (true) [dict setValue:[kvDict valueForKey:key] forKey:key];
 			
 			}
@@ -444,6 +441,7 @@
 		return;
 	}
 	
+	NSAssert(false, @"親設定が無い");
 }
 
 
@@ -473,24 +471,42 @@
 	//メッセージに対してはメッセージIDひも付きの新規ログをつける事になる。
 	//ストアについては、新しいIDのものが出来るとIDの下に保存する。多元木構造になっちゃうなあ。カラムでやった方が良いのかしら？それとも絡み付いたKVSかしら。
 	
-		
-	NSDictionary * LogDictionary;//ログ内容を初期化する
-	LogDictionary = [NSDictionary dictionaryWithObject:@"仮のmessageID" forKey:MS_LOG_MESSAGEID];
-	return LogDictionary;
+	
+	NSString * messageID = (NSString * )CFUUIDCreateString(nil, CFUUIDCreate(nil));//このメッセージのIDを出力(あとでID認識するため)
+	
+	
+	NSDictionary * newLogDictionary;//ログ内容を初期化する
+	newLogDictionary = [NSDictionary dictionaryWithObject:messageID forKey:MS_LOG_MESSAGEID];
+	
+	//ストアに保存する
+	[self saveToLogStore:@"createLogForNew",
+	 [self tag:MS_LOG_MESSAGEID val:messageID],
+	 nil];
+	
+	return newLogDictionary;
 }
+
+
 
 /**
  受け取り時のログ書き込み
  
  受信したメッセージからログを受け取り、
- ログの末尾に含まれているメッセージIDでもって、過去に受け取ったことがあるかどうか判定、
+ ログの末尾に含まれているメッセージIDでもって、過去に受け取ったことがあるかどうか判定(未実装)、
  ログストアに保存する。
  */
-- (void) saveLogForReceived:(NSDictionary * )logDict {
+- (void) saveLogForReceived:(NSDictionary * ) recievedLogDict {
 	//ログタイプ、タイムスタンプを作成
+	NSString * messageID = (NSString * ) [recievedLogDict valueForKey:MS_LOG_MESSAGEID];
 	
+	NSLog(@"saveLogForReceived_messageID_%@, name_%@", messageID, [self getMyName]);
+	
+	NSLog(@"受け取り");
 	//ストアに保存する
-	[logDict setValue:@"仮のmessageID" forKey:MS_LOG_MESSAGEID];
+	[self saveToLogStore:@"saveLogForReceived",
+	 [self tag:MS_LOG_MESSAGEID val:messageID],
+	 nil];
+	NSLog(@"受け完了");
 }
 
 /**
@@ -503,7 +519,6 @@
  */
 - (NSDictionary * ) createLogForReply {
 	//ログタイプ、タイムスタンプを作成
-
 	[logDict setValue:@"仮のmessageID" forKey:MS_LOG_MESSAGEID];
 	
 	return logDict;
@@ -512,7 +527,7 @@
 /**
  観察用にこのmessengerに書かれているログを取得するメソッド
  */
-- (NSDictionary * ) getLog {
+- (NSDictionary * ) getLogStore {
 	
 	//ストアの全容量を取り出す
 		
@@ -520,6 +535,42 @@
 }
 
 
+/**
+ 可変長ログストア入力
+ アウトプットは後で考えよう。
+ */
+- (void) saveToLogStore:(NSString * )name, ... {
+	
+	va_list ap;
+	id kvDict;
+	NSLog(@"ココまで来てるが");
+	NSLog(@"saveToLogStore_%@, myName_%@, logDict_%@", name, [self getMyName], logDict);
+	NSLog(@"通過してはいない");
+	
+	va_start(ap, name);
+	kvDict = va_arg(ap, id);
+	
+	int i = 0;
+	
+	
+	while (kvDict) {
+//		NSLog(@"ココに来てる_kvDict_%@", kvDict);
+		
+		for (id key in kvDict) {
+//			NSLog(@"[kvDict valueForKey:key]_%@, key_%@", [kvDict valueForKey:key], key);
+			
+			//この行のNSDateでエラーを出すことがある。どこを間違えてる？
+			[logDict setValue:[NSString stringWithFormat:@"%@ %d %@",name, i, [kvDict valueForKey:key]] forKey:
+			 [NSString stringWithFormat:@"%@ %@",[self getUUID], [NSDate date]]];//データオブジェクトだから、IDで精査できる訳だ。同じ時間であっても、ポインタが異なるので問題ない。
+			
+			i++;
+		}
+		
+		kvDict = va_arg(ap, id);
+	}
+	va_end(ap);
+	NSLog(@"通過してはいない2");
+}
 
 
 
@@ -563,6 +614,13 @@
 	return -1;
 }
 
+
+/**
+ UUIDを作成して返すメソッド
+ */
+- (NSString * ) getUUID {
+	return (NSString * )CFUUIDCreateString(nil, CFUUIDCreate(nil));
+}
 
 
 
@@ -612,7 +670,7 @@
  自分のMSIDを初期化するメソッド
  */
 - (void)initMyMSID {
-	myMSID = (NSString * )CFUUIDCreateString(nil, CFUUIDCreate(nil));
+	myMSID = [self getUUID];
 }
 /**
  自分のMSIDを返すメソッド
@@ -639,8 +697,13 @@
 
 /**
  自分から見た親のMSIDをセットするメソッド
+ 外部から呼ばれるようにセットされている。
+ 自分から呼ぶ事は無い。
  */
 - (void) setMyParentMSID:(NSString * )parentMSID {
+	[self saveToLogStore:@"setMyParentMSID",
+	 [self tag:MS_LOG_LOGTYPE_GOTP val:[self getMyParentName]],
+	 nil];
 	myParentMSID = parentMSID;
 }
 /**

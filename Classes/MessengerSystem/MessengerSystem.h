@@ -43,8 +43,9 @@
 #define MS_LOG_LOGTYPE_NEW	(@"MESSENGER_SYSTEM_COMMAND:LOGGED_TYPE_NEW")//メッセージ作成時に設定される記録タイプに類するキー
 #define MS_LOG_LOGTYPE_REC	(@"MESSENGER_SYSTEM_COMMAND:LOGGED_TYPE_RECEIVED")//メッセージ受取時に設定される記録タイプに類するキー
 #define MS_LOG_LOGTYPE_REP	(@"MESSENGER_SYSTEM_COMMAND:LOGGED_TYPE_REPLIED")//メッセージ返送時に設定される記録タイプに類するキー
-#define MS_LOG_TIMESTAMP	(@"MESSENGER_SYSTEM_COMMAND:LOGGED_TIMESTAMP")//タイムスタンプに類するキー
+#define MS_LOG_LOGTYPE_GOTP	(@"MESSENGER_SYSTEM_COMMAND:LOGGED_TYPE_GOTPARENT")//親決定時に設定される記録タイプに類するキー
 
+#define MS_LOG_TIMESTAMP	(@"MESSENGER_SYSTEM_COMMAND:LOGGED_TIMESTAMP")//タイムスタンプに類するキー
 
 
 
@@ -129,14 +130,25 @@
 - (NSDictionary * ) createLogForNew;//メッセージ初期作成ログを内部に保存する/返すメソッド
 - (void) saveLogForReceived:(NSDictionary * )logDict;//受信時に付与するログを内部に保存するメソッド
 - (NSDictionary * ) createLogForReply;//返答送信時に付与するログを内部に保存する/返すメソッド
-- (NSDictionary * ) getLog;//保存されたログ一覧を取得するメソッド
 
+
+/**
+ ログストア
+ */
+- (void) saveToLogStore:(NSString * )name, ...;
+- (NSDictionary * ) getLogStore;//保存されたログ一覧を取得するメソッド
 
 
 /**
  ストリングの数値化
  */
 - (int) changeStrToNumber:(NSString * )str;
+
+
+/**
+ UUIDを返すメソッド
+ */
+- (NSString * ) getUUID;
 
 
 - (void) setMyBodyID:(id)bodyID;
