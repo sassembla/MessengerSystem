@@ -371,7 +371,7 @@
 		}
 	}
 	
-	//NSAssert1(false, @"callメソッドに指定したmessenger名称が存在しないか、未知のものです。本messengerを親とした設定を行うよう、子から親を指定してください。_%@",name);
+	NSAssert1(false, @"callメソッドに指定したmessengerが存在しないか、未知のものです。本messengerを親とした設定を行うよう、子から親を指定してください。_%@",name);
 }
 
 
@@ -499,14 +499,10 @@
 	//ログタイプ、タイムスタンプを作成
 	NSString * messageID = (NSString * ) [recievedLogDict valueForKey:MS_LOG_MESSAGEID];
 	
-	NSLog(@"saveLogForReceived_messageID_%@, name_%@", messageID, [self getMyName]);
-	
-	NSLog(@"受け取り");
 	//ストアに保存する
 	[self saveToLogStore:@"saveLogForReceived",
 	 [self tag:MS_LOG_MESSAGEID val:messageID],
 	 nil];
-	NSLog(@"受け完了");
 }
 
 /**
@@ -543,9 +539,7 @@
 	
 	va_list ap;
 	id kvDict;
-	NSLog(@"ココまで来てるが");
-	NSLog(@"saveToLogStore_%@, myName_%@, logDict_%@", name, [self getMyName], logDict);
-	NSLog(@"通過してはいない");
+	
 	
 	va_start(ap, name);
 	kvDict = va_arg(ap, id);
@@ -559,7 +553,6 @@
 		for (id key in kvDict) {
 //			NSLog(@"[kvDict valueForKey:key]_%@, key_%@", [kvDict valueForKey:key], key);
 			
-			//この行のNSDateでエラーを出すことがある。どこを間違えてる？
 			[logDict setValue:[NSString stringWithFormat:@"%@ %d %@",name, i, [kvDict valueForKey:key]] forKey:
 			 [NSString stringWithFormat:@"%@ %@",[self getUUID], [NSDate date]]];//データオブジェクトだから、IDで精査できる訳だ。同じ時間であっても、ポインタが異なるので問題ない。
 			
@@ -569,7 +562,6 @@
 		kvDict = va_arg(ap, id);
 	}
 	va_end(ap);
-	NSLog(@"通過してはいない2");
 }
 
 

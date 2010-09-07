@@ -13,7 +13,7 @@
 #import "MessengerSystem.h"
 
 
-#define TEST_PARENT_NAME (@"parentName")
+#define TEST_PARENT_NAME (@"parent_0")
 #define TEST_CHILD_NAME_0 (@"child_0")
 #define TEST_CHILD_NAME_1 (@"child_1")
 
@@ -229,21 +229,31 @@
 	
 	MessengerSystem * child_1 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(testChild:) withName:TEST_CHILD_NAME_1];
 	
-	[parent call:TEST_CHILD_NAME_1 withExec:TEST_EXEC, nil];
+	//[parent call:TEST_CHILD_NAME_1 withExec:TEST_EXEC, nil];
 	
 	NSDictionary * parentLogDict = [parent getLogStore];//親の辞書には、子供Aからの通信で1件、存在しない子供Bへの最初の書き込みで0件 1
 	STAssertTrue([parentLogDict count] == 1, [NSString stringWithFormat:@"親の内容1_内容が合致しません_%d", [parentLogDict count]]);
 	
 	
 	[child_1 inputToMyParentWithName:TEST_PARENT_NAME];//発信、親認定で+2件
+		
+	NSDictionary * child_1Dict = [child_1 getLogStore];
+	STAssertTrue([child_1Dict count] == 2, [NSString stringWithFormat:@"子の内容1_内容が合致しません_%d", [child_1Dict count]]);
+	
 	
 	//親の辞書には、子供Bからの通信で１件　+1 2
-	STAssertTrue([parentLogDict count] == 2, [NSString stringWithFormat:@"親の内容1_内容が合致しません_%d", [parentLogDict count]]);
+	STAssertTrue([parentLogDict count] == 2, [NSString stringWithFormat:@"親の内容2_内容が合致しません_%d", [parentLogDict count]]);
 	
-	
+	//親から子に、送信してみる。Assertが発生していない事を見るに、別の問題なのか？と思うが。
 	[parent call:TEST_CHILD_NAME_1 withExec:TEST_EXEC_2, nil];//子供Bへの通信で１件 +1 3
-//	STAssertTrue([parentLogDict count] == 3, [NSString stringWithFormat:@"親の内容1_内容が合致しません_%d", [parentLogDict count]]);
-//	[child_1 release];
+	STAssertTrue([parentLogDict count] == 4, [NSString stringWithFormat:@"親の内容3_内容が合致しません_%d", [parentLogDict count]]);
+
+	
+	
+	
+	
+	
+	[child_1 release];
 	
 //	//親の辞書には、子供からの通信で1件、子供への最初の書き込みで0件、子供への２回目の書き込みで0件 1
 //	NSDictionary * parentLogDict = [parent getLogStore];

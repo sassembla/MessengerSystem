@@ -197,89 +197,7 @@
 	<key>Notifications</key>
 	<array/>
 	<key>OpenEditors</key>
-	<array>
-		<dict>
-			<key>Content</key>
-			<dict>
-				<key>PBXProjectModuleGUID</key>
-				<string>133B796D12322B4300B37FA0</string>
-				<key>PBXProjectModuleLabel</key>
-				<string>MessengerSystemTest.m</string>
-				<key>PBXSplitModuleInNavigatorKey</key>
-				<dict>
-					<key>Split0</key>
-					<dict>
-						<key>PBXProjectModuleGUID</key>
-						<string>133B796E12322B4300B37FA0</string>
-						<key>PBXProjectModuleLabel</key>
-						<string>MessengerSystemTest.m</string>
-						<key>_historyCapacity</key>
-						<integer>0</integer>
-						<key>bookmark</key>
-						<string>133B7B1512366E9A00B37FA0</string>
-						<key>history</key>
-						<array>
-							<string>133B7B0A12366E8A00B37FA0</string>
-						</array>
-					</dict>
-					<key>SplitCount</key>
-					<string>1</string>
-				</dict>
-				<key>StatusBarVisibility</key>
-				<true/>
-			</dict>
-			<key>Geometry</key>
-			<dict>
-				<key>Frame</key>
-				<string>{{0, 20}, {972, 660}}</string>
-				<key>PBXModuleWindowStatusBarHidden2</key>
-				<false/>
-				<key>RubberWindowFrame</key>
-				<string>146 60 972 701 0 0 1280 778 </string>
-			</dict>
-		</dict>
-		<dict>
-			<key>Content</key>
-			<dict>
-				<key>PBXProjectModuleGUID</key>
-				<string>133B7A71123509F200B37FA0</string>
-				<key>PBXProjectModuleLabel</key>
-				<string>MessengerSystem.m</string>
-				<key>PBXSplitModuleInNavigatorKey</key>
-				<dict>
-					<key>Split0</key>
-					<dict>
-						<key>PBXProjectModuleGUID</key>
-						<string>133B7A72123509F200B37FA0</string>
-						<key>PBXProjectModuleLabel</key>
-						<string>MessengerSystem.m</string>
-						<key>_historyCapacity</key>
-						<integer>0</integer>
-						<key>bookmark</key>
-						<string>133B7B1612366E9A00B37FA0</string>
-						<key>history</key>
-						<array>
-							<string>133B7ADA1236695E00B37FA0</string>
-							<string>133B7B0B12366E8A00B37FA0</string>
-						</array>
-					</dict>
-					<key>SplitCount</key>
-					<string>1</string>
-				</dict>
-				<key>StatusBarVisibility</key>
-				<true/>
-			</dict>
-			<key>Geometry</key>
-			<dict>
-				<key>Frame</key>
-				<string>{{0, 20}, {972, 575}}</string>
-				<key>PBXModuleWindowStatusBarHidden2</key>
-				<false/>
-				<key>RubberWindowFrame</key>
-				<string>301 162 972 616 0 0 1280 778 </string>
-			</dict>
-		</dict>
-	</array>
+	<array/>
 	<key>PerspectiveWidths</key>
 	<array>
 		<integer>-1</integer>
@@ -400,7 +318,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>MessengerSystemTest.m</string>
+								<string>RunPlatformUnitTests.include</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -408,11 +326,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>MessengerSystemTest.m</string>
+										<string>RunPlatformUnitTests.include</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>133B7B1212366E9A00B37FA0</string>
+										<string>133B7B5A1237020400B37FA0</string>
 										<key>history</key>
 										<array>
 											<string>134553FB122A672B00E348F5</string>
@@ -420,9 +338,9 @@
 											<string>13013DE4122AF402001CF263</string>
 											<string>133B796312322B4300B37FA0</string>
 											<string>133B796412322B4300B37FA0</string>
-											<string>133B79DF12327D2200B37FA0</string>
 											<string>133B7A6E123509F200B37FA0</string>
-											<string>133B7B0912366E8A00B37FA0</string>
+											<string>133B7B21123671BB00B37FA0</string>
+											<string>133B7B22123671BB00B37FA0</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -621,9 +539,9 @@
 	<key>WindowOrderList</key>
 	<array>
 		<string>137DA941122A269600FB5497</string>
-		<string>/Users/sassembla/Desktop/TestKitTesting/TestKitTesting.xcodeproj</string>
-		<string>133B7A71123509F200B37FA0</string>
 		<string>133B796D12322B4300B37FA0</string>
+		<string>133B7A71123509F200B37FA0</string>
+		<string>/Users/sassembla/Desktop/TestKitTesting/TestKitTesting.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
 	<string>458 274 788 504 0 0 1280 778 </string>
@@ -642,12 +560,14 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string></string>
+								<string>RunPlatformUnitTests.include</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
