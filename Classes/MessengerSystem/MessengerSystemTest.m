@@ -78,6 +78,7 @@
  テスト用にたたかれるメソッド
  */
 - (void) m_testParent:(NSNotification * )notification {
+	
 }
 
 /**
@@ -227,15 +228,23 @@
 - (void) testCallToNotChild {
 	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];//発信、親認定で+2件
 	
-	MessengerSystem * child_1 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(testChild:) withName:TEST_CHILD_NAME_1];
+	MessengerSystem * child_1 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild:) withName:TEST_CHILD_NAME_1];
 	
-	//[parent call:TEST_CHILD_NAME_1 withExec:TEST_EXEC, nil];
+	//[parent call:TEST_CHILD_NAME_1 withExec:TEST_EXEC, nil];//Assertの発生対象
 	
 	NSDictionary * parentLogDict = [parent getLogStore];//親の辞書には、子供Aからの通信で1件、存在しない子供Bへの最初の書き込みで0件 1
 	STAssertTrue([parentLogDict count] == 1, [NSString stringWithFormat:@"親の内容1_内容が合致しません_%d", [parentLogDict count]]);
 	
 	
+	
+	//親の辞書を調べてみる。
+	NSDictionary * parentDict = [parent getLogStore];
+	NSLog(@"parentDict_%@", parentDict);
+	
+	
 	[child_1 inputToMyParentWithName:TEST_PARENT_NAME];//発信、親認定で+2件
+	
+	NSLog(@"parentDict2_%@", parentDict);
 		
 	NSDictionary * child_1Dict = [child_1 getLogStore];
 	STAssertTrue([child_1Dict count] == 2, [NSString stringWithFormat:@"子の内容1_内容が合致しません_%d", [child_1Dict count]]);
@@ -244,23 +253,60 @@
 	//親の辞書には、子供Bからの通信で１件　+1 2
 	STAssertTrue([parentLogDict count] == 2, [NSString stringWithFormat:@"親の内容2_内容が合致しません_%d", [parentLogDict count]]);
 	
-	//親から子に、送信してみる。Assertが発生していない事を見るに、別の問題なのか？と思うが。
+	
+	//ここまではOK、だがここから先で、どうなっているのか、、インスタンスの持たせ方を変えてみようか。テスト対象を別クラスに移動する。
+	
+	
+	
+	//親から子に、送信してみる。Assertが発生していない事を見るに、別の問題なのか？と思うが。 なんかテスト特性の問題らしい。うーむ。
 	[parent call:TEST_CHILD_NAME_1 withExec:TEST_EXEC_2, nil];//子供Bへの通信で１件 +1 3
-	STAssertTrue([parentLogDict count] == 4, [NSString stringWithFormat:@"親の内容3_内容が合致しません_%d", [parentLogDict count]]);
-
-	
-	
-	
-	
-	
-	[child_1 release];
+//	STAssertTrue([parentLogDict count] == 4, [NSString stringWithFormat:@"親の内容3_内容が合致しません_%d", [parentLogDict count]]);
+//
+//	[child_1 release];
 	
 //	//親の辞書には、子供からの通信で1件、子供への最初の書き込みで0件、子供への２回目の書き込みで0件 1
 //	NSDictionary * parentLogDict = [parent getLogStore];
 //	STAssertTrue([parentLogDict count] == 1, [NSString stringWithFormat:@"親の内容1_内容が合致しません_%d", [parentLogDict count]]);
-//	
+
 }
 
+
+/**
+ 親から子へ
+ 子供からの通信順番をいじったバージョン
+ 
+ */
+- (void) testCallToNotChild_another {
+	MessengerSystem * child_1 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild:) withName:TEST_CHILD_NAME_1];	
+	[child_1 inputToMyParentWithName:TEST_PARENT_NAME];//発信、親認定で+2件
+	//親側の辞書がおかしくなっている可能性を疑おう。
+	
+	
+	NSLog(@"anotherここまで通過");
+	
+	
+	[parent call:TEST_CHILD_NAME_1 withExec:TEST_EXEC, nil];//この部分の問題が解けない。　今のところ分かっている条件が、
+	//子供が二人要ると駄目っぽい
+	//インスタンスがローカルでもグローバルでも関係ない
+	//子供設定の有無なのか、辞書なのかは不明だが、何らか問題があるのは間違いない。
+	
+	NSLog(@"子供側の受け取り完了");
+	NSDictionary * parentLogDict = [parent getLogStore];//親の辞書には、子供Bからの通信で1件、存在する子供Bへの最初の書き込みで1件 2
+	STAssertTrue([parentLogDict count] == 2, [NSString stringWithFormat:@"親の内容1_内容が合致しません_%d", [parentLogDict count]]);
+	
+	
+	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];//発信、親認定で+2件
+	
+	NSDictionary * child_0Dict = [child_0 getLogStore];
+	STAssertTrue([child_0Dict count] == 2, [NSString stringWithFormat:@"子の内容1_内容が合致しません_%d", [child_0Dict count]]);
+	
+	
+	//親の辞書には、子供Bからの通信で１件　+1 2
+	STAssertTrue([parentLogDict count] == 2, [NSString stringWithFormat:@"親の内容2_内容が合致しません_%d", [parentLogDict count]]);
+	
+	[parent call:TEST_CHILD_NAME_0 withExec:TEST_EXEC, nil];
+	
+}
 
 /**
  子から親へ
@@ -304,7 +350,8 @@
 	MessengerSystem * child_1 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(testChild:) withName:TEST_CHILD_NAME_1];
 	[child_1 inputToMyParentWithName:TEST_PARENT_NAME];
 	
-	NSMutableDictionary * dict = [parent getChildDict];
+	
+	NSMutableDictionary * dict = [parent getChildDict];//親の辞書をチェックする
 	
 	STAssertEquals([dict valueForKey:[child_0 getMyMSID]], [child_0 getMyName], @"child_0の親登録が違った");
 	STAssertEquals([dict valueForKey:[child_1 getMyMSID]], [child_1 getMyName], @"child_1の親登録が違った");
@@ -314,7 +361,7 @@
 /**
  一人目の子供の子供
  */
-- (void) testChild_child {
+- (void) testChild_s_child {
 	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];
 	
 	MessengerSystem * child_1 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(testChild:) withName:TEST_CHILD_NAME_1];

@@ -26,12 +26,13 @@
 	//[paren inputToMyParent];
 	
 	
+	
+	[paren callMyself:@"yeah!", 
+	 [paren tag:@"one" val:@"1"],
+	 [paren tag:@"two" val:@"2"],
+	 [paren tag:@"three" val:@"3"],nil];
+	
 	coTestObject * cTest = [[coTestObject alloc] init];
-	
-	coTestObject * cTest2 = [[coTestObject alloc] init];
-//	coTestObject * cTest3 = [[coTestObject alloc] init];
-	
-	//coTestObject * cTest4 = [[coTestObject alloc] init2];
 	
 	[paren call:@"child_0" withExec:@"yeah!", 
 	 [paren tag:@"one" val:@"1"],
@@ -39,11 +40,21 @@
 	 [paren tag:@"three" val:@"3"],nil];
 	
 	
-	[paren call:@"Parentだよ" withExec:@"yeah!", 
+	coTestObject * cTest2 = [[coTestObject alloc] init2];
+//	coTestObject * cTest3 = [[coTestObject alloc] init];
+	
+	//coTestObject * cTest4 = [[coTestObject alloc] init2];
+	
+	[paren call:@"child_1" withExec:@"yeah!", 
 	 [paren tag:@"one" val:@"1"],
 	 [paren tag:@"two" val:@"2"],
 	 [paren tag:@"three" val:@"3"],nil];
 	
+	
+	[paren callMyself:@"yeah!", 
+	 [paren tag:@"one" val:@"1"],
+	 [paren tag:@"two" val:@"2"],
+	 [paren tag:@"three" val:@"3"],nil];
 	
 	
 	//[paren call:@"Parentだよ" withExec:@"yeah2!", nil];
