@@ -13,12 +13,16 @@
 		1345540C122A68A500E348F5 /* MessengerSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 134551B2122A4D0200E348F5 /* MessengerSystem.m */; };
 		13455453122A6AB400E348F5 /* coTestObject.h in Sources */ = {isa = PBXBuildFile; fileRef = 13455449122A6A0A00E348F5 /* coTestObject.h */; };
 		13455454122A6AB400E348F5 /* coTestObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 1345544A122A6A0A00E348F5 /* coTestObject.m */; };
+		13A9E8D6123D2B3200981224 /* MessengerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13AC407D123CB3E700AAF658 /* MessengerView.m */; };
+		13A9E961123D2F6800981224 /* NameList.h in Sources */ = {isa = PBXBuildFile; fileRef = 13A9E95B123D2F5800981224 /* NameList.h */; };
+		13A9EA65123D49AF00981224 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		13A9EABA123D49B900981224 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		13A9EB12123D4A1300981224 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
 		13AC407E123CB3E700AAF658 /* MessengerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13AC407D123CB3E700AAF658 /* MessengerView.m */; };
 		1D3623260D0F684500981E51 /* TestKitTestingAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* TestKitTestingAppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
-		214A3D43122E1EE200C8D6C4 /* JAProcessInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 214A3D42122E1EE200C8D6C4 /* JAProcessInfo.m */; };
 		214A3D53122E1F9E00C8D6C4 /* JAProcessInfo.h in Sources */ = {isa = PBXBuildFile; fileRef = 214A3D41122E1EE200C8D6C4 /* JAProcessInfo.h */; };
 		214A3D54122E1F9E00C8D6C4 /* JAProcessInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 214A3D42122E1EE200C8D6C4 /* JAProcessInfo.m */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
@@ -34,6 +38,7 @@
 		137DA94C122A26C700FB5497 /* TestBuncle-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TestBuncle-Info.plist"; sourceTree = "<group>"; };
 		137DA955122A26D500FB5497 /* TestBundle.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestBundle.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		137DA956122A26D500FB5497 /* TestBundle-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TestBundle-Info.plist"; sourceTree = "<group>"; };
+		13A9E95B123D2F5800981224 /* NameList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NameList.h; sourceTree = "<group>"; };
 		13AC407C123CB3E700AAF658 /* MessengerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessengerView.h; sourceTree = "<group>"; };
 		13AC407D123CB3E700AAF658 /* MessengerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessengerView.m; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -55,6 +60,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13A9EB12123D4A1300981224 /* CoreGraphics.framework in Frameworks */,
+				13A9EABA123D49B900981224 /* Foundation.framework in Frameworks */,
+				13A9EA65123D49AF00981224 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +86,7 @@
 				1D3623250D0F684500981E51 /* TestKitTestingAppDelegate.m */,
 				13455449122A6A0A00E348F5 /* coTestObject.h */,
 				1345544A122A6A0A00E348F5 /* coTestObject.m */,
+				13A9E95B123D2F5800981224 /* NameList.h */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -246,7 +255,6 @@
 			files = (
 				134551B3122A4D0200E348F5 /* MessengerSystem.m in Sources */,
 				134551B5122A4D1600E348F5 /* MessengerSystemTest.m in Sources */,
-				214A3D43122E1EE200C8D6C4 /* JAProcessInfo.m in Sources */,
 				13AC407E123CB3E700AAF658 /* MessengerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -257,8 +265,10 @@
 			files = (
 				214A3D53122E1F9E00C8D6C4 /* JAProcessInfo.h in Sources */,
 				214A3D54122E1F9E00C8D6C4 /* JAProcessInfo.m in Sources */,
+				13A9E8D6123D2B3200981224 /* MessengerView.m in Sources */,
 				13455453122A6AB400E348F5 /* coTestObject.h in Sources */,
 				13455454122A6AB400E348F5 /* coTestObject.m in Sources */,
+				13A9E961123D2F6800981224 /* NameList.h in Sources */,
 				1345540B122A68A500E348F5 /* MessengerSystem.h in Sources */,
 				1345540C122A68A500E348F5 /* MessengerSystem.m in Sources */,
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,

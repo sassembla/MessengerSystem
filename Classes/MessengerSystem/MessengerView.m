@@ -8,7 +8,6 @@
 
 #import "MessengerView.h"
 
-
 @implementation MessengerView
 //上書きしなければいけないのは、初期化メソッドと、実行時のメソッド
 
@@ -27,16 +26,19 @@
 /**
  初期化メソッド
  */
-- (id) init {
+- (id) initWithFrame:(CGRect)frame {
 	if (self = [super init]) {
-	
+		
+		messengerInterfaceView = [[UIView alloc] initWithFrame:frame];
+		
 		[self setMyName:VIEW_NAME_DEFAULT];
 		[self setMyBodyID:nil];
 		[self setMyBodySelector:nil];
 		[self initMyMSID];
 		[self initMyParentData];
 		
-		viewDict = [NSMutableDictionary dictionaryWithCapacity:1];
+		buttonDict = [NSMutableDictionary dictionaryWithCapacity:1];
+		viewListDict = [NSMutableDictionary dictionaryWithCapacity:1];
 		
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(innerPerform:) name:OBSERVER_ID object:nil];
 	}
@@ -95,7 +97,7 @@
 			return;
 		}
 		
-		//親を見つけた子供になった宣言から、関係性を記録する。
+		//[親を見つけたので子供になった宣言]から、関係性を記録する。
 		[self setMessengerInformation:senderName withMSID:senderMSID withParentName:sendersParentName withParentMSID:sendersParentMSID];
 		
 		return;
@@ -117,7 +119,7 @@
 		}
 		
 		
-		//親を解消した宣言から、関係性を削除する。
+		//[親を解消した宣言]から、関係性を削除する。
 		[self removeMessengerInformation:senderName withMSID:senderMSID withParentName:sendersParentName withParentMSID:sendersParentMSID];
 
 		return;
@@ -152,7 +154,9 @@
 	//Messengerをアイデンティファイするキーを作成
 	NSString * newKey = [self createMessengerInformation:senderName withMSID:senderMSID];
 	
-	for (id key in viewDict) {
+	
+	//既に存在している場合は無視する
+	for (id key in viewListDict) {
 		if ([key isEqualToString:newKey]) {
 			NSLog(@"既に含まれている");
 			
@@ -162,7 +166,29 @@
 		}
 	}
 	
-	[viewDict setValue:[self createMessengerInformation:sendersParentName withMSID:sendersParentMSID] forKey:newKey];	
+	
+	/*
+	 UIButtonTypeCustom = 0,
+	 UIButtonTypeRoundedRect,
+	 UIButtonTypeDetailDisclosure,
+	 UIButtonTypeInfoLight,
+	 UIButtonTypeInfoDark,
+	 UIButtonTypeContactAdd,
+	 */
+	
+	//ビュー、辞書に要素を加える
+	
+	UIButton * newButton = [[UIButton alloc] init];//[UIButton buttonWithType:UIButtonTypeDetailDisclosure];//リソースが取り込めないから出る問題だと見ている。
+	[newButton setHidden:FALSE];
+	
+	[newButton setFrame:CGRectMake(0, 120, 100,100)];//newButton.frame.size.width, newButton.frame.size.height)];
+	
+	[newButton setBackgroundColor:[UIColor grayColor]];//一応範囲付け、かなあ。
+	
+	[buttonDict setValue:newButton forKey:newKey];
+	[viewListDict setValue:[self createMessengerInformation:sendersParentName withMSID:sendersParentMSID] forKey:newKey];
+
+	[messengerInterfaceView addSubview:newButton];//ビューに加える
 }
 /**
  通信してきた対象の情報を削除する
@@ -176,7 +202,10 @@
 	//Messengerをアイデンティファイするキーを作成
 	NSString * removeKey = [self createMessengerInformation:senderName withMSID:senderMSID];
 	
-	[viewDict removeObjectForKey:removeKey];	
+	[[buttonDict valueForKey:removeKey] removeFromSuperview];//ビューから外す
+	
+	[buttonDict removeObjectForKey:removeKey];
+	[viewListDict removeObjectForKey:removeKey];
 }
 
 /**
@@ -187,12 +216,18 @@
 }
 
 
+/**
+ ボタン用の辞書を取得する
+ */
+- (NSMutableDictionary * ) getButtonDictionary {
+	return buttonDict;
+}
 
 /**
  View用の辞書を取得する
  */
 - (NSMutableDictionary * ) getViewDictionary {
-	return viewDict;
+	return viewListDict;
 }
 
 

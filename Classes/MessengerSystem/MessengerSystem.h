@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 
 
+//#define NSLog( m, args... )
+
+
 #define MESSENGER_SYSTEM_VERSION (20100829)
 
 //Objective-C id情報
@@ -38,7 +41,7 @@
 #define MS_PARENTMSID	(@"MESSENGER_SYSTEM_COMMAND:PARENT_MSID")//親の固有IDに類するキー
 
 //遠隔メソッド実行に関するタグ
-#define MS_RETURN		(@"MESSENGER_SYSTEM_COMMAND:RETURN")//フック実行メソッドの指定オプションに類するキー
+#define MS_RETURN		(@"MESSENGER_SYSTEM_COMMAND:RETURN")//フック実行メソッドの指定オプションに類するキー 未実装
 
 
 

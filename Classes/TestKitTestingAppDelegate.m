@@ -8,7 +8,12 @@
 
 #import "TestKitTestingAppDelegate.h"
 #import "MessengerSystem.h"
+#import "MessengerView.h"
+
 #import "coTestObject.h"
+
+
+#import "NameList.h"//適当な名称一致用リスト
 
 @implementation TestKitTestingAppDelegate
 
@@ -21,23 +26,30 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
    // coTestObject * cTest = [[coTestObject alloc] init];
 	
-	MessengerSystem * paren = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:@"Parentだよ"];
+	MessengerView * view = [[MessengerView alloc] initWithFrame:window.frame];
+	
+	UIViewController * vController = [[UIViewController alloc] init];//うーん、オーバーライド無しには回転するように出来ない、ってのはちと、、
+	
+	[window addSubview:[view getMessengerInterfaceView]];
+	
+	
+	MessengerSystem * paren = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:PARENTNAME];
 //	NSLog(@"paren_%@", [paren getMyMSID]);
 	//[paren inputToMyParent];
 	
 	
 	
-	[paren callMyself:@"yeah!", 
+	[paren callMyself:COMMAND_YEAH, 
 	 [paren tag:@"one" val:@"1"],
 	 [paren tag:@"two" val:@"2"],
 	 [paren tag:@"three" val:@"3"],nil];
 	
 	coTestObject * cTest = [[coTestObject alloc] init];
 	
-	[paren call:@"child_0" withExec:@"yeah!", 
-	 [paren tag:@"one" val:@"1"],
-	 [paren tag:@"two" val:@"2"],
-	 [paren tag:@"three" val:@"3"],nil];
+//	[paren call:CHILD_1 withExec:COMMAND_YEAH, 
+//	 [paren tag:@"one" val:@"1"],
+//	 [paren tag:@"two" val:@"2"],
+//	 [paren tag:@"three" val:@"3"],nil];
 	
 	
 	coTestObject * cTest2 = [[coTestObject alloc] init2];
@@ -45,13 +57,13 @@
 	
 	//coTestObject * cTest4 = [[coTestObject alloc] init2];
 	
-	[paren call:@"child_1" withExec:@"yeah!", 
-	 [paren tag:@"one" val:@"1"],
-	 [paren tag:@"two" val:@"2"],
-	 [paren tag:@"three" val:@"3"],nil];
+//	[paren call:CHILD_1 withExec:COMMAND_OOPS, 
+//	 [paren tag:@"one" val:@"1"],
+//	 [paren tag:@"two" val:@"2"],
+//	 [paren tag:@"three" val:@"3"],nil];
 	
 	
-	[paren callMyself:@"yeah!", 
+	[paren callMyself:COMMAND_YEAH, 
 	 [paren tag:@"one" val:@"1"],
 	 [paren tag:@"two" val:@"2"],
 	 [paren tag:@"three" val:@"3"],nil];
@@ -59,6 +71,7 @@
 	
 	//[paren call:@"Parentだよ" withExec:@"yeah2!", nil];
 
+	
 	
     [window makeKeyAndVisible];
 	
@@ -68,7 +81,7 @@
 
 
 - (void)test:(NSNotification * )notification {
-	NSLog(@"到着！！！！_%@", notification);
+	NSLog(@"NSNotification到着！！！！_%@", notification);
 }
 
 

@@ -577,7 +577,24 @@
 
 
 
-
+/**
+ 文字列の数値化
+ */
+- (void) testCharToNumber {
+	NSString * str = @"A7058498-B94C-4998-A2EF-4046BCB79AA3";
+	
+	str = @"C";
+//	STAssertTrue([parent changeStrToNumber:str] == 12977804, [NSString stringWithFormat:@"異なる1_%d", [parent changeStrToNumber:str]]);
+	//
+//	str = @"A7058498-B94C-4998-A2EF-4046BCB79AA4";
+//	STAssertTrue([parent changeStrToNumber:str] == 12977836, [NSString stringWithFormat:@"異なる2_%d", [parent changeStrToNumber:str]]);
+//	
+//	str = @"A7058498-B94C-4998-A2EF-4046BCB79AA5";
+//	STAssertTrue([parent changeStrToNumber:str] == 12977868, [NSString stringWithFormat:@"異なる3_%d", [parent changeStrToNumber:str]]);
+//
+//	str = @"AAAAAAA8-B94C-4998-A2EF-4046BCB79AA5";
+//	STAssertTrue([parent changeStrToNumber:str] == 12977868, [NSString stringWithFormat:@"異なる4_%d", [parent changeStrToNumber:str]]);
+}
 
 
 /**
@@ -588,7 +605,7 @@
  子供の追加を確認
  */
 - (void) testMessengerViewAddChild {
-	MessengerView * mView = [[MessengerView alloc] init];
+	MessengerView * mView = [[MessengerView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
 	
 	
 	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];//一件成立している親子関係がある筈
@@ -596,8 +613,10 @@
 	
 	//view側で受け取れており、Dictに情報がたまっていればOK
 	NSMutableDictionary * mViewDict = [mView getViewDictionary];
-	STAssertTrue([mViewDict count] == 1, [NSString stringWithFormat:@"件数が合っていない_%d", [mViewDict count]]);
+	STAssertTrue([mViewDict count] == 1, [NSString stringWithFormat:@"ViewDict件数が合っていない_%d", [mViewDict count]]);
 	
+	NSMutableDictionary * mButtonDict = [mView getButtonDictionary];
+	STAssertTrue([mButtonDict count] == 1, [NSString stringWithFormat:@"ButtonDict件数が合っていない_%d", [mButtonDict count]]);
 	
 	
 	[mView release];
@@ -607,24 +626,39 @@
  子供の解消を確認
  */
 - (void) testMessengerViewRemoveChild {
-	MessengerView * mView = [[MessengerView alloc] init];
+	MessengerView * mView = [[MessengerView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
+	
 	NSMutableDictionary * mViewDict = [mView getViewDictionary];
+	NSMutableDictionary * mButtonDict = [mView getButtonDictionary];
 	
 	
 	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];//一件成立している親子関係がある筈
-	
+	STAssertTrue([mViewDict count] == 1, [NSString stringWithFormat:@"ViewDict件数が合っていない_%d", [mViewDict count]]);
+	STAssertTrue([mButtonDict count] == 1, [NSString stringWithFormat:@"ButtonDict件数が合っていない_%d", [mButtonDict count]]);
+
 	[child_0 resetMyParentData];//一件成立している親子関係を破壊
 	
 	//この時点で親ラインが消えている筈
-	STAssertTrue([mViewDict count] == 0, [NSString stringWithFormat:@"件数が合っていない_%d", [mViewDict count]]);
-	
+	STAssertTrue([mViewDict count] == 0, [NSString stringWithFormat:@"ViewDict件数が合っていない_%d", [mViewDict count]]);
+	STAssertTrue([mButtonDict count] == 0, [NSString stringWithFormat:@"ButtonDict件数が合っていない_%d", [mButtonDict count]]);
+
 	[child_0 inputToMyParentWithName:[parent2 getMyName]];//一件成立している親子関係がある筈
 	
 	//この時点で親ラインが出ている筈
-	STAssertTrue([mViewDict count] == 1, [NSString stringWithFormat:@"件数が合っていない_%d", [mViewDict count]]);
-	
+	STAssertTrue([mViewDict count] == 1, [NSString stringWithFormat:@"ViewDict件数が合っていない_%d", [mViewDict count]]);
+	STAssertTrue([mButtonDict count] == 1, [NSString stringWithFormat:@"ButtonDict件数が合っていない_%d", [mButtonDict count]]);
+
 	[mView release];
 }
+
+/**
+ あと、テストできる要素は、グラフィカルな物かなあ。
+ ボタンを追加する、消す、
+ ボタンからラインを引く
+ ボタンの名称、形状とかを見たいね。
+ とりあえずインスタンスをリスト化してもつところからスタートかしら。
+ */
+
 
 
 

@@ -49,7 +49,7 @@
 	NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:8];
 	
 	[dict setValue:MS_CATEGOLY_PARENTSEARCH forKey:MS_CATEGOLY];
-	[dict setValue:[self getMyName] forKey:MS_ADDRESS_NAME];
+	[dict setValue:[self getMyParentName] forKey:MS_ADDRESS_NAME];
 
 	[dict setValue:[self getMyParentName] forKey:MS_PARENTNAME];
 	
@@ -129,7 +129,6 @@
  自分宛のメッセージでなければ無視する
  */
 - (void) innerPerform:(NSNotification * )notification {
-//	NSLog(@"myName_%@	self_%@	notification_%@",myName, self, notification);
 	
 	NSMutableDictionary * dict = (NSMutableDictionary *)[notification userInfo];
 	
@@ -138,14 +137,14 @@
 	//コマンド名について確認
 	NSString * commandName = [dict valueForKey:MS_CATEGOLY];
 	if (!commandName) {
-//		NSLog(@"コマンドが無いため、何の処理も行われずに帰る");
+		NSLog(@"コマンドが無いため、何の処理も行われずに帰る");
 		return;
 	}
 	
 	//送信者名
 	NSString * senderName = [dict valueForKey:MS_SENDERNAME];
 	if (!senderName) {//送信者不詳であれば無視する
-//		NSLog(@"送信者NAME不詳");
+		NSLog(@"送信者NAME不詳");
 		return;
 	}
 	
@@ -153,7 +152,7 @@
 	//送信者MSID
 	NSString * senderMSID = [dict valueForKey:MS_SENDERMSID];
 	if (!senderMSID) {//送信者不詳であれば無視する
-//		NSLog(@"送信者ID不詳");
+		NSLog(@"送信者ID不詳");
 		return;
 	}
 	
@@ -161,7 +160,7 @@
 	//宛名確認
 	NSString * address = [dict valueForKey:MS_ADDRESS_NAME];
 	if (!address) {
-//		NSLog(@"宛名が無い_%@", commandName);
+		NSLog(@"宛名が無い_%@", commandName);
 		return;
 	}
 	
@@ -169,7 +168,7 @@
 	//ログ関連
 	NSDictionary * recievedLogDict = [dict valueForKey:MS_LOGDICTIONARY];
 	if (!recievedLogDict) {
-//		NSLog(@"ログが無いので受け付けない_%@", commandName);
+		NSLog(@"ログが無いので受け付けない_%@", commandName);
 		return;
 	} else {
 		//メッセージIDについて確認
@@ -187,10 +186,13 @@
 	
 	
 	if ([commandName isEqualToString:MS_CATEGOLY_LOCAL]) {
-		NSLog(@"自分自身を召還中");
+//		if (![address isEqualToString:[self getMyName]]) {//送信者の指定した宛先が自分か
+//			NSLog(@"MS_CATEGOLY_LOCAL_宛先ではないMessnegerが受け取った");
+//			return;
+//		}
 		
 		if (![senderName isEqualToString:[self getMyName]]) {
-			NSLog(@"名称が違う");
+			NSLog(@"MS_CATEGOLY_LOCAL 名称が違う_%@", [self getMyName]);
 			return;
 		}
 		
@@ -219,7 +221,7 @@
 	if ([commandName isEqualToString:MS_CATEGOLY_CALLCHILD]) {
 		//宛名が自分の事でなかったら帰る
 		if (![address isEqualToString:[self getMyName]]) {
-//			NSLog(@"自分宛ではないので却下_From_%@,	To_%@,	Iam_%@", senderName, address, [self getMyName]);
+			NSLog(@"自分宛ではないので却下_From_%@,	To_%@,	Iam_%@", senderName, address, [self getMyName]);
 			return;
 		}
 		
@@ -253,7 +255,7 @@
 	if ([commandName isEqualToString:MS_CATEGOLY_CALLPARENT]) {//親に送られたメッセージ
 		
 		if (![address isEqualToString:[self getMyName]]) {//送信者の指定した宛先が自分か
-			NSLog(@"宛先ではないMessnegerが受け取った");
+			NSLog(@"MS_CATEGOLY_CALLPARENT_宛先ではないMessnegerが受け取った");
 			return;
 		}
 		
@@ -292,17 +294,23 @@
 	
 	//親探索のサーチが届いた
 	if ([commandName isEqualToString:MS_CATEGOLY_PARENTSEARCH]) {
-		//		NSLog(@"サーチへの受け取り完了");
+		
+		//自分宛かどうか、先ず名前で判断
+		if (![address isEqualToString:[self getMyName]]) {
+			NSLog(@"MS_CATEGOLY_PARENTSEARCHのアドレスcheck");
+			return;
+		}
+		
 		//送信者が自分であれば無視する 自分から自分へのメッセージの無視
 		if ([[recievedLogDict valueForKey:MS_SENDERMSID] isEqualToString:[self getMyMSID]]) {
-			//			NSLog(@"自分が送信者なので無視する_%@", [self getMyMSID]);
+			NSLog(@"自分が送信者なので無視する_%@", [self getMyMSID]);
 			return;
 		}
 		
 		
 		NSString * calledParentName = [dict valueForKey:MS_PARENTNAME];
 		if (!calledParentName) {
-			//			NSLog(@"親の名称に入力が無ければ無視！");
+			NSLog(@"親の名称に入力が無ければ無視！");
 			return;//値が無ければ無視する
 		}
 		
@@ -328,10 +336,10 @@
 			[self saveLogForReceived:recievedLogDict];
 			
 			
-			//			NSLog(@"自分に対して子供から親になる宣言をされた、辞書作成直前");
+			NSLog(@"自分に対して子供から親になる宣言をされた、辞書作成直前");
 			//親が居ないと子が生まれない構造。 senderMSIDをキーとし、子供辞書を作る。
 			[self setChildDictChildNameAsValue:senderName withMSIDAsKey:senderMSID];
-			//			NSLog(@"辞書作成まで完了");
+			NSLog(@"辞書作成まで完了");
 			
 			
 			
@@ -364,7 +372,7 @@
 		
 		
 		//自分宛ではない
-		//		NSLog(@"自分宛ではないので、無視する_%@	called%@", myName, calledParentName);
+		NSLog(@"自分宛ではないので、無視する_%@	called%@", myName, calledParentName);
 		return;
 	}
 	
@@ -749,40 +757,15 @@
 
 /**
  文字列の数値化
- 文字列を分解するとき、あるルールに乗っ取って数値化ができる
- 
- のだが、同じ数字なのに振れ幅が凄くでかいぞ。
- 数値化自体は問題ないと思うのだけれど。
- 
- ポインタかなあ。
- この機能は使えない。
- 行頭にアルファベットをつける事で強制的に変化させられるが、それだと安定しない。
- 
- →NSStringだと、安定するようだ。
- っていうか一定だし。無理。
- 
  */
 - (int) changeStrToNumber:(NSString * )str {
+//	NSLog(@"str_%d", str);
 	
-	//NSLog(@"changeStrToNumber/str_%@", str);
+	char *myCString = "This is a string.";
+	NSValue *theValue = [NSValue value:&myCString withObjCType:@encode(char **)];
 	
-//	char  tokenstring[] = "6C57C707-EDE5-4CCB-9211-975EDCBEA470";//6
-//	char  tokenstring[] = "5D921305-EAB6-48A5-BF39-F233634D39EB";//5
-//	char  tokenstring[] = "AC57C707-EDE5-4CCB-9211-975EDCBEA470";//5404244
-//	char  tokenstring[] = "AC57C707-EDE5-4CCB-9211-9AAAAAAAAAA0";//13956720	//なぜ変化する？ メモリかなにかに依存してるっぽいな。。
-	char  tokenstring[] = "AC57C707-EDE5-4CCB-9211-9AAAAAAAAAA0";//13834016
-
-//	NSString * tokenstring = @"AC57C707-EDE5-4CCB-9211-9AAAAAAAAAA0";//-1073775176
-//	NSString * tokenstring = @"asaAC57C707ndflkhaiosdfAAAAA0";//
-
-//	NSInteger * i;
-	int i;
-	sscanf(tokenstring, "%d", &i);//INT値に変換する(大文字小文字、数字全て)
-	
-	NSLog(@"Integer:  = %d", i );
-	//NSAssert1(false,@"integer____%d\n",i);
-	
-	return -1;
+	NSLog(@"theValue_%@", theValue);
+	return -1;//[str cString];
 }
 
 

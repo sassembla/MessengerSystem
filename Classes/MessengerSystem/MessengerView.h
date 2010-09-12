@@ -8,19 +8,22 @@
 
 #import <Foundation/Foundation.h>
 #import "MessengerSystem.h"
+
 #import <UIKit/UIKit.h>
 
 @interface MessengerView : MessengerSystem {
 	//追加するインスタンス
 	
 	//通信者記録用の辞書
-	NSMutableDictionary * viewDict;
+	NSMutableDictionary * viewListDict;//ビュー自体が持つMessengerの辞書
+	NSMutableDictionary * buttonDict;//ボタン辞書
+	
 	UIView * messengerInterfaceView;//ボタン、ラインをセットするビュー
 	
 }
 //初期化
 - (id) initWithBodyID:(id)body_id withSelector:(SEL)body_selector withName:(NSString * )name;//オーバーライド、アサートを架けて使用禁止
-- (id) init;//初期化メソッド
+- (id) initWithFrame:(CGRect)frame;//初期化メソッド
 
 /**
  通信してきた対象の情報をviewDictへと保持しておくメソッド
@@ -42,8 +45,9 @@
 - (NSString * ) createMessengerInformation:(NSString * )name withMSID:(NSString * )MSID;
 
 /**
- 辞書を渡す
+ ボタン、Messengerのリスト辞書を渡す
  */
+- (NSMutableDictionary * ) getButtonDictionary;
 - (NSMutableDictionary * ) getViewDictionary;
 
 /**

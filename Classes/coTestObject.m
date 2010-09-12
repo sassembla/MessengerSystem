@@ -7,13 +7,14 @@
 //
 
 #import "coTestObject.h"
+#import "NameList.h"
 
 
 @implementation coTestObject
 - (id) init {
 	if (self = [super init]) {
-		messenger = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:@"child_0"];
-		[messenger inputToMyParentWithName:@"Parentだよ"];
+		messenger = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:CHILD_1];
+		[messenger inputToMyParentWithName:PARENTNAME];
 	}
 	return self;
 }
@@ -21,8 +22,8 @@
 
 - (id) init2 {
 	if (self = [super init]) {
-		messenger = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:@"child_1"];
-		[messenger inputToMyParentWithName:@"Parentだよ"];
+		messenger = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:CHILD_2];
+		[messenger inputToMyParentWithName:PARENTNAME];
 	}
 	return self;
 }
@@ -33,8 +34,6 @@
 	NSLog(@"test_notification_%@",notification);
 	
 	//あとは好きにして！
-	
-	
 }
 
 
