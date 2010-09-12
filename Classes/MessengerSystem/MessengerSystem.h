@@ -17,14 +17,19 @@
 
 //カテゴリ系タグ メッセージの種類を用途ごとに分ける
 #define MS_CATEGOLY	(@"MESSENGER_SYSTEM_COMMAND")//コマンドに類するキー
-	#define MS_CATEGOLY_CALL			(@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_CALLED")//呼び出し
+	#define MS_CATEGOLY_LOCAL			(@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_LOCAL")//自分呼び出し
+	#define MS_CATEGOLY_CALLCHILD		(@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_CALL_CHILD")//子供呼び出し
+	#define	MS_CATEGOLY_CALLPARENT		(@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_CALL_PARENT")//親呼び出し
 	#define MS_CATEGOLY_PARENTSEARCH	(@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_PARENTSEARCH")//親探索
+	#define MS_CATEGOLY_GOTPARENT		(@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_GOT_PARENT")//親取得完了
+	#define MS_CATEGOLY_PARENTREMOVE	(@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_PARENTREMOVE")//親の登録を消す
 
 #define MS_SENDERNAME	(@"MESSENGER_SYSTEM_COMMAND:LOGGED_SENDER_NAME")//自分の名前に類するキー
 #define MS_SENDERMSID	(@"MESSENGER_SYSTEM_COMMAND:LOGGED_SENDER_MSID")//自分固有のMSIDに類するキー
 
 //実行内容に関するタグ
-#define MS_ADDRESS		(@"MESSENGER_SYSTEM_COMMAND:ADDRESS")//宛先
+#define MS_ADDRESS_NAME	(@"MESSENGER_SYSTEM_COMMAND:ADDRESS_NAME")//宛先名
+#define MS_ADDRESS_MSID	(@"MESSENGER_SYSTEM_COMMAND:ADDRESS_MSID")//宛先MSID
 #define MS_EXECUTE		(@"MESSENGER_SYSTEM_COMMAND:EXECUTE")//実行内容名
 
 
@@ -46,6 +51,12 @@
 #define MS_LOG_LOGTYPE_GOTP	(@"MESSENGER_SYSTEM_COMMAND:LOGGED_TYPE_GOTPARENT")//親決定時に設定される記録タイプに類するキー
 
 #define MS_LOG_TIMESTAMP	(@"MESSENGER_SYSTEM_COMMAND:LOGGED_TIMESTAMP")//タイムスタンプに類するキー
+
+
+//初期化内容
+#define PARENTNAME_DEFAULT	(@"MESSENGER_SYSTEM_COMMAND:PARENTNAME_DEFAULT")//デフォルトのmyParentName
+#define PARENTMSID_DEFAULT	(@"MESSENGER_SYSTEM_COMMAND:PARENTMSID_DEFAULT")//デフォルトのmyParentMSID
+#define VIEW_NAME_DEFAULT	(@"MESSENGER_SYSTEM_COMMAND:VIEW_NAME_DEFAULT")//デフォルトのViewのName
 
 
 
@@ -94,11 +105,16 @@
  */
 - (id) initWithBodyID:(id)body_id withSelector:(SEL)body_selector withName:(NSString * )name;
 
+
 /**
  内部実行メソッド
  */
-- (void) innerPerform:(NSNotification * )notification;//内部実装メソッド、システムな動作とbodyへのメソッド伝達を行う。
 - (void) inputToMyParentWithName:(NSString * )parent;//親への登録メソッド
+- (void) decidedParentName:(NSString * )parentName withParentMSID:(NSString * )parentMSID;//親への登録完了時の声明発行メソッド
+- (void) removeMyParentData;//親情報を初期化する通信を行うメソッド
+
+
+- (void) innerPerform:(NSNotification * )notification;//内部実装メソッド、システムな動作とbodyへのメソッド伝達を行う。
 
 - (void) callMyself:(NSString * )exec, ...;
 - (void) call:(NSString * )name withExec:(NSString * )exec, ...;//特定の子への通信用メソッド
@@ -115,6 +131,7 @@
  子供辞書に子供のmyName,myMSIDを保存する
  */
 - (void) setChildDictChildNameAsValue:(NSString * )senderName withMSIDAsKey:(NSString * )senderMSID;
+- (void) removeChildDictChildNameAsValue:(NSString * )senderName withMSIDAsKey:(NSString * )senderMSID;
 - (NSMutableDictionary * ) getChildDict;
 
 
@@ -151,6 +168,11 @@
 - (NSString * ) getUUID;
 
 
+
+/**
+ クラスが持つ値の
+ ゲッター、セッター、イニシャライザ
+ */
 - (void) setMyBodyID:(id)bodyID;
 - (id) getMyBodyID;
 
@@ -163,6 +185,9 @@
 - (void)initMyMSID;
 - (NSString * )getMyMSID;
 
+
+- (void) initMyParentData;
+- (void) resetMyParentData;
 - (void) setMyParentName:(NSString * )parent;
 - (NSString * )getMyParentName;
 

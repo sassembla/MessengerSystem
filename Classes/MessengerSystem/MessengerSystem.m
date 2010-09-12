@@ -22,6 +22,7 @@
 		[self setMyBodyID:body_id];
 		[self setMyBodySelector:body_selector];
 		[self initMyMSID];
+		[self initMyParentData];
 		
 		childDict = [NSMutableDictionary dictionaryWithCapacity:1];
 		logDict = [NSMutableDictionary dictionaryWithCapacity:1];
@@ -33,22 +34,22 @@
 }
 
 
-
 /**
  親へと自分が子供である事の通知を行い、返り値として親のMSIDを受け取るメソッド
  受け取り用のメソッドの情報を親へと渡し、親からの入力をダイレクトに受ける。
  */
 - (void) inputToMyParentWithName:(NSString * )parent {
 	
+	NSAssert([[self getMyParentName] isEqualToString:PARENTNAME_DEFAULT], @"デフォルト以外の親が既にセットされています。親を再設定する場合、resetMyParentDataメソッドを実行してから親指定を行ってください。");
+	
 	//親の名前を設定
-	NSLog(@"インプットするんだぜ_%@,	now_%@", parent, [self getMyParentName]);
 	[self setMyParentName:parent];
 	
 	
 	NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:8];
 	
 	[dict setValue:MS_CATEGOLY_PARENTSEARCH forKey:MS_CATEGOLY];
-	[dict setValue:[self getMyName] forKey:MS_ADDRESS];
+	[dict setValue:[self getMyName] forKey:MS_ADDRESS_NAME];
 
 	[dict setValue:[self getMyParentName] forKey:MS_PARENTNAME];
 	
@@ -77,10 +78,48 @@
 	[self sendPerform:dict];
 	
 	
-	
-	
-	
 	NSAssert1([self getMyParentMSID], @"指定した親が存在しないようです。parentに指定している名前を確認してください_現在指定されているparentは_%@",[self getMyParentName]);
+}
+
+/**
+ 親が決定した事をお知らせする
+ 受け取っても行う処理の存在しない、宛先の無いメソッド
+ */
+- (void) decidedParentName:(NSString * )parentName withParentMSID:(NSString * )parentMSID {
+	
+	NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:5];
+	
+	[dict setValue:MS_CATEGOLY_GOTPARENT forKey:MS_CATEGOLY];
+	
+	[dict setValue:[self getMyParentName] forKey:MS_PARENTNAME];
+	[dict setValue:[self getMyParentMSID] forKey:MS_PARENTMSID];
+	
+	[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
+	[dict setValue:[self getMyMSID] forKey:MS_SENDERMSID];
+	
+	//最終送信処理
+	[self sendPerform:dict];
+}
+/**
+ 現在の親情報を削除する
+ */
+- (void) removeMyParentData {
+	NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:6];
+	
+	[dict setValue:MS_CATEGOLY_PARENTREMOVE forKey:MS_CATEGOLY];
+	
+	[dict setValue:[self getMyParentName] forKey:MS_ADDRESS_NAME];
+	[dict setValue:[self getMyParentMSID] forKey:MS_ADDRESS_MSID];
+	
+	[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
+	[dict setValue:[self getMyMSID] forKey:MS_SENDERMSID];
+	
+	//ログを作成する
+	[dict setValue:[self createLogForNew] forKey:MS_LOGDICTIONARY];
+	
+	//最終送信処理
+	[self sendPerform:dict];
+	
 }
 
 
@@ -99,14 +138,14 @@
 	//コマンド名について確認
 	NSString * commandName = [dict valueForKey:MS_CATEGOLY];
 	if (!commandName) {
-		NSLog(@"コマンドが無いため、何の処理も行われずに帰る");
+//		NSLog(@"コマンドが無いため、何の処理も行われずに帰る");
 		return;
 	}
 	
 	//送信者名
 	NSString * senderName = [dict valueForKey:MS_SENDERNAME];
 	if (!senderName) {//送信者不詳であれば無視する
-		NSLog(@"送信者NAME不詳");
+//		NSLog(@"送信者NAME不詳");
 		return;
 	}
 	
@@ -114,15 +153,15 @@
 	//送信者MSID
 	NSString * senderMSID = [dict valueForKey:MS_SENDERMSID];
 	if (!senderMSID) {//送信者不詳であれば無視する
-		NSLog(@"送信者ID不詳");
+//		NSLog(@"送信者ID不詳");
 		return;
 	}
 	
 	
 	//宛名確認
-	NSString * address = [dict valueForKey:MS_ADDRESS];
+	NSString * address = [dict valueForKey:MS_ADDRESS_NAME];
 	if (!address) {
-		NSLog(@"宛名が無い");
+//		NSLog(@"宛名が無い_%@", commandName);
 		return;
 	}
 	
@@ -130,7 +169,7 @@
 	//ログ関連
 	NSDictionary * recievedLogDict = [dict valueForKey:MS_LOGDICTIONARY];
 	if (!recievedLogDict) {
-		NSLog(@"ログが無いので受け付けない");
+//		NSLog(@"ログが無いので受け付けない_%@", commandName);
 		return;
 	} else {
 		//メッセージIDについて確認
@@ -143,23 +182,131 @@
 	
 	
 	
+	
+	//カテゴリごとの処理に移行
+	
+	
+	if ([commandName isEqualToString:MS_CATEGOLY_LOCAL]) {
+		NSLog(@"自分自身を召還中");
+		
+		if (![senderName isEqualToString:[self getMyName]]) {
+			NSLog(@"名称が違う");
+			return;
+		}
+		
+		if (![senderMSID isEqualToString:[self getMyMSID]]) {//MSIDが異なれば処理をしない
+			NSLog(@"名前が同様の異なるMSIDを持つオブジェクト");
+			return;
+		}
+		
+		
+		[self saveLogForReceived:recievedLogDict];//受信ログを実行する
+
+		//設定されたbodyのメソッドを実行
+		IMP func = [[self getMyBodyID] methodForSelector:[self getMyBodySelector]];
+		(*func)([self getMyBodyID], [self getMyBodySelector], notification);
+		
+		
+		return;
+	}
+	
+	
+	
+	
+		
+	
+	//親から子供に向けてのコールを受け取った
+	if ([commandName isEqualToString:MS_CATEGOLY_CALLCHILD]) {
+		//宛名が自分の事でなかったら帰る
+		if (![address isEqualToString:[self getMyName]]) {
+//			NSLog(@"自分宛ではないので却下_From_%@,	To_%@,	Iam_%@", senderName, address, [self getMyName]);
+			return;
+		}
+		
+		
+		//送信者の名前と受信者の名前が同一であれば、抜ける 送信側で既に除外済み
+		if ([senderName isEqualToString:[self getMyName]]) {
+			NSAssert(false, @"同名の子供はブロードキャストの対象に出来ない");
+		}
+		
+		
+		if ([senderName isEqualToString:[self getMyParentName]]) {
+			//受信時にログに受信記録を付け、保存する
+			[self saveLogForReceived:recievedLogDict];
+			
+			
+			//設定されたbodyのメソッドを実行
+			IMP func = [[self getMyBodyID] methodForSelector:[self getMyBodySelector]];
+			(*func)([self getMyBodyID], [self getMyBodySelector], notification);
+			return;
+		}
+		
+		
+		
+		//対象ではなかった
+		return;
+	}
+	
+	
+	
+	//子供から親に向けてのコールを受け取った
+	if ([commandName isEqualToString:MS_CATEGOLY_CALLPARENT]) {//親に送られたメッセージ
+		
+		if (![address isEqualToString:[self getMyName]]) {//送信者の指定した宛先が自分か
+			NSLog(@"宛先ではないMessnegerが受け取った");
+			return;
+		}
+		
+		
+		//宛先MSIDのキーがあるか
+		NSString * calledParentMSID = [dict valueForKey:MS_ADDRESS_MSID];
+		if (!calledParentMSID) {
+			NSLog(@"親のMSIDの入力が無ければ無効");
+			return;//値が無ければ無視する
+		}
+		
+		
+		//自分のMSIDと一致するか
+		if (![calledParentMSID isEqualToString:[self getMyMSID]]) {
+			NSLog(@"同名の親が存在するが、呼ばれている親と異なるため無効");
+			return;
+		}
+		
+		
+		//受信時にログに受信記録を付け、保存する
+		[self saveLogForReceived:recievedLogDict];
+		
+		//設定されたbodyのメソッドを実行
+		IMP func = [[self getMyBodyID] methodForSelector:[self getMyBodySelector]];
+		(*func)([self getMyBodyID], [self getMyBodySelector], notification);
+		
+		
+		
+		return;
+	}
+	
+	
+	
+	
+	
+	
 	//親探索のサーチが届いた
 	if ([commandName isEqualToString:MS_CATEGOLY_PARENTSEARCH]) {
-//		NSLog(@"サーチへの受け取り完了");
+		//		NSLog(@"サーチへの受け取り完了");
 		//送信者が自分であれば無視する 自分から自分へのメッセージの無視
 		if ([[recievedLogDict valueForKey:MS_SENDERMSID] isEqualToString:[self getMyMSID]]) {
-//			NSLog(@"自分が送信者なので無視する_%@", [self getMyMSID]);
+			//			NSLog(@"自分が送信者なので無視する_%@", [self getMyMSID]);
 			return;
 		}
 		
 		
 		NSString * calledParentName = [dict valueForKey:MS_PARENTNAME];
 		if (!calledParentName) {
-//			NSLog(@"親の名称に入力が無ければ無視！");
+			//			NSLog(@"親の名称に入力が無ければ無視！");
 			return;//値が無ければ無視する
 		}
 		
-//		NSLog(@"自分以外の誰かが、自分をparentとして設定して通信してきている。_%@", calledParentName);
+		//		NSLog(@"自分以外の誰かが、自分をparentとして設定しようと通信してきている。_%@", calledParentName);
 		if ([calledParentName isEqualToString:[self getMyName]]) {//それが自分だったら
 			
 			id senderID = [dict valueForKey:MS_SENDERID];
@@ -169,14 +316,22 @@
 			}
 			
 			
+			
+			//親は先着順で設定される。既に子供が自分と同名の親にアクセスし、そのMSIDを持っている場合があり得るため、ここで子供の持っている親MSIDを確認する必要がある
+			if (![[senderID getMyParentMSID] isEqualToString:PARENTMSID_DEFAULT]) {
+				//				NSLog(@"親は先着順で既に設定されているようです");
+				return;
+			}
+			
+			
 			//受信時にログに受信記録を付け、保存する
 			[self saveLogForReceived:recievedLogDict];
 			
 			
-//			NSLog(@"自分に対して子供から親になる宣言をされた、辞書作成直前");
+			//			NSLog(@"自分に対して子供から親になる宣言をされた、辞書作成直前");
 			//親が居ないと子が生まれない構造。 senderMSIDをキーとし、子供辞書を作る。
 			[self setChildDictChildNameAsValue:senderName withMSIDAsKey:senderMSID];
-//			NSLog(@"辞書作成まで完了");
+			//			NSLog(@"辞書作成まで完了");
 			
 			
 			
@@ -191,11 +346,12 @@
 			id invocation;
 			
 			signature = [dict valueForKey:MS_RETURN];
-//			NSLog(@"signature_%@", signature);
+			//			NSLog(@"signature_%@", signature);
 			
 			//NSInvocationを使った実装
+			//他者が、自分の持っているメソッドを送り出し、よそでの実行を望むパターンを作りたい。持ってきて実行するにあたり、受け取って実行する方は、全て匿名で実行させたい。
 			invocation = [NSInvocation invocationWithMethodSignature:signature];
-			[invocation setSelector:@selector(setMyParentMSID:)];//ここは直書きしかないのか！？　じゃあ意味なくね？ 特にselectorだけ渡すとかしないといけないのか？
+			[invocation setSelector:@selector(setMyParentMSID:)];//ここに書くメソッド名、直書きしかないのか！？　なんと無意味な。セレクターを持って来れるんだろうか。
 			[invocation setTarget:senderID];
 			NSString * myMSIDforchild = [self getMyMSID];
 			[invocation setArgument:&myMSIDforchild atIndex:2];//0,1が埋まっているから固定値,,
@@ -208,39 +364,37 @@
 		
 		
 		//自分宛ではない
-		NSLog(@"自分宛ではないので、無視する_%@	called%@", myName, calledParentName);
+		//		NSLog(@"自分宛ではないので、無視する_%@	called%@", myName, calledParentName);
 		return;
 	}
 	
 	
-	
-	
-	//特定の相手に向けてのコールを受け取った
-	if ([commandName isEqualToString:MS_CATEGOLY_CALL]) {//自分か、子供に送る。
-		//宛名が自分の事でなかったら帰る
+	//親解消のコマンドが届いた
+	if ([commandName isEqualToString:MS_CATEGOLY_PARENTREMOVE]) {
+		
+		//自分宛かどうか、先ず名前で判断
 		if (![address isEqualToString:[self getMyName]]) {
-			NSLog(@"自分宛ではないので却下_From_%@,	To_%@,	Iam_%@", senderName, address, [self getMyName]);
 			return;
 		}
+		
+		//自分宛かどうか、MSIDで判断
+		//宛先MSIDのキーがあるか
+		NSString * calledParentMSID = [dict valueForKey:MS_ADDRESS_MSID];
+		if (!calledParentMSID) {
+			return;
+		}
+		
 		
 		//受信時にログに受信記録を付け、保存する
 		[self saveLogForReceived:recievedLogDict];
 		
-		//設定されたbodyのメソッドを実行
-		IMP func = [[self getMyBodyID] methodForSelector:[self getMyBodySelector]];
-		(*func)([self getMyBodyID], [self getMyBodySelector], notification);
 		
-		/*
-		 
-		 このメソッドの中で、
-		 bodyのメソッド実行が行われる。
-		 
-		 */
-		NSLog(@"bodyメソッドの実行を完了");
-		
-		
+		//自分の子供辞書にある、子供情報を削除する
+		[self removeChildDictChildNameAsValue:senderName withMSIDAsKey:senderMSID];
+			
 		return;
 	}
+	
 	
 }
 
@@ -254,6 +408,14 @@
 	[[self getChildDict] setValue:senderName forKey:senderMSID];
 	
 }
+/**
+ 子供からの要請で、childDictから該当の子供情報を削除する
+ */
+- (void) removeChildDictChildNameAsValue:(NSString * )senderName withMSIDAsKey:(NSString * )senderMSID {
+	[[self getChildDict] removeObjectForKey:senderMSID];//無かったらどうしよう、、、
+}
+
+
 /**
  childDictを返す
  */
@@ -283,8 +445,8 @@
 - (void) callMyself:(NSString * )exec, ... {
 	NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:5];
 	
-	[dict setValue:MS_CATEGOLY_CALL forKey:MS_CATEGOLY];
-	[dict setValue:[self getMyName] forKey:MS_ADDRESS];
+	[dict setValue:MS_CATEGOLY_LOCAL forKey:MS_CATEGOLY];
+	[dict setValue:[self getMyName] forKey:MS_ADDRESS_NAME];
 	
 	[dict setValue:exec forKey:MS_EXECUTE];
 	[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
@@ -324,17 +486,28 @@
  親から子限定
  
  子供辞書を持っており、かつ、nameに該当する子供がいる
+ 送り先の名称が自分と異なる場合のみ、送る事が出来る
+	→同名の子供群まで対象に入れると、メッセージの判別手段にグループの概念を持ち込まなければいけないために存在する制限。
+ 
  */
 - (void) call:(NSString * )name withExec:(NSString * )exec, ... {
 	
-	//親から子
-	for (id key in childDict) {//もうちょっとうまい引き方があった気がする。valueから引けなかったっけ。
+	NSAssert(![name isEqualToString:[self getMyName]], @"自分自身/同名の子供達へのメッセージブロードキャストをこのメソッドで行う事はできません。　callMyselfメソッドを使用してください");
+	NSAssert(![name isEqualToString:PARENTNAME_DEFAULT], @"システムで予約してあるデフォルトの名称です。　この名称を使ってのシステム使用は、その、なんだ、お勧めしません。");
+	
+	
+	//特定のキーが含まれているか
+//	[childDict allValues]//NSArray コストは概ね一緒かな。 特定のキーが含まれているか否か、を隠蔽したいか否か
+	
+	
+	//親から子へのブロードキャスト MSIDで送り先を限定しない。
+	for (id key in childDict) {
 		//NSLog(@"key: %@, value: %@", key, [childDict objectForKey:key]);//この件数分だけ出す必要は無い！　一件出せればいい。特に限定が必要な場合もそう。
 		if ([[childDict objectForKey:key] isEqualToString:name]) {//一つでも合致する内容のものがあれば、メッセージを送る対象として見る。
 			NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:5];
 			
-			[dict setValue:MS_CATEGOLY_CALL forKey:MS_CATEGOLY];
-			[dict setValue:name forKey:MS_ADDRESS];
+			[dict setValue:MS_CATEGOLY_CALLCHILD forKey:MS_CATEGOLY];
+			[dict setValue:name forKey:MS_ADDRESS_NAME];
 			
 			[dict setValue:exec forKey:MS_EXECUTE];
 			[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
@@ -371,7 +544,7 @@
 		}
 	}
 	
-	NSAssert1(false, @"callメソッドに指定したmessengerが存在しないか、未知のものです。本messengerを親とした設定を行うよう、子から親を指定してください。_%@",name);
+	//NSAssert1(false, @"callメソッドに指定したmessengerが存在しないか、未知のものです。本messengerを親とした設定を行うよう、子から親を指定してください。_%@",name);
 }
 
 
@@ -379,7 +552,7 @@
  特定の子への通信を行うメソッド、特にMSIDを使い、相手を最大限特定する。
  */
 - (void) callChild:(NSString * )childName withMSID:(NSString * ) withCommand:(NSString * )exec, ... {
-	
+	NSAssert(false, @"開発中のメソッドです");
 }
 
 
@@ -394,8 +567,10 @@
 		NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:5];
 		
 		
-		[dict setValue:MS_CATEGOLY_CALL forKey:MS_CATEGOLY];
-		[dict setValue:[self getMyParentName] forKey:MS_ADDRESS];
+		[dict setValue:MS_CATEGOLY_CALLPARENT forKey:MS_CATEGOLY];
+		[dict setValue:[self getMyParentName] forKey:MS_ADDRESS_NAME];
+		[dict setValue:[self getMyParentMSID] forKey:MS_ADDRESS_MSID];
+		
 		
 		[dict setValue:exec forKey:MS_EXECUTE];
 		[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
@@ -432,9 +607,8 @@
 		
 		
 		
-		//ログを作成する
+		//送信用ログを作成する
 		[dict setValue:[self createLogForNew] forKey:MS_LOGDICTIONARY];
-		
 		
 		//最終送信を行う
 		[self sendPerform:dict];
@@ -443,6 +617,7 @@
 	
 	NSAssert(false, @"親設定が無い");
 }
+
 
 
 
@@ -496,6 +671,7 @@
  ログストアに保存する。
  */
 - (void) saveLogForReceived:(NSDictionary * ) recievedLogDict {
+	
 	//ログタイプ、タイムスタンプを作成
 	NSString * messageID = (NSString * ) [recievedLogDict valueForKey:MS_LOG_MESSAGEID];
 	
@@ -503,7 +679,10 @@
 	[self saveToLogStore:@"saveLogForReceived",
 	 [self tag:MS_LOG_MESSAGEID val:messageID],
 	 nil];
+	
 }
+
+
 
 /**
  返信時のログ書き込み
@@ -672,6 +851,24 @@
 }
 
 
+
+/**
+ myParent関連情報を初期化する
+ */
+- (void) initMyParentData {
+	[self setMyParentName:PARENTNAME_DEFAULT];
+	myParentMSID = PARENTMSID_DEFAULT;
+}
+/**
+ 親情報をリセットする
+ (親のchildDictからも消す)
+ */
+- (void) resetMyParentData {
+	[self removeMyParentData];
+	
+	[self initMyParentData];//初期化
+}
+
 /**
  親の名称をセットするメソッド
  */
@@ -686,17 +883,23 @@
 }
 
 
-
 /**
  自分から見た親のMSIDをセットするメソッド
- 外部から呼ばれるようにセットされている。
- 自分から呼ぶ事は無い。
+ 外部から呼ばれるように設計されている。
+ 親が複数要るケースは想定し排除してある。
+ 
+ 本メソッドは条件を満たした親から起動されるメソッドになっており、自分から呼ぶ事は無い。
  */
 - (void) setMyParentMSID:(NSString * )parentMSID {
-	[self saveToLogStore:@"setMyParentMSID",
-	 [self tag:MS_LOG_LOGTYPE_GOTP val:[self getMyParentName]],
-	 nil];
-	myParentMSID = parentMSID;
+	if ([[self getMyParentMSID] isEqualToString:PARENTMSID_DEFAULT]) {
+		
+		[self saveToLogStore:@"setMyParentMSID",
+		 [self tag:MS_LOG_LOGTYPE_GOTP val:[self getMyParentName]],
+		 nil];
+		myParentMSID = parentMSID;
+		
+		[self decidedParentName:[self getMyParentName] withParentMSID:[self getMyParentMSID]];
+	}	
 }
 /**
  親のMSIDを返すメソッド
@@ -707,36 +910,35 @@
 
 
 
-- (void)dealloc {
+
+- (void) dealloc {
 	//通信のくびきを切る。
     [[NSNotificationCenter defaultCenter] removeObserver:self name:OBSERVER_ID object:nil];
 	
-//	//本体のID
-//	myBodyID = nil;
-//	
-//	//本体のセレクタ
-//	myBodySelector = nil;//メッセージ受け取り時に叩かれるセレクタ、最低一つの引数を持つ必要がある。
-//	
-//	
-//	//自分の名前	NSString
-//	myName = nil;
-//	
-//	//自分のID	NSString
-//	myMSID = nil;
-//	
-//	
-//	//親の名前	NSString
-//	myParentName = nil;
-//	
-//	//親のID		NSString
-//	myParentMSID = nil;
+	//本体のID
+	myBodyID = nil;
+	
+	//本体のセレクタ
+	myBodySelector = nil;//メッセージ受け取り時に叩かれるセレクタ、最低一つの引数を持つ必要がある。
+	
+	
+	//自分の名前	NSString
+	myName = nil;
+	
+	//自分のID	NSString
+	myMSID = nil;
+	
+	
+	//親の名前	NSString
+	myParentName = nil;
+	
+	//親のID		NSString
+	myParentMSID = nil;
 	
 	
 	//子供の名前とIDを保存する辞書	NSMutableDictionary
-	//うーーーーーん、やるとテストに通らなくなる、なぜ？
-//	[childDict removeAllObjects];
+	[childDict removeAllObjects];
 //	NSLog(@"解除！_%@, %d", [self getMyName], [childDict retainCount]);
-//	[childDict release];
 	
     [super dealloc];
 }
