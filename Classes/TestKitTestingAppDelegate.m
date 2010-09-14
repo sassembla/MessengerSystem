@@ -7,7 +7,6 @@
 //
 
 #import "TestKitTestingAppDelegate.h"
-#import "MessengerSystem.h"
 #import "MessengerView.h"
 
 #import "coTestObject.h"
@@ -33,35 +32,46 @@
 	[window addSubview:[view getMessengerInterfaceView]];
 	
 	
-	MessengerSystem * paren = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:PARENTNAME];
+	paren = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:PARENTNAME];
 //	NSLog(@"paren_%@", [paren getMyMSID]);
-	//[paren inputToMyParent];
 	
 	
+	coTestObject * cTest = [[coTestObject alloc] init];
+
 	
-	[paren callMyself:COMMAND_YEAH, 
+
+	[paren callMyself:COMMAND_YEAH,
 	 [paren tag:@"one" val:@"1"],
 	 [paren tag:@"two" val:@"2"],
 	 [paren tag:@"three" val:@"3"],
 	 [paren withDelay:0.5],
 	  nil];
 	
-	//[paren callMyself:COMMAND_YEAH, 
+	
+//	[paren call:CHILD_1 withExec:@"仮",
+//	 [paren tag:@"one" val:@"1"],
+//	 [paren withDelay:0.75],
+//	 nil];
+	
+	
+	
+//	[paren callMyself:COMMAND_YEAH, 
 //	 [paren tag:@"one" val:@"1"],
 //	 [paren tag:@"two" val:@"2"],
 //	 [paren tag:@"three" val:@"3"],
-//	 [paren withDelay:0.3],
+////	 [paren withDelay:0.3],
 //	 nil];
 	
-	coTestObject * cTest = [[coTestObject alloc] init];
 	
-//	[paren call:CHILD_1 withExec:COMMAND_YEAH, 
+	//	[paren call:CHILD_1 withExec:COMMAND_YEAH, 
 //	 [paren tag:@"one" val:@"1"],
 //	 [paren tag:@"two" val:@"2"],
 //	 [paren tag:@"three" val:@"3"],nil];
 	
 	
-	coTestObject * cTest2 = [[coTestObject alloc] init2];
+	
+	
+	//coTestObject * cTest2 = [[coTestObject alloc] init2];
 //	coTestObject * cTest3 = [[coTestObject alloc] init];
 	
 	//coTestObject * cTest4 = [[coTestObject alloc] init2];
@@ -72,11 +82,11 @@
 //	 [paren tag:@"three" val:@"3"],nil];
 	
 	
-	[paren callMyself:COMMAND_YEAH, 
-	 [paren tag:@"one" val:@"1"],
-	 [paren tag:@"two" val:@"2"],
-	 [paren tag:@"three" val:@"3"],nil];
-	
+//	[paren callMyself:COMMAND_YEAH, 
+//	 [paren tag:@"one" val:@"1"],
+//	 [paren tag:@"two" val:@"2"],
+//	 [paren tag:@"three" val:@"3"],nil];
+
 	
 	//[paren call:@"Parentだよ" withExec:@"yeah2!", nil];
 
@@ -91,6 +101,20 @@
 
 - (void)test:(NSNotification * )notification {
 	NSLog(@"NSNotification到着！！！！_%@", notification);
+	
+	NSMutableDictionary * dict = (NSMutableDictionary *)[notification userInfo];
+	
+	NSString * exec = [dict valueForKey:MS_EXECUTE];
+	NSLog(@"exec1_%@",exec);
+	
+	if ([exec isEqualToString:COMMAND_YEAH]) {
+		NSLog(@"m_testChild1 返答実行 YEAHHHHHHH!");
+		[paren callMyself:COMMAND_YEAH,
+		 [paren withDelay:0.5],
+		 nil];
+		
+	}
+	
 }
 
 

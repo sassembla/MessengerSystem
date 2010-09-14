@@ -6,6 +6,16 @@
 //  Copyright 2010 KISSAKI. All rights reserved.
 //
 
+/**
+ 遅延実行
+ 遠隔実行
+ 
+ これらについて、各通信手段のはすがけが全テストケース。
+ 
+ 子供の持ち方については、テスト内容で試した物以外は不明。
+ 
+ */
+
 #import <SenTestingKit/SenTestingKit.h>
 #import <UIKit/UIKit.h>
 
@@ -186,9 +196,10 @@
 	[parent callMyself:@"To Myself!!",nil];
 	
 	//送信記録と受信記録が残る筈。
-//	NSDictionary * logDict = [parent getLogStore];
+	NSDictionary * logDict = [parent getLogStore];
+	//自分自身への通信なので、送信と受信が一件ずつ残る筈
 	
-	
+	STAssertTrue([logDict count] == 2, @"違う");
 }
 
 /*

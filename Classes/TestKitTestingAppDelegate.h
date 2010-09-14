@@ -8,8 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MessengerSystem.h"
+
 @interface TestKitTestingAppDelegate : NSObject <UIApplicationDelegate> {
-    UIWindow *window;}
+    UIWindow *window;
+	MessengerSystem * paren;
+}
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 

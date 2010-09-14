@@ -120,14 +120,15 @@
 - (void) innerPerform:(NSNotification * )notification;//内部実装メソッド、システムな動作とbodyへのメソッド伝達を行う。
 
 - (void) callMyself:(NSString * )exec, ...;//自分自身への通信メソッド
-- (void) call:(NSString * )name withExec:(NSString * )exec, ...;//特定の子への通信用メソッド
-- (void) callChild:(NSString * )childName withMSID:(NSString * ) withCommand:(NSString * )exec, ...;//特定の子への通信用メソッド childのMSIDを用いる。
+- (void) call:(NSString * )childName withExec:(NSString * )exec, ...;//特定の子への通信用メソッド
+- (void) call:(NSString * )childName withMSID:(NSString * ) withExec:(NSString * )exec, ...;//特定の子への通信用メソッド childのMSIDを用いる。
 - (void) callParent:(NSString * )exec, ...;//親への通信用メソッド
 
 
-- (void) sendPerform:(NSMutableDictionary * )dict;//パフォーマンス実装
+- (void) sendPerform:(NSMutableDictionary * )dict;//ブロック実装
 - (void) sendPerform:(NSMutableDictionary * )dict withDelay:(float)delay;//遅延実行
 
+- (void) sendMessage:(NSMutableDictionary * )dict;//送信実行メソッド
 
 
 /**

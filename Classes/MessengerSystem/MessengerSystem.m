@@ -142,8 +142,6 @@
 	
 	
 	
-	
-	
 	//コマンド名について確認
 	NSString * commandName = [dict valueForKey:MS_CATEGOLY];
 	if (!commandName) {
@@ -191,8 +189,15 @@
 	
 	
 	
+	/**
+	 自分が今、誰なのかを考察する
+	 1,プロセスID
+	 2,スレッドID
+	 3,スレッドが触っているコンテナID、、まだ取れていない
+	 */
 	
-//	pid_t pid = getpid();//ぐっはあ、うーん。　惜しい。プロセスIDでは駄目か！?　それとも行けるのか
+	
+//	pid_t pid = getpid();//駄目、ぐっはあ、うーん。　惜しい。プロセスIDでは駄目か！?　それとも行けるのか
 //	pid_t ppid = getppid();
 //	
 //	
@@ -207,14 +212,10 @@
 	NSLog(@"currentThread_0_self=%@, %@", [self getMyName], [NSThread currentThread]);
 	
 	//カテゴリごとの処理に移行
-	//クリティカルなケースであっても、ThreadIDで対応できる筈。現在実行中の、Threadからみて未完了の処理、というのが或る筈なんだ。
+	//クリティカルなケースであっても、ThreadIDで対応できる筈。現在実行中の、Threadからみて未完了の処理とそれをIDする機能、というのが或る筈なんだ。
 	
 	
 	if ([commandName isEqualToString:MS_CATEGOLY_LOCAL]) {
-//		if (![address isEqualToString:[self getMyName]]) {//送信者の指定した宛先が自分か
-//			NSLog(@"MS_CATEGOLY_LOCAL_宛先ではないMessnegerが受け取った");
-//			return;
-//		}
 		
 		if (![senderName isEqualToString:[self getMyName]]) {
 			NSLog(@"MS_CATEGOLY_LOCAL 名称が違う_%@", [self getMyName]);
@@ -227,27 +228,10 @@
 		}
 		
 		
-//		//自分自身にDelay要素があったら、Delay要素を取り除いてもう一度ぶっ飛ばす。
-//		NSNumber * delay = [dict valueForKey:MS_DELAY];
-//	
-//		
-//		if (delay) {//ここでやんなくていいんじゃね。
-//			NSLog(@"遅延実行_%@", delay);
-//			
-//			[self sendPerform:dict withDelay:[delay floatValue]];
-//			
-//			NSLog(@"とりあえず処理完了");
-//			
-//			return;
-//		}
 		
 		
-		NSLog(@"Delay要素が無い状態で処理");
-		NSLog(@"saveLogForReceived突入前");
-		NSLog(@"logDict_SAVE突入前_%@",logDict);
+		[self saveLogForReceived:recievedLogDict];
 		
-		
-		[self saveLogForReceived:recievedLogDict];//受信ログを実行する
 		
 		//設定されたbodyのメソッドを実行
 		IMP func = [[self getMyBodyID] methodForSelector:[self getMyBodySelector]];
@@ -278,7 +262,8 @@
 		
 		
 		if ([senderName isEqualToString:[self getMyParentName]]) {
-			//受信時にログに受信記録を付け、保存する
+			
+			
 			[self saveLogForReceived:recievedLogDict];
 			
 			
@@ -320,7 +305,6 @@
 		}
 		
 		
-		//受信時にログに受信記録を付け、保存する
 		[self saveLogForReceived:recievedLogDict];
 		
 		//設定されたbodyのメソッドを実行
@@ -537,27 +521,7 @@
 	}
 	va_end(ap);
 	
-	
-	//遅延実行キーがある場合
-	NSNumber * delay = [dict valueForKey:MS_DELAY];//複数或る場合はエラーにしたい
-	if (delay) {
-		NSLog(@"遅延実行_%@", delay);
-		float delayTime = [delay floatValue];
-		
-		[dict removeObjectForKey:MS_DELAY];//削除する
-		
-		[dict setValue:[self createLogForNew] forKey:MS_LOGDICTIONARY];
-		
-		[self sendPerform:dict withDelay:delayTime];
-		
-		return;
-	}
-	
-	
-	//通常送信のログを作成する
-	[dict setValue:[self createLogForNew] forKey:MS_LOGDICTIONARY];
-	
-	[self sendPerform:dict];
+	[self sendMessage:dict];
 }
 
 
@@ -570,10 +534,10 @@
 	→同名の子供群まで対象に入れると、メッセージの判別手段にグループの概念を持ち込まなければいけないために存在する制限。
  
  */
-- (void) call:(NSString * )name withExec:(NSString * )exec, ... {
+- (void) call:(NSString * )childName withExec:(NSString * )exec, ... {
 	
-	NSAssert(![name isEqualToString:[self getMyName]], @"自分自身/同名の子供達へのメッセージブロードキャストをこのメソッドで行う事はできません。　callMyselfメソッドを使用してください");
-	NSAssert(![name isEqualToString:PARENTNAME_DEFAULT], @"システムで予約してあるデフォルトの名称です。　この名称を使ってのシステム使用は、その、なんだ、お勧めしません。");
+	NSAssert(![childName isEqualToString:[self getMyName]], @"自分自身/同名の子供達へのメッセージブロードキャストをこのメソッドで行う事はできません。　callMyselfメソッドを使用してください");
+	NSAssert(![childName isEqualToString:PARENTNAME_DEFAULT], @"システムで予約してあるデフォルトの名称です。　この名称を使ってのシステム使用は、その、なんだ、お勧めしません。");
 	
 	
 	//特定のキーが含まれているか
@@ -583,11 +547,11 @@
 	//親から子へのブロードキャスト MSIDで送り先を限定しない。
 	for (id key in childDict) {
 		//NSLog(@"key: %@, value: %@", key, [childDict objectForKey:key]);//この件数分だけ出す必要は無い！　一件出せればいい。特に限定が必要な場合もそう。
-		if ([[childDict objectForKey:key] isEqualToString:name]) {//一つでも合致する内容のものがあれば、メッセージを送る対象として見る。
+		if ([[childDict objectForKey:key] isEqualToString:childName]) {//一つでも合致する内容のものがあれば、メッセージを送る対象として見る。
 			NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:5];
 			
 			[dict setValue:MS_CATEGOLY_CALLCHILD forKey:MS_CATEGOLY];
-			[dict setValue:name forKey:MS_ADDRESS_NAME];
+			[dict setValue:childName forKey:MS_ADDRESS_NAME];
 			
 			[dict setValue:exec forKey:MS_EXECUTE];
 			[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
@@ -612,14 +576,9 @@
 				kvDict = va_arg(ap, id);
 			}
 			va_end(ap);
+
+			[self sendMessage:dict];
 			
-			
-			//ログを作成する
-			[dict setValue:[self createLogForNew] forKey:MS_LOGDICTIONARY];
-			
-			
-			//最終送信を行う
-			[self sendPerform:dict];
 			return;//一通だけを送る
 		}
 	}
@@ -631,7 +590,7 @@
 /**
  特定の子への通信を行うメソッド、特にMSIDを使い、相手を最大限特定する。
  */
-- (void) callChild:(NSString * )childName withMSID:(NSString * ) withCommand:(NSString * )exec, ... {
+- (void) call:(NSString * )childName withMSID:(NSString * ) withExec:(NSString * )exec, ... {
 	NSAssert(false, @"開発中のメソッドです");
 }
 
@@ -685,13 +644,8 @@
 		
 		va_end(vp);//終了処理
 		
+		[self sendMessage:dict];
 		
-		
-		//送信用ログを作成する
-		[dict setValue:[self createLogForNew] forKey:MS_LOGDICTIONARY];
-		
-		//最終送信を行う
-		[self sendPerform:dict];
 		return;
 	}
 	
@@ -719,6 +673,56 @@
 }
 
 
+/**
+ ログを取り、実行する。
+ */
+- (void) sendMessage:(NSMutableDictionary * )dict {
+	
+	[dict setValue:[self createLogForNew] forKey:MS_LOGDICTIONARY];
+	
+	
+	//遅延実行キーがある場合
+	NSNumber * delay = [dict valueForKey:MS_DELAY];//複数或る場合はエラーにしたい
+	if (delay) {
+		
+		float delayTime = [delay floatValue];
+		
+		//辞書を太らせる部分の話に直結していそう。このキーを使うと破綻する、のだ。ということは、ログには常に辞書を入れておき、その内容を入れ替える、のほうが健全なのか。
+		/**
+		 そも原因はどこだ。このキーなのか。
+		 辞書にキーが無いと受付なくなるだけ。いい事は無い。
+		 
+		 １、キーをこのタイミングで発行するもののみ、変えてみる。
+		 →変わらん。キーが原因ではないのかもしれない。
+		 →確証を得た。原因ではない。アクセスしている要素全てがマズそう。ただし、辞書のみ？　アクセス方法を変更すればいいのだろうか？
+		 
+		 ２、自分自身への投入が問題なのか？
+		 →子供向けでも落ちた。同じ原因か探ろう。
+		 →親の辞書を見ようとして見てる。　遅延実行のタイミングで親に触っちゃだめ、という系統なんだろうか。
+		 
+		 →それっぽい。内容の如何に関わらず。
+		 そうであれば、このログ方法自体に無理がある、という事になる。どうする。
+		 遅延実行での受け側でのログ書き込みをしなければ、問題は発生しない。
+		 遅延実行かどうかを判断し、ログを遅延実行にすれば、あるいは。
+		 ログ記録自体を遅延実行にしてみるか。　うへえ。
+		 
+		 ３、それでも駄目
+		 遅延実行でも駄目な物は駄目らしい。うーん、相手、他人を問わず、また入れる内容に関わらず駄目なのか。そうなのか。
+		 →純粋無垢なDictを作り、やってみようと思う。
+		 
+		 今のところの一時的な回答は、受け取り時の記録を遅延実行に関してのみ行わない、という事。
+		 明確な線が無い。
+		 
+		 */
+		[self sendPerform:dict withDelay:delayTime];
+		
+		return;
+	}
+	
+	
+	//通常の送信を行う
+	[self sendPerform:dict];
+}
 
 
 
@@ -738,7 +742,7 @@
 	
 	
 	NSDictionary * newLogDictionary;//ログ内容を初期化する
-	newLogDictionary = [NSDictionary dictionaryWithObject:messageID forKey:MS_LOG_MESSAGEID];
+	newLogDictionary = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%@", messageID] forKey:MS_LOG_MESSAGEID];
 	
 	//ストアに保存する
 	[self saveToLogStore:@"createLogForNew",
@@ -758,8 +762,7 @@
  ログストアに保存する。
  */
 - (void) saveLogForReceived:(NSMutableDictionary * ) recievedLogDict {
-	NSLog(@"saveLogForReceived突入");
-	NSLog(@"logDict_SAVE突入前_%@",logDict);
+	
 	//ログタイプ、タイムスタンプを作成
 	NSString * messageID = (NSString * )[recievedLogDict valueForKey:MS_LOG_MESSAGEID];
 	
@@ -767,7 +770,6 @@
 	[self saveToLogStore:@"saveLogForReceived",
 	 [self tag:MS_LOG_MESSAGEID val:messageID],
 	 nil];
-	
 }
 
 
@@ -803,27 +805,15 @@
  アウトプットは後で考えよう。
  */
 - (void) saveToLogStore:(NSString * )name, ... {
-	
-	if (false) {
-		NSLog(@"到達");
+	if (true) return;
+	if (true) {
 		
-		if (logDict) {//なるほど。
-			NSLog(@"場所にすらこれまい_%d", [logDict count]);
-		} else {
-			NSLog(@"ここの");
-		}
-
-		NSLog(@"logDict_%@",logDict);//この辞書自体か！
+		[logDict setValue:@"仮" forKey:[NSDate date]];
+		//とりあえず無関係なものを叩き込んでも駄目。うーん。内容ではないらしい。では、アクセス方法そのものに無理がある?
 		
-		[logDict setValue:
-		 [NSString stringWithFormat:@"%@", name] 
-				   forKey:
-		 [NSString stringWithFormat:@"%@ %@", [self getUUID], [NSDate date]]
-		 ];
-		 
-	} else if (true) {//今までの成功パターン
-		NSLog(@"到達");
-		NSLog(@"logDict_%@", logDict);//ココで見る要素自体がおかしい。なんて観測しずらい
+	} else if (false) {//今までの成功パターン
+		NSLog(@"到達_%@", [self getMyName]);
+		NSLog(@"logDict_%@", logDict);//内容が壊れている。なぜ観測できない？
 		
 		va_list ap;
 		id kvDict;
@@ -1017,6 +1007,7 @@
 		[self saveToLogStore:@"setMyParentMSID",
 		 [self tag:MS_LOG_LOGTYPE_GOTP val:[self getMyParentName]],
 		 nil];
+		
 		myParentMSID = parentMSID;
 		
 		[self decidedParentName:[self getMyParentName] withParentMSID:[self getMyParentMSID]];
