@@ -40,9 +40,9 @@
 #define MS_PARENTNAME	(@"MESSENGER_SYSTEM_COMMAND:PARENT_NAME")//親の名前に類するキー
 #define MS_PARENTMSID	(@"MESSENGER_SYSTEM_COMMAND:PARENT_MSID")//親の固有IDに類するキー
 
-//遠隔メソッド実行に関するタグ
+//メソッド実行オプションに関するタグ
 #define MS_RETURN		(@"MESSENGER_SYSTEM_COMMAND:RETURN")//フック実行メソッドの指定オプションに類するキー 未実装
-
+#define MS_DELAY		(@"MESSENGER_SYSTEM_COMMAND:DELAY")//遅延実行
 
 
 //logに関するタグ
@@ -119,14 +119,14 @@
 
 - (void) innerPerform:(NSNotification * )notification;//内部実装メソッド、システムな動作とbodyへのメソッド伝達を行う。
 
-- (void) callMyself:(NSString * )exec, ...;
+- (void) callMyself:(NSString * )exec, ...;//自分自身への通信メソッド
 - (void) call:(NSString * )name withExec:(NSString * )exec, ...;//特定の子への通信用メソッド
 - (void) callChild:(NSString * )childName withMSID:(NSString * ) withCommand:(NSString * )exec, ...;//特定の子への通信用メソッド childのMSIDを用いる。
 - (void) callParent:(NSString * )exec, ...;//親への通信用メソッド
 
 
 - (void) sendPerform:(NSMutableDictionary * )dict;//パフォーマンス実装
-
+- (void) sendPerform:(NSMutableDictionary * )dict withDelay:(float)delay;//遅延実行
 
 
 
@@ -145,18 +145,25 @@
 
 
 /**
+ タグシステムの亜種、DelayTag
+ */
+- (NSDictionary * ) withDelay:(float)delay;
+
+
+
+/**
  ログシステム
  */
-- (NSDictionary * ) createLogForNew;//メッセージ初期作成ログを内部に保存する/返すメソッド
-- (void) saveLogForReceived:(NSDictionary * )logDict;//受信時に付与するログを内部に保存するメソッド
-- (NSDictionary * ) createLogForReply;//返答送信時に付与するログを内部に保存する/返すメソッド
+- (NSMutableDictionary * ) createLogForNew;//メッセージ初期作成ログを内部に保存する/返すメソッド
+- (void) saveLogForReceived:(NSMutableDictionary * )logDict;//受信時に付与するログを内部に保存するメソッド
+- (NSMutableDictionary * ) createLogForReply;//返答送信時に付与するログを内部に保存する/返すメソッド
 
 
 /**
  ログストア
  */
-- (void) saveToLogStore:(NSString * )name, ...;
-- (NSDictionary * ) getLogStore;//保存されたログ一覧を取得するメソッド
+- (void) saveToLogStore:(NSString * )name, ... ;
+- (NSMutableDictionary * ) getLogStore;//保存されたログ一覧を取得するメソッド
 
 
 /**
@@ -196,5 +203,7 @@
 
 - (void) setMyParentMSID:(NSString * )parentMSID;
 - (NSString * )getMyParentMSID;
+
+- (void) gagaga;//パフォーマンス実行のテスト
 
 @end

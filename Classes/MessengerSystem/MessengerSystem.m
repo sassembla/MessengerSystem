@@ -7,7 +7,7 @@
 //
 
 #import "MessengerSystem.h"
-
+#import <unistd.h>
 
 @implementation MessengerSystem
 
@@ -26,7 +26,6 @@
 		
 		childDict = [NSMutableDictionary dictionaryWithCapacity:1];
 		logDict = [NSMutableDictionary dictionaryWithCapacity:1];
-
 		
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(innerPerform:) name:OBSERVER_ID object:nil];
 	}
@@ -123,6 +122,14 @@
 }
 
 
+/**
+ パフォーマンス実行のテストケース
+ */
+- (void) gagaga {
+	NSLog(@"currentThread_1_self=%@, %@", [self getMyName], [NSThread currentThread]);
+}
+	
+
 
 /**
  内部実行で先ず呼ばれるメソッド
@@ -131,6 +138,9 @@
 - (void) innerPerform:(NSNotification * )notification {
 	
 	NSMutableDictionary * dict = (NSMutableDictionary *)[notification userInfo];
+	
+	
+	
 	
 	
 	
@@ -166,7 +176,7 @@
 	
 	
 	//ログ関連
-	NSDictionary * recievedLogDict = [dict valueForKey:MS_LOGDICTIONARY];
+	NSMutableDictionary * recievedLogDict = [dict valueForKey:MS_LOGDICTIONARY];
 	if (!recievedLogDict) {
 		NSLog(@"ログが無いので受け付けない_%@", commandName);
 		return;
@@ -182,7 +192,22 @@
 	
 	
 	
+//	pid_t pid = getpid();//ぐっはあ、うーん。　惜しい。プロセスIDでは駄目か！?　それとも行けるのか
+//	pid_t ppid = getppid();
+//	
+//	
+//	NSLog(@"Num_%d /	2_%d", pid, ppid);
+//	
+//	NSProcessInfo *processInfo = [NSProcessInfo processInfo];
+//	
+//	NSString *processName = [processInfo processName];
+//	int processID = [processInfo processIdentifier];// = getpid()
+//	NSLog(@"Process Name:%@ Process ID:%d", processName, processID);
+	
+	NSLog(@"currentThread_0_self=%@, %@", [self getMyName], [NSThread currentThread]);
+	
 	//カテゴリごとの処理に移行
+	//クリティカルなケースであっても、ThreadIDで対応できる筈。現在実行中の、Threadからみて未完了の処理、というのが或る筈なんだ。
 	
 	
 	if ([commandName isEqualToString:MS_CATEGOLY_LOCAL]) {
@@ -202,8 +227,28 @@
 		}
 		
 		
+//		//自分自身にDelay要素があったら、Delay要素を取り除いてもう一度ぶっ飛ばす。
+//		NSNumber * delay = [dict valueForKey:MS_DELAY];
+//	
+//		
+//		if (delay) {//ここでやんなくていいんじゃね。
+//			NSLog(@"遅延実行_%@", delay);
+//			
+//			[self sendPerform:dict withDelay:[delay floatValue]];
+//			
+//			NSLog(@"とりあえず処理完了");
+//			
+//			return;
+//		}
+		
+		
+		NSLog(@"Delay要素が無い状態で処理");
+		NSLog(@"saveLogForReceived突入前");
+		NSLog(@"logDict_SAVE突入前_%@",logDict);
+		
+		
 		[self saveLogForReceived:recievedLogDict];//受信ログを実行する
-
+		
 		//設定されたbodyのメソッドを実行
 		IMP func = [[self getMyBodyID] methodForSelector:[self getMyBodySelector]];
 		(*func)([self getMyBodyID], [self getMyBodySelector], notification);
@@ -446,6 +491,18 @@
 	return [NSDictionary dictionaryWithObject:obj_value forKey:obj_tag];
 } 
 
+/**
+ 遅延実行
+ tag-Valueと同形式でオプションを挿入するメソッド
+ */
+- (NSDictionary * ) withDelay:(float)delay {
+	NSAssert1(delay,@"obj_value_%@ is nil",delay);
+	return [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:delay] forKey:MS_DELAY];
+}
+
+
+
+
 
 /**
  自分自身のmessengerへと通信を行うメソッド
@@ -481,9 +538,24 @@
 	va_end(ap);
 	
 	
-	//ログを作成する
-	[dict setValue:[self createLogForNew] forKey:MS_LOGDICTIONARY];
+	//遅延実行キーがある場合
+	NSNumber * delay = [dict valueForKey:MS_DELAY];//複数或る場合はエラーにしたい
+	if (delay) {
+		NSLog(@"遅延実行_%@", delay);
+		float delayTime = [delay floatValue];
+		
+		[dict removeObjectForKey:MS_DELAY];//削除する
+		
+		[dict setValue:[self createLogForNew] forKey:MS_LOGDICTIONARY];
+		
+		[self sendPerform:dict withDelay:delayTime];
+		
+		return;
+	}
 	
+	
+	//通常送信のログを作成する
+	[dict setValue:[self createLogForNew] forKey:MS_LOGDICTIONARY];
 	
 	[self sendPerform:dict];
 }
@@ -548,7 +620,7 @@
 			
 			//最終送信を行う
 			[self sendPerform:dict];
-			return;			
+			return;//一通だけを送る
 		}
 	}
 	
@@ -639,6 +711,13 @@
 	[[NSNotificationCenter defaultCenter] postNotificationName:OBSERVER_ID object:self userInfo:(id)dict];
 }
 
+/**
+ 遅延実行
+ */
+- (void) sendPerform:(NSMutableDictionary * )dict withDelay:(float)delay {
+	[self performSelector:@selector(sendPerform:) withObject:dict afterDelay:delay];
+}
+
 
 
 
@@ -655,7 +734,7 @@
 	//ストアについては、新しいIDのものが出来るとIDの下に保存する。多元木構造になっちゃうなあ。カラムでやった方が良いのかしら？それとも絡み付いたKVSかしら。
 	
 	
-	NSString * messageID = (NSString * )CFUUIDCreateString(nil, CFUUIDCreate(nil));//このメッセージのIDを出力(あとでID認識するため)
+	NSString * messageID = [self getUUID];//このメッセージのIDを出力(あとでID認識するため)
 	
 	
 	NSDictionary * newLogDictionary;//ログ内容を初期化する
@@ -678,10 +757,11 @@
  ログの末尾に含まれているメッセージIDでもって、過去に受け取ったことがあるかどうか判定(未実装)、
  ログストアに保存する。
  */
-- (void) saveLogForReceived:(NSDictionary * ) recievedLogDict {
-	
+- (void) saveLogForReceived:(NSMutableDictionary * ) recievedLogDict {
+	NSLog(@"saveLogForReceived突入");
+	NSLog(@"logDict_SAVE突入前_%@",logDict);
 	//ログタイプ、タイムスタンプを作成
-	NSString * messageID = (NSString * ) [recievedLogDict valueForKey:MS_LOG_MESSAGEID];
+	NSString * messageID = (NSString * )[recievedLogDict valueForKey:MS_LOG_MESSAGEID];
 	
 	//ストアに保存する
 	[self saveToLogStore:@"saveLogForReceived",
@@ -700,7 +780,7 @@
  最新の「送信しました」記録を行い、
  記録をログ末尾に付け加えたログを返す。
  */
-- (NSDictionary * ) createLogForReply {
+- (NSMutableDictionary * ) createLogForReply {
 	//ログタイプ、タイムスタンプを作成
 	[logDict setValue:@"仮のmessageID" forKey:MS_LOG_MESSAGEID];
 	
@@ -710,7 +790,7 @@
 /**
  観察用にこのmessengerに書かれているログを取得するメソッド
  */
-- (NSDictionary * ) getLogStore {
+- (NSMutableDictionary * ) getLogStore {
 	
 	//ストアの全容量を取り出す
 		
@@ -724,31 +804,88 @@
  */
 - (void) saveToLogStore:(NSString * )name, ... {
 	
-	va_list ap;
-	id kvDict;
-	
-	
-	va_start(ap, name);
-	kvDict = va_arg(ap, id);
-	
-	int i = 0;
-	
-	
-	while (kvDict) {
-//		NSLog(@"ココに来てる_kvDict_%@", kvDict);
+	if (false) {
+		NSLog(@"到達");
 		
-		for (id key in kvDict) {
-//			NSLog(@"[kvDict valueForKey:key]_%@, key_%@", [kvDict valueForKey:key], key);
-			
-			[logDict setValue:[NSString stringWithFormat:@"%@ %d %@",name, i, [kvDict valueForKey:key]] forKey:
-			 [NSString stringWithFormat:@"%@ %@",[self getUUID], [NSDate date]]];//データオブジェクトだから、IDで精査できる訳だ。同じ時間であっても、ポインタが異なるので問題ない。
-			
-			i++;
+		if (logDict) {//なるほど。
+			NSLog(@"場所にすらこれまい_%d", [logDict count]);
+		} else {
+			NSLog(@"ここの");
 		}
+
+		NSLog(@"logDict_%@",logDict);//この辞書自体か！
 		
+		[logDict setValue:
+		 [NSString stringWithFormat:@"%@", name] 
+				   forKey:
+		 [NSString stringWithFormat:@"%@ %@", [self getUUID], [NSDate date]]
+		 ];
+		 
+	} else if (true) {//今までの成功パターン
+		NSLog(@"到達");
+		NSLog(@"logDict_%@", logDict);//ココで見る要素自体がおかしい。なんて観測しずらい
+		
+		va_list ap;
+		id kvDict;
+		
+		int i = 0;
+		
+		
+		va_start(ap, name);
 		kvDict = va_arg(ap, id);
+
+		
+		while (kvDict) {
+//			NSLog(@"ココに来てる_kvDict_%@", kvDict);//複数件あったらまずいんじゃね？　素直に出せばいい。
+			for (id key in kvDict) {
+				//			NSLog(@"[kvDict valueForKey:key]_%@, key_%@", [kvDict valueForKey:key], key);
+				
+				[logDict setValue:
+				 [NSString stringWithFormat:@"%@ %d %@",name, i, [kvDict valueForKey:key]] 
+						   forKey:
+				 [NSString stringWithFormat:@"%@ %@",[self getUUID], [NSDate date]]
+				 ];
+				
+				i++;
+			}
+			
+			kvDict = va_arg(ap, id);
+		}
+		va_end(ap);
+	} else if (false) {
+		
+		va_list ap;
+		NSDictionary * kvDict;
+		
+		
+		
+		va_start(ap, name);
+		kvDict = (NSDictionary * )va_arg(ap, id);
+		
+		
+		NSAssert([kvDict count] == 1, @"ログ内容違反");
+		
+		//解決できる時と出来ない時があるようだ。原因は不明。時間がかかるので逃げてる節がある。どこで時間がかかっているのか、調べれば分かるかもしれない。
+		
+		NSArray * key = [kvDict allKeys];//1件しか無い内容を取得する
+		@try {
+			NSLog(@"開始");
+			[logDict setValue://この行為自体が無理なんじゃね？
+			 [NSString stringWithFormat:@"%@ %@", name, [kvDict valueForKey:[key objectAtIndex:0]]] 
+					   forKey:
+			 [NSString stringWithFormat:@"%@ %@", [self getUUID], [NSDate date]]
+			 ];
+			NSLog(@"通過");
+		}
+		@catch (NSException * e) {
+			NSLog(@"error_%@", e);
+		}
+		@finally {
+			
+		}
+		va_end(ap);
 	}
-	va_end(ap);
+	
 }
 
 
@@ -771,6 +908,7 @@
 
 /**
  UUIDを作成して返すメソッド
+ クラスメソッドの必要があるんだろうな。。。それ用のクラス作って分離しようかな。
  */
 - (NSString * ) getUUID {
 	return (NSString * )CFUUIDCreateString(nil, CFUUIDCreate(nil));

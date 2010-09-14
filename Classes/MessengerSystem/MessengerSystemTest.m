@@ -539,6 +539,9 @@
 
 /**
  親を切り替えるテスト
+ 予備テストとして、ここから呼ばれたらどうなってしまうのか、をチェックする必要がある。
+ -親を切り替えたときに子供から親を呼べるか(エラー)、また親から子供を呼べるか（非特定/特定 x 存在/不在）
+ 
  */
 - (void) testResetParent {
 	[child_0 inputToMyParentWithName:[parent getMyName]];
@@ -562,6 +565,25 @@
 	
 	
 	//STAssertEquals([dict1 valueForKey:[child_2 getMyMSID]], [child_2 getMyName], @"child_2の親登録が違った");
+}
+
+
+//遅延実行
+/**
+ 遅延実行のテストがそもそも出来るのか
+ Dealloc周りのテストもしなきゃな。
+ */
+- (void) testCallWithDelay {
+//	[child_0 inputToMyParentWithName:[parent getMyName]];
+	
+//	[parent callMyself:@"テスト", 
+	MessengerSystem * s = [[MessengerSystem alloc] initWithBodyID:self withSelector:nil withName:@"じぶん"];
+	[s callMyself:@"テスト",
+	 [parent withDelay:0.3],
+	 nil];
+	
+	//STFail(@"確認");
+	//テストの結果を知るには、、、、どうすればいいんだ。返り値を判断する機構でもあればいいんだけど。
 }
 
 

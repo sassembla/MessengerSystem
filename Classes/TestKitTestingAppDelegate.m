@@ -42,7 +42,16 @@
 	[paren callMyself:COMMAND_YEAH, 
 	 [paren tag:@"one" val:@"1"],
 	 [paren tag:@"two" val:@"2"],
-	 [paren tag:@"three" val:@"3"],nil];
+	 [paren tag:@"three" val:@"3"],
+	 [paren withDelay:0.5],
+	  nil];
+	
+	//[paren callMyself:COMMAND_YEAH, 
+//	 [paren tag:@"one" val:@"1"],
+//	 [paren tag:@"two" val:@"2"],
+//	 [paren tag:@"three" val:@"3"],
+//	 [paren withDelay:0.3],
+//	 nil];
 	
 	coTestObject * cTest = [[coTestObject alloc] init];
 	
