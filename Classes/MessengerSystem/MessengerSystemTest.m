@@ -69,7 +69,7 @@
  セットアップ
  */
 - (void) setUp {
-	NSLog(@"%@ setUp", self.name);//なにこれ。自分ってメソッドになれるの。継承してる元がそういう性能を持ってるのか。
+	NSLog(@"%@ setUp", self.name);
 	parent = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testParent:) withName:TEST_PARENT_NAME];
 	parent2 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testParent:) withName:TEST_PARENT_NAME];
 	
