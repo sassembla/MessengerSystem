@@ -71,12 +71,11 @@
 	
 	
 	//ログを作成する
-	[dict setValue:[self createLogForNew] forKey:MS_LOGDICTIONARY];
-	
+	[self addCreationLog:dict];
 	
 	//最終送信処理
 	[self sendPerform:dict];
-	
+	NSLog(@"処理通過");
 	
 	NSAssert1([self getMyParentMID], @"指定した親が存在しないようです。parentに指定している名前を確認してください_現在指定されているparentは_%@",[self getMyParentName]);
 }
@@ -115,7 +114,7 @@
 	[dict setValue:[self getMyMID] forKey:MS_SENDERMID];
 	
 	//ログを作成する
-	[dict setValue:[self createLogForNew] forKey:MS_LOGDICTIONARY];
+	[self addCreationLog:dict];
 	
 	//最終送信処理
 	[self sendPerform:dict];
@@ -168,15 +167,15 @@
 	//ログ関連
 	NSMutableDictionary * recievedLogDict = [dict valueForKey:MS_LOGDICTIONARY];
 	if (!recievedLogDict) {
-		NSLog(@"ログが無いので受け付けない_%@", commandName);
+//		NSLog(@"ログが無いので受け付けない_%@", commandName);
 		return;
 	} else {
 		//メッセージIDについて確認
-		NSString * messageID = [recievedLogDict valueForKey:MS_LOG_MESSAGEID];
-		if (!messageID) {
-			NSLog(@"メッセージIDが無いため、何の処理も行われずに帰る");
-			return;
-		}		
+//		NSString * messageID = [recievedLogDict valueForKey:MS_LOG_MESSAGEID];
+//		if (!messageID) {
+//			NSLog(@"メッセージIDが無いため、何の処理も行われずに帰る");
+//			return;
+//		}		
 	}
 	
 	
@@ -323,11 +322,10 @@
 		}
 		
 		//送信者が自分であれば無視する 自分から自分へのメッセージの無視
-		if ([[recievedLogDict valueForKey:MS_SENDERMID] isEqualToString:[self getMyMID]]) {
+		if ([senderMID isEqualToString:[self getMyMID]]) {
 			NSLog(@"自分が送信者なので無視する_%@", [self getMyMID]);
 			return;
 		}
-		
 		
 		NSString * calledParentName = [dict valueForKey:MS_PARENTNAME];
 		if (!calledParentName) {
@@ -351,7 +349,7 @@
 				//				NSLog(@"親は先着順で既に設定されているようです");
 				return;
 			}
-			
+			NSLog(@"とうたつしてる");
 			
 			//受信時にログに受信記録を付け、保存する
 			[self saveLogForReceived:recievedLogDict];
@@ -384,7 +382,7 @@
 			[invocation setTarget:senderID];
 			NSString * myMSIDforchild = [self getMyMID];
 			[invocation setArgument:&myMSIDforchild atIndex:2];//0,1が埋まっているから固定値,,
-			
+			NSLog(@"実行まで行ってるのか");
 			[invocation invoke];
 			
 			
@@ -423,8 +421,7 @@
 			
 		return;
 	}
-	
-	
+	NSLog(@"素通り");
 }
 
 
@@ -653,8 +650,8 @@
  この処理は、出来るだけ独立した要素として分けておく。
  */
 - (void) sendPerform:(NSMutableDictionary * )dict {
-	//NSLog(@"dict_%@", dict);
-	[[NSNotificationCenter defaultCenter] postNotificationName:OBSERVER_ID object:self userInfo:(id)dict];
+	NSLog(@"dict_%@", dict);
+	[[NSNotificationCenter defaultCenter] postNotificationName:OBSERVER_ID object:nil userInfo:(id)dict];
 }
 
 /**
@@ -670,7 +667,7 @@
  */
 - (void) sendMessage:(NSMutableDictionary * )dict {
 	
-	[dict setValue:[self createLogForNew] forKey:MS_LOGDICTIONARY];
+	[self addCreationLog:dict];
 	
 	
 	//遅延実行キーがある場合
@@ -678,34 +675,6 @@
 	if (delay) {
 		
 		float delayTime = [delay floatValue];
-		
-		//辞書を太らせる部分の話に直結していそう。このキーを使うと破綻する、のだ。ということは、ログには常に辞書を入れておき、その内容を入れ替える、のほうが健全なのか。
-		/**
-		 そも原因はどこだ。このキーなのか。
-		 辞書にキーが無いと受付なくなるだけ。いい事は無い。
-		 
-		 １、キーをこのタイミングで発行するもののみ、変えてみる。
-		 →変わらん。キーが原因ではないのかもしれない。
-		 →確証を得た。原因ではない。アクセスしている要素全てがマズそう。ただし、辞書のみ？　アクセス方法を変更すればいいのだろうか？
-		 
-		 ２、自分自身への投入が問題なのか？
-		 →子供向けでも落ちた。同じ原因か探ろう。
-		 →親の辞書を見ようとして見てる。　遅延実行のタイミングで親に触っちゃだめ、という系統なんだろうか。
-		 
-		 →それっぽい。内容の如何に関わらず。
-		 そうであれば、このログ方法自体に無理がある、という事になる。どうする。
-		 遅延実行での受け側でのログ書き込みをしなければ、問題は発生しない。
-		 遅延実行かどうかを判断し、ログを遅延実行にすれば、あるいは。
-		 ログ記録自体を遅延実行にしてみるか。　うへえ。
-		 
-		 ３、それでも駄目
-		 遅延実行でも駄目な物は駄目らしい。うーん、相手、他人を問わず、また入れる内容に関わらず駄目なのか。そうなのか。
-		 →純粋無垢なDictを作り、やってみようと思う。
-		 
-		 今のところの一時的な回答は、受け取り時の記録を遅延実行に関してのみ行わない、という事。
-		 明確な線が無い。
-		 
-		 */
 		[self sendPerform:dict withDelay:delayTime];
 		
 		return;
@@ -724,24 +693,22 @@
  メッセージIDを作成、いろいろな情報をまとめる
  
  */
-- (NSDictionary * ) createLogForNew {
+- (void) addCreationLog:(NSMutableDictionary * )dict {
+	
 	//ログタイプ、タイムスタンプを作成
 	//メッセージに対してはメッセージIDひも付きの新規ログをつける事になる。
 	//ストアについては、新しいIDのものが出来るとIDの下に保存する。多元木構造になっちゃうなあ。カラムでやった方が良いのかしら？それとも絡み付いたKVSかしら。
 	
-	
 	NSString * messageID = [MessengerIDGenerator getMID];//このメッセージのIDを出力(あとでID認識するため)
 	
-	
-	NSDictionary * newLogDictionary;//ログ内容を初期化する
-	newLogDictionary = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%@", messageID] forKey:MS_LOG_MESSAGEID];
-	
 	//ストアに保存する
-	[self saveToLogStore:@"createLogForNew",
-	 [self tag:MS_LOG_MESSAGEID val:messageID],
-	 nil];
+	[self saveToLogStore:@"createLogForNew" log:[self tag:MS_LOG_MESSAGEID val:messageID]];
 	
-	return newLogDictionary;
+	
+	[dict setValue:messageID forKey:MS_LOGDICTIONARY];//ちょっと内容を変えてる。そのままログをセットする。ただし、キーはメッセージIDではない。
+//	NSDictionary * newLogDictionary;//ログ内容を初期化する
+//	newLogDictionary = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%@", messageID] forKey:MS_LOG_MESSAGEID];
+
 }
 
 
@@ -755,13 +722,12 @@
  */
 - (void) saveLogForReceived:(NSMutableDictionary * ) recievedLogDict {
 	
-	//ログタイプ、タイムスタンプを作成
-	NSString * messageID = (NSString * )[recievedLogDict valueForKey:MS_LOG_MESSAGEID];
-	
-	//ストアに保存する
-	[self saveToLogStore:@"saveLogForReceived",
-	 [self tag:MS_LOG_MESSAGEID val:messageID],
-	 nil];
+//	//ログタイプ、タイムスタンプを作成
+//	NSString * messageID = (NSString * )[recievedLogDict valueForKey:MS_LOG_MESSAGEID];//原因がこれ。まあ取り除いたもんね。
+//	
+//	//ストアに保存する
+//	[self saveToLogStore:@"saveLogForReceived" log:[self tag:MS_LOG_MESSAGEID val:messageID]];
+	[self saveToLogStore:@"saveLogForReceived" log:[self tag:MS_LOG_MESSAGEID val:@"仮ID"]];
 }
 
 
@@ -796,102 +762,64 @@
  可変長ログストア入力
  アウトプットは後で考えよう。
  */
-- (void) saveToLogStore:(NSString * )name, ... {
-	if (false) return;
-	if (false) {
-		
-		[logDict setValue:@"仮" forKey:[NSDate date]];
-		//とりあえず無関係なものを叩き込んでも駄目。うーん。内容ではないらしい。では、アクセス方法そのものに無理がある?
-		
-	} else if (true) {//今までの成功パターン
-		NSLog(@"到達_%@", [self getMyName]);
-		NSLog(@"logDict_%@", logDict);//内容が壊れている。なぜ観測できない？
-		
-		va_list ap;
-		id kvDict;
-		
-		int i = 0;
-		
-		
-		va_start(ap, name);
-		kvDict = va_arg(ap, id);
-
-		
-		while (kvDict) {
-//			NSLog(@"ココに来てる_kvDict_%@", kvDict);//複数件あったらまずいんじゃね？　素直に出せばいい。
-			for (id key in kvDict) {
-				//			NSLog(@"[kvDict valueForKey:key]_%@, key_%@", [kvDict valueForKey:key], key);
-				
-				[logDict setValue:
-				 [NSString stringWithFormat:@"%@ %d %@",name, i, [kvDict valueForKey:key]] 
-						   forKey:
-				 [NSString stringWithFormat:@"%@ %@",[MessengerIDGenerator getMID], [NSDate date]]
-				 ];
-				
-				i++;
-			}
-			
-			kvDict = va_arg(ap, id);
-		}
-		va_end(ap);
-	} else if (false) {
-		
-		va_list ap;
-		NSDictionary * kvDict;
-		
-		
-		
-		va_start(ap, name);
-		kvDict = (NSDictionary * )va_arg(ap, id);
-		
-		
-		NSAssert([kvDict count] == 1, @"ログ内容違反");
-		
-		//解決できる時と出来ない時があるようだ。原因は不明。時間がかかるので逃げてる節がある。どこで時間がかかっているのか、調べれば分かるかもしれない。
-		
-		NSArray * key = [kvDict allKeys];//1件しか無い内容を取得する
-		@try {
-			NSLog(@"開始");
-			[logDict setValue://この行為自体が無理なんじゃね？
-			 [NSString stringWithFormat:@"%@ %@", name, [kvDict valueForKey:[key objectAtIndex:0]]] 
-					   forKey:
-			 [NSString stringWithFormat:@"%@ %@", [MessengerIDGenerator getMID], [NSDate date]]
-			 ];
-			NSLog(@"通過");
-		}
-		@catch (NSException * e) {
-			NSLog(@"error_%@", e);
-		}
-		@finally {
-			
-		}
-		va_end(ap);
-	}
+- (void) saveToLogStore:(NSString * )name log:(NSDictionary * )value {
+	NSLog(@"saveToLogStore_到達_%@", [self getMyName]);
 	
+	NSArray * key = [value allKeys];//1件しか無い内容を取得する
+	//非同期にすると処理に失敗して落ちるみたいね。
+	[logDict setValue:
+	 [NSString stringWithFormat:@"%@ %@", name, [value valueForKey:[key objectAtIndex:0]]] 
+			   forKey:
+	 [NSString stringWithFormat:@"%@ %@", [MessengerIDGenerator getMID], [NSDate date]]
+	 ];
 }
 
 
 /**
  実行処理名を指定、hash値を取得する
+ この時点で飛び込んでくるストリングのポインタと同じ値を直前で出して、合致する値を出せればいいのか、、って定数じゃないが、、一致は出来る、、うーん。
  */
-- (long) getExec:(NSMutableDictionary * )dict {
+- (int) getExec:(NSMutableDictionary * )dict {
 	return [self changeStrToNumber:[dict valueForKey:MS_EXECUTE]];
 }
 
 /**
  NSStringからhash値を出す
  */
-- (long) equalExec:(NSString * )exec {
+- (int) equalToExec:(NSString * )exec {
 	return [self changeStrToNumber:exec];
 }
 
 
+#define MULLE_ELF_STEP(B)	 do { ret=(ret<<4)+B; ret^=(ret>>24)&0xF0; } while(0)//ビットシフトしつつ文字列を数値に変換する。
+
 /**
  文字列の数値化
- hashを用いる。コストが掛かりすぎるかなあ。
  */
-- (long) changeStrToNumber:(NSString * )str {
-	return [str hash];
+- (int) changeStrToNumber:(NSString * )str {
+	
+	
+	const char * bytes = [str UTF8String];
+	unsigned int length = [str lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+	
+	unsigned int ret = 0;
+	int rem = length;//残りの文字数長だけ、４文字ずつ処理を行う
+	
+	while (3 < rem) {
+		MULLE_ELF_STEP(bytes[length - rem]);
+		MULLE_ELF_STEP(bytes[length - rem + 1]);
+		MULLE_ELF_STEP(bytes[length - rem + 2]);
+		MULLE_ELF_STEP(bytes[length - rem + 3]);
+		rem -= 4;
+	}
+	switch (rem) {//ラスト、のこりの文字数部分を計算する
+		case 3:  MULLE_ELF_STEP(bytes[length - 3]);
+		case 2:  MULLE_ELF_STEP(bytes[length - 2]);
+		case 1:  MULLE_ELF_STEP(bytes[length - 1]);
+		case 0:  ;
+	}
+	return ret;
+
 }
 
 
@@ -995,9 +923,8 @@
 - (void) setMyParentMID:(NSString * )parentMID {
 	if ([[self getMyParentMID] isEqualToString:PARENTMID_DEFAULT]) {
 		
-		[self saveToLogStore:@"setMyParentMID",
-		 [self tag:MS_LOG_LOGTYPE_GOTP val:[self getMyParentName]],
-		 nil];
+		[self saveToLogStore:@"setMyParentMID" log:[self tag:MS_LOG_LOGTYPE_GOTP val:[self getMyParentName]]];
+		
 		
 		myParentMID = parentMID;
 		

@@ -61,7 +61,7 @@
 #define PARENTMID_DEFAULT	(@"MESSENGER_SYSTEM_COMMAND:PARENTMID_DEFAULT")//デフォルトのmyParentMID
 #define VIEW_NAME_DEFAULT	(@"MESSENGER_SYSTEM_COMMAND:VIEW_NAME_DEFAULT")//デフォルトのViewのName
 
-
+#define equalExec(m)	(100)//hash計算
 
 @interface MessengerSystem : NSObject {
 	//本体のID
@@ -155,7 +155,7 @@
 /**
  ログシステム
  */
-- (NSMutableDictionary * ) createLogForNew;//メッセージ初期作成ログを内部に保存する/返すメソッド
+- (void) addCreationLog:(NSMutableDictionary * )dict;//メッセージ初期作成ログを内部に保存する/返すメソッド
 - (void) saveLogForReceived:(NSMutableDictionary * )logDict;//受信時に付与するログを内部に保存するメソッド
 - (NSMutableDictionary * ) createLogForReply;//返答送信時に付与するログを内部に保存する/返すメソッド
 
@@ -163,7 +163,7 @@
 /**
  ログストア
  */
-- (void) saveToLogStore:(NSString * )name, ... ;
+- (void) saveToLogStore:(NSString * )name log:(NSDictionary * )value;
 - (NSMutableDictionary * ) getLogStore;//保存されたログ一覧を取得するメソッド
 
 
@@ -172,17 +172,17 @@
 /**
  辞書からsiwtch文で使用する情報を取得する
  */
-- (long) getExec:(NSMutableDictionary * )dict;
+- (int) getExec:(NSMutableDictionary * )dict;
 
 /**
  文字列からswitch文で使用する情報を取得する
  */
-- (long) equalExec:(NSString * )exec;
+- (int) equalToExec:(NSString * )exec;
 
 /**
  ストリングの数値化
  */
-- (long) changeStrToNumber:(NSString * )str;
+- (int) changeStrToNumber:(NSString * )str;
 
 
 

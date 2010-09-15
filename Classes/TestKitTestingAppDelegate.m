@@ -36,20 +36,7 @@
 	
 	paren = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:PARENTNAME];
 //	NSLog(@"paren_%@", [paren getMyMID]);
-	if (true) {
-		MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:@"こども１"];
-		MessengerSystem * child_2 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild2:) withName:@"こども２"];
-		
-		
-		[child_0 inputToMyParentWithName:PARENTNAME];
-		
-		[child_2 inputToMyParentWithName:[child_0 getMyName]];
-		
-		//child_0の子供としてchild_2をセットした際、child_0の名前がchild_2のmyParentにセットしてあるはず。
-		NSMutableDictionary * dict1 = [child_0 getChildDict];
-		
-		return YES;
-	}
+
 	
 	coTestObject * cTest = [[coTestObject alloc] init];
 
@@ -59,7 +46,7 @@
 	 [paren tag:@"one" val:@"1"],
 	 [paren tag:@"two" val:@"2"],
 	 [paren tag:@"three" val:@"3"],
-	 [paren withDelay:0.5],
+	// [paren withDelay:0.5],
 	  nil];
 	
 	
@@ -119,30 +106,27 @@
 	
 	NSMutableDictionary * dict = (NSMutableDictionary *)[notification userInfo];
 	
+	int n = [paren getExec:dict];
+	NSLog(@"testn_%d",n);
+	
+	int m = [paren equalToExec:COMMAND_YEAH];
+	NSLog(@"testm_%d", m);
+	
+	
 	NSString * exec = [dict valueForKey:MS_EXECUTE];
-	NSLog(@"exec1_%@",exec);
+	NSLog(@"test_exec1_%@",exec);
 	
 	if ([exec isEqualToString:COMMAND_YEAH]) {
 		NSLog(@"m_testChild1 返答実行 YEAHHHHHHH!");
-		[paren callMyself:COMMAND_YEAH,
+		[paren callMyself:COMMAND_YEAH,//あー、同期の中の同期なら無制限にループできる。なんか根が深そう。　非同期自体に問題があるみたいだ。
 		 [paren withDelay:0.5],
 		 nil];
 		
 	}
 	
 	
-	switch ([paren getExec:dict]) {
-		case [paren changeStrToNumber:COMMAND_YEAH]:
-			
-			break;
-		default:
-			break;
-	}
 	
 }
-
-
-
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {

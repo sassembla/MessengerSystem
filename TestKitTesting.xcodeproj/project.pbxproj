@@ -14,6 +14,7 @@
 		13455453122A6AB400E348F5 /* coTestObject.h in Sources */ = {isa = PBXBuildFile; fileRef = 13455449122A6A0A00E348F5 /* coTestObject.h */; };
 		13455454122A6AB400E348F5 /* coTestObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 1345544A122A6A0A00E348F5 /* coTestObject.m */; };
 		13A2E99412407C6E007685AD /* MessengerIDGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A2E99312407C6E007685AD /* MessengerIDGenerator.m */; };
+		13A2EA231240A235007685AD /* MessengerIDGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A2E99312407C6E007685AD /* MessengerIDGenerator.m */; };
 		13A9E8D6123D2B3200981224 /* MessengerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13AC407D123CB3E700AAF658 /* MessengerView.m */; };
 		13A9E961123D2F6800981224 /* NameList.h in Sources */ = {isa = PBXBuildFile; fileRef = 13A9E95B123D2F5800981224 /* NameList.h */; };
 		13A9EA65123D49AF00981224 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
@@ -274,6 +275,7 @@
 				13A9E8D6123D2B3200981224 /* MessengerView.m in Sources */,
 				13455453122A6AB400E348F5 /* coTestObject.h in Sources */,
 				13455454122A6AB400E348F5 /* coTestObject.m in Sources */,
+				13A2EA231240A235007685AD /* MessengerIDGenerator.m in Sources */,
 				13A9E961123D2F6800981224 /* NameList.h in Sources */,
 				1345540B122A68A500E348F5 /* MessengerSystem.h in Sources */,
 				1345540C122A68A500E348F5 /* MessengerSystem.m in Sources */,

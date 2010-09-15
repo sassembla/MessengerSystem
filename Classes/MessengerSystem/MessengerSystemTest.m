@@ -352,15 +352,15 @@
  */
 - (void) testCallToNotChild {
 	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
-	
+	NSLog(@"testCallToNotChildテスト到達-1");
 	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];//発信、親認定で+2件
-	
+	NSLog(@"testCallToNotChildテスト到達0");
 	MessengerSystem * child_2 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild2:) withName:TEST_CHILD_NAME_2];
 	[parent call:[child_2 getMyName] withExec:TEST_EXEC, nil];//無効な呼び出し
-	
+	NSLog(@"testCallToNotChildテスト到達1");
 	NSDictionary * parentLogDict = [parent getLogStore];//親の辞書には、子供Aからの通信で1件、存在しない子供Bへの最初の書き込みで0件 1
 	STAssertTrue([parentLogDict count] == 1, [NSString stringWithFormat:@"testCallToNotChild_親の内容1_内容が合致しません_%d", [parentLogDict count]]);	
-	
+	NSLog(@"testCallToNotChildテスト到達2");
 	[child_0 release];
 	[child_2 release];
 }
@@ -375,7 +375,7 @@
 	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
 	
 	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];//発信、親認定で+2件
-	
+	NSLog(@"testCallToNotChild_continueテスト到達1");
 	MessengerSystem * child_2 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild2:) withName:TEST_CHILD_NAME_2];
 	[parent call:[child_2 getMyName] withExec:TEST_EXEC, nil];//無効な呼び出し
 	
@@ -383,7 +383,7 @@
 	NSDictionary * parentLogDict = [parent getLogStore];//親の辞書には、子供Aからの通信で1件、存在しない子供Bへの最初の書き込みで0件 1
 	STAssertTrue([parentLogDict count] == 1, [NSString stringWithFormat:@"親の内容1_内容が合致しません_%d", [parentLogDict count]]);
 	
-	
+	NSLog(@"testCallToNotChild_continueテスト到達2");
 	//親の辞書を調べてみる。
 //	NSDictionary * parentDict = [parent getLogStore];
 	
@@ -391,13 +391,13 @@
 	
 	NSDictionary * child_2Dict = [child_2 getLogStore];
 	STAssertTrue([child_2Dict count] == 2, [NSString stringWithFormat:@"子の内容1_内容が合致しません_%d", [child_2Dict count]]);
-	
+	NSLog(@"testCallToNotChild_continueテスト到達3");
 	
 	//親の辞書には、子供Bからの通信で１件　+1 2
 	STAssertTrue([parentLogDict count] == 2, [NSString stringWithFormat:@"親の内容2_内容が合致しません_%d", [parentLogDict count]]);
 	
 	
-	
+	NSLog(@"testCallToNotChild_continueテスト到達4");
 	
 	[parent call:[child_2 getMyName] withExec:TEST_EXEC, nil];//子供Bへの通信で１件 +1 3
 	
@@ -418,7 +418,7 @@
 	MessengerSystem * child_2 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild2:) withName:TEST_CHILD_NAME_2];
 	
 	[parent call:[child_2 getMyName] withExec:TEST_EXEC, nil];//無効
-	
+	NSLog(@"テスト到達");
 	/**
 	 存在しているがセットされていない相手にcallした後の動作
 	 */
@@ -426,13 +426,15 @@
 	STAssertTrue([parentLogDict count] == 0, [NSString stringWithFormat:@"親の内容1_内容が合致しません_%d", [parentLogDict count]]);
 	
 	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
-	
+	NSLog(@"テスト到達2");
 	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];//発信、親認定で+2件
-	[child_2 inputToMyParentWithName:TEST_PARENT_NAME];//発信、親認定で+2件
+	NSLog(@"テスト到達2.5");
 	
+	[child_2 inputToMyParentWithName:TEST_PARENT_NAME];//発信、親認定で+2件
+	NSLog(@"テスト到達3");
 	NSDictionary * child_0Dict = [child_0 getLogStore];
 	STAssertTrue([child_0Dict count] == 2, [NSString stringWithFormat:@"子の内容1_内容が合致しません_%d", [child_0Dict count]]);
-	
+	NSLog(@"テスト到達4");
 	
 	//親の辞書には、子供Aからの通信で１件 、子供Bからの通信で１件 2
 	STAssertTrue([parentLogDict count] == 2, [NSString stringWithFormat:@"親の内容2_内容が合致しません_%d", [parentLogDict count]]);
@@ -513,6 +515,8 @@
 	STAssertTrue([parentDict count] == 3, [NSString stringWithFormat:@"親の内容3_内容が合致しません_%d", [parentDict count]]);
 	
 	[child_0 release];
+	[child_1 release];
+	[parent2 release];
 }
 
 
@@ -537,6 +541,7 @@
 	STAssertTrue([parentDict_1 count] == 0, @"親として認定されてしまっている？");
 	
 	[child_0 release];
+	[parent2 release];
 }
 
 /*
@@ -643,13 +648,14 @@
 //	[child_0 inputToMyParentWithName:[parent getMyName]];
 	
 //	[parent callMyself:@"テスト", 
-	MessengerSystem * s = [[MessengerSystem alloc] initWithBodyID:self withSelector:nil withName:@"じぶん"];
-	[s callMyself:@"テスト",
+	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:nil withName:@"じぶん"];
+	[child_0 callMyself:@"テスト",
 	 [parent withDelay:0.3],
 	 nil];
 	
 	//STFail(@"確認");
 	//テストの結果を知るには、、、、どうすればいいんだ。返り値を判断する機構でもあればいいんだけど。
+	[child_0 release];
 }
 
 
@@ -667,25 +673,45 @@
 
 /**
  文字列の数値化
+ どうやって一意だと検証しようかな。
  */
 - (void) testCharToNumber {
-	NSString * str = @"A7058498-B94C-4998-A2EF-4046BCB79AA3";
+	NSString * str;
 	
-	STAssertTrue([parent changeStrToNumber:str] == 884320442, [NSString stringWithFormat:@"異なる1_%d", [parent changeStrToNumber:str]]);
+	str = @"A7058498-B94C-4998-A2EF-4046BCB79AA3";
+	STAssertTrue([parent changeStrToNumber:str] == 635213667, [NSString stringWithFormat:@"異なる1_%d", [parent changeStrToNumber:str]]);
 
-	str = @"あたい";
-	STAssertTrue([parent changeStrToNumber:str] == -759143384, [NSString stringWithFormat:@"異なる1_%d", [parent changeStrToNumber:str]]);
+	str = @"亜";
+	STAssertTrue([parent changeStrToNumber:str] == -65332, [NSString stringWithFormat:@"異なる2.0_%d", [parent changeStrToNumber:str]]);
+	
+	str = @"あ";
+	STAssertTrue([parent changeStrToNumber:str] == -64670, [NSString stringWithFormat:@"異なる2.1_%d", [parent changeStrToNumber:str]]);
+	
+	str = @"い";
+	STAssertTrue([parent changeStrToNumber:str] == -64668, [NSString stringWithFormat:@"異なる2.2_%d", [parent changeStrToNumber:str]]);
+	
+	str = @"う";
+	STAssertTrue([parent changeStrToNumber:str] == -64666, [NSString stringWithFormat:@"異なる2.3_%d", [parent changeStrToNumber:str]]);
+	
+	str = @"え";
+	STAssertTrue([parent changeStrToNumber:str] == -64664, [NSString stringWithFormat:@"異なる2.4_%d", [parent changeStrToNumber:str]]);
 	
 	
-//	str = @"A7058498-B94C-4998-A2EF-4046BCB79AA4";
-//	STAssertTrue([parent changeStrToNumber:str] == 12977836, [NSString stringWithFormat:@"異なる2_%d", [parent changeStrToNumber:str]]);
-//	
-//	str = @"A7058498-B94C-4998-A2EF-4046BCB79AA5";
-//	STAssertTrue([parent changeStrToNumber:str] == 12977868, [NSString stringWithFormat:@"異なる3_%d", [parent changeStrToNumber:str]]);
-//
-//	str = @"AAAAAAA8-B94C-4998-A2EF-4046BCB79AA5";
-//	STAssertTrue([parent changeStrToNumber:str] == 12977868, [NSString stringWithFormat:@"異なる4_%d", [parent changeStrToNumber:str]]);
+	str = @"A7058498-B94C-4998-A2EF-4046BCB79AA4";
+	STAssertTrue([parent changeStrToNumber:str] == 635213668, [NSString stringWithFormat:@"異なる3_%d", [parent changeStrToNumber:str]]);
+	
+	str = @"A7058498-B94C-4998-A2EF-4046BCB79AA5";
+	STAssertTrue([parent changeStrToNumber:str] == 635213669, [NSString stringWithFormat:@"異なる4_%d", [parent changeStrToNumber:str]]);
+
+	str = @"AAAAAAA8-B94C-4998-A2EF-4046BCB79AA4";
+	STAssertTrue([parent changeStrToNumber:str] == -2084701500, [NSString stringWithFormat:@"異なる5_%d", [parent changeStrToNumber:str]]);
+	
+	str = @"A7058498-B94C-4998-A2EF-4046BCB79AA4";
+	STAssertTrue([parent changeStrToNumber:str] == 635213668, [NSString stringWithFormat:@"異なる6 s4_%d", [parent changeStrToNumber:str]]);
+	
 }
+
+
 
 
 /**
@@ -731,6 +757,7 @@
 	STAssertTrue([mButtonDict count] == 1, [NSString stringWithFormat:@"ButtonDict件数が合っていない_%d", [mButtonDict count]]);
 
 	[child_0 resetMyParentData];//一件成立している親子関係を破壊
+	
 	
 	//この時点で親ラインが消えている筈
 	STAssertTrue([mViewDict count] == 0, [NSString stringWithFormat:@"ViewDict件数が合っていない_%d", [mViewDict count]]);
