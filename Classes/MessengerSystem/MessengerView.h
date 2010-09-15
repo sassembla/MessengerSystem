@@ -29,20 +29,20 @@
  通信してきた対象の情報をviewDictへと保持しておくメソッド
  */
 - (void) setMessengerInformation:(NSString * )senderName 
-						withMSID:(NSString * )senderMSID 
+						withMID:(NSString * )senderMID 
 				  withParentName:(NSString * )sendersParentName 
-				  withParentMSID:(NSString * )sendersParentMSID;
+				  withParentMID:(NSString * )sendersParentMSID;
 /**
  通信してきた対象の情報をviwDictから削除するメソッド
  */
 - (void) removeMessengerInformation:(NSString * )senderName 
-						   withMSID:(NSString * )senderMSID 
+						   withMID:(NSString * )senderMID 
 					 withParentName:(NSString * )sendersParentName 
-					 withParentMSID:(NSString * )sendersParentMSID;
+					 withParentMID:(NSString * )sendersParentMSID;
 /**
- NameとMSIDのペアを作るメソッド
+ NameとMIDのペアを作るメソッド
  */
-- (NSString * ) createMessengerInformation:(NSString * )name withMSID:(NSString * )MSID;
+- (NSString * ) createMessengerInformation:(NSString * )name withMID:(NSString * )MID;
 
 /**
  ボタン、Messengerのリスト辞書を渡す
@@ -62,7 +62,7 @@
 
 - (void) callMyself:(NSString * )exec, ...;//空実装
 - (void) call:(NSString * )name withExec:(NSString * )exec, ...;//空実装
-- (void) callChild:(NSString * )childName withMSID:(NSString * ) withCommand:(NSString * )exec, ...;//空実装
+- (void) callChild:(NSString * )childName withMID:(NSString * ) withCommand:(NSString * )exec, ...;//空実装
 - (void) callParent:(NSString * )exec, ...;//空実装8
 
 

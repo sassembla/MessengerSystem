@@ -28,17 +28,17 @@
 	#define MS_CATEGOLY_PARENTREMOVE	(@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_PARENTREMOVE")//親の登録を消す
 
 #define MS_SENDERNAME	(@"MESSENGER_SYSTEM_COMMAND:LOGGED_SENDER_NAME")//自分の名前に類するキー
-#define MS_SENDERMSID	(@"MESSENGER_SYSTEM_COMMAND:LOGGED_SENDER_MSID")//自分固有のMSIDに類するキー
+#define MS_SENDERMID	(@"MESSENGER_SYSTEM_COMMAND:LOGGED_SENDER_MID")//自分固有のMIDに類するキー
 
 //実行内容に関するタグ
 #define MS_ADDRESS_NAME	(@"MESSENGER_SYSTEM_COMMAND:ADDRESS_NAME")//宛先名
-#define MS_ADDRESS_MSID	(@"MESSENGER_SYSTEM_COMMAND:ADDRESS_MSID")//宛先MSID
+#define MS_ADDRESS_MID	(@"MESSENGER_SYSTEM_COMMAND:ADDRESS_MID")//宛先MID
 #define MS_EXECUTE		(@"MESSENGER_SYSTEM_COMMAND:EXECUTE")//実行内容名
 
 
 //Parentに関するタグ
 #define MS_PARENTNAME	(@"MESSENGER_SYSTEM_COMMAND:PARENT_NAME")//親の名前に類するキー
-#define MS_PARENTMSID	(@"MESSENGER_SYSTEM_COMMAND:PARENT_MSID")//親の固有IDに類するキー
+#define MS_PARENTMID	(@"MESSENGER_SYSTEM_COMMAND:PARENT_MID")//親の固有MIDに類するキー
 
 //メソッド実行オプションに関するタグ
 #define MS_RETURN		(@"MESSENGER_SYSTEM_COMMAND:RETURN")//フック実行メソッドの指定オプションに類するキー 未実装
@@ -58,7 +58,7 @@
 
 //初期化内容
 #define PARENTNAME_DEFAULT	(@"MESSENGER_SYSTEM_COMMAND:PARENTNAME_DEFAULT")//デフォルトのmyParentName
-#define PARENTMSID_DEFAULT	(@"MESSENGER_SYSTEM_COMMAND:PARENTMSID_DEFAULT")//デフォルトのmyParentMSID
+#define PARENTMID_DEFAULT	(@"MESSENGER_SYSTEM_COMMAND:PARENTMID_DEFAULT")//デフォルトのmyParentMID
 #define VIEW_NAME_DEFAULT	(@"MESSENGER_SYSTEM_COMMAND:VIEW_NAME_DEFAULT")//デフォルトのViewのName
 
 
@@ -75,14 +75,14 @@
 	NSString * myName;
 	
 	//自分のID	NSString
-	NSString * myMSID;
+	NSString * myMID;
 	
 	
 	//親の名前	NSString
 	NSString * myParentName;
 	
 	//親のID		NSString
-	NSString * myParentMSID;
+	NSString * myParentMID;
 	
 	
 	//子供の名前とIDを保存する辞書	NSMutableDictionary
@@ -113,7 +113,7 @@
  内部実行メソッド
  */
 - (void) inputToMyParentWithName:(NSString * )parent;//親への登録メソッド
-- (void) decidedParentName:(NSString * )parentName withParentMSID:(NSString * )parentMSID;//親への登録完了時の声明発行メソッド
+- (void) decidedParentName:(NSString * )parentName withParentMID:(NSString * )parentMID;//親への登録完了時の声明発行メソッド
 - (void) removeMyParentData;//親情報を初期化する通信を行うメソッド
 
 
@@ -121,7 +121,7 @@
 
 - (void) callMyself:(NSString * )exec, ...;//自分自身への通信メソッド
 - (void) call:(NSString * )childName withExec:(NSString * )exec, ...;//特定の子への通信用メソッド
-- (void) call:(NSString * )childName withMSID:(NSString * ) withExec:(NSString * )exec, ...;//特定の子への通信用メソッド childのMSIDを用いる。
+- (void) call:(NSString * )childName withMID:(NSString * ) withExec:(NSString * )exec, ...;//特定の子への通信用メソッド childのMIDを用いる。
 - (void) callParent:(NSString * )exec, ...;//親への通信用メソッド
 
 
@@ -132,10 +132,10 @@
 
 
 /**
- 子供辞書に子供のmyName,myMSIDを保存する
+ 子供辞書に子供のmyName,myMIDを保存する
  */
-- (void) setChildDictChildNameAsValue:(NSString * )senderName withMSIDAsKey:(NSString * )senderMSID;
-- (void) removeChildDictChildNameAsValue:(NSString * )senderName withMSIDAsKey:(NSString * )senderMSID;
+- (void) setChildDictChildNameAsValue:(NSString * )senderName withMIDAsKey:(NSString * )senderMID;
+- (void) removeChildDictChildNameAsValue:(NSString * )senderName withMIDAsKey:(NSString * )senderMID;
 - (NSMutableDictionary * ) getChildDict;
 
 
@@ -167,16 +167,24 @@
 - (NSMutableDictionary * ) getLogStore;//保存されたログ一覧を取得するメソッド
 
 
+
+
+/**
+ 辞書からsiwtch文で使用する情報を取得する
+ */
+- (long) getExec:(NSMutableDictionary * )dict;
+
+/**
+ 文字列からswitch文で使用する情報を取得する
+ */
+- (long) equalExec:(NSString * )exec;
+
 /**
  ストリングの数値化
  */
-- (int) changeStrToNumber:(NSString * )str;
+- (long) changeStrToNumber:(NSString * )str;
 
 
-/**
- UUIDを返すメソッド
- */
-- (NSString * ) getUUID;
 
 
 
@@ -193,8 +201,8 @@
 - (void)setMyName:(NSString * )name;
 - (NSString * )getMyName;
 
-- (void)initMyMSID;
-- (NSString * )getMyMSID;
+- (void)initMyMID;
+- (NSString * )getMyMID;
 
 
 - (void) initMyParentData;
@@ -202,9 +210,8 @@
 - (void) setMyParentName:(NSString * )parent;
 - (NSString * )getMyParentName;
 
-- (void) setMyParentMSID:(NSString * )parentMSID;
-- (NSString * )getMyParentMSID;
+- (void) setMyParentMID:(NSString * )parentMID;
+- (NSString * )getMyParentMID;
 
-- (void) gagaga;//パフォーマンス実行のテスト
 
 @end

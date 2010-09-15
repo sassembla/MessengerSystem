@@ -7,6 +7,7 @@
 //
 
 #import "MessengerSystem.h"
+#import "MessengerIDGenerator.h"
 #import <unistd.h>
 
 @implementation MessengerSystem
@@ -21,7 +22,7 @@
 		[self setMyName:name];
 		[self setMyBodyID:body_id];
 		[self setMyBodySelector:body_selector];
-		[self initMyMSID];
+		[self initMyMID];
 		[self initMyParentData];
 		
 		childDict = [NSMutableDictionary dictionaryWithCapacity:1];
@@ -34,7 +35,7 @@
 
 
 /**
- 親へと自分が子供である事の通知を行い、返り値として親のMSIDを受け取るメソッド
+ 親へと自分が子供である事の通知を行い、返り値として親のMIDを受け取るメソッド
  受け取り用のメソッドの情報を親へと渡し、親からの入力をダイレクトに受ける。
  */
 - (void) inputToMyParentWithName:(NSString * )parent {
@@ -55,18 +56,18 @@
 	
 	
 	[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
-	[dict setValue:[self getMyMSID] forKey:MS_SENDERMSID];
+	[dict setValue:[self getMyMID] forKey:MS_SENDERMID];
 	
 	
 	[dict setValue:self forKey:MS_SENDERID];
 	
 	//フック
 	//特定のメソッドの実行を命令づける、リタンダンシー設定
-	//IMP func = [self methodForSelector:@selector(setMyParentMSID:)];
-	//(*func)(self,@selector(setMyParentMSID:),@"ついた");
+	//IMP func = [self methodForSelector:@selector(setMyParentMID:)];
+	//(*func)(self,@selector(setMyParentMID:),@"ついた");
 	
 	//NSInvocationでの実装
-	[dict setValue:[self methodSignatureForSelector:@selector(setMyParentMSID:)] forKey:MS_RETURN];
+	[dict setValue:[self methodSignatureForSelector:@selector(setMyParentMID:)] forKey:MS_RETURN];
 	
 	
 	//ログを作成する
@@ -77,24 +78,24 @@
 	[self sendPerform:dict];
 	
 	
-	NSAssert1([self getMyParentMSID], @"指定した親が存在しないようです。parentに指定している名前を確認してください_現在指定されているparentは_%@",[self getMyParentName]);
+	NSAssert1([self getMyParentMID], @"指定した親が存在しないようです。parentに指定している名前を確認してください_現在指定されているparentは_%@",[self getMyParentName]);
 }
 
 /**
  親が決定した事をお知らせする
  受け取っても行う処理の存在しない、宛先の無いメソッド
  */
-- (void) decidedParentName:(NSString * )parentName withParentMSID:(NSString * )parentMSID {
+- (void) decidedParentName:(NSString * )parentName withParentMID:(NSString * )parentMID {
 	
 	NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:5];
 	
 	[dict setValue:MS_CATEGOLY_GOTPARENT forKey:MS_CATEGOLY];
 	
 	[dict setValue:[self getMyParentName] forKey:MS_PARENTNAME];
-	[dict setValue:[self getMyParentMSID] forKey:MS_PARENTMSID];
+	[dict setValue:[self getMyParentMID] forKey:MS_PARENTMID];
 	
 	[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
-	[dict setValue:[self getMyMSID] forKey:MS_SENDERMSID];
+	[dict setValue:[self getMyMID] forKey:MS_SENDERMID];
 	
 	//最終送信処理
 	[self sendPerform:dict];
@@ -108,10 +109,10 @@
 	[dict setValue:MS_CATEGOLY_PARENTREMOVE forKey:MS_CATEGOLY];
 	
 	[dict setValue:[self getMyParentName] forKey:MS_ADDRESS_NAME];
-	[dict setValue:[self getMyParentMSID] forKey:MS_ADDRESS_MSID];
+	[dict setValue:[self getMyParentMID] forKey:MS_ADDRESS_MID];
 	
 	[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
-	[dict setValue:[self getMyMSID] forKey:MS_SENDERMSID];
+	[dict setValue:[self getMyMID] forKey:MS_SENDERMID];
 	
 	//ログを作成する
 	[dict setValue:[self createLogForNew] forKey:MS_LOGDICTIONARY];
@@ -120,15 +121,6 @@
 	[self sendPerform:dict];
 	
 }
-
-
-/**
- パフォーマンス実行のテストケース
- */
-- (void) gagaga {
-	NSLog(@"currentThread_1_self=%@, %@", [self getMyName], [NSThread currentThread]);
-}
-	
 
 
 /**
@@ -157,9 +149,9 @@
 	}
 	
 	
-	//送信者MSID
-	NSString * senderMSID = [dict valueForKey:MS_SENDERMSID];
-	if (!senderMSID) {//送信者不詳であれば無視する
+	//送信者MID
+	NSString * senderMID = [dict valueForKey:MS_SENDERMID];
+	if (!senderMID) {//送信者不詳であれば無視する
 		NSLog(@"送信者ID不詳");
 		return;
 	}
@@ -222,8 +214,8 @@
 			return;
 		}
 		
-		if (![senderMSID isEqualToString:[self getMyMSID]]) {//MSIDが異なれば処理をしない
-			NSLog(@"名前が同様の異なるMSIDを持つオブジェクト");
+		if (![senderMID isEqualToString:[self getMyMID]]) {//MIDが異なれば処理をしない
+			NSLog(@"名前が同様の異なるMIDを持つオブジェクト");
 			return;
 		}
 		
@@ -290,16 +282,16 @@
 		}
 		
 		
-		//宛先MSIDのキーがあるか
-		NSString * calledParentMSID = [dict valueForKey:MS_ADDRESS_MSID];
+		//宛先MIDのキーがあるか
+		NSString * calledParentMSID = [dict valueForKey:MS_ADDRESS_MID];
 		if (!calledParentMSID) {
-			NSLog(@"親のMSIDの入力が無ければ無効");
+			NSLog(@"親のMIDの入力が無ければ無効");
 			return;//値が無ければ無視する
 		}
 		
 		
-		//自分のMSIDと一致するか
-		if (![calledParentMSID isEqualToString:[self getMyMSID]]) {
+		//自分のMIDと一致するか
+		if (![calledParentMSID isEqualToString:[self getMyMID]]) {
 			NSLog(@"同名の親が存在するが、呼ばれている親と異なるため無効");
 			return;
 		}
@@ -331,8 +323,8 @@
 		}
 		
 		//送信者が自分であれば無視する 自分から自分へのメッセージの無視
-		if ([[recievedLogDict valueForKey:MS_SENDERMSID] isEqualToString:[self getMyMSID]]) {
-			NSLog(@"自分が送信者なので無視する_%@", [self getMyMSID]);
+		if ([[recievedLogDict valueForKey:MS_SENDERMID] isEqualToString:[self getMyMID]]) {
+			NSLog(@"自分が送信者なので無視する_%@", [self getMyMID]);
 			return;
 		}
 		
@@ -354,8 +346,8 @@
 			
 			
 			
-			//親は先着順で設定される。既に子供が自分と同名の親にアクセスし、そのMSIDを持っている場合があり得るため、ここで子供の持っている親MSIDを確認する必要がある
-			if (![[senderID getMyParentMSID] isEqualToString:PARENTMSID_DEFAULT]) {
+			//親は先着順で設定される。既に子供が自分と同名の親にアクセスし、そのMIDを持っている場合があり得るため、ここで子供の持っている親MIDを確認する必要がある
+			if (![[senderID getMyParentMID] isEqualToString:PARENTMID_DEFAULT]) {
 				//				NSLog(@"親は先着順で既に設定されているようです");
 				return;
 			}
@@ -366,8 +358,8 @@
 			
 			
 			NSLog(@"自分に対して子供から親になる宣言をされた、辞書作成直前");
-			//親が居ないと子が生まれない構造。 senderMSIDをキーとし、子供辞書を作る。
-			[self setChildDictChildNameAsValue:senderName withMSIDAsKey:senderMSID];
+			//親が居ないと子が生まれない構造。 senderMIDをキーとし、子供辞書を作る。
+			[self setChildDictChildNameAsValue:senderName withMIDAsKey:senderMID];
 			NSLog(@"辞書作成まで完了");
 			
 			
@@ -388,9 +380,9 @@
 			//NSInvocationを使った実装
 			//他者が、自分の持っているメソッドを送り出し、よそでの実行を望むパターンを作りたい。持ってきて実行するにあたり、受け取って実行する方は、全て匿名で実行させたい。
 			invocation = [NSInvocation invocationWithMethodSignature:signature];
-			[invocation setSelector:@selector(setMyParentMSID:)];//ここに書くメソッド名、直書きしかないのか！？　なんと無意味な。セレクターを持って来れるんだろうか。
+			[invocation setSelector:@selector(setMyParentMID:)];//ここに書くメソッド名、直書きしかないのか！？　なんと無意味な。セレクターを持って来れるんだろうか。
 			[invocation setTarget:senderID];
-			NSString * myMSIDforchild = [self getMyMSID];
+			NSString * myMSIDforchild = [self getMyMID];
 			[invocation setArgument:&myMSIDforchild atIndex:2];//0,1が埋まっているから固定値,,
 			
 			[invocation invoke];
@@ -414,9 +406,9 @@
 			return;
 		}
 		
-		//自分宛かどうか、MSIDで判断
-		//宛先MSIDのキーがあるか
-		NSString * calledParentMSID = [dict valueForKey:MS_ADDRESS_MSID];
+		//自分宛かどうか、MIDで判断
+		//宛先MIDのキーがあるか
+		NSString * calledParentMSID = [dict valueForKey:MS_ADDRESS_MID];
 		if (!calledParentMSID) {
 			return;
 		}
@@ -427,7 +419,7 @@
 		
 		
 		//自分の子供辞書にある、子供情報を削除する
-		[self removeChildDictChildNameAsValue:senderName withMSIDAsKey:senderMSID];
+		[self removeChildDictChildNameAsValue:senderName withMIDAsKey:senderMID];
 			
 		return;
 	}
@@ -438,18 +430,18 @@
 
 
 /**
- 自分をParentとして指定してきたChildについて、子供のmyNameとmyMSIDを自分のchildDictに登録する。
+ 自分をParentとして指定してきたChildについて、子供のmyNameとmyMIDを自分のchildDictに登録する。
  */
-- (void) setChildDictChildNameAsValue:(NSString * )senderName withMSIDAsKey:(NSString * )senderMSID {
+- (void) setChildDictChildNameAsValue:(NSString * )senderName withMIDAsKey:(NSString * )senderMID {
 	
-	[[self getChildDict] setValue:senderName forKey:senderMSID];
+	[[self getChildDict] setValue:senderName forKey:senderMID];
 	
 }
 /**
  子供からの要請で、childDictから該当の子供情報を削除する
  */
-- (void) removeChildDictChildNameAsValue:(NSString * )senderName withMSIDAsKey:(NSString * )senderMSID {
-	[[self getChildDict] removeObjectForKey:senderMSID];//無かったらどうしよう、、、
+- (void) removeChildDictChildNameAsValue:(NSString * )senderName withMIDAsKey:(NSString * )senderMID {
+	[[self getChildDict] removeObjectForKey:senderMID];//無かったらどうしよう、、、
 }
 
 
@@ -499,7 +491,7 @@
 	
 	[dict setValue:exec forKey:MS_EXECUTE];
 	[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
-	[dict setValue:[self getMyMSID] forKey:MS_SENDERMSID];
+	[dict setValue:[self getMyMID] forKey:MS_SENDERMID];
 	
 	va_list ap;
 	id kvDict;
@@ -544,7 +536,7 @@
 //	[childDict allValues]//NSArray コストは概ね一緒かな。 特定のキーが含まれているか否か、を隠蔽したいか否か
 	
 	
-	//親から子へのブロードキャスト MSIDで送り先を限定しない。
+	//親から子へのブロードキャスト MIDで送り先を限定しない。
 	for (id key in childDict) {
 		//NSLog(@"key: %@, value: %@", key, [childDict objectForKey:key]);//この件数分だけ出す必要は無い！　一件出せればいい。特に限定が必要な場合もそう。
 		if ([[childDict objectForKey:key] isEqualToString:childName]) {//一つでも合致する内容のものがあれば、メッセージを送る対象として見る。
@@ -555,7 +547,7 @@
 			
 			[dict setValue:exec forKey:MS_EXECUTE];
 			[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
-			[dict setValue:[self getMyMSID] forKey:MS_SENDERMSID];
+			[dict setValue:[self getMyMID] forKey:MS_SENDERMID];
 			
 			va_list ap;
 			id kvDict;
@@ -588,9 +580,9 @@
 
 
 /**
- 特定の子への通信を行うメソッド、特にMSIDを使い、相手を最大限特定する。
+ 特定の子への通信を行うメソッド、特にMIDを使い、相手を最大限特定する。
  */
-- (void) call:(NSString * )childName withMSID:(NSString * ) withExec:(NSString * )exec, ... {
+- (void) call:(NSString * )childName withMID:(NSString * ) withExec:(NSString * )exec, ... {
 	NSAssert(false, @"開発中のメソッドです");
 }
 
@@ -608,12 +600,12 @@
 		
 		[dict setValue:MS_CATEGOLY_CALLPARENT forKey:MS_CATEGOLY];
 		[dict setValue:[self getMyParentName] forKey:MS_ADDRESS_NAME];
-		[dict setValue:[self getMyParentMSID] forKey:MS_ADDRESS_MSID];
+		[dict setValue:[self getMyParentMID] forKey:MS_ADDRESS_MID];
 		
 		
 		[dict setValue:exec forKey:MS_EXECUTE];
 		[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
-		[dict setValue:[self getMyMSID] forKey:MS_SENDERMSID];
+		[dict setValue:[self getMyMID] forKey:MS_SENDERMID];
 		
 		
 		//tag付けされた要素以外は無視するように設定
@@ -738,7 +730,7 @@
 	//ストアについては、新しいIDのものが出来るとIDの下に保存する。多元木構造になっちゃうなあ。カラムでやった方が良いのかしら？それとも絡み付いたKVSかしら。
 	
 	
-	NSString * messageID = [self getUUID];//このメッセージのIDを出力(あとでID認識するため)
+	NSString * messageID = [MessengerIDGenerator getMID];//このメッセージのIDを出力(あとでID認識するため)
 	
 	
 	NSDictionary * newLogDictionary;//ログ内容を初期化する
@@ -805,13 +797,13 @@
  アウトプットは後で考えよう。
  */
 - (void) saveToLogStore:(NSString * )name, ... {
-	if (true) return;
-	if (true) {
+	if (false) return;
+	if (false) {
 		
 		[logDict setValue:@"仮" forKey:[NSDate date]];
 		//とりあえず無関係なものを叩き込んでも駄目。うーん。内容ではないらしい。では、アクセス方法そのものに無理がある?
 		
-	} else if (false) {//今までの成功パターン
+	} else if (true) {//今までの成功パターン
 		NSLog(@"到達_%@", [self getMyName]);
 		NSLog(@"logDict_%@", logDict);//内容が壊れている。なぜ観測できない？
 		
@@ -833,7 +825,7 @@
 				[logDict setValue:
 				 [NSString stringWithFormat:@"%@ %d %@",name, i, [kvDict valueForKey:key]] 
 						   forKey:
-				 [NSString stringWithFormat:@"%@ %@",[self getUUID], [NSDate date]]
+				 [NSString stringWithFormat:@"%@ %@",[MessengerIDGenerator getMID], [NSDate date]]
 				 ];
 				
 				i++;
@@ -863,7 +855,7 @@
 			[logDict setValue://この行為自体が無理なんじゃね？
 			 [NSString stringWithFormat:@"%@ %@", name, [kvDict valueForKey:[key objectAtIndex:0]]] 
 					   forKey:
-			 [NSString stringWithFormat:@"%@ %@", [self getUUID], [NSDate date]]
+			 [NSString stringWithFormat:@"%@ %@", [MessengerIDGenerator getMID], [NSDate date]]
 			 ];
 			NSLog(@"通過");
 		}
@@ -879,30 +871,29 @@
 }
 
 
+/**
+ 実行処理名を指定、hash値を取得する
+ */
+- (long) getExec:(NSMutableDictionary * )dict {
+	return [self changeStrToNumber:[dict valueForKey:MS_EXECUTE]];
+}
 
+/**
+ NSStringからhash値を出す
+ */
+- (long) equalExec:(NSString * )exec {
+	return [self changeStrToNumber:exec];
+}
 
 
 /**
  文字列の数値化
+ hashを用いる。コストが掛かりすぎるかなあ。
  */
-- (int) changeStrToNumber:(NSString * )str {
-//	NSLog(@"str_%d", str);
-	
-	char *myCString = "This is a string.";
-	NSValue *theValue = [NSValue value:&myCString withObjCType:@encode(char **)];
-	
-	NSLog(@"theValue_%@", theValue);
-	return -1;//[str cString];
+- (long) changeStrToNumber:(NSString * )str {
+	return [str hash];
 }
 
-
-/**
- UUIDを作成して返すメソッド
- クラスメソッドの必要があるんだろうな。。。それ用のクラス作って分離しようかな。
- */
-- (NSString * ) getUUID {
-	return (NSString * )CFUUIDCreateString(nil, CFUUIDCreate(nil));
-}
 
 
 
@@ -949,16 +940,16 @@
 
 
 /**
- 自分のMSIDを初期化するメソッド
+ 自分のMIDを初期化するメソッド
  */
-- (void)initMyMSID {
-	myMSID = [self getUUID];
+- (void)initMyMID {
+	myMID = [MessengerIDGenerator getMID];
 }
 /**
- 自分のMSIDを返すメソッド
+ 自分のMIDを返すメソッド
  */
-- (NSString * )getMyMSID {
-	return myMSID;
+- (NSString * )getMyMID {
+	return myMID;
 }
 
 
@@ -968,7 +959,7 @@
  */
 - (void) initMyParentData {
 	[self setMyParentName:PARENTNAME_DEFAULT];
-	myParentMSID = PARENTMSID_DEFAULT;
+	myParentMID = PARENTMID_DEFAULT;
 }
 /**
  親情報をリセットする
@@ -995,29 +986,29 @@
 
 
 /**
- 自分から見た親のMSIDをセットするメソッド
+ 自分から見た親のMIDをセットするメソッド
  外部から呼ばれるように設計されている。
  親が複数要るケースは想定し排除してある。
  
  本メソッドは条件を満たした親から起動されるメソッドになっており、自分から呼ぶ事は無い。
  */
-- (void) setMyParentMSID:(NSString * )parentMSID {
-	if ([[self getMyParentMSID] isEqualToString:PARENTMSID_DEFAULT]) {
+- (void) setMyParentMID:(NSString * )parentMID {
+	if ([[self getMyParentMID] isEqualToString:PARENTMID_DEFAULT]) {
 		
-		[self saveToLogStore:@"setMyParentMSID",
+		[self saveToLogStore:@"setMyParentMID",
 		 [self tag:MS_LOG_LOGTYPE_GOTP val:[self getMyParentName]],
 		 nil];
 		
-		myParentMSID = parentMSID;
+		myParentMID = parentMID;
 		
-		[self decidedParentName:[self getMyParentName] withParentMSID:[self getMyParentMSID]];
+		[self decidedParentName:[self getMyParentName] withParentMID:[self getMyParentMID]];
 	}	
 }
 /**
- 親のMSIDを返すメソッド
+ 親のMIDを返すメソッド
  */
-- (NSString * )getMyParentMSID {
-	return myParentMSID;
+- (NSString * )getMyParentMID {
+	return myParentMID;
 }
 
 
@@ -1038,14 +1029,14 @@
 	myName = nil;
 	
 	//自分のID	NSString
-	myMSID = nil;
+	myMID = nil;
 	
 	
 	//親の名前	NSString
 	myParentName = nil;
 	
 	//親のID		NSString
-	myParentMSID = nil;
+	myParentMID = nil;
 	
 	
 	//子供の名前とIDを保存する辞書	NSMutableDictionary

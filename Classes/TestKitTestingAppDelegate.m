@@ -25,6 +25,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
    // coTestObject * cTest = [[coTestObject alloc] init];
 	
+	
+	
 	MessengerView * view = [[MessengerView alloc] initWithFrame:window.frame];
 	
 	UIViewController * vController = [[UIViewController alloc] init];//うーん、オーバーライド無しには回転するように出来ない、ってのはちと、、
@@ -33,8 +35,21 @@
 	
 	
 	paren = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:PARENTNAME];
-//	NSLog(@"paren_%@", [paren getMyMSID]);
-	
+//	NSLog(@"paren_%@", [paren getMyMID]);
+	if (true) {
+		MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:@"こども１"];
+		MessengerSystem * child_2 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild2:) withName:@"こども２"];
+		
+		
+		[child_0 inputToMyParentWithName:PARENTNAME];
+		
+		[child_2 inputToMyParentWithName:[child_0 getMyName]];
+		
+		//child_0の子供としてchild_2をセットした際、child_0の名前がchild_2のmyParentにセットしてあるはず。
+		NSMutableDictionary * dict1 = [child_0 getChildDict];
+		
+		return YES;
+	}
 	
 	coTestObject * cTest = [[coTestObject alloc] init];
 
@@ -113,6 +128,15 @@
 		 [paren withDelay:0.5],
 		 nil];
 		
+	}
+	
+	
+	switch ([paren getExec:dict]) {
+		case [paren changeStrToNumber:COMMAND_YEAH]:
+			
+			break;
+		default:
+			break;
 	}
 	
 }

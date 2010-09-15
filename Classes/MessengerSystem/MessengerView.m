@@ -34,7 +34,7 @@
 		[self setMyName:VIEW_NAME_DEFAULT];
 		[self setMyBodyID:nil];
 		[self setMyBodySelector:nil];
-		[self initMyMSID];
+		[self initMyMID];
 		[self initMyParentData];
 		
 		buttonDict = [NSMutableDictionary dictionaryWithCapacity:1];
@@ -72,9 +72,9 @@
 	}
 	
 	
-	//送信者MSID
-	NSString * senderMSID = [dict valueForKey:MS_SENDERMSID];
-	if (!senderMSID) {//送信者不詳であれば無視する
+	//送信者MID
+	NSString * senderMID = [dict valueForKey:MS_SENDERMID];
+	if (!senderMID) {//送信者不詳であれば無視する
 		NSLog(@"送信者ID不詳");
 		return;
 	}
@@ -91,14 +91,14 @@
 			return;
 		}
 
-		NSString * sendersParentMSID = [dict valueForKey:MS_PARENTMSID];
-		if (!sendersParentMSID) {//送信者の親MSID不詳であれば無視する
-			NSLog(@"送信者親MSID不詳");
+		NSString * sendersParentMSID = [dict valueForKey:MS_PARENTMID];
+		if (!sendersParentMSID) {//送信者の親MID不詳であれば無視する
+			NSLog(@"送信者親MID不詳");
 			return;
 		}
 		
 		//[親を見つけたので子供になった宣言]から、関係性を記録する。
-		[self setMessengerInformation:senderName withMSID:senderMSID withParentName:sendersParentName withParentMSID:sendersParentMSID];
+		[self setMessengerInformation:senderName withMID:senderMID withParentName:sendersParentName withParentMID:sendersParentMSID];
 		
 		return;
 	}
@@ -112,15 +112,15 @@
 			return;
 		}
 		
-		NSString * sendersParentMSID = [dict valueForKey:MS_ADDRESS_MSID];
-		if (!sendersParentMSID) {//送信者の親MSID不詳であれば無視する
-			NSLog(@"送信者親MSID不詳");
+		NSString * sendersParentMSID = [dict valueForKey:MS_ADDRESS_MID];
+		if (!sendersParentMSID) {//送信者の親MID不詳であれば無視する
+			NSLog(@"送信者親MID不詳");
 			return;
 		}
 		
 		
 		//[親を解消した宣言]から、関係性を削除する。
-		[self removeMessengerInformation:senderName withMSID:senderMSID withParentName:sendersParentName withParentMSID:sendersParentMSID];
+		[self removeMessengerInformation:senderName withMID:senderMID withParentName:sendersParentName withParentMID:sendersParentMSID];
 
 		return;
 	}
@@ -146,13 +146,13 @@
  通信してきた対象の情報を保持しておく
  */
 - (void) setMessengerInformation:(NSString * )senderName 
-						withMSID:(NSString * )senderMSID 
+						withMID:(NSString * )senderMID 
 				  withParentName:(NSString * )sendersParentName 
-				  withParentMSID:(NSString * )sendersParentMSID {
+				  withParentMID:(NSString * )sendersParentMSID {
 	
 	
 	//Messengerをアイデンティファイするキーを作成
-	NSString * newKey = [self createMessengerInformation:senderName withMSID:senderMSID];
+	NSString * newKey = [self createMessengerInformation:senderName withMID:senderMID];
 	
 	
 	//既に存在している場合は無視する
@@ -186,7 +186,7 @@
 	[newButton setBackgroundColor:[UIColor grayColor]];//一応範囲付け、かなあ。
 	
 	[buttonDict setValue:newButton forKey:newKey];
-	[viewListDict setValue:[self createMessengerInformation:sendersParentName withMSID:sendersParentMSID] forKey:newKey];
+	[viewListDict setValue:[self createMessengerInformation:sendersParentName withMID:sendersParentMSID] forKey:newKey];
 
 	[messengerInterfaceView addSubview:newButton];//ビューに加える
 }
@@ -194,13 +194,13 @@
  通信してきた対象の情報を削除する
  */
 - (void) removeMessengerInformation:(NSString * )senderName 
-						withMSID:(NSString * )senderMSID 
+						withMID:(NSString * )senderMID 
 				  withParentName:(NSString * )sendersParentName 
-				  withParentMSID:(NSString * )sendersParentMSID {
+				  withParentMID:(NSString * )sendersParentMSID {
 	
 	
 	//Messengerをアイデンティファイするキーを作成
-	NSString * removeKey = [self createMessengerInformation:senderName withMSID:senderMSID];
+	NSString * removeKey = [self createMessengerInformation:senderName withMID:senderMID];
 	
 	[[buttonDict valueForKey:removeKey] removeFromSuperview];//ビューから外す
 	
@@ -209,10 +209,10 @@
 }
 
 /**
- NameとMSIDのペアを作るメソッド
+ NameとMIDのペアを作るメソッド
  */
-- (NSString * ) createMessengerInformation:(NSString * )name withMSID:(NSString * )MSID {
-	return [NSString stringWithFormat:@"%@:%@", name, MSID];
+- (NSString * ) createMessengerInformation:(NSString * )name withMID:(NSString * )MID {
+	return [NSString stringWithFormat:@"%@:%@", name, MID];
 }
 
 
@@ -244,7 +244,7 @@
 - (void) inputToMyParentWithName:(NSString * )parent {}
 - (void) callMyself:(NSString * )exec, ...{}
 - (void) call:(NSString * )name withExec:(NSString * )exec, ...{}
-- (void) callChild:(NSString * )childName withMSID:(NSString * ) withCommand:(NSString * )exec, ...{}
+- (void) callChild:(NSString * )childName withMID:(NSString * ) withCommand:(NSString * )exec, ...{}
 - (void) callParent:(NSString * )exec, ...{}
 
 
