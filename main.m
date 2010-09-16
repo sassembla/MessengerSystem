@@ -11,7 +11,18 @@
 int main(int argc, char *argv[]) {
     
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    int retVal = UIApplicationMain(argc, argv, nil, nil);
+	int retVal;
+	NSLog(@"アプリケーション開始");
+	@try {
+		retVal = UIApplicationMain(argc, argv, nil, nil);
+	}
+	@catch (NSException * e) {
+		NSLog(@"exception_", e);
+	}
+	@finally {
+		
+	}
+    
     [pool release];
     return retVal;
 }

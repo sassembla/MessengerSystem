@@ -61,7 +61,6 @@
 #define PARENTMID_DEFAULT	(@"MESSENGER_SYSTEM_COMMAND:PARENTMID_DEFAULT")//デフォルトのmyParentMID
 #define VIEW_NAME_DEFAULT	(@"MESSENGER_SYSTEM_COMMAND:VIEW_NAME_DEFAULT")//デフォルトのViewのName
 
-#define equalExec(m)	(100)//hash計算
 
 @interface MessengerSystem : NSObject {
 	//本体のID

@@ -27,27 +27,27 @@
 	
 	
 	
-	MessengerView * view = [[MessengerView alloc] initWithFrame:window.frame];
+	//MessengerView * view = [[MessengerView alloc] initWithFrame:window.frame];
 	
 	UIViewController * vController = [[UIViewController alloc] init];//うーん、オーバーライド無しには回転するように出来ない、ってのはちと、、
 	
-	[window addSubview:[view getMessengerInterfaceView]];
+	//[window addSubview:[view getMessengerInterfaceView]];
 	
 	
 	paren = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:PARENTNAME];
 //	NSLog(@"paren_%@", [paren getMyMID]);
-
+	NSLog(@"カウント_%d",[paren retainCount]);
 	
-	coTestObject * cTest = [[coTestObject alloc] init];
+	//coTestObject * cTest = [[coTestObject alloc] init];
 
-	
-
+	 
 	[paren callMyself:COMMAND_YEAH,
 	 [paren tag:@"one" val:@"1"],
 	 [paren tag:@"two" val:@"2"],
 	 [paren tag:@"three" val:@"3"],
-	// [paren withDelay:0.5],
-	  nil];
+	 [paren withDelay:0.1],
+	 nil];
+	
 	
 	
 //	[paren call:CHILD_1 withExec:@"仮",
@@ -90,9 +90,7 @@
 //	 [paren tag:@"three" val:@"3"],nil];
 
 	
-	//[paren call:@"Parentだよ" withExec:@"yeah2!", nil];
-
-	
+	NSLog(@"アプリ下層まで到達");
 	
     [window makeKeyAndVisible];
 	
@@ -113,21 +111,35 @@
 	NSLog(@"testm_%d", m);
 	
 	
-	NSString * exec = [dict valueForKey:MS_EXECUTE];
-	NSLog(@"test_exec1_%@",exec);
-	
-	if ([exec isEqualToString:COMMAND_YEAH]) {
-		NSLog(@"m_testChild1 返答実行 YEAHHHHHHH!");
-		[paren callMyself:COMMAND_YEAH,//あー、同期の中の同期なら無制限にループできる。なんか根が深そう。　非同期自体に問題があるみたいだ。
-		 [paren withDelay:0.5],
-		 nil];
-		
+	switch (n) {
+		case -1295402496://COMMAND_YEAH//この部分をマクロで書ければ最高。
+			NSLog(@"m_testChild1 返答実行 YEAHHHHHHH!");
+			
+			[paren callMyself:COMMAND_YEAH,
+			 [paren tag:@"one" val:@"1"],
+			 [paren tag:@"two" val:@"2"],
+			 [paren tag:@"three" val:@"3"],
+		//	 [paren withDelay:0.1],
+			 nil];
+			
+			NSLog(@"突破");
+			break;
+		case -1295402495:
+			NSLog(@"その２");
+			
+			break;
+		default:
+			NSLog(@"っていうか、どうあっても落ちてね？");
+			break;
 	}
-	
-	
-	
 }
 
+- (void) test2 {
+	NSLog(@"ココまで来てる");
+	[paren callMyself:COMMAND_YEAH,//あー、同期の中の同期なら無制限にループできる。なんか根が深そう。　非同期自体に問題があるみたいだ。
+	 [paren withDelay:0.5],
+	 nil];
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     /*

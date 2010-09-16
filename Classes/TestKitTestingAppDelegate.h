@@ -18,7 +18,7 @@
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 
 - (void)test:(NSNotification * )notification;
-
+- (void) test2;
 
 
 @end

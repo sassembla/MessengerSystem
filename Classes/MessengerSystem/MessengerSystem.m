@@ -8,7 +8,6 @@
 
 #import "MessengerSystem.h"
 #import "MessengerIDGenerator.h"
-#import <unistd.h>
 
 @implementation MessengerSystem
 
@@ -28,8 +27,14 @@
 		childDict = [NSMutableDictionary dictionaryWithCapacity:1];
 		logDict = [NSMutableDictionary dictionaryWithCapacity:1];
 		
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(innerPerform:) name:OBSERVER_ID object:nil];
+		//[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(innerPerform:) name:OBSERVER_ID object:nil];//このクラスを持つクラスに対して、フックとなるようにセットする、とか、、
+		[[NSNotificationCenter defaultCenter] addObserver:body_id selector:body_selector name:OBSERVER_ID object:nil];
 	}
+	
+	/*
+	 マニュアル表示のプログラムを書こう！
+	 */
+	
 	return self;
 }
 
@@ -77,7 +82,8 @@
 	[self sendPerform:dict];
 	NSLog(@"処理通過");
 	
-	NSAssert1([self getMyParentMID], @"指定した親が存在しないようです。parentに指定している名前を確認してください_現在指定されているparentは_%@",[self getMyParentName]);
+	NSLog(@"[self getMyParentName]_%@", [self getMyParentName]);
+	NSAssert1(![[self getMyParentMID] isEqualToString:PARENTMID_DEFAULT], @"指定した親が存在しないようです。parentに指定している名前を確認してください_現在指定されているparentは_%@",[self getMyParentName]);
 }
 
 /**
@@ -130,7 +136,7 @@
 	
 	NSMutableDictionary * dict = (NSMutableDictionary *)[notification userInfo];
 	
-	
+	NSLog(@"内部実装に到達");
 	
 	
 	//コマンド名について確認
@@ -219,15 +225,16 @@
 		}
 		
 		
+		NSLog(@"%@,	MID_%@,	myName_%@,	childDict_%@, logStore_%@",self, [self getMyMID], [self getMyName], [self getChildDict], [self getLogStore]);
 		
 		
 		[self saveLogForReceived:recievedLogDict];
-		
 		
 		//設定されたbodyのメソッドを実行
 		IMP func = [[self getMyBodyID] methodForSelector:[self getMyBodySelector]];
 		(*func)([self getMyBodyID], [self getMyBodySelector], notification);
 		
+		NSLog(@"到達突破確認");
 		
 		return;
 	}
@@ -510,6 +517,7 @@
 	}
 	va_end(ap);
 	
+	
 	[self sendMessage:dict];
 }
 
@@ -650,7 +658,8 @@
  この処理は、出来るだけ独立した要素として分けておく。
  */
 - (void) sendPerform:(NSMutableDictionary * )dict {
-	NSLog(@"dict_%@", dict);
+//	NSLog(@"dict_%@", dict);
+	NSLog(@"sendPerform");
 	[[NSNotificationCenter defaultCenter] postNotificationName:OBSERVER_ID object:nil userInfo:(id)dict];
 }
 
@@ -669,17 +678,13 @@
 	
 	[self addCreationLog:dict];
 	
-	
 	//遅延実行キーがある場合
 	NSNumber * delay = [dict valueForKey:MS_DELAY];//複数或る場合はエラーにしたい
 	if (delay) {
-		
 		float delayTime = [delay floatValue];
 		[self sendPerform:dict withDelay:delayTime];
-		
 		return;
 	}
-	
 	
 	//通常の送信を行う
 	[self sendPerform:dict];
@@ -764,14 +769,23 @@
  */
 - (void) saveToLogStore:(NSString * )name log:(NSDictionary * )value {
 	NSLog(@"saveToLogStore_到達_%@", [self getMyName]);
-	
+	if (TRUE) return;
 	NSArray * key = [value allKeys];//1件しか無い内容を取得する
-	//非同期にすると処理に失敗して落ちるみたいね。
+	//非同期にすると処理に失敗して落ちるみたいね。 logDictの整合性が無い？
+	@try {
+		NSLog(@"到着、ココから先で落ちる、、かと思ったのだが、落ちないね。");
 	[logDict setValue:
 	 [NSString stringWithFormat:@"%@ %@", name, [value valueForKey:[key objectAtIndex:0]]] 
 			   forKey:
 	 [NSString stringWithFormat:@"%@ %@", [MessengerIDGenerator getMID], [NSDate date]]
 	 ];
+		NSLog(@"完了、エラーで無かった");
+	}
+	
+	@catch (NSError * e) {
+		NSLog(@"error_%@", e);
+	}
+	
 }
 
 
