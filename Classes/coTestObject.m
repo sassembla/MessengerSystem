@@ -13,9 +13,10 @@
 @implementation coTestObject
 - (id) init {
 	if (self = [super init]) {
-		messenger = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:CHILD_1];
-		[messenger inputToMyParentWithName:PARENTNAME];
+		
 	}
+	messenger = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:CHILD_1];
+	[messenger inputToMyParentWithName:PARENTNAME];
 	return self;
 }
 
@@ -31,7 +32,28 @@
 
 - (void)test:(NSNotification * )notification {
 	
-	NSLog(@"test_notification_%@",notification);
+	NSMutableDictionary * dict = (NSMutableDictionary *)[notification userInfo];
+	
+	NSLog(@"子供に到達_%@", notification);
+	
+	
+	int n = [messenger getExecAsInt:dict];
+	NSLog(@"messengern_%d",n);
+	
+	
+	
+	
+	switch (n) {
+		case -1295402495://COMMAND_OOPS
+			NSLog(@"子供に到着しました");
+			[messenger callParent:COMMAND_YEAH,
+			 [messenger withDelay:0.5],
+			 nil];
+			
+			NSLog(@"到着後の処理が完了しました");			
+			break;
+	}
+	
 	
 	//あとは好きにして！
 }

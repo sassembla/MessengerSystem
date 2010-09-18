@@ -38,10 +38,19 @@
 //	NSLog(@"paren_%@", [paren getMyMID]);
 	NSLog(@"カウント_%d",[paren retainCount]);
 	
-	//coTestObject * cTest = [[coTestObject alloc] init];
+	coTestObject * cTest = [[coTestObject alloc] init];
 
 	 
-	[paren callMyself:COMMAND_YEAH,
+//	[paren callMyself:COMMAND_OOPS,
+//	 [paren tag:@"one" val:@"1"],
+//	 [paren tag:@"two" val:@"2"],
+//	 [paren tag:@"three" val:@"3"],
+//	 [paren withDelay:1.0],
+//	 nil];
+	
+	
+	//子供を自分自身から呼ぶコード
+	[paren callMyself:COMMAND_OOPS,
 	 [paren tag:@"one" val:@"1"],
 	 [paren tag:@"two" val:@"2"],
 	 [paren tag:@"three" val:@"3"],
@@ -50,7 +59,8 @@
 	
 	
 	
-//	[paren call:CHILD_1 withExec:@"仮",
+//	//子供を直接呼ぶコード
+//	[paren call:CHILD_1 withExec:COMMAND_OOPS,
 //	 [paren tag:@"one" val:@"1"],
 //	 [paren withDelay:0.75],
 //	 nil];
@@ -107,35 +117,39 @@
 	int n = [paren getExecAsInt:dict];
 	NSLog(@"testn_%d",n);
 	
-	int m = [paren equalToExec:COMMAND_YEAH];
+	int m = [paren equalToExec:COMMAND_OOPS];
 	NSLog(@"testm_%d", m);
 	
 	
 	switch (n) {
 		case -1295402496://COMMAND_YEAH//この部分をマクロで書ければ最高。
-			NSLog(@"m_testChild1 返答実行 YEAHHHHHHH!");
 			
-			//[paren callMyself:COMMAND_YEAH,
-//			 [paren tag:@"one" val:@"1"],
-//			 [paren tag:@"two" val:@"2"],
-//			 [paren tag:@"three" val:@"3"],
-//			 [paren withDelay:0.1],
-//			 nil];
 			
-			NSLog(@"突破");
+			[paren callMyself:COMMAND_YEAH,
+			 [paren tag:@"one" val:@"1"],
+			 [paren tag:@"two" val:@"2"],
+			 [paren tag:@"three" val:@"3"],
+			 [paren withDelay:0.1],
+			 nil];
+			
 			break;
-		case -1295402495:
-			NSLog(@"その２");
+		case -1295402495://COMMAND_OOPS
 			
+			NSLog(@"OOPSの親受け取り");
+			
+			[paren call:CHILD_1 withExec:COMMAND_OOPS,
+			 [paren withDelay:0.1],
+			 nil];
+			
+			NSLog(@"子供が呼ばれてる");
 			break;
 		default:
-			NSLog(@"っていうか、どうあっても落ちてね？");
+			NSLog(@"per_%d", n);//コマンドの数字を出す
 			break;
 	}
 }
 
 - (void) test2 {
-	NSLog(@"ココまで来てる");
 	[paren callMyself:COMMAND_YEAH,//あー、同期の中の同期なら無制限にループできる。なんか根が深そう。　非同期自体に問題があるみたいだ。
 	 [paren withDelay:0.5],
 	 nil];

@@ -383,13 +383,11 @@
 				//				NSLog(@"親は先着順で既に設定されているようです");
 				return;
 			}
-			NSLog(@"とうたつしてる");
 			
 			//受信時にログに受信記録を付け、保存する
 			[self saveLogForReceived:recievedLogDict];
 			
 			
-			NSLog(@"自分に対して子供から親になる宣言をされた、辞書作成直前");
 			//親が居ないと子が生まれない構造。 senderMIDをキーとし、子供辞書を作る。
 			[self setChildDictChildNameAsValue:senderName withMIDAsKey:senderMID];
 			NSLog(@"辞書作成まで完了");
@@ -480,7 +478,7 @@
  childDictを返す
  */
 - (NSMutableDictionary * ) getChildDict {
-	return childDict;
+	return childDict;//確かにぶっ壊れてる。
 }
 
 
@@ -567,9 +565,9 @@
 	//特定のキーが含まれているか
 //	[childDict allValues]//NSArray コストは概ね一緒かな。 特定のキーが含まれているか否か、を隠蔽したいか否か
 	
-	
+	NSLog(@"子供辞書の問題、Mutableから変えればいいのかな。。。うーーん。");
 	//親から子へのブロードキャスト MIDで送り先を限定しない。
-	for (id key in childDict) {
+	for (id key in [self getChildDict]) {//この時点か、この中なのか。
 		//NSLog(@"key: %@, value: %@", key, [childDict objectForKey:key]);//この件数分だけ出す必要は無い！　一件出せればいい。特に限定が必要な場合もそう。
 		if ([[childDict objectForKey:key] isEqualToString:childName]) {//一つでも合致する内容のものがあれば、メッセージを送る対象として見る。
 			NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:5];
@@ -732,7 +730,6 @@
 	//ストアについては、新しいIDのものが出来るとIDの下に保存する。多元木構造になっちゃうなあ。カラムでやった方が良いのかしら？それとも絡み付いたKVSかしら。
 	
 	NSString * messageID = [MessengerIDGenerator getMID];//このメッセージのIDを出力(あとでID認識するため)
-	
 	//ストアに保存する
 	[self saveToLogStore:@"createLogForNew" log:[self tag:MS_LOG_MESSAGEID val:messageID]];
 	
@@ -925,6 +922,7 @@
  自分のMIDを返すメソッド
  */
 - (NSString * )getMyMID {
+	NSLog(@"この辺で来てる_%@", myMID);
 	return myMID;
 }
 
@@ -1018,6 +1016,9 @@
 	//子供の名前とIDを保存する辞書	NSMutableDictionary
 	[childDict removeAllObjects];
 //	NSLog(@"解除！_%@, %d", [self getMyName], [childDict retainCount]);
+	
+	[logDict removeAllObjects];
+	
 	
     [super dealloc];
 }
