@@ -166,12 +166,16 @@
 - (NSMutableDictionary * ) getLogStore;//保存されたログ一覧を取得するメソッド
 
 
-
+/**
+ コマンド情報を文字列で取得する
+ */
+- (NSString * ) getExecAsString:(NSMutableDictionary * )dict; 
 
 /**
- 辞書からsiwtch文で使用する情報を取得する
+ コマンド情報を数値で取得する
+ 辞書からswitch文で使用する情報を数値で取得する
  */
-- (int) getExec:(NSMutableDictionary * )dict;
+- (int) getExecAsInt:(NSMutableDictionary * )dict;
 
 /**
  文字列からswitch文で使用する情報を取得する

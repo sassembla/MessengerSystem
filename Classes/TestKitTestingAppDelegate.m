@@ -27,11 +27,11 @@
 	
 	
 	
-	//MessengerView * view = [[MessengerView alloc] initWithFrame:window.frame];
+	MessengerView * view = [[MessengerView alloc] initWithFrame:window.frame];
 	
 	UIViewController * vController = [[UIViewController alloc] init];//うーん、オーバーライド無しには回転するように出来ない、ってのはちと、、
 	
-	//[window addSubview:[view getMessengerInterfaceView]];
+	[window addSubview:[view getMessengerInterfaceView]];
 	
 	
 	paren = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:PARENTNAME];
@@ -45,7 +45,7 @@
 	 [paren tag:@"one" val:@"1"],
 	 [paren tag:@"two" val:@"2"],
 	 [paren tag:@"three" val:@"3"],
-	 [paren withDelay:0.1],
+	 [paren withDelay:1.0],
 	 nil];
 	
 	
@@ -104,7 +104,7 @@
 	
 	NSMutableDictionary * dict = (NSMutableDictionary *)[notification userInfo];
 	
-	int n = [paren getExec:dict];
+	int n = [paren getExecAsInt:dict];
 	NSLog(@"testn_%d",n);
 	
 	int m = [paren equalToExec:COMMAND_YEAH];
@@ -115,12 +115,12 @@
 		case -1295402496://COMMAND_YEAH//この部分をマクロで書ければ最高。
 			NSLog(@"m_testChild1 返答実行 YEAHHHHHHH!");
 			
-			[paren callMyself:COMMAND_YEAH,
-			 [paren tag:@"one" val:@"1"],
-			 [paren tag:@"two" val:@"2"],
-			 [paren tag:@"three" val:@"3"],
-		//	 [paren withDelay:0.1],
-			 nil];
+			//[paren callMyself:COMMAND_YEAH,
+//			 [paren tag:@"one" val:@"1"],
+//			 [paren tag:@"two" val:@"2"],
+//			 [paren tag:@"three" val:@"3"],
+//			 [paren withDelay:0.1],
+//			 nil];
 			
 			NSLog(@"突破");
 			break;

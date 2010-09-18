@@ -9,14 +9,11 @@
 /* Begin PBXBuildFile section */
 		134551B3122A4D0200E348F5 /* MessengerSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 134551B2122A4D0200E348F5 /* MessengerSystem.m */; };
 		134551B5122A4D1600E348F5 /* MessengerSystemTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 134551B4122A4D1600E348F5 /* MessengerSystemTest.m */; };
-		1345540B122A68A500E348F5 /* MessengerSystem.h in Sources */ = {isa = PBXBuildFile; fileRef = 134551B1122A4D0200E348F5 /* MessengerSystem.h */; };
 		1345540C122A68A500E348F5 /* MessengerSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 134551B2122A4D0200E348F5 /* MessengerSystem.m */; };
-		13455453122A6AB400E348F5 /* coTestObject.h in Sources */ = {isa = PBXBuildFile; fileRef = 13455449122A6A0A00E348F5 /* coTestObject.h */; };
 		13455454122A6AB400E348F5 /* coTestObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 1345544A122A6A0A00E348F5 /* coTestObject.m */; };
 		13A2E99412407C6E007685AD /* MessengerIDGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A2E99312407C6E007685AD /* MessengerIDGenerator.m */; };
 		13A2EA231240A235007685AD /* MessengerIDGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A2E99312407C6E007685AD /* MessengerIDGenerator.m */; };
 		13A9E8D6123D2B3200981224 /* MessengerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13AC407D123CB3E700AAF658 /* MessengerView.m */; };
-		13A9E961123D2F6800981224 /* NameList.h in Sources */ = {isa = PBXBuildFile; fileRef = 13A9E95B123D2F5800981224 /* NameList.h */; };
 		13A9EA65123D49AF00981224 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		13A9EABA123D49B900981224 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		13A9EB12123D4A1300981224 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
@@ -265,11 +262,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				13A9E8D6123D2B3200981224 /* MessengerView.m in Sources */,
-				13455453122A6AB400E348F5 /* coTestObject.h in Sources */,
 				13455454122A6AB400E348F5 /* coTestObject.m in Sources */,
 				13A2EA231240A235007685AD /* MessengerIDGenerator.m in Sources */,
-				13A9E961123D2F6800981224 /* NameList.h in Sources */,
-				1345540B122A68A500E348F5 /* MessengerSystem.h in Sources */,
 				1345540C122A68A500E348F5 /* MessengerSystem.m in Sources */,
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* TestKitTestingAppDelegate.m in Sources */,

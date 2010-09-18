@@ -73,3 +73,5 @@ build/TestKitTesting.build/Debug-iphonesimulator/TestBundle.build/Objects-normal
 build/TestKitTesting.build/Debug-iphonesimulator/TestBundle.build/Objects-normal/i386/MessengerSystemIDGenerator.o~$
 build/TestKitTesting.build/Debug-iphonesimulator/TestBundle.build/Objects-normal/i386/MessengerSystemIDGenerator.o~>
 build/TestKitTesting.build/Debug-iphonesimulator/TestKitTesting.build/Objects-normal/i386/MessengerIDGenerator.o
+build/TestKitTesting.build/Debug-iphonesimulator/TestKitTesting.build/Objects-normal/i386/MessengerSystem.o
+build/TestKitTesting.build/Debug-iphonesimulator/TestKitTesting.build/Objects-normal/i386/coTestObject.o

@@ -9,6 +9,12 @@
 #import "MessengerSystem.h"
 #import "MessengerIDGenerator.h"
 
+#define test	(false)
+#define logDo	(true)//両方trueで実際に動く、両方falseでテストが動く。
+
+//非同期はfalse falseでしか動かない？
+//
+
 @implementation MessengerSystem
 
 
@@ -17,26 +23,42 @@
  */
 - (id) initWithBodyID:(id)body_id withSelector:(SEL)body_selector withName:(NSString * )name {
 	if (self = [super init]) {
-		
 		[self setMyName:name];
 		[self setMyBodyID:body_id];
 		[self setMyBodySelector:body_selector];
 		[self initMyMID];
 		[self initMyParentData];
-		
-		childDict = [NSMutableDictionary dictionaryWithCapacity:1];
-		logDict = [NSMutableDictionary dictionaryWithCapacity:1];
-		
-		//[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(innerPerform:) name:OBSERVER_ID object:nil];//このクラスを持つクラスに対して、フックとなるようにセットする、とか、、
-		[[NSNotificationCenter defaultCenter] addObserver:body_id selector:body_selector name:OBSERVER_ID object:nil];
 	}
 	
-	/*
-	 マニュアル表示のプログラムを書こう！
+	childDict = [NSMutableDictionary dictionaryWithCapacity:1];
+	logDict = [NSMutableDictionary dictionaryWithCapacity:1];
+	
+	//動的にメソッドを足す、という事をすればOKではある、ということは、自分のメソッドを動的にオーバーライドするようにすればいい。中間。
+	/**
+	 思考デザインしてから行おう。
+	 
+	 そもそも原因はなんなのか、根本的な理解による簡単な解決法は無いのか。
+	 
+	 
 	 */
+	
+	if (test)[[NSNotificationCenter defaultCenter] addObserver:myBodyID selector:myBodySelector name:OBSERVER_ID object:nil];//このクラスを持つクラスに対して、フックとなるようにセットする、とか、、
+	else [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(innerPerform:) name:OBSERVER_ID object:nil];
+	
 	
 	return self;
 }
+
+
+//- (id) initWithManual {
+//	/*
+//	 マニュアル表示のプログラムを書こう！
+//	 */
+//	if (self = [super init]) {
+//		
+//	}
+//	return self;
+//}
 
 
 /**
@@ -133,7 +155,6 @@
  自分宛のメッセージでなければ無視する
  */
 - (void) innerPerform:(NSNotification * )notification {
-	
 	NSMutableDictionary * dict = (NSMutableDictionary *)[notification userInfo];
 	
 	NSLog(@"内部実装に到達");
@@ -184,7 +205,7 @@
 //		}		
 	}
 	
-	
+	NSLog(@"内部実装に到達2");
 	
 	/**
 	 自分が今、誰なのかを考察する
@@ -206,13 +227,18 @@
 //	int processID = [processInfo processIdentifier];// = getpid()
 //	NSLog(@"Process Name:%@ Process ID:%d", processName, processID);
 	
-	NSLog(@"currentThread_0_self=%@, %@", [self getMyName], [NSThread currentThread]);
+//	NSLog(@"currentThread_0_self=%@, %@", [self getMyName], [NSThread currentThread]);
+	
+
+	NSLog(@"内部実装に到達3");
 	
 	//カテゴリごとの処理に移行
 	//クリティカルなケースであっても、ThreadIDで対応できる筈。現在実行中の、Threadからみて未完了の処理とそれをIDする機能、というのが或る筈なんだ。
 	
 	
 	if ([commandName isEqualToString:MS_CATEGOLY_LOCAL]) {
+		NSLog(@"内部実装に到達4");
+		
 		
 		if (![senderName isEqualToString:[self getMyName]]) {
 			NSLog(@"MS_CATEGOLY_LOCAL 名称が違う_%@", [self getMyName]);
@@ -225,7 +251,8 @@
 		}
 		
 		
-		NSLog(@"%@,	MID_%@,	myName_%@,	childDict_%@, logStore_%@",self, [self getMyMID], [self getMyName], [self getChildDict], [self getLogStore]);
+		//NSLog(@"%@,	MID_%@,	myName_%@,	childDict_%@, logStore_%@",self, [self getMyMID], [self getMyName], [self getChildDict], [self getLogStore]);
+		NSLog(@"内部実装に到達5");
 		
 		
 		[self saveLogForReceived:recievedLogDict];
@@ -234,7 +261,7 @@
 		IMP func = [[self getMyBodyID] methodForSelector:[self getMyBodySelector]];
 		(*func)([self getMyBodyID], [self getMyBodySelector], notification);
 		
-		NSLog(@"到達突破確認");
+		NSLog(@"内部実装に到達6");
 		
 		return;
 	}
@@ -769,7 +796,7 @@
  */
 - (void) saveToLogStore:(NSString * )name log:(NSDictionary * )value {
 	NSLog(@"saveToLogStore_到達_%@", [self getMyName]);
-	if (TRUE) return;
+	if (logDo) return;
 	NSArray * key = [value allKeys];//1件しか無い内容を取得する
 	//非同期にすると処理に失敗して落ちるみたいね。 logDictの整合性が無い？
 	@try {
@@ -788,12 +815,19 @@
 	
 }
 
+/**
+ 実行処理名を指定、String値を取得する
+ */
+- (NSString * ) getExecAsString:(NSMutableDictionary * )dict {
+	return [dict valueForKey:MS_EXECUTE];
+}
+
 
 /**
- 実行処理名を指定、hash値を取得する
+ 実行処理名を指定、Int値を取得する
  この時点で飛び込んでくるストリングのポインタと同じ値を直前で出して、合致する値を出せればいいのか、、って定数じゃないが、、一致は出来る、、うーん。
  */
-- (int) getExec:(NSMutableDictionary * )dict {
+- (int) getExecAsInt:(NSMutableDictionary * )dict {
 	return [self changeStrToNumber:[dict valueForKey:MS_EXECUTE]];
 }
 
@@ -957,7 +991,8 @@
 
 - (void) dealloc {
 	//通信のくびきを切る。
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:OBSERVER_ID object:nil];
+	if (test) [[NSNotificationCenter defaultCenter] removeObserver:[self getMyBodyID] name:OBSERVER_ID object:nil];
+	else [[NSNotificationCenter defaultCenter] removeObserver:self name:OBSERVER_ID object:nil];//自分自身でセットしてるから、そりゃ落ちるわな。
 	
 	//本体のID
 	myBodyID = nil;
