@@ -9,3 +9,4 @@
 
 #define COMMAND_YEAH	(@"実験コマンド①")
 #define COMMAND_OOPS	(@"実験コマンド②")
+#define COMMAND_CHILDS	(@"子供たちへ")

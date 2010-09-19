@@ -23,7 +23,7 @@
 
 - (id) init2 {
 	if (self = [super init]) {
-		messenger = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:CHILD_2];
+		messenger = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:CHILD_1];
 		[messenger inputToMyParentWithName:PARENTNAME];
 	}
 	return self;
@@ -44,6 +44,9 @@
 	
 	
 	switch (n) {
+		case -1295402496://COMMAND_YEAH
+			NSLog(@"帰属部分に到着");
+			break;
 		case -1295402495://COMMAND_OOPS
 			NSLog(@"子供に到着しました");
 			[messenger callParent:COMMAND_YEAH,
@@ -52,6 +55,10 @@
 			
 			NSLog(@"到着後の処理が完了しました");			
 			break;
+		case 748839144://COMMAND_CHILDS
+			NSLog(@"COMMAND_CHILDS到着_%@",[messenger getMyMID]);
+			break;
+			
 	}
 	
 	

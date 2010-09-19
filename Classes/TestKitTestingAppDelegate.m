@@ -49,13 +49,13 @@
 //	 nil];
 	
 	
-	//子供を自分自身から呼ぶコード
-	[paren callMyself:COMMAND_OOPS,
-	 [paren tag:@"one" val:@"1"],
-	 [paren tag:@"two" val:@"2"],
-	 [paren tag:@"three" val:@"3"],
-	 [paren withDelay:1.0],
-	 nil];
+//	//子供を自分自身から呼ぶコード10/09/19 9:20:13
+//	[paren callMyself:COMMAND_OOPS,
+//	 [paren tag:@"one" val:@"1"],
+//	 [paren tag:@"two" val:@"2"],
+//	 [paren tag:@"three" val:@"3"],
+//	 [paren withDelay:1.0],
+//	 nil];
 	
 	
 	
@@ -83,7 +83,7 @@
 	
 	
 	
-	//coTestObject * cTest2 = [[coTestObject alloc] init2];
+	coTestObject * cTest2 = [[coTestObject alloc] init2];
 //	coTestObject * cTest3 = [[coTestObject alloc] init];
 	
 	//coTestObject * cTest4 = [[coTestObject alloc] init2];
@@ -100,7 +100,18 @@
 //	 [paren tag:@"three" val:@"3"],nil];
 
 	
-	NSLog(@"アプリ下層まで到達");
+	
+	//子供を自分自身から呼ぶコード
+	[paren callMyself:COMMAND_CHILDS,
+	 [paren tag:@"one" val:@"1"],
+	 [paren tag:@"two" val:@"2"],
+	 [paren tag:@"three" val:@"3"],
+	 [paren withDelay:0.01],
+	 nil];
+	
+	
+
+	
 	
     [window makeKeyAndVisible];
 	
@@ -114,34 +125,33 @@
 	
 	NSMutableDictionary * dict = (NSMutableDictionary *)[notification userInfo];
 	
-	int n = [paren getExecAsInt:dict];
+	int n = 0;//[paren getExecAsInt:dict];
 	NSLog(@"testn_%d",n);
 	
-	int m = [paren equalToExec:COMMAND_OOPS];
+	int m = [paren equalToExec:COMMAND_CHILDS];
 	NSLog(@"testm_%d", m);
 	
 	
 	switch (n) {
 		case -1295402496://COMMAND_YEAH//この部分をマクロで書ければ最高。
 			
-			
-			[paren callMyself:COMMAND_YEAH,
-			 [paren tag:@"one" val:@"1"],
-			 [paren tag:@"two" val:@"2"],
-			 [paren tag:@"three" val:@"3"],
-			 [paren withDelay:0.1],
-			 nil];
+//			[paren call:CHILD_1 withExec:COMMAND_YEAH,
+//			 [paren withDelay:0.1],
+//			 nil];
 			
 			break;
 		case -1295402495://COMMAND_OOPS
 			
-			NSLog(@"OOPSの親受け取り");
+//			[paren call:CHILD_1 withExec:COMMAND_OOPS,
+//			 [paren withDelay:0.1],
+//			 nil];
 			
-			[paren call:CHILD_1 withExec:COMMAND_OOPS,
+			break;
+		case 748839144://COMMAND_CHILDS
+			NSLog(@"COMMAND_CHILDに到着");
+			[paren call:CHILD_1 withExec:COMMAND_CHILDS,
 			 [paren withDelay:0.1],
 			 nil];
-			
-			NSLog(@"子供が呼ばれてる");
 			break;
 		default:
 			NSLog(@"per_%d", n);//コマンドの数字を出す
@@ -149,11 +159,7 @@
 	}
 }
 
-- (void) test2 {
-	[paren callMyself:COMMAND_YEAH,//あー、同期の中の同期なら無制限にループできる。なんか根が深そう。　非同期自体に問題があるみたいだ。
-	 [paren withDelay:0.5],
-	 nil];
-}
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     /*

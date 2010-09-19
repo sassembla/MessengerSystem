@@ -10,7 +10,7 @@
 #import "MessengerIDGenerator.h"
 
 #define test	(false)
-#define logDo	(true)//両方trueで実際に動く、両方falseでテストが動く。
+#define logDo	(false)//両方trueで実際に動く、両方falseでテストが動く。
 
 //非同期はfalse falseでしか動かない？
 //
@@ -30,17 +30,10 @@
 		[self initMyParentData];
 	}
 	
-	childDict = [NSMutableDictionary dictionaryWithCapacity:1];
-	logDict = [NSMutableDictionary dictionaryWithCapacity:1];
+	childDict = [[NSMutableDictionary alloc] init];//[NSMutableDictionary dictionaryWithCapacity:1];で初期化していたのだが、バグの元でした。SIGABRTバグの原因になり、カウントが壊れます。
+	logDict = [[NSMutableDictionary alloc] init];
 	
-	//動的にメソッドを足す、という事をすればOKではある、ということは、自分のメソッドを動的にオーバーライドするようにすればいい。中間。
-	/**
-	 思考デザインしてから行おう。
-	 
-	 そもそも原因はなんなのか、根本的な理解による簡単な解決法は無いのか。
-	 
-	 
-	 */
+	
 	
 	if (test)[[NSNotificationCenter defaultCenter] addObserver:myBodyID selector:myBodySelector name:OBSERVER_ID object:nil];//このクラスを持つクラスに対して、フックとなるようにセットする、とか、、
 	else [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(innerPerform:) name:OBSERVER_ID object:nil];
@@ -102,9 +95,8 @@
 	
 	//最終送信処理
 	[self sendPerform:dict];
-	NSLog(@"処理通過");
 	
-	NSLog(@"[self getMyParentName]_%@", [self getMyParentName]);
+	
 	NSAssert1(![[self getMyParentMID] isEqualToString:PARENTMID_DEFAULT], @"指定した親が存在しないようです。parentに指定している名前を確認してください_現在指定されているparentは_%@",[self getMyParentName]);
 }
 
@@ -157,7 +149,7 @@
 - (void) innerPerform:(NSNotification * )notification {
 	NSMutableDictionary * dict = (NSMutableDictionary *)[notification userInfo];
 	
-	NSLog(@"内部実装に到達");
+	
 	
 	
 	//コマンド名について確認
@@ -205,7 +197,6 @@
 //		}		
 	}
 	
-	NSLog(@"内部実装に到達2");
 	
 	/**
 	 自分が今、誰なのかを考察する
@@ -230,14 +221,12 @@
 //	NSLog(@"currentThread_0_self=%@, %@", [self getMyName], [NSThread currentThread]);
 	
 
-	NSLog(@"内部実装に到達3");
 	
 	//カテゴリごとの処理に移行
 	//クリティカルなケースであっても、ThreadIDで対応できる筈。現在実行中の、Threadからみて未完了の処理とそれをIDする機能、というのが或る筈なんだ。
 	
 	
 	if ([commandName isEqualToString:MS_CATEGOLY_LOCAL]) {
-		NSLog(@"内部実装に到達4");
 		
 		
 		if (![senderName isEqualToString:[self getMyName]]) {
@@ -251,17 +240,12 @@
 		}
 		
 		
-		//NSLog(@"%@,	MID_%@,	myName_%@,	childDict_%@, logStore_%@",self, [self getMyMID], [self getMyName], [self getChildDict], [self getLogStore]);
-		NSLog(@"内部実装に到達5");
-		
-		
 		[self saveLogForReceived:recievedLogDict];
 		
 		//設定されたbodyのメソッドを実行
 		IMP func = [[self getMyBodyID] methodForSelector:[self getMyBodySelector]];
 		(*func)([self getMyBodyID], [self getMyBodySelector], notification);
 		
-		NSLog(@"内部実装に到達6");
 		
 		return;
 	}
@@ -351,7 +335,7 @@
 		
 		//自分宛かどうか、先ず名前で判断
 		if (![address isEqualToString:[self getMyName]]) {
-			NSLog(@"MS_CATEGOLY_PARENTSEARCHのアドレスcheck");
+			NSLog(@"MS_CATEGOLY_PARENTSEARCHのアドレスcheckに失敗");
 			return;
 		}
 		
@@ -390,9 +374,9 @@
 			
 			//親が居ないと子が生まれない構造。 senderMIDをキーとし、子供辞書を作る。
 			[self setChildDictChildNameAsValue:senderName withMIDAsKey:senderMID];
-			NSLog(@"辞書作成まで完了");
 			
 			
+			[self getChildDict];
 			
 			//送り届けられたメソッドを使い、Child宛に登録した旨の返答を行う。
 			/*
@@ -414,7 +398,7 @@
 			[invocation setTarget:senderID];
 			NSString * myMSIDforchild = [self getMyMID];
 			[invocation setArgument:&myMSIDforchild atIndex:2];//0,1が埋まっているから固定値,,
-			NSLog(@"実行まで行ってるのか");
+			
 			[invocation invoke];
 			
 			
@@ -478,7 +462,7 @@
  childDictを返す
  */
 - (NSMutableDictionary * ) getChildDict {
-	return childDict;//確かにぶっ壊れてる。
+	return childDict;
 }
 
 
@@ -683,8 +667,6 @@
  この処理は、出来るだけ独立した要素として分けておく。
  */
 - (void) sendPerform:(NSMutableDictionary * )dict {
-//	NSLog(@"dict_%@", dict);
-	NSLog(@"sendPerform");
 	[[NSNotificationCenter defaultCenter] postNotificationName:OBSERVER_ID object:nil userInfo:(id)dict];
 }
 
@@ -792,23 +774,15 @@
  アウトプットは後で考えよう。
  */
 - (void) saveToLogStore:(NSString * )name log:(NSDictionary * )value {
-	NSLog(@"saveToLogStore_到達_%@", [self getMyName]);
 	if (logDo) return;
 	NSArray * key = [value allKeys];//1件しか無い内容を取得する
-	//非同期にすると処理に失敗して落ちるみたいね。 logDictの整合性が無い？
-	@try {
-		NSLog(@"到着、ココから先で落ちる、、かと思ったのだが、落ちないね。");
+	
 	[logDict setValue:
 	 [NSString stringWithFormat:@"%@ %@", name, [value valueForKey:[key objectAtIndex:0]]] 
 			   forKey:
 	 [NSString stringWithFormat:@"%@ %@", [MessengerIDGenerator getMID], [NSDate date]]
 	 ];
-		NSLog(@"完了、エラーで無かった");
-	}
 	
-	@catch (NSError * e) {
-		NSLog(@"error_%@", e);
-	}
 	
 }
 
@@ -922,7 +896,6 @@
  自分のMIDを返すメソッド
  */
 - (NSString * )getMyMID {
-	NSLog(@"この辺で来てる_%@", myMID);
 	return myMID;
 }
 
