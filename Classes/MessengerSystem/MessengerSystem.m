@@ -9,11 +9,8 @@
 #import "MessengerSystem.h"
 #import "MessengerIDGenerator.h"
 
-#define test	(false)
-#define logDo	(false)//両方trueで実際に動く、両方falseでテストが動く。
 
-//非同期はfalse falseでしか動かない？
-//
+
 
 @implementation MessengerSystem
 
@@ -35,8 +32,8 @@
 	
 	
 	
-	if (test)[[NSNotificationCenter defaultCenter] addObserver:myBodyID selector:myBodySelector name:OBSERVER_ID object:nil];//このクラスを持つクラスに対して、フックとなるようにセットする、とか、、
-	else [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(innerPerform:) name:OBSERVER_ID object:nil];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(innerPerform:) name:OBSERVER_ID object:nil];
 	
 	
 	return self;
@@ -190,11 +187,11 @@
 		return;
 	} else {
 		//メッセージIDについて確認
-//		NSString * messageID = [recievedLogDict valueForKey:MS_LOG_MESSAGEID];
-//		if (!messageID) {
-//			NSLog(@"メッセージIDが無いため、何の処理も行われずに帰る");
-//			return;
-//		}		
+		NSString * messageID = [recievedLogDict valueForKey:MS_LOG_MESSAGEID];
+		if (!messageID) {
+			NSLog(@"メッセージIDが無いため、何の処理も行われずに帰る");
+			return;
+		}		
 	}
 	
 	
@@ -335,19 +332,19 @@
 		
 		//自分宛かどうか、先ず名前で判断
 		if (![address isEqualToString:[self getMyName]]) {
-			NSLog(@"MS_CATEGOLY_PARENTSEARCHのアドレスcheckに失敗");
+//			NSLog(@"MS_CATEGOLY_PARENTSEARCHのアドレスcheckに失敗");
 			return;
 		}
 		
 		//送信者が自分であれば無視する 自分から自分へのメッセージの無視
 		if ([senderMID isEqualToString:[self getMyMID]]) {
-			NSLog(@"自分が送信者なので無視する_%@", [self getMyMID]);
+//			NSLog(@"自分が送信者なので無視する_%@", [self getMyMID]);
 			return;
 		}
 		
 		NSString * calledParentName = [dict valueForKey:MS_PARENTNAME];
 		if (!calledParentName) {
-			NSLog(@"親の名称に入力が無ければ無視！");
+//			NSLog(@"親の名称に入力が無ければ無視！");
 			return;//値が無ければ無視する
 		}
 		
@@ -356,7 +353,7 @@
 			
 			id senderID = [dict valueForKey:MS_SENDERID];
 			if (!senderID) {
-				NSLog(@"senderID(送信者のselfポインタ)が無い");
+//				NSLog(@"senderID(送信者のselfポインタ)が無い");
 				return;
 			}
 			
@@ -407,7 +404,7 @@
 		
 		
 		//自分宛ではない
-		NSLog(@"自分宛ではないので、無視する_%@	called%@", myName, calledParentName);
+//		NSLog(@"自分宛ではないので、無視する_%@	called%@", myName, calledParentName);
 		return;
 	}
 	
@@ -437,7 +434,7 @@
 			
 		return;
 	}
-	NSLog(@"素通り");
+	NSAssert(false, @"想定外のコマンド");
 }
 
 
@@ -712,14 +709,17 @@
 	//ストアについては、新しいIDのものが出来るとIDの下に保存する。多元木構造になっちゃうなあ。カラムでやった方が良いのかしら？それとも絡み付いたKVSかしら。
 	
 	NSString * messageID = [MessengerIDGenerator getMID];//このメッセージのIDを出力(あとでID認識するため)
+	
+	
 	//ストアに保存する
-	[self saveToLogStore:@"createLogForNew" log:[self tag:MS_LOG_MESSAGEID val:messageID]];
+	[self saveToLogStore:MS_LOGMESSAGE_CREATED log:[self tag:MS_LOG_MESSAGEID val:messageID]];
 	
 	
-	[dict setValue:messageID forKey:MS_LOGDICTIONARY];//ちょっと内容を変えてる。そのままログをセットする。ただし、キーはメッセージIDではない。
-//	NSDictionary * newLogDictionary;//ログ内容を初期化する
-//	newLogDictionary = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%@", messageID] forKey:MS_LOG_MESSAGEID];
-
+	//messageとともに移動するログに内容をセットする
+	NSDictionary * newLogDictionary;
+	newLogDictionary = [NSDictionary dictionaryWithObject:messageID forKey:MS_LOG_MESSAGEID];
+	
+	[dict setValue:newLogDictionary forKey:MS_LOGDICTIONARY];
 }
 
 
@@ -733,12 +733,11 @@
  */
 - (void) saveLogForReceived:(NSMutableDictionary * ) recievedLogDict {
 	
-//	//ログタイプ、タイムスタンプを作成
-//	NSString * messageID = (NSString * )[recievedLogDict valueForKey:MS_LOG_MESSAGEID];//原因がこれ。まあ取り除いたもんね。
-//	
-//	//ストアに保存する
-//	[self saveToLogStore:@"saveLogForReceived" log:[self tag:MS_LOG_MESSAGEID val:messageID]];
-	[self saveToLogStore:@"saveLogForReceived" log:[self tag:MS_LOG_MESSAGEID val:@"仮ID"]];
+	//ログタイプ、タイムスタンプを作成
+	NSString * messageID = (NSString * )[recievedLogDict valueForKey:MS_LOG_MESSAGEID];
+	
+	//ストアに保存する
+	[self saveToLogStore:MS_LOGMESSAGE_RECEIVED log:[self tag:MS_LOG_MESSAGEID val:messageID]];
 }
 
 
@@ -774,7 +773,7 @@
  アウトプットは後で考えよう。
  */
 - (void) saveToLogStore:(NSString * )name log:(NSDictionary * )value {
-	if (logDo) return;
+	
 	NSArray * key = [value allKeys];//1件しか無い内容を取得する
 	
 	[logDict setValue:
@@ -840,6 +839,11 @@
 	return ret;
 
 }
+
+/**
+ 数値の文字列化
+ */
+
 
 
 
@@ -962,8 +966,7 @@
 
 - (void) dealloc {
 	//通信のくびきを切る。
-	if (test) [[NSNotificationCenter defaultCenter] removeObserver:[self getMyBodyID] name:OBSERVER_ID object:nil];
-	else [[NSNotificationCenter defaultCenter] removeObserver:self name:OBSERVER_ID object:nil];//自分自身でセットしてるから、そりゃ落ちるわな。
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:OBSERVER_ID object:nil];//自分自身でセットしてるから、そりゃ落ちるわな。
 	
 	//本体のID
 	myBodyID = nil;
