@@ -41,7 +41,12 @@
 #define MS_PARENTMID	(@"MESSENGER_SYSTEM_COMMAND:PARENT_MID")//親の固有MIDに類するキー
 
 //メソッド実行オプションに関するタグ
-#define MS_RETURN		(@"MESSENGER_SYSTEM_COMMAND:RETURN")//フック実行メソッドの指定オプションに類するキー 未実装
+#define MS_RETURN		(@"MESSENGER_SYSTEM_COMMAND:RETURN")//フック実行に類するキー
+	#define MS_RETURNID				(@"MESSENGER_SYSTEM_COMMAND:RETURN_ID")//フック実行メソッドのidに類するキー
+	#define MS_RETURNSIGNATURE		(@"MESSENGER_SYSTEM_COMMAND:RETURN_SIGNATURE")//フック実行メソッドのSignature指定に類するキー
+	#define MS_RETURNSELECTOR		(@"MESSENGER_SYSTEM_COMMAND:RETURN_SELECTOR")//フック実行メソッドのSelector指定に類するキー
+
+//遅延実行に関するタグ
 #define MS_DELAY		(@"MESSENGER_SYSTEM_COMMAND:DELAY")//遅延実行
 
 
@@ -111,6 +116,8 @@
 - (id) initWithBodyID:(id)body_id withSelector:(SEL)body_selector withName:(NSString * )name;
 
 
+
+
 /**
  内部実行メソッド
  */
@@ -147,7 +154,20 @@
 - (NSDictionary * ) tag:(id)obj_tag val:(id)obj_value;
 
 
+
 /**
+ 遠隔実行
+ タグシステムの亜種、RemoteTag
+ */
+- (NSDictionary * ) withRemoteFrom:(id)mySelf withSelector:(SEL)sel;
+
+- (NSDictionary * ) setRemoteInvocationFrom:(id)mySelf withSelector:(SEL)sel;
+- (void) remoteInvocation:(NSMutableDictionary * )dict, ...;
+
+
+
+/**
+ 遅延実行
  タグシステムの亜種、DelayTag
  */
 - (NSDictionary * ) withDelay:(float)delay;
@@ -176,14 +196,14 @@
 
 /**
  コマンド情報を数値で取得する
- 辞書からswitch文で使用する情報を数値で取得する
+ 辞書からswitch文で使用する数値を取得する
  */
-- (int) getExecAsInt:(NSMutableDictionary * )dict;
+- (int) getExecAsIntFromDict:(NSMutableDictionary * )dict;
 
 /**
- 文字列からswitch文で使用する情報を取得する
+ 文字列からswitch文で使用する数値を取得する
  */
-- (int) equalToExec:(NSString * )exec;
+- (int) getIntFromExec:(NSString * )exec;
 
 /**
  ストリングの数値化
@@ -191,6 +211,13 @@
 - (int) changeStrToNumber:(NSString * )str;
 
 
+
+/**
+ ユーティリティ
+ */
++ (NSString * )version;
+- (BOOL) hasParent;
+- (BOOL) hasChild;
 
 
 

@@ -37,7 +37,7 @@
 	NSLog(@"子供に到達_%@", notification);
 	
 	
-	int n = [messenger getExecAsInt:dict];
+	int n = [messenger getExecAsIntFromDict:dict];
 	NSLog(@"messengern_%d",n);
 	
 	

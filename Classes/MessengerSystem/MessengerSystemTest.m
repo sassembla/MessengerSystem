@@ -36,6 +36,7 @@
 #define TEST_EXEC (@"testExec")
 #define TEST_EXEC_2 (@"testExec_2")
 #define TEST_EXEC_3 (@"testExec_3")
+#define TEST_PARENT_INVOKE	(@"testParentExec")
 
 
 
@@ -52,6 +53,9 @@
 
 - (void) m_testChild2:(NSNotification * )notification;
 - (void) m_testChild3:(NSNotification * )notification;
+
+
+- (void) sayHello:(NSString * )str;
 
 @end
 
@@ -95,7 +99,16 @@
  テスト用にたたかれるメソッド
  */
 - (void) m_testParent:(NSNotification * )notification {
-	NSLog(@"到達している");
+	
+	NSMutableDictionary * dict = (NSMutableDictionary *)[notification userInfo];
+	NSLog(@"到達している_%@", dict);
+	
+	NSString * exec = [dict valueForKey:MS_EXECUTE];
+	
+	if ([exec isEqualToString:TEST_PARENT_INVOKE]) {
+		[parent remoteInvocation:dict, @"遠隔実行で親から子供の、子供から指定されたメソッド実行にて実行しています。", nil];
+	}
+	
 }
 
 /**
@@ -167,11 +180,25 @@
 	
 	NSString * exec = [dict valueForKey:MS_EXECUTE];
 	NSLog(@"exec_%@",exec);
+}
+
+
+
+/**
+ テスト用に遠隔実行されるメソッド
+ */
+- (void) sayHello:(NSString * )str {
+	NSLog(@"Hello!_%@", str);
 	
 }
 
 
 
+
+
+
+
+//テスト
 /**
  自分自身へのテスト
  */
@@ -193,6 +220,9 @@
 	
 	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];
 	STAssertEquals([child_0 getMyParentName], TEST_PARENT_NAME, @"親の名前が想定と違う");
+	
+	STAssertTrue([child_0 hasParent], @"親がセットされている筈なのに判定がおかしい");//child_0には親がセットされている筈
+	
 	[child_0 release];
 }
 
@@ -602,6 +632,37 @@
 
 
 /**
+ 複数の子供を設定し、順に削除する
+ */
+- (void) testMultiChild {
+	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
+	MessengerSystem * child_2 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild2:) withName:TEST_CHILD_NAME_2];
+	
+	[child_0 inputToMyParentWithName:[parent getMyName]];
+	[child_2 inputToMyParentWithName:[parent getMyName]];
+	
+	
+	[child_0 resetMyParentData];//親情報をリセットする
+	//親には子供がいる　_2
+	//子供２には親がいる 
+	STAssertTrue(![child_0 hasParent], @"親設定があります_0");
+	STAssertTrue([child_2 hasParent], @"親設定がありません_2");
+	STAssertTrue([parent hasChild], @"子供がいません");
+	
+	[child_2 resetMyParentData];//親情報をリセットする
+	//親には子供がいない
+	//子供２には親がいない
+	STAssertTrue(![child_0 hasParent], @"親設定があります_0　その２");
+	STAssertTrue(![child_2 hasParent], @"親設定があります_2　その２");
+	STAssertTrue(![parent hasChild], @"子供がいます　その２");
+	
+	[child_0 release];
+	[child_2 release];
+}
+
+
+
+/**
  親を切り替えるテスト
  予備テストとして、ここから呼ばれたらどうなってしまうのか、をチェックする必要がある。
  -親を切り替えたときに子供から親を呼べるか(エラー)、また親から子供を呼べるか（非特定/特定 x 存在/不在）
@@ -623,6 +684,8 @@
 	
 	//parentの子供辞書を調べてみる、一件も無くなっている筈
 	STAssertTrue([parentChildDict count] == 0, [NSString stringWithFormat:@"親の持っている子供辞書が0件になっていない_%d", [parentChildDict count]]);
+	STAssertTrue(![child_0 hasParent], @"子供がまだ親情報を持っている");
+	STAssertTrue(![parent hasChild], @"親がまだ子供情報を持っている");
 	
 	[child_0 inputToMyParentWithName:[child_2 getMyName]];//新規親情報
 	
@@ -638,6 +701,23 @@
 	[child_2 release];
 }
 
+/**
+ メソッドの遠隔実行
+ */
+- (void) testRemoteInvoke {
+	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:@"じぶん"];
+	[child_0 inputToMyParentWithName:[parent getMyName]];
+	
+	
+	//親から子供0のメソッドを実行する
+	[child_0 callParent:TEST_PARENT_INVOKE, 
+	 [child_0 tag:@"仮に" val:@"なんでもいいとして"],
+	 [child_0 withRemoteFrom:self withSelector:@selector(sayHello:)],
+	 nil];
+	
+	
+	[child_0 release];
+}
 
 //遅延実行
 /**
@@ -645,12 +725,10 @@
  Dealloc周りのテストもしなきゃな。
  */
 - (void) testCallWithDelay {
-//	[child_0 inputToMyParentWithName:[parent getMyName]];
 	
-//	[parent callMyself:@"テスト", 
-	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:nil withName:@"じぶん"];
+	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:@"じぶん"];
 	[child_0 callMyself:@"テスト",
-	 [parent withDelay:0.3],
+	 [child_0 withDelay:0.3],
 	 nil];
 	
 	//STFail(@"確認");

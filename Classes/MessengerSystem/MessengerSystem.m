@@ -20,9 +20,15 @@
  */
 - (id) initWithBodyID:(id)body_id withSelector:(SEL)body_selector withName:(NSString * )name {
 	if (self = [super init]) {
+		NSAssert(name, @"withName引数がnilです。　名称をセットしてください。");
 		[self setMyName:name];
+		
+		NSAssert(body_id, @"initWithBodyID引数がnilです。　制作者のidをセットしてください。");
 		[self setMyBodyID:body_id];
+		
+		NSAssert(body_selector, @"withSelector引数がnilです。　実行セレクタをセットしてください。");
 		[self setMyBodySelector:body_selector];
+		
 		[self initMyMID];
 		[self initMyParentData];
 	}
@@ -78,13 +84,10 @@
 	
 	[dict setValue:self forKey:MS_SENDERID];
 	
-	//フック
-	//特定のメソッドの実行を命令づける、リタンダンシー設定
-	//IMP func = [self methodForSelector:@selector(setMyParentMID:)];
-	//(*func)(self,@selector(setMyParentMID:),@"ついた");
 	
-	//NSInvocationでの実装
-	[dict setValue:[self methodSignatureForSelector:@selector(setMyParentMID:)] forKey:MS_RETURN];
+	//遠隔実装メソッドを設定
+	[dict setValue:[self setRemoteInvocationFrom:self withSelector:@selector(setMyParentMID:)] forKey:MS_RETURN];
+	
 	
 	
 	//ログを作成する
@@ -376,27 +379,14 @@
 			[self getChildDict];
 			
 			//送り届けられたメソッドを使い、Child宛に登録した旨の返答を行う。
-			/*
-			 代替案。
-			 void (*setter)(id, SEL, BOOL);
-			 setter = (void (*)(id, SEL, BOOL))[self methodForSelector:@selector(inputToMyParentWithName:)];//関数ポインタに切り替えてる
-			 setter(self, @selector(inputToMyParentWithName:), YES);//関数として実行			 
-			 */
-			id signature;
-			id invocation;
 			
-			signature = [dict valueForKey:MS_RETURN];
-			//			NSLog(@"signature_%@", signature);
 			
-			//NSInvocationを使った実装
-			//他者が、自分の持っているメソッドを送り出し、よそでの実行を望むパターンを作りたい。持ってきて実行するにあたり、受け取って実行する方は、全て匿名で実行させたい。
-			invocation = [NSInvocation invocationWithMethodSignature:signature];
-			[invocation setSelector:@selector(setMyParentMID:)];//ここに書くメソッド名、直書きしかないのか！？　なんと無意味な。セレクターを持って来れるんだろうか。
-			[invocation setTarget:senderID];
-			NSString * myMSIDforchild = [self getMyMID];
-			[invocation setArgument:&myMSIDforchild atIndex:2];//0,1が埋まっているから固定値,,
+			NSString * myMSIDforChild = [self getMyMID];//遠隔実行のための引数を出し、渡せるようにする。
 			
-			[invocation invoke];
+			
+			//遠隔実行を行う
+			[self remoteInvocation:dict, myMSIDforChild, nil];
+			
 			
 			
 			return;
@@ -465,24 +455,123 @@
 
 
 
+
 /**
  tag valueメソッド
  値にnilが入る事、
  システムが使うのと同様のコマンドが入っている事に関しては、注意する。
  */
 - (NSDictionary * ) tag:(id)obj_tag val:(id)obj_value {
-	NSAssert1(obj_tag,@"obj_tag_%@ is nil",obj_tag);
-	NSAssert1(obj_value,@"obj_value_%@ is nil",obj_value);
+	NSAssert1(obj_tag, @"tag_%@ is nil",obj_tag);
+	NSAssert1(obj_value, @"val_%@ is nil",obj_value);
 	
 	return [NSDictionary dictionaryWithObject:obj_value forKey:obj_tag];
 } 
+
+
+/**
+ 遠隔実行
+ tag-Valueと同形式で遠隔実行オプションを挿入するメソッド
+ */
+- (NSDictionary * )withRemoteFrom:(id)mySelf withSelector:(SEL)sel {
+	NSAssert1(mySelf, @"withRemoteFrom_%@ is nil",mySelf);
+	NSAssert1(sel, @"withSelector_%@ is nil",sel);
+	
+	return [NSDictionary dictionaryWithObject:[self setRemoteInvocationFrom:mySelf withSelector:sel] forKey:MS_RETURN];
+}
+
+/**
+ 遠隔実行セットメソッド
+ */
+- (NSDictionary * ) setRemoteInvocationFrom:(id)mySelf withSelector:(SEL)sel {
+	//フック
+	//特定のメソッドの実行を命令づける設定
+	//IMP func = [self methodForSelector:@selector(setMyParentMID:)];
+	//(*func)(self,@selector(setMyParentMID:),@"ついた");
+	NSDictionary * retDict = [NSDictionary dictionaryWithObjectsAndKeys:
+							  mySelf,	MS_RETURNID, 
+							  [mySelf methodSignatureForSelector:sel],	MS_RETURNSIGNATURE, 
+							  NSStringFromSelector(sel),	MS_RETURNSELECTOR, 
+							  nil];
+	return retDict;
+}
+
+/**
+ 遠隔実行発行メソッド
+ 可変長引数受付
+ 引数にはid型のみ受け付ける。NSObjectの拡張クラスで無ければ、Assertを発生させてしまうが、この辺がメソッド化の限界かなあ。
+ */
+- (void) remoteInvocation:(NSMutableDictionary * )dict, ... {
+	
+	
+	NSDictionary * invokeDict = [dict valueForKey:MS_RETURN];//の中に、辞書が入ってて順番になってる筈。
+	if (!invokeDict) {
+		NSAssert(FALSE, @"MS_RETURNが無い");
+		return;
+	}
+	
+	
+	id invocatorId;
+	id signature;
+	SEL method;
+	
+	id invocation;
+	
+	
+	invocatorId = [invokeDict valueForKey:MS_RETURNID];
+	if (!invocatorId) {
+		NSAssert(FALSE, @"MS_RETURNIDが無い");
+		return;
+	}
+	
+	signature = [invokeDict valueForKey:MS_RETURNSIGNATURE];
+	if (!signature) {
+		NSAssert(FALSE, @"MS_RETURNSIGNATUREが無い");
+		return;
+	}
+	
+	method = NSSelectorFromString([invokeDict valueForKey:MS_RETURNSELECTOR]);
+	if (!method) {
+		NSAssert(FALSE, @"MS_RETURNSELECTORが無い");
+		return;
+	}
+	
+	
+	//NSInvocationを使った実装
+	invocation = [NSInvocation invocationWithMethodSignature:signature];
+	[invocation setSelector:method];
+	[invocation setTarget:invocatorId];
+	
+	
+	int i = 2;//0,1が埋まっているから固定値 2から先に値を渡せるようにする必要がある
+	
+	va_list ap;
+	id param;
+	va_start(ap, dict);
+	param = va_arg(ap, id);
+	
+	while (param) {
+		
+		[invocation setArgument:&param atIndex:i];
+		i++;
+		
+		param = va_arg(ap, id);
+	}
+	va_end(ap);
+	
+	
+	[invocation invoke];//実行
+	
+}
+
+
 
 /**
  遅延実行
  tag-Valueと同形式でオプションを挿入するメソッド
  */
 - (NSDictionary * ) withDelay:(float)delay {
-	NSAssert1(delay,@"obj_value_%@ is nil",delay);
+	NSAssert1(delay,@"withDelay_%@ is nil",delay);
 	return [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:delay] forKey:MS_DELAY];
 }
 
@@ -797,14 +886,14 @@
  実行処理名を指定、Int値を取得する
  この時点で飛び込んでくるストリングのポインタと同じ値を直前で出して、合致する値を出せればいいのか、、って定数じゃないが、、一致は出来る、、うーん。
  */
-- (int) getExecAsInt:(NSMutableDictionary * )dict {
+- (int) getExecAsIntFromDict:(NSMutableDictionary * )dict {
 	return [self changeStrToNumber:[dict valueForKey:MS_EXECUTE]];
 }
 
 /**
  NSStringからhash値を出す
  */
-- (int) equalToExec:(NSString * )exec {
+- (int) getIntFromExec:(NSString * )exec {
 	return [self changeStrToNumber:exec];
 }
 
@@ -843,6 +932,43 @@
 /**
  数値の文字列化
  */
+
+
+
+
+
+
+
+//ユーティリティ
+/**
+ バージョンを返す
+ */
++ (NSString * )version {
+    return @"0.5.0";//10/09/20 3:46:51
+}
+
+
+/**
+ 親が設定されているかどうか返す
+ */
+- (BOOL) hasParent {
+	if (![[self getMyParentMID] isEqual:PARENTMID_DEFAULT]) {//デフォルトでない
+		return TRUE;
+	}
+	return FALSE;
+}
+
+/**
+ 子供が設定されているかどうか返す
+ */
+- (BOOL) hasChild {
+	if (0 < [[self getChildDict] count]) {
+		return TRUE;
+	}
+	return FALSE;
+}
+
+
 
 
 
@@ -964,9 +1090,13 @@
 
 
 
+/**
+ Dealloc
+ 
+ */
 - (void) dealloc {
 	//通信のくびきを切る。
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:OBSERVER_ID object:nil];//自分自身でセットしてるから、そりゃ落ちるわな。
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:OBSERVER_ID object:nil];
 	
 	//本体のID
 	myBodyID = nil;

@@ -125,10 +125,10 @@
 	
 	NSMutableDictionary * dict = (NSMutableDictionary *)[notification userInfo];
 	
-	int n = [paren getExecAsInt:dict];
+	int n = [paren getExecAsIntFromDict:dict];
 	NSLog(@"testn_%d",n);
 	
-	int m = [paren equalToExec:COMMAND_CHILDS];
+	int m = [paren getIntFromExec:COMMAND_CHILDS];
 	NSLog(@"testm_%d", m);
 	
 	
