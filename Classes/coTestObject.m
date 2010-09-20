@@ -24,7 +24,7 @@
 - (id) init2 {
 	if (self = [super init]) {
 		messenger = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:CHILD_1];
-		[messenger inputToMyParentWithName:PARENTNAME];
+		//[messenger inputToMyParentWithName:PARENTNAME];
 	}
 	return self;
 }
@@ -59,10 +59,36 @@
 			NSLog(@"COMMAND_CHILDS到着_%@",[messenger getMyMID]);
 			break;
 			
+		case -416910212://COMMAND_DELAYANDREMOTE
+			NSLog(@"ディレイで到達_%@",[messenger getMyMID]);
+			[messenger remoteInvocation:dict, @"親のメソッドを子供が起動", nil];
+			
+			[messenger callParent:COMMAND_DELAYANDREMOTE_RET, 
+			 [messenger withRemoteFrom:self withSelector:@selector(forInvocaton:)],
+			 nil];
+			
+			[messenger callParent:COMMAND_DELAYANDREMOTE_RET_2, 
+			 [messenger withRemoteFrom:self withSelector:@selector(forInvocaton:)],
+			 [messenger withDelay:0.4],//どーも、ディレイと同時に付くと、問題が出るようだね。
+			 nil];
+			break;
+			
+		default:
+		{
+			int m = [messenger getExecAsIntFromDict:dict];
+			NSLog(@"messenger m_%d",m);
+		}
+			
+			break;
 	}
-	
-	
-	//あとは好きにして！
+}
+
+
+/**
+ 遠隔実行で渡してみる
+ */
+- (void) forInvocaton:(NSString * )str {
+	NSLog(@"forInvocaton_%@",str);
 }
 
 

@@ -10,10 +10,17 @@
 #import "MessengerIDGenerator.h"
 
 
+#define NSLog( m, args... )
 
 
 @implementation MessengerSystem
 
+/**
+ バージョンを返す
+ */
++ (NSString * )version {
+    return @"0.5.0";//10/09/20 3:46:51
+}
 
 /**
  初期化する
@@ -891,7 +898,7 @@
 }
 
 /**
- NSStringからhash値を出す
+ NSStringからInt値を出す
  */
 - (int) getIntFromExec:(NSString * )exec {
 	return [self changeStrToNumber:exec];
@@ -906,8 +913,8 @@
 - (int) changeStrToNumber:(NSString * )str {
 	
 	
-	const char * bytes = [str UTF8String];
-	unsigned int length = [str lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+	const char * bytes = [str UTF8String];//UTF8エンコードに設定
+	unsigned int length = [str lengthOfBytesUsingEncoding:NSUTF8StringEncoding];//長さ取得
 	
 	unsigned int ret = 0;
 	int rem = length;//残りの文字数長だけ、４文字ずつ処理を行う
@@ -932,7 +939,9 @@
 /**
  数値の文字列化
  */
-
+- (NSString * ) changeNumberToStr:(int)num {
+	return nil;
+}
 
 
 
@@ -940,14 +949,6 @@
 
 
 //ユーティリティ
-/**
- バージョンを返す
- */
-+ (NSString * )version {
-    return @"0.5.0";//10/09/20 3:46:51
-}
-
-
 /**
  親が設定されているかどうか返す
  */

@@ -101,16 +101,20 @@
 
 	
 	
-	//子供を自分自身から呼ぶコード
-	[paren callMyself:COMMAND_CHILDS,
-	 [paren tag:@"one" val:@"1"],
-	 [paren tag:@"two" val:@"2"],
-	 [paren tag:@"three" val:@"3"],
-	 [paren withDelay:0.01],
-	 nil];
+//	//子供を自分自身から呼ぶコード
+//	[paren callMyself:COMMAND_CHILDS,
+//	 [paren tag:@"one" val:@"1"],
+//	 [paren tag:@"two" val:@"2"],
+//	 [paren tag:@"three" val:@"3"],
+//	 [paren withDelay:0.01],
+//	 nil];
 	
 	
 
+	[paren call:CHILD_1 withExec:COMMAND_DELAYANDREMOTE, 
+	 [paren withDelay:0.5],
+	 [paren withRemoteFrom:self withSelector:@selector(ignition:)],
+	 nil];
 	
 	
     [window makeKeyAndVisible];
@@ -120,16 +124,23 @@
 
 
 
+/**
+ 遠隔実行する用のメソッド
+ */
+- (void) ignition:(NSString * )str {
+	NSLog(@"ignition_%@", str);
+}
+
+
+
 - (void)test:(NSNotification * )notification {
 	NSLog(@"NSNotification到着！！！！_%@", notification);
 	
 	NSMutableDictionary * dict = (NSMutableDictionary *)[notification userInfo];
 	
+	NSLog(@"param_%@", [paren getExecAsString:dict]);
 	int n = [paren getExecAsIntFromDict:dict];
 	NSLog(@"testn_%d",n);
-	
-	int m = [paren getIntFromExec:COMMAND_CHILDS];
-	NSLog(@"testm_%d", m);
 	
 	
 	switch (n) {
@@ -153,6 +164,15 @@
 			 [paren withDelay:0.1],
 			 nil];
 			break;
+			
+		case 2099139860://COMMAND_DELAYANDREMOTE_RET
+			[paren remoteInvocation:dict, @"第一次受け取り", nil];
+			break;
+			
+		case -773500510://COMMAND_DELAYANDREMOTE_RET_2
+			[paren remoteInvocation:dict, @"第二次受け取り", nil];
+			break;
+			
 		default:
 			NSLog(@"per_%d", n);//コマンドの数字を出す
 			break;

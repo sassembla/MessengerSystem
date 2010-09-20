@@ -9,10 +9,6 @@
 #import <Foundation/Foundation.h>
 
 
-//#define NSLog( m, args... )
-
-
-#define MESSENGER_SYSTEM_VERSION (20100829)
 
 //Objective-C id情報
 #define MS_SENDERID		(@"MESSENGER_SYSTEM_COMMAND:SENDER_ID")//自分固有のObjective-C IDに類するキー
@@ -104,11 +100,14 @@
 /**
  メッセージオブザーバーID
  */
-#define OBSERVER_ID		(@"MessengerSystemDefault")
+#define OBSERVER_ID		(@"MessengerSystemDefault_E2FD8F50-F6E9-42F6-8949-E7DD20312CA0")
 
 
+/**
+ バージョン取得
+ */
++ (NSString * )version;
 
-	
 
 /**
  初期化メソッド
@@ -210,12 +209,15 @@
  */
 - (int) changeStrToNumber:(NSString * )str;
 
+/**
+ 数値の文字列化
+ */
+- (NSString * ) changeNumberToStr:(int)num;
 
 
 /**
  ユーティリティ
  */
-+ (NSString * )version;
 - (BOOL) hasParent;
 - (BOOL) hasChild;
 

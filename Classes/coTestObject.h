@@ -18,4 +18,6 @@
 - (id) init2;
 
 
+- (void) forInvocaton:(NSString * )str;
+
 @end
