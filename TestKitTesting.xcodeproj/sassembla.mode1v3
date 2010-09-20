@@ -299,7 +299,7 @@
 							<real>245</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>473 274 788 504 0 0 1280 778 </string>
+						<string>41 274 788 504 0 0 1280 778 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -310,14 +310,12 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>MessengerSystemTest.m</string>
+								<string>RunPlatformUnitTests.include</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -325,11 +323,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>MessengerSystemTest.m</string>
+										<string>RunPlatformUnitTests.include</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>13A1659D1247EC5C00B948A3</string>
+										<string>13A165D21247EF1900B948A3</string>
 										<key>history</key>
 										<array>
 											<string>134553FB122A672B00E348F5</string>
@@ -338,7 +336,6 @@
 											<string>13A2ECF112423D7F007685AD</string>
 											<string>131E8C981242798C00FE8CB6</string>
 											<string>134C8672124512CF005ABE97</string>
-											<string>1321AD2D1246898100C5D3F6</string>
 											<string>1321AEA6124734DA00C5D3F6</string>
 											<string>1321AF4C124744C900C5D3F6</string>
 											<string>1321AF7D1247496C00C5D3F6</string>
@@ -348,7 +345,8 @@
 											<string>1321AFF912474D7800C5D3F6</string>
 											<string>1321AFFA12474D7800C5D3F6</string>
 											<string>1321B08E124778BB00C5D3F6</string>
-											<string>1321B2BE1247EC3100C5D3F6</string>
+											<string>13A165CF1247EF1900B948A3</string>
+											<string>13A165D01247EF1900B948A3</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -362,7 +360,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {521, 122}}</string>
 								<key>RubberWindowFrame</key>
-								<string>473 274 788 504 0 0 1280 778 </string>
+								<string>41 274 788 504 0 0 1280 778 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -370,6 +368,8 @@
 							<string>122pt</string>
 						</dict>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -382,7 +382,7 @@
 								<key>Frame</key>
 								<string>{{0, 127}, {521, 336}}</string>
 								<key>RubberWindowFrame</key>
-								<string>473 274 788 504 0 0 1280 778 </string>
+								<string>41 274 788 504 0 0 1280 778 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
@@ -552,7 +552,7 @@
 		<string>/Users/sassembla/Desktop/TestKitTesting/TestKitTesting.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>473 274 788 504 0 0 1280 778 </string>
+	<string>41 274 788 504 0 0 1280 778 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>
@@ -573,7 +573,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string></string>
+								<string>MessengerSystemTest.m</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -590,6 +590,8 @@
 							<string>239pt</string>
 						</dict>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -876,6 +878,8 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>

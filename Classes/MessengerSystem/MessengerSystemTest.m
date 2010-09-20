@@ -214,10 +214,10 @@
  Deallocコード
  */
 - (void) testDealloc {
-	NSString * code = [NSString stringWithFormat:@"仮に"];
-	NSLog(@"code_retainCount_%d", [code retainCount]);//この時点で１ならOK、というレベル。
-	NSLog(@"code_%@", code);
-	[code release];
+//	NSString * code = [NSString stringWithFormat:@"仮に"];
+//	NSLog(@"code_retainCount_%d", [code retainCount]);//この時点で１ならOK、というレベル。
+//	NSLog(@"code_%@", code);
+	//[code release];//リリースしちゃいけないのか！
 //	NSLog(@"code_retainCount2_%d", [code retainCount]);//releaseした後でも１を保つが、参照すると吹っ飛ぶ。
 
 	
