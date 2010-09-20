@@ -16,8 +16,9 @@
 
 - (id) init;
 - (id) init2;
+- (id) init3;
 
-
+- (void) setParent;
 - (void) forInvocaton:(NSString * )str;
 
 @end

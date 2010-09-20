@@ -17,6 +17,7 @@
 	}
 	messenger = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:CHILD_1];
 	[messenger inputToMyParentWithName:PARENTNAME];
+	NSLog(@"作る事は出来てる");
 	return self;
 }
 
@@ -29,6 +30,17 @@
 	return self;
 }
 
+- (id) init3 {
+	if (self = [super init]) {
+		messenger = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:CHILD_1];
+		
+	}
+	return self;
+}
+
+- (void) setParent {
+	[messenger inputToMyParentWithName:PARENTNAME];
+}
 
 - (void)test:(NSNotification * )notification {
 	

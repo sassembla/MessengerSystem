@@ -77,11 +77,9 @@
  ティアダウン
  */
 - (void) tearDown {
-	
 	[parent release];
 	[child_persis release];
 	NSLog(@"tearDown");
-	
 }
 
 
@@ -209,7 +207,23 @@
 	NSDictionary * logDict = [parent getLogStore];
 	//自分自身への通信なので、送信と受信が一件ずつ残る筈
 	
-	STAssertTrue([logDict count] == 2, @"違う");
+	STAssertTrue([logDict count] == 2, @"発信記録、受信記録が含まれていない");
+}
+
+/**
+ 削除 Deallocコード
+ */
+- (void) testDealloc {
+	NSString * code = [NSString stringWithFormat:@"仮に"];
+	NSLog(@"code_retainCount_%d", [code retainCount]);//この時点で１ならOK、というレベル。
+	NSLog(@"code_%@", code);
+	[code release];
+//	NSLog(@"code_retainCount2_%d", [code retainCount]);//releaseした後でも１を保つが、参照すると吹っ飛ぶ。
+
+	
+	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
+	STAssertTrue([child_0 retainCount] == 1, [NSString stringWithFormat:@"解放準備ができていない%d", [child_0 retainCount]]);
+	[child_0 release];
 }
 
 /*
@@ -239,6 +253,20 @@
 }
 
 
+/**
+ 子供を解除する
+ */
+- (void) testRemoveChild {
+	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
+	
+	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];
+	STAssertTrue([[child_0 getMyParentMID] isEqualToString:[parent getMyMID]], [NSString stringWithFormat:@"親のIDが想定と違う/child_0_%@, parent_%@", [child_0 getMyParentMID], [parent getMyMID]]);
+	
+	[parent removeChildData];
+	
+	STAssertTrue([[child_0 getMyParentMID] isEqualToString:PARENTMID_DEFAULT], [NSString stringWithFormat:@"親のIDが想定と違う/child_0_%@, parent_%@", [child_0 getMyParentMID], [parent getMyMID]]);
+	[child_0 release];
+}
 
 /**
  わざと存在しない親の名前を指定した際のテスト
@@ -622,7 +650,7 @@
 	
 	//child_0の子供としてchild_2をセットした際、child_0の名前がchild_2のmyParentにセットしてあるはず。
 	NSMutableDictionary * dict1 = [child_persis getChildDict];
-	STAssertEquals([dict1 valueForKey:[child_2 getMyMID]], [child_2 getMyName], @"child_2の親登録が違った");
+	STAssertTrue([[dict1 valueForKey:[child_2 getMyMID]] isEqualToString:[child_2 getMyName]], @"child_2の親登録が違った");
 	
 	
 	//親に送る系の命令は、child_2からは0、0からはparentに行くはず。
@@ -679,19 +707,33 @@
 	NSMutableDictionary * parentChildDict = [parent getChildDict];
 	STAssertTrue([parentChildDict count] == 1, [NSString stringWithFormat:@"親の持っている子供辞書が1件になっていない_%d", [parentChildDict count]]);
 	
-	
+	NSLog(@"child_0の親を抹消");
 	[child_0 resetMyParentData];//親情報をリセットする
+	NSLog(@"child_0の親抹消済みの筈_親ID_%@", [child_0 getMyParentMID]);
 	
 	//parentの子供辞書を調べてみる、一件も無くなっている筈
 	STAssertTrue([parentChildDict count] == 0, [NSString stringWithFormat:@"親の持っている子供辞書が0件になっていない_%d", [parentChildDict count]]);
 	STAssertTrue(![child_0 hasParent], @"子供がまだ親情報を持っている");
 	STAssertTrue(![parent hasChild], @"親がまだ子供情報を持っている");
 	
+	
+	
 	[child_0 inputToMyParentWithName:[child_2 getMyName]];//新規親情報
 	
-	NSMutableDictionary * dict2 = [child_2 getChildDict];
-	STAssertEquals([dict2 valueForKey:[child_0 getMyMID]], [child_0 getMyName], @"child_2の親登録が違った");
 	
+	NSLog(@"子供が知ってる親の名前_%@", [child_0 getMyParentName]);
+	//親が知ってる子供の情報、という部分において、他のオブジェクト（子供残骸＞）
+	
+	STAssertTrue([child_0 hasParent], @"子供がまだ親情報を持っている");
+	STAssertTrue(![parent hasChild], @"親がまだ子供情報を持っている");
+	STAssertTrue([child_2 hasParent], @"子供2が子供情報を持っていない");
+	
+	
+	NSMutableDictionary * dict2 = [child_2 getChildDict];
+	STAssertTrue([dict2 count] == 1, [NSString stringWithFormat:@"dict2の持っている子供辞書が1件になっていない_%d", [dict2 count]]);
+	
+	NSLog(@"dict2_%@", dict2);
+	STAssertTrue([[dict2 valueForKey:[child_0 getMyMID]] isEqualToString:[child_0 getMyName]], @"child_2の親登録が違った");
 	
 	[child_2 call:[child_0 getMyName] withExec:@"試し",nil];
 	
@@ -699,6 +741,7 @@
 	//STAssertEquals([dict1 valueForKey:[child_2 getMyMID]], [child_2 getMyName], @"child_2の親登録が違った");
 	[child_0 release];
 	[child_2 release];
+	
 }
 
 /**
@@ -734,6 +777,7 @@
 	//STFail(@"確認");
 	//テストの結果を知るには、、、、どうすればいいんだ。返り値を判断する機構でもあればいいんだけど。
 	[child_0 release];
+	
 }
 
 

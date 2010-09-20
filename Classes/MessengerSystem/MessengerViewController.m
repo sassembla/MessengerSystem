@@ -29,7 +29,7 @@
 - (id) initWithFrame:(CGRect)frame {
 	if (self = [super init]) {
 		
-		messengerInterfaceView = [[UIView alloc] initWithFrame:frame];
+		messengerInterfaceView = [[MessengerDisplayView alloc] initWithFrame:frame];
 		
 		[self setMyName:VIEW_NAME_DEFAULT];
 		[self setMyBodyID:nil];
@@ -105,7 +105,7 @@
 	
 	
 	
-	if ([commandName isEqualToString:MS_CATEGOLY_PARENTREMOVE]) {//親設定の解除コマンドを判断
+	if ([commandName isEqualToString:MS_CATEGOLY_REMOVE_PARENT]) {//親設定の解除コマンドを判断
 		NSString * sendersParentName = [dict valueForKey:MS_ADDRESS_NAME];
 		if (!sendersParentName) {//送信者の親Name不詳であれば無視する
 			NSLog(@"送信者親Name不詳");
@@ -197,6 +197,8 @@
 	[viewListDict setValue:[self createMessengerInformation:sendersParentName withMID:sendersParentMSID] forKey:newKey];
 
 	[messengerInterfaceView addSubview:newButton];//ビューに加える
+	[messengerInterfaceView setDrawDict:buttonDict];
+	
 }
 /**
  通信してきた対象の情報を削除する

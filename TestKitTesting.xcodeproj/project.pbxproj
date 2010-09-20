@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1321AF5A124745DD00C5D3F6 /* MessengerDisplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1321AF59124745DD00C5D3F6 /* MessengerDisplayView.m */; };
+		1321AF631247468B00C5D3F6 /* MessengerDisplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1321AF59124745DD00C5D3F6 /* MessengerDisplayView.m */; };
 		134551B3122A4D0200E348F5 /* MessengerSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 134551B2122A4D0200E348F5 /* MessengerSystem.m */; };
 		134551B5122A4D1600E348F5 /* MessengerSystemTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 134551B4122A4D1600E348F5 /* MessengerSystemTest.m */; };
 		1345540C122A68A500E348F5 /* MessengerSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 134551B2122A4D0200E348F5 /* MessengerSystem.m */; };
@@ -27,6 +29,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1321AF58124745DD00C5D3F6 /* MessengerDisplayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessengerDisplayView.h; sourceTree = "<group>"; };
+		1321AF59124745DD00C5D3F6 /* MessengerDisplayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessengerDisplayView.m; sourceTree = "<group>"; };
 		134551B1122A4D0200E348F5 /* MessengerSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessengerSystem.h; sourceTree = "<group>"; };
 		134551B2122A4D0200E348F5 /* MessengerSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessengerSystem.m; sourceTree = "<group>"; };
 		134551B4122A4D1600E348F5 /* MessengerSystemTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessengerSystemTest.m; sourceTree = "<group>"; };
@@ -98,6 +102,8 @@
 				13AC407D123CB3E700AAF658 /* MessengerViewController.m */,
 				13A2E99212407C6E007685AD /* MessengerIDGenerator.h */,
 				13A2E99312407C6E007685AD /* MessengerIDGenerator.m */,
+				1321AF58124745DD00C5D3F6 /* MessengerDisplayView.h */,
+				1321AF59124745DD00C5D3F6 /* MessengerDisplayView.m */,
 			);
 			name = MessengerSystem;
 			path = Classes/MessengerSystem;
@@ -253,6 +259,7 @@
 				13A2E99412407C6E007685AD /* MessengerIDGenerator.m in Sources */,
 				134551B3122A4D0200E348F5 /* MessengerSystem.m in Sources */,
 				13AC407E123CB3E700AAF658 /* MessengerViewController.m in Sources */,
+				1321AF5A124745DD00C5D3F6 /* MessengerDisplayView.m in Sources */,
 				134551B5122A4D1600E348F5 /* MessengerSystemTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -262,6 +269,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13A9E8D6123D2B3200981224 /* MessengerViewController.m in Sources */,
+				1321AF631247468B00C5D3F6 /* MessengerDisplayView.m in Sources */,
 				13455454122A6AB400E348F5 /* coTestObject.m in Sources */,
 				13A2EA231240A235007685AD /* MessengerIDGenerator.m in Sources */,
 				1345540C122A68A500E348F5 /* MessengerSystem.m in Sources */,

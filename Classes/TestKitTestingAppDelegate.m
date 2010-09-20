@@ -170,7 +170,13 @@
 			break;
 			
 		case -773500510://COMMAND_DELAYANDREMOTE_RET_2
+		{
+			
 			[paren remoteInvocation:dict, @"第二次受け取り", nil];
+			coTestObject * cTest3 = [[coTestObject alloc] init3];//動的に子供が出来ること自体が駄目？それってむずくね？　なんで？
+			[cTest3 setParent];
+			
+		}
 			break;
 			
 		default:

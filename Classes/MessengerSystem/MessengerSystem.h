@@ -21,7 +21,9 @@
 	#define	MS_CATEGOLY_CALLPARENT		(@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_CALL_PARENT")//親呼び出し
 	#define MS_CATEGOLY_PARENTSEARCH	(@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_PARENTSEARCH")//親探索
 	#define MS_CATEGOLY_GOTPARENT		(@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_GOT_PARENT")//親取得完了
-	#define MS_CATEGOLY_PARENTREMOVE	(@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_PARENTREMOVE")//親の登録を消す
+	#define MS_CATEGOLY_REMOVE_PARENT	(@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_REMOVEPARENT")//親の登録を消す
+	#define MS_CATEGOLY_REMOVE_CHILD	(@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_REMOVECHILD")//子供の登録を消す
+
 
 #define MS_SENDERNAME	(@"MESSENGER_SYSTEM_COMMAND:LOGGED_SENDER_NAME")//自分の名前に類するキー
 #define MS_SENDERMID	(@"MESSENGER_SYSTEM_COMMAND:LOGGED_SENDER_MID")//自分固有のMIDに類するキー
@@ -92,7 +94,7 @@
 	NSMutableDictionary * childDict;
 	
 	
-	//ログ取り用の辞書
+	//ログ取り用の辞書				NSMutableDictionary
 	NSMutableDictionary * logDict;
 }
 
@@ -123,7 +125,7 @@
 - (void) inputToMyParentWithName:(NSString * )parent;//親への登録メソッド
 - (void) decidedParentName:(NSString * )parentName withParentMID:(NSString * )parentMID;//親への登録完了時の声明発行メソッド
 - (void) removeMyParentData;//親情報を初期化する通信を行うメソッド
-
+- (void) removeChildData;//自分を親に設定している子供に対して解除を促すメソッド
 
 - (void) innerPerform:(NSNotification * )notification;//内部実装メソッド、システムな動作とbodyへのメソッド伝達を行う。
 
@@ -218,9 +220,14 @@
 /**
  ユーティリティ
  */
+//親の有無を確認する
 - (BOOL) hasParent;
+
+//子供の有無を確認する
 - (BOOL) hasChild;
 
+//innerPerformを無効化する
+- (void) removeReaction;
 
 
 /**

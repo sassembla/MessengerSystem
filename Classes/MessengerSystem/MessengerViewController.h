@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "MessengerSystem.h"
+#import "MessengerDisplayView.h"
 
 #import <UIKit/UIKit.h>
 
@@ -18,7 +19,7 @@
 	NSMutableDictionary * viewListDict;//ビュー自体が持つMessengerの辞書
 	NSMutableDictionary * buttonDict;//ボタン辞書
 	
-	UIView * messengerInterfaceView;//ボタン、ラインをセットするビュー
+	MessengerDisplayView * messengerInterfaceView;//ボタン、ラインをセットするビュー
 	
 }
 //初期化
