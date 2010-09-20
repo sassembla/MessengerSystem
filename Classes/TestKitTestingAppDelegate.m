@@ -173,10 +173,22 @@
 		{
 			
 			[paren remoteInvocation:dict, @"第二次受け取り", nil];
-			coTestObject * cTest3 = [[coTestObject alloc] init3];//動的に子供が出来ること自体が駄目？それってむずくね？　なんで？
-			[cTest3 setParent];
+			
+			[paren callMyself:COMMAND_LOOP,
+			 [paren withDelay:0.1],
+			 nil];
+			
+		//	coTestObject * cTest3 = [[coTestObject alloc] init3];//動的に子供が出来ること自体が駄目？それってむずくね？　なんで？
+//			[cTest3 setParent];
 			
 		}
+			break;
+			
+		case 624007143://COMMAND_LOOP
+			[paren callMyself:COMMAND_LOOP,
+			 [paren withDelay:0.1],
+			 nil];
+			
 			break;
 			
 		default:

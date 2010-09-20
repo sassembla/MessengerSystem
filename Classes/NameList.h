@@ -13,3 +13,5 @@
 #define COMMAND_DELAYANDREMOTE	(@"遅延と遠隔実行")
 #define COMMAND_DELAYANDREMOTE_RET	(@"遅延と遠隔実行返答")
 #define COMMAND_DELAYANDREMOTE_RET_2 (@"遅延と遠隔実行返答2")
+
+#define COMMAND_LOOP	(@"ループ")
