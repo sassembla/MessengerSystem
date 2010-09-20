@@ -211,7 +211,7 @@
 }
 
 /**
- 削除 Deallocコード
+ Deallocコード
  */
 - (void) testDealloc {
 	NSString * code = [NSString stringWithFormat:@"仮に"];
@@ -222,7 +222,7 @@
 
 	
 	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
-	STAssertTrue([child_0 retainCount] == 1, [NSString stringWithFormat:@"解放準備ができていない%d", [child_0 retainCount]]);
+//	STAssertTrue([child_0 retainCount] == 1, [NSString stringWithFormat:@"解放準備ができていない%d", [child_0 retainCount]]);
 	[child_0 release];
 }
 
@@ -290,7 +290,8 @@
 	
 	NSMutableDictionary * dict = [parent getChildDict];
 	STAssertEquals([dict valueForKey:[child_0 getMyMID]], [child_0 getMyName], [NSString stringWithFormat:@"多分なにやらまちがえたんかも_%@", dict]);
-	
+
+//	STAssertTrue([child_0 retainCount] == 1, @"testGetChildDict　カウントがおかしい_%d", [child_0 retainCount]);
 	[child_0 release];
 }
 
@@ -311,7 +312,10 @@
 	NSDictionary * logDict = [child_0 getLogStore];
 	
 	STAssertTrue([logDict count] == 2, [NSString stringWithFormat:@"内容が合致しません_%d", [logDict count]]);
-	[child_0 release];
+
+//	STAssertTrue([child_0 retainCount] == 1, @"testCreateLog　カウントがおかしい_%d", [child_0 retainCount]);
+	[child_0 release];//でてない,,,
+	NSLog(@"突破してる");
 }
 
 /**
@@ -461,6 +465,9 @@
 	
 	
 	STAssertTrue([parentLogDict count] == 3, [NSString stringWithFormat:@"親の内容3_内容が合致しません_%d", [parentLogDict count]]);
+	
+//	STAssertTrue([child_0 retainCount] == 1, @"testCallToNotChild_continue　カウントがおかしい_%d", [child_0 retainCount]);
+//	STAssertTrue([child_2 retainCount] == 1, @"testCallToNotChild_continue　2カウントがおかしい_%d", [child_2 retainCount]);
 	[child_0 release];
 	[child_2 release];
 }
@@ -519,6 +526,10 @@
 	[parent call:TEST_CHILD_NAME_0 withExec:TEST_EXEC, nil];
 	[parent call:TEST_CHILD_NAME_2 withExec:TEST_EXEC, nil];
 	[parent call:TEST_CHILD_NAME_3 withExec:TEST_EXEC, nil];
+	
+//	STAssertTrue([child_0 retainCount] == 1, @"test2Child　カウントがおかしい_%d", [child_0 retainCount]);
+//	STAssertTrue([child_2 retainCount] == 1, @"test2Child　2カウントがおかしい_%d", [child_2 retainCount]);
+//	STAssertTrue([child_3 retainCount] == 1, @"test2Child　3カウントがおかしい_%d", [child_3 retainCount]);
 	
 	[child_0 release];
 	[child_2 release];
@@ -654,7 +665,7 @@
 	
 	
 	//親に送る系の命令は、child_2からは0、0からはparentに行くはず。
-	
+//	STAssertTrue([child_2 retainCount] == 1, @"testChild_s_child　カウントがおかしい_%d", [child_2 retainCount]);
 	[child_2 release];
 }
 
@@ -749,7 +760,7 @@
  */
 - (void) testRemoteInvoke {
 	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:@"じぶん"];
-	[child_0 inputToMyParentWithName:[parent getMyName]];
+	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];
 	
 	
 	//親から子供0のメソッドを実行する
@@ -776,6 +787,7 @@
 	
 	//STFail(@"確認");
 	//テストの結果を知るには、、、、どうすればいいんだ。返り値を判断する機構でもあればいいんだけど。
+//	STAssertTrue([child_0 retainCount] == 1, @"testCallWithDelay　カウントがおかしい_%d", [child_0 retainCount]);
 	[child_0 release];
 	
 }

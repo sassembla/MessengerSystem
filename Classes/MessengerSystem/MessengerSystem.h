@@ -226,8 +226,6 @@
 //子供の有無を確認する
 - (BOOL) hasChild;
 
-//innerPerformを無効化する
-- (void) removeReaction;
 
 
 /**
