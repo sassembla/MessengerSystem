@@ -13,11 +13,11 @@
 		13455454122A6AB400E348F5 /* coTestObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 1345544A122A6A0A00E348F5 /* coTestObject.m */; };
 		13A2E99412407C6E007685AD /* MessengerIDGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A2E99312407C6E007685AD /* MessengerIDGenerator.m */; };
 		13A2EA231240A235007685AD /* MessengerIDGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A2E99312407C6E007685AD /* MessengerIDGenerator.m */; };
-		13A9E8D6123D2B3200981224 /* MessengerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13AC407D123CB3E700AAF658 /* MessengerView.m */; };
+		13A9E8D6123D2B3200981224 /* MessengerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13AC407D123CB3E700AAF658 /* MessengerViewController.m */; };
 		13A9EA65123D49AF00981224 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		13A9EABA123D49B900981224 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		13A9EB12123D4A1300981224 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
-		13AC407E123CB3E700AAF658 /* MessengerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13AC407D123CB3E700AAF658 /* MessengerView.m */; };
+		13AC407E123CB3E700AAF658 /* MessengerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13AC407D123CB3E700AAF658 /* MessengerViewController.m */; };
 		1D3623260D0F684500981E51 /* TestKitTestingAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* TestKitTestingAppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -38,8 +38,8 @@
 		13A2E99212407C6E007685AD /* MessengerIDGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessengerIDGenerator.h; sourceTree = "<group>"; };
 		13A2E99312407C6E007685AD /* MessengerIDGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessengerIDGenerator.m; sourceTree = "<group>"; };
 		13A9E95B123D2F5800981224 /* NameList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NameList.h; sourceTree = "<group>"; };
-		13AC407C123CB3E700AAF658 /* MessengerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessengerView.h; sourceTree = "<group>"; };
-		13AC407D123CB3E700AAF658 /* MessengerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessengerView.m; sourceTree = "<group>"; };
+		13AC407C123CB3E700AAF658 /* MessengerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessengerViewController.h; sourceTree = "<group>"; };
+		13AC407D123CB3E700AAF658 /* MessengerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessengerViewController.m; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* TestKitTestingAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestKitTestingAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* TestKitTestingAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestKitTestingAppDelegate.m; sourceTree = "<group>"; };
@@ -94,8 +94,8 @@
 				134551B1122A4D0200E348F5 /* MessengerSystem.h */,
 				134551B2122A4D0200E348F5 /* MessengerSystem.m */,
 				134551B4122A4D1600E348F5 /* MessengerSystemTest.m */,
-				13AC407C123CB3E700AAF658 /* MessengerView.h */,
-				13AC407D123CB3E700AAF658 /* MessengerView.m */,
+				13AC407C123CB3E700AAF658 /* MessengerViewController.h */,
+				13AC407D123CB3E700AAF658 /* MessengerViewController.m */,
 				13A2E99212407C6E007685AD /* MessengerIDGenerator.h */,
 				13A2E99312407C6E007685AD /* MessengerIDGenerator.m */,
 			);
@@ -252,8 +252,8 @@
 			files = (
 				13A2E99412407C6E007685AD /* MessengerIDGenerator.m in Sources */,
 				134551B3122A4D0200E348F5 /* MessengerSystem.m in Sources */,
+				13AC407E123CB3E700AAF658 /* MessengerViewController.m in Sources */,
 				134551B5122A4D1600E348F5 /* MessengerSystemTest.m in Sources */,
-				13AC407E123CB3E700AAF658 /* MessengerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,7 +261,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13A9E8D6123D2B3200981224 /* MessengerView.m in Sources */,
+				13A9E8D6123D2B3200981224 /* MessengerViewController.m in Sources */,
 				13455454122A6AB400E348F5 /* coTestObject.m in Sources */,
 				13A2EA231240A235007685AD /* MessengerIDGenerator.m in Sources */,
 				1345540C122A68A500E348F5 /* MessengerSystem.m in Sources */,

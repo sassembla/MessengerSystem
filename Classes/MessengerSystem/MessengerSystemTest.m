@@ -21,7 +21,7 @@
 
 // Test-subject headers.
 #import "MessengerSystem.h"
-#import "MessengerView.h"
+#import "MessengerViewController.h"
 
 
 #define TEST_PARENT_NAME (@"parent_0")
@@ -800,7 +800,7 @@
  子供の追加を確認
  */
 - (void) testMessengerViewAddChild {
-	MessengerView * mView = [[MessengerView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
+	MessengerViewController * mView = [[MessengerViewController alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
 	
 	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
 	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];//一件成立している親子関係がある筈
@@ -813,15 +813,16 @@
 	NSMutableDictionary * mButtonDict = [mView getButtonDictionary];
 	STAssertTrue([mButtonDict count] == 1, [NSString stringWithFormat:@"ButtonDict件数が合っていない_%d", [mButtonDict count]]);
 	
-	[child_0 release];
+	
 	[mView release];
+	[child_0 release];
 }
 
 /**
  子供の解消を確認
  */
 - (void) testMessengerViewRemoveChild {
-	MessengerView * mView = [[MessengerView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
+	MessengerViewController * mView = [[MessengerViewController alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
 	
 	NSMutableDictionary * mViewDict = [mView getViewDictionary];
 	NSMutableDictionary * mButtonDict = [mView getButtonDictionary];

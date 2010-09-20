@@ -1,14 +1,14 @@
 //
-//  MessengerView.m
+//  MessengerViewController.m
 //  TestKitTesting
 //
 //  Created by Inoue 徹 on 10/09/12.
 //  Copyright 2010 KISSAKI. All rights reserved.
 //
 
-#import "MessengerView.h"
+#import "MessengerViewController.h"
 
-@implementation MessengerView
+@implementation MessengerViewController
 //上書きしなければいけないのは、初期化メソッドと、実行時のメソッド
 
 /**
@@ -178,14 +178,22 @@
 	
 	//ビュー、辞書に要素を加える
 	
-	UIButton * newButton = [[UIButton alloc] init];//[UIButton buttonWithType:UIButtonTypeDetailDisclosure];//リソースが取り込めないから出る問題だと見ている。
+	UIButton * newButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];//[UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+	
 	[newButton setHidden:FALSE];
 	
-	[newButton setFrame:CGRectMake(0, 120, 100,100)];//newButton.frame.size.width, newButton.frame.size.height)];
+	
+	CGPoint point = CGPointMake(0, 120);
+	[newButton setFrame:CGRectMake(point.x, point.y, newButton.frame.size.width, newButton.frame.size.height)];
 	
 	[newButton setBackgroundColor:[UIColor grayColor]];//一応範囲付け、かなあ。
 	
-	[buttonDict setValue:newButton forKey:newKey];
+	[newButton addTarget:self action:@selector(tapped:) forControlEvents:UIControlEventTouchUpInside];
+	
+	
+	[buttonDict setValue:newButton forKey:newKey];//ボタン自体を保存
+	//[buttonDict setValue:point forKey:newButton];//座標ポイントを保存
+	
 	[viewListDict setValue:[self createMessengerInformation:sendersParentName withMID:sendersParentMSID] forKey:newKey];
 
 	[messengerInterfaceView addSubview:newButton];//ビューに加える
@@ -207,6 +215,16 @@
 	[buttonDict removeObjectForKey:removeKey];
 	[viewListDict removeObjectForKey:removeKey];
 }
+
+
+/**
+ ボタンが押された時のメソッド
+ */
+- (void) tapped:(UIControlEvents * )event {
+	NSLog(@"到達_%@", event);
+}
+
+
 
 /**
  NameとMIDのペアを作るメソッド
@@ -247,5 +265,13 @@
 - (void) callChild:(NSString * )childName withMID:(NSString * ) withCommand:(NSString * )exec, ...{}
 - (void) callParent:(NSString * )exec, ...{}
 
+
+- (void) dealloc {
+	[super dealloc];
+	
+	
+	[viewListDict removeAllObjects];
+	[buttonDict removeAllObjects];
+}
 
 @end

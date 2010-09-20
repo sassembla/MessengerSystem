@@ -1,5 +1,5 @@
 //
-//  MessengerView.h
+//  MessengerViewController.h
 //  TestKitTesting
 //
 //  Created by Inoue 徹 on 10/09/12.
@@ -11,7 +11,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MessengerView : MessengerSystem {
+@interface MessengerViewController : MessengerSystem {
 	//追加するインスタンス
 	
 	//通信者記録用の辞書
@@ -56,6 +56,12 @@
 - (UIView * ) getMessengerInterfaceView;
 
 
+/**
+ ボタンが押された際のメソッド
+ */
+- (void) tapped:(UIControlEvents * )event;
+
+
 //実行処理系(オーバーライドで無効化)
 - (void) inputToMyParentWithName:(NSString * )parent;//空実装
 - (void) innerPerform:(NSNotification * )notification;//受け取りの条件を緩和する
@@ -65,5 +71,8 @@
 - (void) callChild:(NSString * )childName withMID:(NSString * ) withCommand:(NSString * )exec, ...;//空実装
 - (void) callParent:(NSString * )exec, ...;//空実装8
 
-
+/**
+ Dealloc
+ */
+- (void) dealloc;
 @end

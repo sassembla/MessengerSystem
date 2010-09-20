@@ -7,7 +7,7 @@
 //
 
 #import "TestKitTestingAppDelegate.h"
-#import "MessengerView.h"
+#import "MessengerViewController.h"
 
 #import "coTestObject.h"
 
@@ -27,7 +27,7 @@
 	
 	
 	
-	MessengerView * view = [[MessengerView alloc] initWithFrame:window.frame];
+	MessengerViewController * view = [[MessengerViewController alloc] initWithFrame:window.frame];
 	
 	UIViewController * vController = [[UIViewController alloc] init];//うーん、オーバーライド無しには回転するように出来ない、ってのはちと、、
 	
