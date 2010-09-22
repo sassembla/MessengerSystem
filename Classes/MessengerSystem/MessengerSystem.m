@@ -168,6 +168,7 @@
 	//クリティカルなケースであっても、ThreadIDで対応できる筈。現在実行中の、Threadからみて未完了の処理とそれをIDする機能、というのが或る筈なんだ。
 	
 	
+	//LPC
 	if ([commandName isEqualToString:MS_CATEGOLY_LOCAL]) {
 		
 		
@@ -293,7 +294,7 @@
 			return;//値が無ければ無視する
 		}
 		
-		//		NSLog(@"自分以外の誰かが、自分をparentとして設定しようと通信してきている。_%@", calledParentName);
+//		NSLog(@"自分以外の誰かが、自分をparentとして設定しようと通信してきている。_%@", calledParentName);
 		if ([calledParentName isEqualToString:[self getMyName]]) {//それが自分だったら
 			
 			id senderID = [dict valueForKey:MS_SENDERID];
@@ -395,8 +396,10 @@
 /**
  パフォーマンス実行を行う
  */
-- (void) sendPerform:(NSMutableDictionary * )dict {//流石にインスタントにリレーした後に子を設定すると駄目なのか？
+- (void) sendPerform:(NSMutableDictionary * )dict {
+	
 	[[NSNotificationCenter defaultCenter] postNotificationName:OBSERVER_ID object:nil userInfo:(id)dict];
+	
 }
 
 /**
@@ -435,7 +438,7 @@
  */
 - (void) decidedParentName:(NSString * )parentName withParentMID:(NSString * )parentMID {
 	
-	NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:5];
+	NSMutableDictionary * dict = [[NSMutableDictionary alloc] dictionaryWithCapacity:5];
 	
 	[dict setValue:MS_CATEGOLY_GOTPARENT forKey:MS_CATEGOLY];
 	
@@ -757,7 +760,6 @@
 	//最終送信処理
 	[self sendPerform:dict];
 	
-	
 	NSAssert1(![[self getMyParentMID] isEqualToString:PARENTMID_DEFAULT], @"指定した親が存在しないようです。parentに指定している名前を確認してください_現在指定されているparentは_%@",[self getMyParentName]);
 }
 
@@ -1010,6 +1012,7 @@
  */
 - (NSDictionary * ) withDelay:(float)delay {
 	NSAssert1(delay,@"withDelay_%@ is nil",delay);
+	
 	return [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:delay] forKey:MS_DELAY];
 }
 
@@ -1023,13 +1026,12 @@
  */
 - (void) remoteInvocation:(NSMutableDictionary * )dict, ... {
 	
-	
-	NSDictionary * invokeDict = [dict valueForKey:MS_RETURN];//の中に、辞書が入ってて順番になってる筈。
-	if (!invokeDict) {
-		NSAssert(FALSE, @"MS_RETURNが無い");
+	if (![self isIncludeRemote:dict]) {
+		NSAssert(FALSE, @"リモート実行コマンドが設定されていないメッセージに対してremoteInvocationメソッドを実行しています。");
 		return;
 	}
 	
+	NSDictionary * invokeDict = [dict valueForKey:MS_RETURN];
 	
 	id invocatorId;
 	id signature;
@@ -1079,8 +1081,8 @@
 	}
 	va_end(ap);
 	
-	
 	[invocation invoke];//実行
+	
 }
 
 
@@ -1188,7 +1190,7 @@
 
 //ユーティリティ
 /**
- 親が設定されているかどうか返す
+ 親が設定されているか否か返す
  */
 - (BOOL) hasParent {
 	if (![[self getMyParentMID] isEqual:PARENTMID_DEFAULT]) {//デフォルトでない
@@ -1198,7 +1200,7 @@
 }
 
 /**
- 子供が設定されているかどうか返す
+ 子供が設定されているか否か返す
  */
 - (BOOL) hasChild {
 	if (0 < [[self getChildDict] count]) {
@@ -1208,7 +1210,16 @@
 }
 
 
-
+/**
+ 受け取ったデータに遠隔実行が含まれているか否か返す
+ */
+- (BOOL) isIncludeRemote:(NSMutableDictionary * )dict {
+	
+	if ([dict valueForKey:MS_RETURN]) {
+		return TRUE;
+	}
+	return FALSE;
+}
 
 
 //ゲッター

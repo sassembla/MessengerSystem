@@ -15,3 +15,5 @@
 #define COMMAND_DELAYANDREMOTE_RET_2 (@"遅延と遠隔実行返答2")
 
 #define COMMAND_LOOP	(@"ループ")
+#define COMMAND_ADD_CHILD	(@"動的にクラス作成する")
+#define COMMAND_ADD_CHILD2	(@"動的にクラス作成、ワンステップ")

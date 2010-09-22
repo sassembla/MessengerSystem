@@ -113,11 +113,19 @@
 	
 	
 
-	[paren call:CHILD_1 withExec:COMMAND_DELAYANDREMOTE, 
-	 [paren withDelay:0.5],
-	 [paren withRemoteFrom:self withSelector:@selector(ignition:)],
+//	[paren call:CHILD_1 withExec:COMMAND_DELAYANDREMOTE, 
+//	 [paren withDelay:0.5],
+//	 [paren withRemoteFrom:self withSelector:@selector(ignition:)],
+//	 nil];
+	
+	
+	[paren callMyself:COMMAND_ADD_CHILD,
+	 [paren withDelay:0.01],
+//	 [paren withRemoteFrom:self withSelector:@selector(ignition:)],
 	 nil];
 	
+	
+//	[self got];
 	//[self testResetParent];
 	
     [window makeKeyAndVisible];
@@ -134,7 +142,11 @@
 	NSLog(@"ignition_%@", str);
 }
 
-
+- (void) got {
+	NSLog(@"子供ゲット");
+	
+	NSLog(@"通過");
+}
 
 - (void)test:(NSNotification * )notification {
 	NSLog(@"NSNotification到着！！！！_%@", notification);
@@ -173,18 +185,13 @@
 			break;
 			
 		case -773500510://COMMAND_DELAYANDREMOTE_RET_2
-		{
+		
 			
 			[paren remoteInvocation:dict, @"第二次受け取り", nil];
+		
 			
-			[paren callMyself:COMMAND_LOOP,
-			 [paren withDelay:0.1],
-			 nil];
 			
-		//	coTestObject * cTest3 = [[coTestObject alloc] init3];//動的に子供が出来ること自体が駄目？それってむずくね？　なんで？
-//			[cTest3 setParent];
 			
-		}
 			break;
 			
 		case 624007143://COMMAND_LOOP
@@ -192,6 +199,29 @@
 			 [paren withDelay:0.1],
 			 nil];
 			
+			break;
+			
+		case 1880616375://COMMAND_ADD_CHILD
+			[paren callMyself:COMMAND_ADD_CHILD,
+			 nil];
+			
+			break;
+			
+		case -1001328277://COMMAND_ADD_CHILD
+		
+			
+			NSLog(@"受け取り COMMAND_ADD_CHILD_%@", dict);
+			if ([paren isIncludeRemote:dict]) {
+				[paren remoteInvocation:dict, @"子供のメソッドを子供が起動", nil];
+			} else {
+				NSLog(@"子供のメソッドは実行しなかった");
+			}
+			
+			NSLog(@"動的に作成");//遅延実行では作れない。どこかで遅延実行が絡んでも、作れない。
+			coTestObject * cTest3 = [[coTestObject alloc] init3];
+			[cTest3 setParent];
+			
+			[self got];
 			break;
 			
 		default:

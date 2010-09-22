@@ -39,8 +39,8 @@
 		[self initMyMID];
 		[self initMyParentData];
 		
-		buttonDict = [NSMutableDictionary dictionaryWithCapacity:1];
-		viewListDict = [NSMutableDictionary dictionaryWithCapacity:1];
+		buttonDict = [[NSMutableDictionary alloc] init];
+		viewListDict = [[NSMutableDictionary alloc] init];
 		
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(innerPerform:) name:OBSERVER_ID object:nil];
 	}

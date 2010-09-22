@@ -184,6 +184,11 @@
 
 
 
+//遠隔実行のコマンドがメッセージに含まれているか
+- (BOOL) isIncludeRemote:(NSMutableDictionary * )dict;
+
+
+
 /**
  クラスが持つ値の
  ゲッター

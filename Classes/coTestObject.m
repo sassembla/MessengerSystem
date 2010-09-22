@@ -17,7 +17,6 @@
 	}
 	messenger = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:CHILD_1];
 	[messenger inputToMyParentWithName:PARENTNAME];
-	NSLog(@"作る事は出来てる");
 	return self;
 }
 
@@ -32,8 +31,7 @@
 
 - (id) init3 {
 	if (self = [super init]) {
-		messenger = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:CHILD_1];
-		
+		messenger = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:CHILD_2];
 	}
 	return self;
 }
@@ -75,13 +73,18 @@
 			NSLog(@"ディレイで到達_%@",[messenger getMyMID]);
 			[messenger remoteInvocation:dict, @"親のメソッドを子供が起動", nil];
 			
-			[messenger callParent:COMMAND_DELAYANDREMOTE_RET, 
-			 [messenger withRemoteFrom:self withSelector:@selector(forInvocaton:)],
-			 nil];
+//			[messenger callParent:COMMAND_DELAYANDREMOTE_RET, 
+//			 [messenger withRemoteFrom:self withSelector:@selector(forInvocaton:)],
+//			 nil];
+//			
+//			[messenger callParent:COMMAND_DELAYANDREMOTE_RET_2, 
+//			 [messenger withRemoteFrom:self withSelector:@selector(forInvocaton:)],
+//			 [messenger withDelay:0.4],
+//			 nil];
 			
-			[messenger callParent:COMMAND_DELAYANDREMOTE_RET_2, 
+			[messenger callParent:COMMAND_ADD_CHILD,
 			 [messenger withRemoteFrom:self withSelector:@selector(forInvocaton:)],
-			 [messenger withDelay:0.4],//どーも、ディレイと同時に付くと、問題が出るようだね。
+			// [messenger withDelay:0.4],
 			 nil];
 			break;
 			
