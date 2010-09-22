@@ -63,6 +63,19 @@
 - (void) tapped:(UIControlEvents * )event;
 
 
+//setter, initializer 必要の或る物だけを用意
+- (void) setMyName:(NSString * )name;
+- (void) setMyBodyID:(id)bodyID;
+- (void) setMyBodySelector:(SEL)body_selector;
+
+- (void) initMyMID;
+- (void) initMyParentData;
+
+- (void) setMyParentName:(NSString * )parent;
+
+
+
+
 //実行処理系(オーバーライドで無効化)
 - (void) inputToMyParentWithName:(NSString * )parent;//空実装
 - (void) innerPerform:(NSNotification * )notification;//受け取りの条件を緩和する

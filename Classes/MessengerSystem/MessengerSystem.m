@@ -13,168 +13,77 @@
 //#define NSLog( m, args... )
 
 
-@implementation MessengerSystem
-
-/**
- バージョンを返す
- */
-+ (NSString * )version {
-    return @"0.5.0";//10/09/20 3:46:51
-}
-
-/**
- 初期化する
- */
-- (id) initWithBodyID:(id)body_id withSelector:(SEL)body_selector withName:(NSString * )name {
-	if (self = [super init]) {
-		NSAssert(name, @"withName引数がnilです。　名称をセットしてください。");
-		[self setMyName:name];
-		
-		NSAssert(body_id, @"initWithBodyID引数がnilです。　制作者のidをセットしてください。");
-		[self setMyBodyID:body_id];
-		
-		NSAssert(body_selector, @"withSelector引数がnilです。　実行セレクタをセットしてください。");
-		[self setMyBodySelector:body_selector];
-		
-		[self initMyMID];
-		[self initMyParentData];
-	}
-	
-	childDict = [[NSMutableDictionary alloc] init];//[NSMutableDictionary dictionaryWithCapacity:1];で初期化していたのだが、バグの元でした。SIGABRTバグの原因になり、カウントが壊れます。
-	logDict = [[NSMutableDictionary alloc] init];
-	
-	
-	
-	
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(innerPerform:) name:OBSERVER_ID object:nil];
-	
-	
-	return self;
-}
 
 
-//- (id) initWithManual {
-//	/*
-//	 マニュアル表示のプログラムを書こう！
-//	 */
-//	if (self = [super init]) {
-//		
-//	}
-//	return self;
-//}
+
+
+
+
 
 
 /**
- 親へと自分が子供である事の通知を行い、返り値として親のMIDを受け取るメソッド
- 受け取り用のメソッドの情報を親へと渡し、親からの入力をダイレクトに受ける。
+ プライベートインターフェース
  */
-- (void) inputToMyParentWithName:(NSString * )parent {
-	
-	NSAssert([[self getMyParentName] isEqualToString:PARENTNAME_DEFAULT], @"デフォルト以外の親が既にセットされています。親を再設定する場合、resetMyParentDataメソッドを実行してから親指定を行ってください。");
-	
-	//親の名前を設定
-	[self setMyParentName:parent];
-	
-	
-	NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:8];
-	
-	[dict setValue:MS_CATEGOLY_PARENTSEARCH forKey:MS_CATEGOLY];
-	[dict setValue:[self getMyParentName] forKey:MS_ADDRESS_NAME];
+@interface MessengerSystem (PrivateImplements)
 
-	[dict setValue:[self getMyParentName] forKey:MS_PARENTNAME];
-	
-	
-	
-	[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
-	[dict setValue:[self getMyMID] forKey:MS_SENDERMID];
-	
-	
-	[dict setValue:self forKey:MS_SENDERID];
-	
-	
-	//遠隔実装メソッドを設定
-	[dict setValue:[self setRemoteInvocationFrom:self withSelector:@selector(setMyParentMID:)] forKey:MS_RETURN];
-	
-	
-	
-	//ログを作成する
-	[self addCreationLog:dict];
-	
-	//最終送信処理
-	[self sendPerform:dict];
-	
-	
-	NSAssert1(![[self getMyParentMID] isEqualToString:PARENTMID_DEFAULT], @"指定した親が存在しないようです。parentに指定している名前を確認してください_現在指定されているparentは_%@",[self getMyParentName]);
-}
+
+//内部実行系
+- (void) innerPerform:(NSNotification * )notification;//内部実装メソッド
+
+- (void) sendPerform:(NSMutableDictionary * )dict;//実行メソッド
+- (void) sendPerform:(NSMutableDictionary * )dict withDelay:(float)delay;//遅延実行メソッド
+
+- (void) sendMessage:(NSMutableDictionary * )dict;//送信実行ブロック
+
+
+
+
+//プライベート実行メソッド
+- (void) decidedParentName:(NSString * )parentName withParentMID:(NSString * )parentMID;//親への登録完了時の声明発行メソッド
+
+
+
+//子供辞書関連
+- (void) setChildDictChildNameAsValue:(NSString * )senderName withMIDAsKey:(NSString * )senderMID;
+- (void) removeChildDictChildNameAsValue:(NSString * )senderName withMIDAsKey:(NSString * )senderMID;
+
+
+
+//遠隔実行
+- (NSDictionary * ) setRemoteInvocationFrom:(id)mySelf withSelector:(SEL)sel;
+
+
+
+//ログシステム
+- (void) addCreationLog:(NSMutableDictionary * )dict;//メッセージ初期作成ログを内部に保存する/返すメソッド
+- (void) saveLogForReceived:(NSMutableDictionary * )logDict;//受信時に付与するログを内部に保存するメソッド
+- (NSMutableDictionary * ) createLogForReply;//返答送信時に付与するログを内部に保存する/返すメソッド
+
+- (void) saveToLogStore:(NSString * )name log:(NSDictionary * )value;
+
+
+
+
+//setter, initializer
+- (void) setMyBodyID:(id)bodyID;
+- (void) setMyBodySelector:(SEL)body_selector;
+- (void) setMyName:(NSString * )name;
+- (void) initMyMID;
+- (void) initMyParentData;
+- (void) resetMyParentData;
+- (void) setMyParentName:(NSString * )parent;
+- (void) setMyParentMID:(NSString * )parentMID;
+
+
+@end
+
 
 /**
- 親が決定した事をお知らせする
- 受け取っても行う処理の存在しない、宛先の無いメソッド
+ プライベート実装
  */
-- (void) decidedParentName:(NSString * )parentName withParentMID:(NSString * )parentMID {
-	
-	NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:5];
-	
-	[dict setValue:MS_CATEGOLY_GOTPARENT forKey:MS_CATEGOLY];
-	
-	[dict setValue:[self getMyParentName] forKey:MS_PARENTNAME];
-	[dict setValue:[self getMyParentMID] forKey:MS_PARENTMID];
-	
-	[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
-	[dict setValue:[self getMyMID] forKey:MS_SENDERMID];
-	
-	//最終送信処理
-	[self sendPerform:dict];
-}
-/**
- 現在の親情報を削除する
- */
-- (void) removeMyParentData {
-	NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:6];
-	
-	[dict setValue:MS_CATEGOLY_REMOVE_PARENT forKey:MS_CATEGOLY];
-	
-	[dict setValue:[self getMyParentName] forKey:MS_ADDRESS_NAME];
-	[dict setValue:[self getMyParentMID] forKey:MS_ADDRESS_MID];
-	
-	[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
-	[dict setValue:[self getMyMID] forKey:MS_SENDERMID];
-	
-	//ログを作成する
-	[self addCreationLog:dict];
-	
-	//最終送信処理
-	[self sendPerform:dict];
-	
-}
+@implementation MessengerSystem (PrivateImplements)
 
-/**
- 子供との関連性を解除する
- 自分の事を親に設定している全てのオブジェクトから離脱するブロードコールを行う。
- */
-- (void) removeChildData {
-	NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:6];
-	
-	[dict setValue:MS_CATEGOLY_REMOVE_CHILD forKey:MS_CATEGOLY];
-	
-	[dict setValue:[self getMyName] forKey:MS_ADDRESS_NAME];
-	[dict setValue:[self getMyMID] forKey:MS_ADDRESS_MID];
-	
-	[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
-	[dict setValue:[self getMyMID] forKey:MS_SENDERMID];
-	
-	//ログを作成する
-	[self addCreationLog:dict];
-	
-	//最終送信処理
-	[self sendPerform:dict];
-	
-	[[self getChildDict] removeAllObjects];
-}
-
-
-
-
+//内部実行系
 /**
  内部実行で先ず呼ばれるメソッド
  自分宛のメッセージでなければ無視する
@@ -219,7 +128,7 @@
 	//ログ関連
 	NSMutableDictionary * recievedLogDict = [dict valueForKey:MS_LOGDICTIONARY];
 	if (!recievedLogDict) {
-//		NSLog(@"ログが無いので受け付けない_%@", commandName);
+		//		NSLog(@"ログが無いので受け付けない_%@", commandName);
 		return;
 	} else {
 		//メッセージIDについて確認
@@ -239,21 +148,21 @@
 	 */
 	
 	
-//	pid_t pid = getpid();//駄目、ぐっはあ、うーん。　惜しい。プロセスIDでは駄目か！?　それとも行けるのか
-//	pid_t ppid = getppid();
-//	
-//	
-//	NSLog(@"Num_%d /	2_%d", pid, ppid);
-//	
-//	NSProcessInfo *processInfo = [NSProcessInfo processInfo];
-//	
-//	NSString *processName = [processInfo processName];
-//	int processID = [processInfo processIdentifier];// = getpid()
-//	NSLog(@"Process Name:%@ Process ID:%d", processName, processID);
+	//	pid_t pid = getpid();//駄目、ぐっはあ、うーん。　惜しい。プロセスIDでは駄目か！?　それとも行けるのか
+	//	pid_t ppid = getppid();
+	//	
+	//	
+	//	NSLog(@"Num_%d /	2_%d", pid, ppid);
+	//	
+	//	NSProcessInfo *processInfo = [NSProcessInfo processInfo];
+	//	
+	//	NSString *processName = [processInfo processName];
+	//	int processID = [processInfo processIdentifier];// = getpid()
+	//	NSLog(@"Process Name:%@ Process ID:%d", processName, processID);
 	
-//	NSLog(@"currentThread_0_self=%@, %@", [self getMyName], [NSThread currentThread]);
+	//	NSLog(@"currentThread_0_self=%@, %@", [self getMyName], [NSThread currentThread]);
 	
-
+	
 	
 	//カテゴリごとの処理に移行
 	//クリティカルなケースであっても、ThreadIDで対応できる筈。現在実行中の、Threadからみて未完了の処理とそれをIDする機能、というのが或る筈なんだ。
@@ -286,7 +195,7 @@
 	
 	
 	
-		
+	
 	
 	//親から子供に向けてのコールを受け取った
 	if ([commandName isEqualToString:MS_CATEGOLY_CALLCHILD]) {
@@ -368,19 +277,19 @@
 		
 		//自分宛かどうか、先ず名前で判断
 		if (![address isEqualToString:[self getMyName]]) {
-//			NSLog(@"MS_CATEGOLY_PARENTSEARCHのアドレスcheckに失敗");
+			//			NSLog(@"MS_CATEGOLY_PARENTSEARCHのアドレスcheckに失敗");
 			return;
 		}
 		
 		//送信者が自分であれば無視する 自分から自分へのメッセージの無視
 		if ([senderMID isEqualToString:[self getMyMID]]) {
-//			NSLog(@"自分が送信者なので無視する_%@", [self getMyMID]);
+			//			NSLog(@"自分が送信者なので無視する_%@", [self getMyMID]);
 			return;
 		}
 		
 		NSString * calledParentName = [dict valueForKey:MS_PARENTNAME];
 		if (!calledParentName) {
-//			NSLog(@"親の名称に入力が無ければ無視！");
+			//			NSLog(@"親の名称に入力が無ければ無視！");
 			return;//値が無ければ無視する
 		}
 		
@@ -389,7 +298,7 @@
 			
 			id senderID = [dict valueForKey:MS_SENDERID];
 			if (!senderID) {
-//				NSLog(@"senderID(送信者のselfポインタ)が無い");
+				//				NSLog(@"senderID(送信者のselfポインタ)が無い");
 				return;
 			}
 			
@@ -427,7 +336,7 @@
 		
 		
 		//自分宛ではない
-//		NSLog(@"自分宛ではないので、無視する_%@	called%@", myName, calledParentName);
+		//		NSLog(@"自分宛ではないので、無視する_%@	called%@", myName, calledParentName);
 		return;
 	}
 	
@@ -454,7 +363,7 @@
 		
 		//自分の子供辞書にある、子供情報を削除する
 		[self removeChildDictChildNameAsValue:senderName withMIDAsKey:senderMID];
-			
+		
 		return;
 	}
 	
@@ -483,8 +392,65 @@
 	NSAssert(false, commandName);
 }
 
+/**
+ パフォーマンス実行を行う
+ */
+- (void) sendPerform:(NSMutableDictionary * )dict {//流石にインスタントにリレーした後に子を設定すると駄目なのか？
+	[[NSNotificationCenter defaultCenter] postNotificationName:OBSERVER_ID object:nil userInfo:(id)dict];
+}
+
+/**
+ 遅延実行
+ */
+- (void) sendPerform:(NSMutableDictionary * )dict withDelay:(float)delay {
+	[self performSelector:@selector(sendPerform:) withObject:dict afterDelay:delay];
+}
+
+/**
+ ログを取り、実行する。
+ */
+- (void) sendMessage:(NSMutableDictionary * )dict {
+	
+	[self addCreationLog:dict];
+	
+	//遅延実行キーがある場合
+	NSNumber * delay = [dict valueForKey:MS_DELAY];//複数或る場合はエラーにしたい
+	if (delay) {
+		float delayTime = [delay floatValue];
+		[self sendPerform:dict withDelay:delayTime];
+		return;
+	}
+	
+	//通常の送信を行う
+	[self sendPerform:dict];
+}
 
 
+
+
+//プライベート実行メソッド
+/**
+ 親が決定した事をお知らせする
+ 受け取っても行う処理の存在しない、宛先の無いメソッド
+ */
+- (void) decidedParentName:(NSString * )parentName withParentMID:(NSString * )parentMID {
+	
+	NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:5];
+	
+	[dict setValue:MS_CATEGOLY_GOTPARENT forKey:MS_CATEGOLY];
+	
+	[dict setValue:[self getMyParentName] forKey:MS_PARENTNAME];
+	[dict setValue:[self getMyParentMID] forKey:MS_PARENTMID];
+	
+	[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
+	[dict setValue:[self getMyMID] forKey:MS_SENDERMID];
+	
+	//最終送信処理
+	[self sendPerform:dict];
+}
+
+
+//子供辞書関連
 /**
  自分をParentとして指定してきたChildについて、子供のmyNameとmyMIDを自分のchildDictに登録する。
  */
@@ -501,41 +467,10 @@
 }
 
 
-/**
- childDictを返す
- */
-- (NSMutableDictionary * ) getChildDict {
-	return childDict;
-}
 
 
 
-
-
-/**
- tag valueメソッド
- 値にnilが入る事、
- システムが使うのと同様のコマンドが入っている事に関しては、注意する。
- */
-- (NSDictionary * ) tag:(id)obj_tag val:(id)obj_value {
-	NSAssert1(obj_tag, @"tag_%@ is nil",obj_tag);
-	NSAssert1(obj_value, @"val_%@ is nil",obj_value);
-	
-	return [NSDictionary dictionaryWithObject:obj_value forKey:obj_tag];
-} 
-
-
-/**
- 遠隔実行
- tag-Valueと同形式で遠隔実行オプションを挿入するメソッド
- */
-- (NSDictionary * )withRemoteFrom:(id)mySelf withSelector:(SEL)sel {
-	NSAssert1(mySelf, @"withRemoteFrom_%@ is nil",mySelf);
-	NSAssert1(sel, @"withSelector_%@ is nil",sel);
-	
-	return [NSDictionary dictionaryWithObject:[self setRemoteInvocationFrom:mySelf withSelector:sel] forKey:MS_RETURN];
-}
-
+//遠隔実行
 /**
  遠隔実行セットメソッド
  */
@@ -552,6 +487,535 @@
 	return retDict;
 }
 
+
+
+
+
+//ログ
+/**
+ メッセージ発生時のログ書き込み、ログ初期化
+ メッセージIDを作成、いろいろな情報をまとめる
+ */
+- (void) addCreationLog:(NSMutableDictionary * )dict {
+	
+	//ログタイプ、タイムスタンプを作成
+	//メッセージに対してはメッセージIDひも付きの新規ログをつける事になる。
+	//ストアについては、新しいIDのものが出来るとIDの下に保存する。多元木構造になっちゃうなあ。カラムでやった方が良いのかしら？それとも絡み付いたKVSかしら。
+	
+	NSString * messageID = [MessengerIDGenerator getMID];//このメッセージのIDを出力(あとでID認識するため)
+	
+	
+	//ストアに保存する
+	[self saveToLogStore:MS_LOGMESSAGE_CREATED log:[self tag:MS_LOG_MESSAGEID val:messageID]];
+	
+	
+	//messageとともに移動するログに内容をセットする
+	NSDictionary * newLogDictionary;
+	newLogDictionary = [NSDictionary dictionaryWithObject:messageID forKey:MS_LOG_MESSAGEID];
+	
+	[dict setValue:newLogDictionary forKey:MS_LOGDICTIONARY];
+}
+
+/**
+ 受け取り時のログ書き込み
+ 
+ 受信したメッセージからログを受け取り、
+ ログの末尾に含まれているメッセージIDでもって、過去に受け取ったことがあるかどうか判定(未実装)、
+ ログストアに保存する。
+ */
+- (void) saveLogForReceived:(NSMutableDictionary * ) recievedLogDict {
+	
+	//ログタイプ、タイムスタンプを作成
+	NSString * messageID = (NSString * )[recievedLogDict valueForKey:MS_LOG_MESSAGEID];
+	
+	//ストアに保存する
+	[self saveToLogStore:MS_LOGMESSAGE_RECEIVED log:[self tag:MS_LOG_MESSAGEID val:messageID]];
+}
+
+/**
+ 返信時のログ書き込み
+ 
+ どこからか取得したメッセージIDでもって、
+ 保存していたログストアからログデータを読み出し、
+ 最新の「送信しました」記録を行い、
+ 記録をログ末尾に付け加えたログを返す。
+ */
+- (NSMutableDictionary * ) createLogForReply {
+	NSAssert(FALSE, @"createLogForReplyは未完成です。　使用禁止です。");
+	//ログタイプ、タイムスタンプを作成
+	[logDict setValue:@"仮のmessageID" forKey:MS_LOG_MESSAGEID];
+	
+	return logDict;
+}
+
+/**
+ 可変長ログストア入力
+ アウトプットは後で考えよう。
+ */
+- (void) saveToLogStore:(NSString * )name log:(NSDictionary * )value {
+	
+	NSArray * key = [value allKeys];//1件しか無い内容を取得する
+	
+	[logDict setValue:
+	 [NSString stringWithFormat:@"%@ %@", name, [value valueForKey:[key objectAtIndex:0]]] 
+			   forKey:
+	 [NSString stringWithFormat:@"%@ %@", [MessengerIDGenerator getMID], [NSDate date]]
+	 ];
+	
+	
+}
+
+
+
+
+
+//setter, initializer
+/**
+ 自分の名称をセットするメソッド
+ */
+- (void)setMyName:(NSString * )name {
+	myName = name;
+}
+
+
+/**
+ 自分のBodyIDをセットするメソッド
+ */
+- (void) setMyBodyID:(id)bodyID {
+	myBodyID = bodyID;
+}
+
+
+/**
+ 自分のBodyが提供するメソッドセレクターを、自分のセレクター用ポインタにセットするメソッド
+ */
+- (void) setMyBodySelector:(SEL)body_selector {
+	myBodySelector = body_selector;
+}
+
+
+/**
+ 自分のMIDを初期化するメソッド
+ */
+- (void)initMyMID {
+	myMID = [MessengerIDGenerator getMID];
+}
+
+
+/**
+ myParent関連情報を初期化する
+ */
+- (void) initMyParentData {
+	[self setMyParentName:PARENTNAME_DEFAULT];
+	myParentMID = PARENTMID_DEFAULT;
+}
+
+
+/**
+ 親情報をリセットする
+ (親のchildDictからも消す)
+ */
+- (void) resetMyParentData {
+	[self removeMyParentData];
+}
+
+
+/**
+ 親の名称をセットするメソッド
+ */
+- (void) setMyParentName:(NSString * )parent {
+	myParentName = parent;
+}
+
+
+/**
+ 自分から見た親のMIDをセットするメソッド
+ 外部から呼ばれるように設計されている。
+ 親が複数要るケースは想定し排除してある。
+ 
+ 本メソッドは条件を満たした親から起動されるメソッドになっており、自分から呼ぶ事は無い。
+ */
+- (void) setMyParentMID:(NSString * )parentMID {
+	if ([[self getMyParentMID] isEqualToString:PARENTMID_DEFAULT]) {
+		
+		[self saveToLogStore:@"setMyParentMID" log:[self tag:MS_LOG_LOGTYPE_GOTP val:[self getMyParentName]]];
+		
+		
+		myParentMID = parentMID;
+		
+		[self decidedParentName:[self getMyParentName] withParentMID:[self getMyParentMID]];
+	}	
+}
+
+
+@end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ パブリック実装
+ */
+@implementation MessengerSystem
+
+/**
+ バージョンを返す
+ */
++ (NSString * )version {
+    return @"0.5.0";//10/09/20 3:46:51
+}
+
+//初期化メソッド
+- (id) initWithBodyID:(id)body_id withSelector:(SEL)body_selector withName:(NSString * )name {
+	if (self = [super init]) {
+		NSAssert(name, @"withName引数がnilです。　名称をセットしてください。");
+		[self setMyName:name];
+		
+		NSAssert(body_id, @"initWithBodyID引数がnilです。　制作者のidをセットしてください。");
+		[self setMyBodyID:body_id];
+		
+		NSAssert(body_selector, @"withSelector引数がnilです。　実行セレクタをセットしてください。");
+		[self setMyBodySelector:body_selector];
+		
+		[self initMyMID];
+		[self initMyParentData];
+	}
+	
+	childDict = [[NSMutableDictionary alloc] init];//[NSMutableDictionary dictionaryWithCapacity:1];で初期化していたのだが、バグの元でした。SIGABRTバグの原因になり、カウントが壊れます。
+	logDict = [[NSMutableDictionary alloc] init];
+	
+	
+	
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(innerPerform:) name:OBSERVER_ID object:nil];
+	
+	
+	return self;
+}
+
+
+//- (id) initWithManual {
+//	/*
+//	 マニュアル表示のプログラムを書こう！
+//	 */
+//	if (self = [super init]) {
+//		
+//	}
+//	return self;
+//}
+
+
+//実行メソッド
+/**
+ 親へと自分が子供である事の通知を行い、返り値として親のMIDを受け取るメソッド
+ 受け取り用のメソッドの情報を親へと渡し、親からの入力をダイレクトに受ける。
+ */
+- (void) inputToMyParentWithName:(NSString * )parent {
+	
+	NSAssert([[self getMyParentName] isEqualToString:PARENTNAME_DEFAULT], @"デフォルト以外の親が既にセットされています。親を再設定する場合、resetMyParentDataメソッドを実行してから親指定を行ってください。");
+	
+	//親の名前を設定
+	[self setMyParentName:parent];
+	
+	
+	NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:8];
+	
+	[dict setValue:MS_CATEGOLY_PARENTSEARCH forKey:MS_CATEGOLY];
+	[dict setValue:[self getMyParentName] forKey:MS_ADDRESS_NAME];
+
+	[dict setValue:[self getMyParentName] forKey:MS_PARENTNAME];
+	
+	
+	
+	[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
+	[dict setValue:[self getMyMID] forKey:MS_SENDERMID];
+	
+	
+	[dict setValue:self forKey:MS_SENDERID];
+	
+	
+	//遠隔実装メソッドを設定
+	[dict setValue:[self setRemoteInvocationFrom:self withSelector:@selector(setMyParentMID:)] forKey:MS_RETURN];
+	
+	
+	
+	//ログを作成する
+	[self addCreationLog:dict];
+	
+	//最終送信処理
+	[self sendPerform:dict];
+	
+	
+	NSAssert1(![[self getMyParentMID] isEqualToString:PARENTMID_DEFAULT], @"指定した親が存在しないようです。parentに指定している名前を確認してください_現在指定されているparentは_%@",[self getMyParentName]);
+}
+
+/**
+ 現在の親情報を削除する
+ */
+- (void) removeMyParentData {
+	NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:6];
+	
+	[dict setValue:MS_CATEGOLY_REMOVE_PARENT forKey:MS_CATEGOLY];
+	
+	[dict setValue:[self getMyParentName] forKey:MS_ADDRESS_NAME];
+	[dict setValue:[self getMyParentMID] forKey:MS_ADDRESS_MID];
+	
+	[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
+	[dict setValue:[self getMyMID] forKey:MS_SENDERMID];
+	
+	//ログを作成する
+	[self addCreationLog:dict];
+	
+	//最終送信処理
+	[self sendPerform:dict];
+	
+	//初期化
+	[self initMyParentData];
+}
+
+/**
+ 子供との関連性を解除する
+ 自分の事を親に設定している全てのオブジェクトから離脱するブロードコールを行う。
+ */
+- (void) removeChildData {
+	NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:6];
+	
+	[dict setValue:MS_CATEGOLY_REMOVE_CHILD forKey:MS_CATEGOLY];
+	
+	[dict setValue:[self getMyName] forKey:MS_ADDRESS_NAME];
+	[dict setValue:[self getMyMID] forKey:MS_ADDRESS_MID];
+	
+	[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
+	[dict setValue:[self getMyMID] forKey:MS_SENDERMID];
+	
+	//ログを作成する
+	[self addCreationLog:dict];
+	
+	//最終送信処理
+	[self sendPerform:dict];
+	
+	[[self getChildDict] removeAllObjects];
+}
+
+
+
+/**
+ 自分自身のmessengerへと通信を行うメソッド
+ */
+- (void) callMyself:(NSString * )exec, ... {
+	NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:5];
+	
+	[dict setValue:MS_CATEGOLY_LOCAL forKey:MS_CATEGOLY];
+	[dict setValue:[self getMyName] forKey:MS_ADDRESS_NAME];
+	
+	[dict setValue:exec forKey:MS_EXECUTE];
+	[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
+	[dict setValue:[self getMyMID] forKey:MS_SENDERMID];
+	
+	va_list ap;
+	id kvDict;
+	
+	//NSLog(@"start_%@", exec);
+	
+	va_start(ap, exec);
+	kvDict = va_arg(ap, id);
+	
+	while (kvDict) {
+		//NSLog(@"kvDict_%@", kvDict);
+		
+		for (id key in kvDict) {
+			//					NSLog(@"[kvDict valueForKey:key]_%@, key_%@", [kvDict valueForKey:key], key);
+			[dict setValue:[kvDict valueForKey:key] forKey:key];
+		}
+		
+		kvDict = va_arg(ap, id);
+	}
+	va_end(ap);
+	
+	
+	[self sendMessage:dict];
+}
+
+/**
+ 特定の名前のmessengerへの通信を行うメソッド
+ 親から子限定
+ 
+ 子供辞書を持っており、かつ、nameに該当する子供がいる
+ 送り先の名称が自分と異なる場合のみ、送る事が出来る
+ →同名の子供群まで対象に入れると、メッセージの判別手段にグループの概念を持ち込まなければいけないために存在する制限。
+ 
+ */
+- (void) call:(NSString * )childName withExec:(NSString * )exec, ... {
+	
+	NSAssert(![childName isEqualToString:[self getMyName]], @"自分自身/同名の子供達へのメッセージブロードキャストをこのメソッドで行う事はできません。　callMyselfメソッドを使用してください");
+	NSAssert(![childName isEqualToString:PARENTNAME_DEFAULT], @"システムで予約してあるデフォルトの名称です。　この名称を使ってのシステム使用は、その、なんだ、お勧めしません。");
+	
+	
+	//特定のキーが含まれているか
+	//	[childDict allValues]//NSArray コストは概ね一緒かな。 特定のキーが含まれているか否か、を隠蔽したいか否か
+	
+	//親から子へのブロードキャスト MIDで送り先を限定しない。
+	for (id key in [self getChildDict]) {//この時点か、この中なのか。
+		//NSLog(@"key: %@, value: %@", key, [childDict objectForKey:key]);//この件数分だけ出す必要は無い！　一件出せればいい。特に限定が必要な場合もそう。
+		if ([[childDict objectForKey:key] isEqualToString:childName]) {//一つでも合致する内容のものがあれば、メッセージを送る対象として見る。
+			NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:5];
+			
+			[dict setValue:MS_CATEGOLY_CALLCHILD forKey:MS_CATEGOLY];
+			[dict setValue:childName forKey:MS_ADDRESS_NAME];
+			
+			[dict setValue:exec forKey:MS_EXECUTE];
+			[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
+			[dict setValue:[self getMyMID] forKey:MS_SENDERMID];
+			
+			va_list ap;
+			id kvDict;
+			
+			//NSLog(@"start_%@", exec);
+			
+			va_start(ap, exec);
+			kvDict = va_arg(ap, id);
+			
+			while (kvDict) {
+				//NSLog(@"kvDict_%@", kvDict);
+				
+				for (id key in kvDict) {
+					//					NSLog(@"[kvDict valueForKey:key]_%@, key_%@", [kvDict valueForKey:key], key);
+					[dict setValue:[kvDict valueForKey:key] forKey:key];
+				}
+				
+				kvDict = va_arg(ap, id);
+			}
+			va_end(ap);
+			
+			[self sendMessage:dict];
+			
+			return;//一通だけを送る
+		}
+	}
+	
+	//NSAssert1(false, @"callメソッドに指定したmessengerが存在しないか、未知のものです。本messengerを親とした設定を行うよう、子から親を指定してください。_%@",name);
+}
+
+/**
+ 特定の子への通信を行うメソッド、特にMIDを使い、相手を最大限特定する。
+ */
+- (void) call:(NSString * )childName withMID:(NSString * ) withExec:(NSString * )exec, ... {
+	NSAssert(false, @"開発中のメソッドです");
+}
+
+/**
+ 親への通信を行うメソッド
+ */
+- (void) callParent:(NSString * )exec, ... {
+	
+	//親が居たら
+	if ([self getMyParentName]) {
+		NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:5];
+		
+		
+		[dict setValue:MS_CATEGOLY_CALLPARENT forKey:MS_CATEGOLY];
+		[dict setValue:[self getMyParentName] forKey:MS_ADDRESS_NAME];
+		[dict setValue:[self getMyParentMID] forKey:MS_ADDRESS_MID];
+		
+		
+		[dict setValue:exec forKey:MS_EXECUTE];
+		[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
+		[dict setValue:[self getMyMID] forKey:MS_SENDERMID];
+		
+		
+		//tag付けされた要素以外は無視するように設定
+		//可変長配列に与えられた要素を処理する。
+		
+		va_list vp;//可変引数のポインタになる変数
+		id kvDict;//可変長引数から辞書を取り出すときに使用するポインタ
+		
+		//NSLog(@"start_%@", exec);
+		
+		va_start(vp, exec);//vpを可変長配列のポインタとして初期化する
+		kvDict = va_arg(vp, id);//vpから現在の可変長配列のヘッドにあるidを抽出し、kvDictに代入。この時点でkvDictは可変長配列のトップの要素のidを持っている。
+		
+		while (kvDict) {//存在していなければnull、可変長引数の終了の合図。
+			
+			//NSLog(@"kvDict_%@", kvDict);
+			
+			for (id key in kvDict) {
+				
+				//NSLog(@"[kvDict valueForKey:key]_%@, key_%@", [kvDict valueForKey:key], key);
+				//型チェック、kvDict型で無ければ無視する必要がある。
+				if (true) [dict setValue:[kvDict valueForKey:key] forKey:key];
+				
+			}
+			
+			kvDict = va_arg(vp, id);//次の値を読み出す
+		}
+		
+		va_end(vp);//終了処理
+		
+		[self sendMessage:dict];
+		
+		return;
+	}
+	
+	NSAssert(false, @"親設定が無い");
+}
+
+
+
+
+
+
+
+
+//タグシステム
+/**
+ tag valueメソッド
+ 値にnilが入る事、
+ システムが使うのと同様のコマンドが入っている事に関しては、注意する。
+ */
+- (NSDictionary * ) tag:(id)obj_tag val:(id)obj_value {
+	NSAssert1(obj_tag, @"tag_%@ is nil",obj_tag);
+	NSAssert1(obj_value, @"val_%@ is nil",obj_value);
+	
+	return [NSDictionary dictionaryWithObject:obj_value forKey:obj_tag];
+} 
+
+
+/**
+ 遠隔実行タグ
+ tag-Valueと同形式で遠隔実行オプションを挿入するメソッド
+ */
+- (NSDictionary * )withRemoteFrom:(id)mySelf withSelector:(SEL)sel {
+	NSAssert1(mySelf, @"withRemoteFrom_%@ is nil",mySelf);
+	NSAssert1(sel, @"withSelector_%@ is nil",sel);
+	
+	return [NSDictionary dictionaryWithObject:[self setRemoteInvocationFrom:mySelf withSelector:sel] forKey:MS_RETURN];
+}
+
+
+/**
+ 遅延実行タグ
+ tag-Valueと同形式でオプションを挿入するメソッド
+ */
+- (NSDictionary * ) withDelay:(float)delay {
+	NSAssert1(delay,@"withDelay_%@ is nil",delay);
+	return [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:delay] forKey:MS_DELAY];
+}
+
+
+
+//遠隔実行実装
 /**
  遠隔実行発行メソッド
  可変長引数受付
@@ -617,317 +1081,42 @@
 	
 	
 	[invocation invoke];//実行
-	
-}
-
-
-
-/**
- 遅延実行
- tag-Valueと同形式でオプションを挿入するメソッド
- */
-- (NSDictionary * ) withDelay:(float)delay {
-	NSAssert1(delay,@"withDelay_%@ is nil",delay);
-	return [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:delay] forKey:MS_DELAY];
 }
 
 
 
 
 
-/**
- 自分自身のmessengerへと通信を行うメソッド
- */
-- (void) callMyself:(NSString * )exec, ... {
-	NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:5];
-	
-	[dict setValue:MS_CATEGOLY_LOCAL forKey:MS_CATEGOLY];
-	[dict setValue:[self getMyName] forKey:MS_ADDRESS_NAME];
-	
-	[dict setValue:exec forKey:MS_EXECUTE];
-	[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
-	[dict setValue:[self getMyMID] forKey:MS_SENDERMID];
-	
-	va_list ap;
-	id kvDict;
-	
-	//NSLog(@"start_%@", exec);
-	
-	va_start(ap, exec);
-	kvDict = va_arg(ap, id);
-	
-	while (kvDict) {
-		//NSLog(@"kvDict_%@", kvDict);
-		
-		for (id key in kvDict) {
-			//					NSLog(@"[kvDict valueForKey:key]_%@, key_%@", [kvDict valueForKey:key], key);
-			[dict setValue:[kvDict valueForKey:key] forKey:key];
-		}
-		
-		kvDict = va_arg(ap, id);
-	}
-	va_end(ap);
-	
-	
-	[self sendMessage:dict];
-}
 
 
-/**
- 特定の名前のmessengerへの通信を行うメソッド
- 親から子限定
- 
- 子供辞書を持っており、かつ、nameに該当する子供がいる
- 送り先の名称が自分と異なる場合のみ、送る事が出来る
-	→同名の子供群まで対象に入れると、メッセージの判別手段にグループの概念を持ち込まなければいけないために存在する制限。
- 
- */
-- (void) call:(NSString * )childName withExec:(NSString * )exec, ... {
-	
-	NSAssert(![childName isEqualToString:[self getMyName]], @"自分自身/同名の子供達へのメッセージブロードキャストをこのメソッドで行う事はできません。　callMyselfメソッドを使用してください");
-	NSAssert(![childName isEqualToString:PARENTNAME_DEFAULT], @"システムで予約してあるデフォルトの名称です。　この名称を使ってのシステム使用は、その、なんだ、お勧めしません。");
-	
-	
-	//特定のキーが含まれているか
-//	[childDict allValues]//NSArray コストは概ね一緒かな。 特定のキーが含まれているか否か、を隠蔽したいか否か
-	
-	//親から子へのブロードキャスト MIDで送り先を限定しない。
-	for (id key in [self getChildDict]) {//この時点か、この中なのか。
-		//NSLog(@"key: %@, value: %@", key, [childDict objectForKey:key]);//この件数分だけ出す必要は無い！　一件出せればいい。特に限定が必要な場合もそう。
-		if ([[childDict objectForKey:key] isEqualToString:childName]) {//一つでも合致する内容のものがあれば、メッセージを送る対象として見る。
-			NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:5];
-			
-			[dict setValue:MS_CATEGOLY_CALLCHILD forKey:MS_CATEGOLY];
-			[dict setValue:childName forKey:MS_ADDRESS_NAME];
-			
-			[dict setValue:exec forKey:MS_EXECUTE];
-			[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
-			[dict setValue:[self getMyMID] forKey:MS_SENDERMID];
-			
-			va_list ap;
-			id kvDict;
-			
-			//NSLog(@"start_%@", exec);
-			
-			va_start(ap, exec);
-			kvDict = va_arg(ap, id);
-			
-			while (kvDict) {
-				//NSLog(@"kvDict_%@", kvDict);
-				
-				for (id key in kvDict) {
-					//					NSLog(@"[kvDict valueForKey:key]_%@, key_%@", [kvDict valueForKey:key], key);
-					[dict setValue:[kvDict valueForKey:key] forKey:key];
-				}
-				
-				kvDict = va_arg(ap, id);
-			}
-			va_end(ap);
-
-			[self sendMessage:dict];
-			
-			return;//一通だけを送る
-		}
-	}
-	
-	//NSAssert1(false, @"callメソッドに指定したmessengerが存在しないか、未知のものです。本messengerを親とした設定を行うよう、子から親を指定してください。_%@",name);
-}
-
-
-/**
- 特定の子への通信を行うメソッド、特にMIDを使い、相手を最大限特定する。
- */
-- (void) call:(NSString * )childName withMID:(NSString * ) withExec:(NSString * )exec, ... {
-	NSAssert(false, @"開発中のメソッドです");
-}
-
-
-
-/**
- 親への通信を行うメソッド
- */
-- (void) callParent:(NSString * )exec, ... {
-	
-	//親が居たら
-	if ([self getMyParentName]) {
-		NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:5];
-		
-		
-		[dict setValue:MS_CATEGOLY_CALLPARENT forKey:MS_CATEGOLY];
-		[dict setValue:[self getMyParentName] forKey:MS_ADDRESS_NAME];
-		[dict setValue:[self getMyParentMID] forKey:MS_ADDRESS_MID];
-		
-		
-		[dict setValue:exec forKey:MS_EXECUTE];
-		[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
-		[dict setValue:[self getMyMID] forKey:MS_SENDERMID];
-		
-		
-		//tag付けされた要素以外は無視するように設定
-		//可変長配列に与えられた要素を処理する。
-		
-		va_list vp;//可変引数のポインタになる変数
-		id kvDict;//可変長引数から辞書を取り出すときに使用するポインタ
-		
-		//NSLog(@"start_%@", exec);
-		
-		va_start(vp, exec);//vpを可変長配列のポインタとして初期化する
-		kvDict = va_arg(vp, id);//vpから現在の可変長配列のヘッドにあるidを抽出し、kvDictに代入。この時点でkvDictは可変長配列のトップの要素のidを持っている。
-		
-		while (kvDict) {//存在していなければnull、可変長引数の終了の合図。
-			
-			//NSLog(@"kvDict_%@", kvDict);
-			
-			for (id key in kvDict) {
-				
-				//NSLog(@"[kvDict valueForKey:key]_%@, key_%@", [kvDict valueForKey:key], key);
-				//型チェック、kvDict型で無ければ無視する必要がある。
-				if (true) [dict setValue:[kvDict valueForKey:key] forKey:key];
-			
-			}
-			
-			kvDict = va_arg(vp, id);//次の値を読み出す
-		}
-		
-		va_end(vp);//終了処理
-		
-		[self sendMessage:dict];
-		
-		return;
-	}
-	
-	NSAssert(false, @"親設定が無い");
-}
-
-
-
-
-/**
- パフォーマンス実行を行う
- 
- この処理は、出来るだけ独立した要素として分けておく。
- */
-- (void) sendPerform:(NSMutableDictionary * )dict {//流石にインスタントにリレーした後に子を設定すると駄目なのか？
-	[[NSNotificationCenter defaultCenter] postNotificationName:OBSERVER_ID object:nil userInfo:(id)dict];
-}
-
-/**
- 遅延実行
- */
-- (void) sendPerform:(NSMutableDictionary * )dict withDelay:(float)delay {
-	[self performSelector:@selector(sendPerform:) withObject:dict afterDelay:delay];
-}
-
-
-/**
- ログを取り、実行する。
- */
-- (void) sendMessage:(NSMutableDictionary * )dict {
-	
-	[self addCreationLog:dict];
-	
-	//遅延実行キーがある場合
-	NSNumber * delay = [dict valueForKey:MS_DELAY];//複数或る場合はエラーにしたい
-	if (delay) {
-		float delayTime = [delay floatValue];
-		[self sendPerform:dict withDelay:delayTime];
-		return;
-	}
-	
-	//通常の送信を行う
-	[self sendPerform:dict];
-}
-
-
-
-/**
- メッセージ発生時のログ書き込み、ログ初期化
- 
- メッセージIDを作成、いろいろな情報をまとめる
- 
- */
-- (void) addCreationLog:(NSMutableDictionary * )dict {
-	
-	//ログタイプ、タイムスタンプを作成
-	//メッセージに対してはメッセージIDひも付きの新規ログをつける事になる。
-	//ストアについては、新しいIDのものが出来るとIDの下に保存する。多元木構造になっちゃうなあ。カラムでやった方が良いのかしら？それとも絡み付いたKVSかしら。
-	
-	NSString * messageID = [MessengerIDGenerator getMID];//このメッセージのIDを出力(あとでID認識するため)
-	
-	
-	//ストアに保存する
-	[self saveToLogStore:MS_LOGMESSAGE_CREATED log:[self tag:MS_LOG_MESSAGEID val:messageID]];
-	
-	
-	//messageとともに移動するログに内容をセットする
-	NSDictionary * newLogDictionary;
-	newLogDictionary = [NSDictionary dictionaryWithObject:messageID forKey:MS_LOG_MESSAGEID];
-	
-	[dict setValue:newLogDictionary forKey:MS_LOGDICTIONARY];
-}
-
-
-
-/**
- 受け取り時のログ書き込み
- 
- 受信したメッセージからログを受け取り、
- ログの末尾に含まれているメッセージIDでもって、過去に受け取ったことがあるかどうか判定(未実装)、
- ログストアに保存する。
- */
-- (void) saveLogForReceived:(NSMutableDictionary * ) recievedLogDict {
-	
-	//ログタイプ、タイムスタンプを作成
-	NSString * messageID = (NSString * )[recievedLogDict valueForKey:MS_LOG_MESSAGEID];
-	
-	//ストアに保存する
-	[self saveToLogStore:MS_LOGMESSAGE_RECEIVED log:[self tag:MS_LOG_MESSAGEID val:messageID]];
-}
-
-
-
-/**
- 返信時のログ書き込み
- 
- どこからか取得したメッセージIDでもって、
- 保存していたログストアからログデータを読み出し、
- 最新の「送信しました」記録を行い、
- 記録をログ末尾に付け加えたログを返す。
- */
-- (NSMutableDictionary * ) createLogForReply {
-	//ログタイプ、タイムスタンプを作成
-	[logDict setValue:@"仮のmessageID" forKey:MS_LOG_MESSAGEID];
-	
-	return logDict;
-}
-
+//ログストアの取得
 /**
  観察用にこのmessengerに書かれているログを取得するメソッド
  */
 - (NSMutableDictionary * ) getLogStore {
 	
 	//ストアの全容量を取り出す
-		
+	
 	return logDict;
 }
 
 
+
+
+//子供辞書の取得
 /**
- 可変長ログストア入力
- アウトプットは後で考えよう。
+ childDictを返す
  */
-- (void) saveToLogStore:(NSString * )name log:(NSDictionary * )value {
-	
-	NSArray * key = [value allKeys];//1件しか無い内容を取得する
-	
-	[logDict setValue:
-	 [NSString stringWithFormat:@"%@ %@", name, [value valueForKey:[key objectAtIndex:0]]] 
-			   forKey:
-	 [NSString stringWithFormat:@"%@ %@", [MessengerIDGenerator getMID], [NSDate date]]
-	 ];
-	
-	
+- (NSMutableDictionary * ) getChildDict {
+	return childDict;
 }
+
+
+
+
+
+
+
 
 /**
  実行処理名を指定、String値を取得する
@@ -988,6 +1177,7 @@
  数値の文字列化
  */
 - (NSString * ) changeNumberToStr:(int)num {
+	NSAssert(FALSE, @"まだ設計されてません");
 	return nil;
 }
 
@@ -1021,14 +1211,7 @@
 
 
 
-
-
-/**
- 自分の名称をセットするメソッド
- */
-- (void)setMyName:(NSString * )name {
-	myName = name;
-}
+//ゲッター
 /**
  自分の名称を返すメソッド
  */
@@ -1038,12 +1221,6 @@
 
 
 /**
- 自分のBodyIDをセットするメソッド
- */
-- (void) setMyBodyID:(id)bodyID {
-	myBodyID = bodyID;
-}
-/**
  自分のBodyIDを返すメソッド
  */
 - (id) getMyBodyID {
@@ -1052,25 +1229,12 @@
 
 
 /**
- 自分のBodyが提供するメソッドセレクターを、自分のセレクター用ポインタにセットするメソッド
- */
-- (void) setMyBodySelector:(SEL)body_selector {
-	myBodySelector = body_selector;
-}
-/**
  自分のセレクター用ポインタを返すメソッド
  */
 - (SEL) getMyBodySelector {
 	return myBodySelector;
 }
 
-
-/**
- 自分のMIDを初期化するメソッド
- */
-- (void)initMyMID {
-	myMID = [MessengerIDGenerator getMID];
-}
 /**
  自分のMIDを返すメソッド
  */
@@ -1079,30 +1243,6 @@
 }
 
 
-
-/**
- myParent関連情報を初期化する
- */
-- (void) initMyParentData {
-	[self setMyParentName:PARENTNAME_DEFAULT];
-	myParentMID = PARENTMID_DEFAULT;
-}
-/**
- 親情報をリセットする
- (親のchildDictからも消す)
- */
-- (void) resetMyParentData {
-	[self removeMyParentData];
-	
-	[self initMyParentData];//初期化
-}
-
-/**
- 親の名称をセットするメソッド
- */
-- (void) setMyParentName:(NSString * )parent {
-	myParentName = parent;
-}
 /**
  親の名称を返すメソッド
  */
@@ -1111,24 +1251,6 @@
 }
 
 
-/**
- 自分から見た親のMIDをセットするメソッド
- 外部から呼ばれるように設計されている。
- 親が複数要るケースは想定し排除してある。
- 
- 本メソッドは条件を満たした親から起動されるメソッドになっており、自分から呼ぶ事は無い。
- */
-- (void) setMyParentMID:(NSString * )parentMID {
-	if ([[self getMyParentMID] isEqualToString:PARENTMID_DEFAULT]) {
-		
-		[self saveToLogStore:@"setMyParentMID" log:[self tag:MS_LOG_LOGTYPE_GOTP val:[self getMyParentName]]];
-		
-		
-		myParentMID = parentMID;
-		
-		[self decidedParentName:[self getMyParentName] withParentMID:[self getMyParentMID]];
-	}	
-}
 /**
  親のMIDを返すメソッド
  */
@@ -1191,9 +1313,4 @@
 	
     [super dealloc];
 }
-
-
-
-
-
 @end

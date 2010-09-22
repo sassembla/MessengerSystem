@@ -7,6 +7,8 @@
 //
 
 #import "MessengerViewController.h"
+#import "MessengerIDGenerator.h"
+
 
 @implementation MessengerViewController
 //上書きしなければいけないのは、初期化メソッドと、実行時のメソッド
@@ -49,7 +51,7 @@
 
 /**
  内部処理実装
- オーバーライドし、実行内容を変貌させる
+ オーバーライドし、実行内容を限定する
  */
 - (void) innerPerform:(NSNotification * )notification {
 	
@@ -124,6 +126,13 @@
 
 		return;
 	}
+	
+	
+	if ([commandName isEqualToString:MS_CATEGOLY_REMOVE_CHILD]) {//子供設定の解除コマンドを判断
+		
+	}
+	
+	
 	
 	if ([commandName isEqualToString:MS_CATEGOLY_CALLCHILD]) {
 		//親から子の関係性成立済み情報が載っている
@@ -260,12 +269,70 @@
 }
 
 
+
+
+//自前実装のセッターメソッド　プログラム本体ではプライベートカテゴリに実装してある
+/**
+ 自分の名称をセットするメソッド
+ */
+- (void)setMyName:(NSString * )name {
+	myName = name;
+}
+
+
+/**
+ 自分のBodyIDをセットするメソッド
+ */
+- (void) setMyBodyID:(id)bodyID {
+	myBodyID = bodyID;
+}
+
+
+/**
+ 自分のBodyが提供するメソッドセレクターを、自分のセレクター用ポインタにセットするメソッド
+ */
+- (void) setMyBodySelector:(SEL)body_selector {
+	myBodySelector = body_selector;
+}
+
+
+
+/**
+ 自分のMIDを初期化するメソッド
+ */
+- (void)initMyMID {
+	myMID = [MessengerIDGenerator getMID];
+}
+
+
+/**
+ myParent関連情報を初期化する
+ */
+- (void) initMyParentData {
+	[self setMyParentName:PARENTNAME_DEFAULT];
+	myParentMID = PARENTMID_DEFAULT;
+}
+
+
+/**
+ 親の名称をセットするメソッド
+ */
+- (void) setMyParentName:(NSString * )parent {
+	myParentName = parent;
+}
+
+
 //オーバーライドするメソッド、特に何もさせない。
 - (void) inputToMyParentWithName:(NSString * )parent {}
 - (void) callMyself:(NSString * )exec, ...{}
 - (void) call:(NSString * )name withExec:(NSString * )exec, ...{}
 - (void) callChild:(NSString * )childName withMID:(NSString * ) withCommand:(NSString * )exec, ...{}
 - (void) callParent:(NSString * )exec, ...{}
+
+
+
+
+
 
 
 - (void) dealloc {

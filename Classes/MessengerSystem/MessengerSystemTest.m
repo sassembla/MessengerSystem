@@ -541,8 +541,31 @@
  同名の複数の子供
  */
 - (void) testSameNameChild {
+	MessengerSystem * child_00 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
+	MessengerSystem * child_01 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
+	MessengerSystem * child_02 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
+	MessengerSystem * child_03 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
+	MessengerSystem * child_04 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
 	
 	
+	[child_00 inputToMyParentWithName:[parent getMyName]];
+	[child_01 inputToMyParentWithName:[parent getMyName]];
+	[child_02 inputToMyParentWithName:[parent getMyName]];
+	[child_03 inputToMyParentWithName:[parent getMyName]];
+	[child_04 inputToMyParentWithName:[parent getMyName]];
+	
+	STAssertTrue([parent hasChild], @"子供がいない事になってる");
+	STAssertTrue([[parent getChildDict] count] == 5, @"子供が足りない");
+	
+	[child_00 removeMyParentData];
+	
+	
+	
+	[child_00 release];
+	[child_01 release];
+	[child_02 release];
+	[child_03 release];
+	[child_04 release];
 }
 
 
@@ -613,14 +636,6 @@
 	[parent2 release];
 }
 
-/*
- MIDを数値化する事ができるっぽい。いいねえ。だとしたら、そういうテーブルを作っておいて、switchでつかう、とかできそうね。
- 
- */
-
-
-//banする機構ってあるの？　→ 無い！ そんな不完全な機構作らん。
-
 
 
 
@@ -681,14 +696,14 @@
 	[child_2 inputToMyParentWithName:[parent getMyName]];
 	
 	
-	[child_0 resetMyParentData];//親情報をリセットする
+	[child_0 removeMyParentData];//親情報をリセットする
 	//親には子供がいる　_2
 	//子供２には親がいる 
 	STAssertTrue(![child_0 hasParent], @"親設定があります_0");
 	STAssertTrue([child_2 hasParent], @"親設定がありません_2");
 	STAssertTrue([parent hasChild], @"子供がいません");
 	
-	[child_2 resetMyParentData];//親情報をリセットする
+	[child_2 removeMyParentData];//親情報をリセットする
 	//親には子供がいない
 	//子供２には親がいない
 	STAssertTrue(![child_0 hasParent], @"親設定があります_0　その２");
@@ -719,7 +734,7 @@
 	STAssertTrue([parentChildDict count] == 1, [NSString stringWithFormat:@"親の持っている子供辞書が1件になっていない_%d", [parentChildDict count]]);
 	
 	NSLog(@"child_0の親を抹消");
-	[child_0 resetMyParentData];//親情報をリセットする
+	[child_0 removeMyParentData];//親情報をリセットする
 	NSLog(@"child_0の親抹消済みの筈_親ID_%@", [child_0 getMyParentMID]);
 	
 	//parentの子供辞書を調べてみる、一件も無くなっている筈
@@ -732,12 +747,15 @@
 	[child_0 inputToMyParentWithName:[child_2 getMyName]];//新規親情報
 	
 	
-	NSLog(@"子供が知ってる親の名前_%@", [child_0 getMyParentName]);
-	//親が知ってる子供の情報、という部分において、他のオブジェクト（子供残骸＞）
+	
 	
 	STAssertTrue([child_0 hasParent], @"子供がまだ親情報を持っている");
 	STAssertTrue(![parent hasChild], @"親がまだ子供情報を持っている");
-	STAssertTrue([child_2 hasParent], @"子供2が子供情報を持っていない");
+	
+	NSLog(@"child_0_Parent_%@ = %@", [child_0 getMyParentMID], [child_2 getMyMID]);
+	NSLog(@"child_2_Child_%@ = %@", [child_2 getChildDict], [child_0 getMyMID]);
+	
+	STAssertTrue([child_2 hasChild], @"子供2が子供情報を持っていない");
 	
 	
 	NSMutableDictionary * dict2 = [child_2 getChildDict];
@@ -891,8 +909,7 @@
 	STAssertTrue([mViewDict count] == 1, [NSString stringWithFormat:@"ViewDict件数が合っていない_%d", [mViewDict count]]);
 	STAssertTrue([mButtonDict count] == 1, [NSString stringWithFormat:@"ButtonDict件数が合っていない_%d", [mButtonDict count]]);
 
-	[child_0 resetMyParentData];//一件成立している親子関係を破壊
-	
+	[child_0 removeMyParentData];//一件成立している親子関係を破壊
 	
 	//この時点で親ラインが消えている筈
 	STAssertTrue([mViewDict count] == 0, [NSString stringWithFormat:@"ViewDict件数が合っていない_%d", [mViewDict count]]);

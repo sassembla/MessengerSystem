@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 
 
-
 //Objective-C id情報
 #define MS_SENDERID		(@"MESSENGER_SYSTEM_COMMAND:SENDER_ID")//自分固有のObjective-C IDに類するキー
 
@@ -105,29 +104,20 @@
 #define OBSERVER_ID		(@"MessengerSystemDefault_E2FD8F50-F6E9-42F6-8949-E7DD20312CA0")
 
 
-/**
- バージョン取得
- */
+//バージョン取得
 + (NSString * )version;
 
 
-/**
- 初期化メソッド
- */
+
+//初期化メソッド
 - (id) initWithBodyID:(id)body_id withSelector:(SEL)body_selector withName:(NSString * )name;
 
 
 
-
-/**
- 内部実行メソッド
- */
+//実行メソッド
 - (void) inputToMyParentWithName:(NSString * )parent;//親への登録メソッド
-- (void) decidedParentName:(NSString * )parentName withParentMID:(NSString * )parentMID;//親への登録完了時の声明発行メソッド
 - (void) removeMyParentData;//親情報を初期化する通信を行うメソッド
 - (void) removeChildData;//自分を親に設定している子供に対して解除を促すメソッド
-
-- (void) innerPerform:(NSNotification * )notification;//内部実装メソッド、システムな動作とbodyへのメソッド伝達を行う。
 
 - (void) callMyself:(NSString * )exec, ...;//自分自身への通信メソッド
 - (void) call:(NSString * )childName withExec:(NSString * )exec, ...;//特定の子への通信用メソッド
@@ -135,59 +125,25 @@
 - (void) callParent:(NSString * )exec, ...;//親への通信用メソッド
 
 
-- (void) sendPerform:(NSMutableDictionary * )dict;//ブロック実装
-- (void) sendPerform:(NSMutableDictionary * )dict withDelay:(float)delay;//遅延実行
-
-- (void) sendMessage:(NSMutableDictionary * )dict;//送信実行メソッド
-
-
-/**
- 子供辞書に子供のmyName,myMIDを保存する
- */
-- (void) setChildDictChildNameAsValue:(NSString * )senderName withMIDAsKey:(NSString * )senderMID;
-- (void) removeChildDictChildNameAsValue:(NSString * )senderName withMIDAsKey:(NSString * )senderMID;
-- (NSMutableDictionary * ) getChildDict;
-
-
-/**
- タグシステム
- */
+//タグシステム
 - (NSDictionary * ) tag:(id)obj_tag val:(id)obj_value;
+- (NSDictionary * ) withRemoteFrom:(id)mySelf withSelector:(SEL)sel;//遠隔実行
+- (NSDictionary * ) withDelay:(float)delay;//遅延実行
 
 
-
-/**
- 遠隔実行
- タグシステムの亜種、RemoteTag
- */
-- (NSDictionary * ) withRemoteFrom:(id)mySelf withSelector:(SEL)sel;
-
-- (NSDictionary * ) setRemoteInvocationFrom:(id)mySelf withSelector:(SEL)sel;
+//遠隔実行実装
 - (void) remoteInvocation:(NSMutableDictionary * )dict, ...;
 
 
 
-/**
- 遅延実行
- タグシステムの亜種、DelayTag
- */
-- (NSDictionary * ) withDelay:(float)delay;
-
-
-
-/**
- ログシステム
- */
-- (void) addCreationLog:(NSMutableDictionary * )dict;//メッセージ初期作成ログを内部に保存する/返すメソッド
-- (void) saveLogForReceived:(NSMutableDictionary * )logDict;//受信時に付与するログを内部に保存するメソッド
-- (NSMutableDictionary * ) createLogForReply;//返答送信時に付与するログを内部に保存する/返すメソッド
-
-
-/**
- ログストア
- */
-- (void) saveToLogStore:(NSString * )name log:(NSDictionary * )value;
+//ログストアの取得
 - (NSMutableDictionary * ) getLogStore;//保存されたログ一覧を取得するメソッド
+
+
+
+//子供辞書の取得
+- (NSMutableDictionary * ) getChildDict;
+
 
 
 /**
@@ -230,27 +186,13 @@
 
 /**
  クラスが持つ値の
- ゲッター、セッター、イニシャライザ
+ ゲッター
  */
-- (void) setMyBodyID:(id)bodyID;
 - (id) getMyBodyID;
-
-- (void) setMyBodySelector:(SEL)body_selector;
 - (SEL) getMyBodySelector;
-
-- (void)setMyName:(NSString * )name;
 - (NSString * )getMyName;
-
-- (void)initMyMID;
 - (NSString * )getMyMID;
-
-
-- (void) initMyParentData;
-- (void) resetMyParentData;
-- (void) setMyParentName:(NSString * )parent;
 - (NSString * )getMyParentName;
-
-- (void) setMyParentMID:(NSString * )parentMID;
 - (NSString * )getMyParentMID;
 
 
