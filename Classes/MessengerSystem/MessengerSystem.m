@@ -366,6 +366,9 @@
 		
 		if ([senderMID isEqualToString:[self getMyParentMID]]) {
 			[self initMyParentData];
+			
+			//通知
+			[self updatedNotice:[self getMyParentName] withParentMID:[self getMyParentMID]];
 		}
 		return;
 	}
@@ -1386,33 +1389,36 @@
 	[self killedNotice];
 
 	
-	//本体のID
-	myBodyID = nil;
-	
-	//本体のセレクタ
-	myBodySelector = nil;//メッセージ受け取り時に叩かれるセレクタ、最低一つの引数を持つ必要がある。
-	
 	
 	//自分の名前	NSString
+//	NSAssert([myName retainCount] == 1, @"myName_%d",[myName retainCount]);
 	myName = nil;
 	
+	
 	//自分のID	NSString
+//	NSAssert([myMID retainCount] == 1, @"myMID_%d",[myMID retainCount]);
 	myMID = nil;
 	
 	
 	//親の名前	NSString
+//	NSAssert([myParentName retainCount] == 1, @"myParentName_%d",[myParentName retainCount]);
 	myParentName = nil;
 	
 	//親のID		NSString
+//	NSAssert([myParentMID retainCount] == 1, @"myParentMID_%d",[myParentMID retainCount]);
 	myParentMID = nil;
 	
 	
 	//子供の名前とIDを保存する辞書	NSMutableDictionary
+	NSAssert([childDict count] == 0, @"childDict_%d",[childDict count]);
 	[childDict removeAllObjects];
-//	NSLog(@"解除！_%@, %d", [self getMyName], [childDict retainCount]);
+	[childDict release];
 	
 	//ログ削除
+//	NSAssert([logDict count] == 0, @"logDict_%d",[logDict count]);
 	[logDict removeAllObjects];
+	NSAssert([logDict count] == 0, @"logDict_%d",[logDict count]);
+	[logDict release];
 	
 	
     [super dealloc];

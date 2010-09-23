@@ -7,6 +7,7 @@
 //
 
 #import "MessengerDisplayView.h"
+#import "GlyphTable.h"
 
 
 @implementation MessengerDisplayView
@@ -14,7 +15,7 @@
 
 - (id)initWithMessengerDisplayFrame:(CGRect)frame {
     if ((self = [super initWithFrame:frame])) {
-        // Initialization code
+        
     }
     return self;
 }
@@ -23,36 +24,23 @@
 /**
  辞書を受け取り自己の描画リストを更新する
  */
-- (void) updateDrawList:(NSMutableDictionary * )dict {
-	[drawDict autorelease];
-	drawDict = [dict copy];//ポインタの更新
+- (void) updateDrawList:(NSMutableDictionary * )draw andConnectionList:(NSMutableDictionary * )connect {
+	
+	[drawList autorelease];
+	drawList = [draw copy];//ポインタの更新
+	NSLog(@"drawList_%@", drawList);
+	
+	
+	[connectionList autorelease];//コネクションの更新
+	connectionList = [connect copy];
+	
+	NSLog(@"connectionList_%@", connectionList);
+	
+	
 	NSLog(@"描画_アップデート");
 	[self setNeedsDisplay];
 }
 
-void addRoundRectToPath(CGContextRef context, CGRect rect, float ovalWidth, float ovalHeight)
-{
-	if (ovalWidth != 0 && ovalHeight != 0) {
-		float fw,fh;
-		
-		CGContextSaveGState(context);
-		CGContextTranslateCTM(context, CGRectGetMinX(rect), CGRectGetMinY(rect));
-		CGContextScaleCTM(context, ovalWidth, ovalHeight);
-		fw = CGRectGetWidth(rect)/ovalWidth;
-		fh = CGRectGetHeight(rect)/ovalHeight;
-		CGContextMoveToPoint(context, fw, fh/2);
-		
-		CGContextAddArcToPoint(context, fw, fh, fw/2, fh, 0.5);	//右上
-		CGContextAddArcToPoint(context, 0, fh, 0, fh/2, 0.5);	//左上
-		CGContextAddArcToPoint(context, 0, 0, fw/2, 0, 0.5);	//左下
-		CGContextAddArcToPoint(context, fw, 0, fw, fh/2, 0.5);	//右下
-		
-		CGContextClosePath(context);
-		CGContextRestoreGState(context);
-	} else {
-		
-	}
-}	
 
 
 /**
@@ -60,40 +48,64 @@ void addRoundRectToPath(CGContextRef context, CGRect rect, float ovalWidth, floa
  */
 - (void)drawRect:(CGRect)rect {
 
-//	NSLog(@"描画中");
-//	CGContextRef context = UIGraphicsGetCurrentContext();
-//	CGContextSetGrayFillColor(context, 1., 1.0);
-//    CGContextFillRect(context, [self bounds]);//背景
-//
-//	CGContextSetLineWidth(context, 4.0);
-//	CGContextBeginPath(context);
-//	
-//	
-//	
-//	for (id key in drawDict) {
-//		NSLog(@"drawDict_%@",[drawDict valueForKey:key]);
-//		{
-//			//buttonの位置に、何か。
-//			UIButton * b = [drawDict valueForKey:key];
-//			NSLog(@"x_%f	y_%f", b.frame.origin.x, b.frame.origin.y);
-//			CGRect bRect = CGRectMake(b.frame.origin.x, b.frame.origin.y, b.frame.size.width, b.frame.size.height);
-//			
-//			
-//			addRoundRectToPath(context, bRect, b.frame.origin.x, b.frame.origin.y);
-//			
-////			[[UIColor colorWithRed:10 green:100 blue:1 alpha:0.5] setFill];
-////			[[UIBezierPath bezierPathWithRect:bRect] fill];
-//		}
-//	}
-//	CGContextSetRGBStrokeColor(context, 0,0,0,0.3);
-//
-//	CGContextDrawPath(context, kCGPathStroke);
+	NSLog(@"描画中");
+	CGContextRef context = UIGraphicsGetCurrentContext();
+	
+	CGContextSetGrayFillColor(context, 0., 1);
+	CGContextFillRect(context, [self bounds]);//背景
+	
+	//背景描画
+	CGContextSetGrayFillColor(context, 1., 0.5);
+	CGContextFillRect(context, [self bounds]);//背景
 	
 	
+	
+	//オブジェクトを描く
+	for (id key in drawList) {
+		
+		
+		UIButton * b = [drawList valueForKey:key];
+		CGRect bRect = CGRectMake(b.frame.origin.x, b.frame.origin.y, b.frame.size.width, b.frame.size.height);
+		
+		CGContextSetLineWidth(context, 6.0);
+		CGContextSetRGBStrokeColor(context, 1, 1, 1, 0.3);//状態によって色を変える
+		CGContextStrokeEllipseInRect(context, bRect);
+		CGContextFillEllipseInRect(context, CGRectMake(b.center.x-6, b.center.y-6, 12, 12));
+		
+		
+		//名前を書く
+		[GlyphTable drawString:context string:key withFont:@"HiraKakuProN-W3" fontSize:20 
+						   atX:b.frame.origin.x atY:b.frame.origin.y];
+		
+		//ラインを引く
+		for (id connectionKey in connectionList) {
+			if ([key isEqualToString:connectionKey]) {//一致するキーのラインを描く
+				NSArray * positionArray = [connectionList valueForKey:key];
+				
+				float sx = [[positionArray objectAtIndex:0] floatValue];
+				float sy = [[positionArray objectAtIndex:1] floatValue];
+
+				float ex = [[positionArray objectAtIndex:2] floatValue];
+				float ey = [[positionArray objectAtIndex:3] floatValue];
+
+				
+				lineFromTo(context, CGPointMake(sx,sy), CGPointMake(ex, ey));
+			}
+		}
+	}
 }
 
 
-
+void lineFromTo(CGContextRef context, CGPoint start, CGPoint end) {
+	CGContextSetLineWidth(context, 2.0);
+	CGContextSetRGBStrokeColor(context, 1, 1, 1, 0.3);//状態によって色を変える
+	
+	CGPoint p [2];
+	p[0] = start;
+	p[1] = end;
+	CGContextStrokeLineSegments(context, p, 2);
+	
+}
 
 
 - (void)dealloc {

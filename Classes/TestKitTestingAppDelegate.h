@@ -19,7 +19,5 @@
 
 - (void)test:(NSNotification * )notification;
 - (void) testResetParent;
-- (void) got;
-
 @end
 

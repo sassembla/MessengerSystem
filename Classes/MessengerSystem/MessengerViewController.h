@@ -45,7 +45,10 @@
 - (void) deleteMessengerInformation:(NSString * )senderName 
 						   withMID:(NSString * )senderMID;
 
-
+/**
+ 描画データのアップデート
+ */
+- (void) drawDataUpdate;
 
 /**
  NameとMIDのペアを作るメソッド

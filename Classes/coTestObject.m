@@ -32,6 +32,9 @@
 - (id) init3 {
 	if (self = [super init]) {
 		messenger = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:CHILD_2];
+		[messenger callMyself:COMMAND_YEAH,
+		 [messenger withDelay:0.4],
+		 nil];
 	}
 	return self;
 }
@@ -55,7 +58,18 @@
 	
 	switch (n) {
 		case -1295402496://COMMAND_YEAH
-			NSLog(@"帰属部分に到着");
+			
+			if ([messenger hasParent]) {
+				
+			} else {
+				[messenger inputParent:PARENTNAME];
+			}
+
+			
+			[messenger callMyself:COMMAND_YEAH,
+			 [messenger withDelay:0.4],
+			 nil];
+			
 			break;
 		case -1295402495://COMMAND_OOPS
 			NSLog(@"子供に到着しました");
@@ -63,10 +77,22 @@
 			 [messenger withDelay:0.5],
 			 nil];
 			
+			[messenger removeFromParent];
+			
 			NSLog(@"到着後の処理が完了しました");			
 			break;
 		case 748839144://COMMAND_CHILDS
 			NSLog(@"COMMAND_CHILDS到着_%@",[messenger getMyMID]);
+			[messenger callParent:COMMAND_ADD_CHILD,
+			 [messenger withRemoteFrom:self withSelector:@selector(forInvocaton:)],
+			 [messenger withDelay:0.4],
+			 nil];
+			
+			[messenger callMyself:COMMAND_CHILDS,
+			 [messenger withDelay:0.4],
+			 nil];
+			
+			
 			break;
 			
 		case -416910212://COMMAND_DELAYANDREMOTE

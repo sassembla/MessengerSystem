@@ -35,12 +35,8 @@
 	
 	
 	paren = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:PARENTNAME];
-//	NSLog(@"paren_%@", [paren getMyMID]);
-	NSLog(@"カウント_%d",[paren retainCount]);
-	
 	coTestObject * cTest = [[coTestObject alloc] init];
-
-	 
+	
 //	[paren callMyself:COMMAND_OOPS,
 //	 [paren tag:@"one" val:@"1"],
 //	 [paren tag:@"two" val:@"2"],
@@ -100,9 +96,9 @@
 //	 [paren tag:@"one" val:@"1"],
 //	 [paren tag:@"two" val:@"2"],
 //	 [paren tag:@"three" val:@"3"],nil];
-
-	
-	
+//
+//	
+//	
 //	//子供を自分自身から呼ぶコード
 //	[paren callMyself:COMMAND_CHILDS,
 //	 [paren tag:@"one" val:@"1"],
@@ -110,9 +106,9 @@
 //	 [paren tag:@"three" val:@"3"],
 //	 [paren withDelay:0.01],
 //	 nil];
-	
-	
-
+//	
+//	
+//
 //	[paren call:CHILD_1 withExec:COMMAND_DELAYANDREMOTE, 
 //	 [paren withDelay:0.5],
 //	 [paren withRemoteFrom:self withSelector:@selector(ignition:)],
@@ -121,12 +117,17 @@
 	
 	[paren callMyself:COMMAND_ADD_CHILD,
 	 [paren withDelay:0.01],
-//	 [paren withRemoteFrom:self withSelector:@selector(ignition:)],
+	 [paren withRemoteFrom:self withSelector:@selector(ignition:)],
 	 nil];
 	
 	
-//	[self got];
-	//[self testResetParent];
+	[paren callMyself:COMMAND_OOPS,
+	 [paren withDelay:0.5],
+	 nil];
+	
+	[paren callMyself:COMMAND_YEAH,
+	 [paren withDelay:5],
+	 nil];
 	
     [window makeKeyAndVisible];
 	
@@ -142,11 +143,7 @@
 	NSLog(@"ignition_%@", str);
 }
 
-- (void) got {
-	NSLog(@"子供ゲット");
-	
-	NSLog(@"通過");
-}
+
 
 - (void)test:(NSNotification * )notification {
 	NSLog(@"NSNotification到着！！！！_%@", notification);
@@ -161,16 +158,17 @@
 	switch (n) {
 		case -1295402496://COMMAND_YEAH//この部分をマクロで書ければ最高。
 			
-//			[paren call:CHILD_1 withExec:COMMAND_YEAH,
-//			 [paren withDelay:0.1],
-//			 nil];
+			
+			[paren removeAllChild];
+			[paren callMyself:COMMAND_YEAH,
+			 [paren withDelay:6],
+			 nil];
+			
 			
 			break;
 		case -1295402495://COMMAND_OOPS
 			
-//			[paren call:CHILD_1 withExec:COMMAND_OOPS,
-//			 [paren withDelay:0.1],
-//			 nil];
+			[paren call:CHILD_1 withExec:COMMAND_OOPS,nil];
 			
 			break;
 		case 748839144://COMMAND_CHILDS
@@ -201,12 +199,7 @@
 			
 			break;
 			
-		case 1880616375://COMMAND_ADD_CHILD
-			[paren callMyself:COMMAND_ADD_CHILD,
-			 nil];
-			
-			break;
-			
+					
 		case -1001328277://COMMAND_ADD_CHILD
 		
 			
@@ -221,7 +214,11 @@
 			coTestObject * cTest3 = [[coTestObject alloc] init3];
 			[cTest3 setParent];
 			
-			[self got];
+			
+			[paren callMyself:COMMAND_ADD_CHILD,
+			 [paren withDelay:1.0],
+			 nil];
+			
 			break;
 			
 		default:
@@ -278,7 +275,7 @@
 	[child_0 inputParent:[paren getMyName]];
 	
 	NSMutableDictionary * parentChildDict = [paren getChildDict];
-//	STAssertTrue([parentChildDict count] == 1, [NSString stringWithFormat:@"親の持っている子供辞書が1件になっていない_%d", [parentChildDict count]]);
+
 	
 	NSLog(@"child_0の親を抹消");
 	[child_0 removeFromParent];//親情報をリセットする

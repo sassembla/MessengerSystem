@@ -14,9 +14,15 @@
  
  */
 @interface MessengerDisplayView : UIView {
-	NSMutableDictionary * drawDict;
+	NSMutableDictionary * drawList;
+	NSMutableDictionary * connectionList;
+	
 }
-- (void) updateDrawList:(NSMutableDictionary * )dict;
+
+
+- (void) updateDrawList:(NSMutableDictionary * )draw andConnectionList:(NSMutableDictionary * )connect;
 - (id)initWithMessengerDisplayFrame:(CGRect)frame;
+
+void lineFromTo(CGContextRef context, CGPoint start, CGPoint end);
 
 @end

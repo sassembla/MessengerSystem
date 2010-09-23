@@ -32,7 +32,7 @@
 - (id) initWithFrame:(CGRect)frame {
 	if (self = [super init]) {
 		
-		messengerInterfaceView = [[MessengerDisplayView alloc] initWithFrame:frame];
+		messengerInterfaceView = [[MessengerDisplayView alloc] initWithMessengerDisplayFrame:frame];
 		
 		[self setMyName:VIEW_NAME_DEFAULT];
 		[self setMyBodyID:nil];
@@ -176,7 +176,7 @@
 	
 	
 	//既に存在している場合は無視する
-	for (id key in messengerList) {
+	for (id key in [self getMessengerList]) {
 		if ([key isEqualToString:newKey]) {
 			NSAssert(FALSE, @"二度生まれてる？");
 			return;
@@ -185,27 +185,29 @@
 	
 	
 	//ビュー、辞書に要素を加える
-	UIButton * newButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];//[UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+	UIButton * newButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50., 50.)];//[UIButton buttonWithType:UIButtonTypeDetailDisclosure];
 	
 	[newButton setHidden:FALSE];
 	
 	
-	CGPoint point = CGPointMake(0, 120);
+	int x = [[self getButtonList] count]*30+(rand()%100);
+	int y = [[self getButtonList] count]*30+(rand()%100);
+	
+	CGPoint point = CGPointMake(0+x, 120+y);
 	[newButton setFrame:CGRectMake(point.x, point.y, newButton.frame.size.width, newButton.frame.size.height)];
 	
-	[newButton setBackgroundColor:[UIColor colorWithRed:10.6 green:10 blue:1 alpha:1]];//一応範囲付け、かなあ。
+	[newButton setBackgroundColor:[UIColor colorWithRed:10.6 green:10 blue:1 alpha:0.01]];//一応範囲付け、かなあ。
 	[newButton addTarget:self action:@selector(tapped:) forControlEvents:UIControlEventTouchUpInside];
 	
 	
-	[buttonList setValue:newButton forKey:newKey];//ボタン自体を保存、座標もここに含まれる
+	[[self getButtonList] setValue:newButton forKey:newKey];//ボタン自体を保存、座標もここに含まれる
 	
 	//新規インスタンスなので、親設定は無い。自分自身から親への関係性を保存する。
-	[messengerList setValue:[self getMessengerInformationKey:MS_DEFAULT_PARENTNAME withMID:MS_DEFAULT_PARENTMID] forKey:newKey];
+	[[self getMessengerList] setValue:[self getMessengerInformationKey:MS_DEFAULT_PARENTNAME withMID:MS_DEFAULT_PARENTMID] forKey:newKey];
 	
 	
 	[messengerInterfaceView addSubview:newButton];//ビューに加える
-	[messengerInterfaceView updateDrawList:buttonList];//ボタン座標データをビューの描画リストにセットする
-	
+	[self drawDataUpdate];
 }
 /**
  通信してきた対象の情報がアップデートされ、親情報が変更された
@@ -222,11 +224,11 @@
 	
 	
 	//既に存在している場合は無視する
-	for (id key in messengerList) {
+	for (id key in [self getMessengerList]) {
 		if ([key isEqualToString:myKey]) {
 			
-			[messengerList setValue:[self getMessengerInformationKey:sendersParentName withMID:sendersParentMID] forKey:key];
-			
+			[[self getMessengerList] setValue:[self getMessengerInformationKey:sendersParentName withMID:sendersParentMID] forKey:key];
+			[self drawDataUpdate];
 			return;
 		}
 	}
@@ -246,24 +248,60 @@
 	//Messengerをアイデンティファイするキーを作成
 	NSString * removeKey = [self getMessengerInformationKey:senderName withMID:senderMID];
 	
-	if (![messengerList valueForKey:removeKey]) {
+	if (![[self getMessengerList] valueForKey:removeKey]) {
 		
-		NSLog(@"messengerList_%@", messengerList);
+		NSLog(@"messengerList_%@", [self getMessengerList]);
 		NSLog(@"removeKey_%@", removeKey);
 		NSAssert(FALSE, @"deleteMessengerInformation_一度も生まれていない");
 	}
 	
-	[[buttonList valueForKey:removeKey] removeFromSuperview];//ビューから外す
-	[buttonList removeObjectForKey:removeKey];
+	[[[self getButtonList] valueForKey:removeKey] removeFromSuperview];//ビューから外す
+	[[self getButtonList] removeObjectForKey:removeKey];
+	[[self getMessengerList] removeObjectForKey:removeKey];//登録抹消
 	
-	
-	[messengerInterfaceView updateDrawList:buttonList];//更新
-	
-	
-	[messengerList removeObjectForKey:removeKey];//登録抹消
+	[self drawDataUpdate];
 	NSLog(@"登録抹消が行われた_%@", removeKey);
 }
 
+/**
+ ドローデータの更新
+ */
+- (void) drawDataUpdate {
+
+//	ボタンリストを実体として渡し、
+//	ラインを引く座標リストをボタンと同じキーで渡せれば上々。
+	//子供　対　親なので、ポイントに換算して置ける筈。
+	NSLog(@"messengerList_%@", [self getMessengerList]);
+	
+	NSMutableDictionary * connectionList = [[NSMutableDictionary alloc] init];
+	
+	for (id key in [self getMessengerList]) {
+		if (![[[self getMessengerList] valueForKey:key] isEqualToString:[self getMessengerInformationKey:MS_DEFAULT_PARENTNAME withMID:MS_DEFAULT_PARENTMID]]) {//接続先が存在するキー
+			//ボタンの位置から位置に対して線が引ければそれでいいんだけど、なんか引く方向とか考えておくといい事がある気がする。
+			//from to　みたいな形で、CGPointが持てればいいのかな。
+			//同じキーでつれるボタン辞書の内容がある
+			UIButton * sButton = [[self getButtonList] valueForKey:key];//始点
+			NSAssert(sButton, @"始点ボタンが無い");
+			
+			UIButton * eButton = [[self getButtonList] valueForKey:[[self getMessengerList] valueForKey:key]];//終点
+			NSAssert(eButton, @"終点ボタンが無い");
+			
+			//子から親にラインを引く用に点を出す
+			NSArray * positionArray = [[NSArray alloc] initWithObjects:
+									   [NSNumber numberWithFloat:sButton.center.x],//startX
+									   [NSNumber numberWithFloat:sButton.center.y],//startY
+									   [NSNumber numberWithFloat:eButton.center.x],//endX
+									   [NSNumber numberWithFloat:eButton.center.y],//endY
+									   nil];
+			
+			[connectionList setValue:positionArray forKey:key];
+		}
+	}
+	
+	
+	
+	[messengerInterfaceView updateDrawList:[self getButtonList] andConnectionList:connectionList];//ボタン座標データをビューの描画リストにセットする
+}
 
 /**
  ボタンが押された時のメソッド
