@@ -16,7 +16,7 @@
 		
 	}
 	messenger = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:CHILD_1];
-	[messenger inputToMyParentWithName:PARENTNAME];
+	[messenger inputParent:PARENTNAME];
 	return self;
 }
 
@@ -24,7 +24,7 @@
 - (id) init2 {
 	if (self = [super init]) {
 		messenger = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:CHILD_1];
-		//[messenger inputToMyParentWithName:PARENTNAME];
+		//[messenger inputParent:PARENTNAME];
 	}
 	return self;
 }
@@ -37,7 +37,7 @@
 }
 
 - (void) setParent {
-	[messenger inputToMyParentWithName:PARENTNAME];
+	[messenger inputParent:PARENTNAME];
 }
 
 - (void)test:(NSNotification * )notification {

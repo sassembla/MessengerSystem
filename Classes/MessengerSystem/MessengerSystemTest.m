@@ -26,6 +26,8 @@
 
 #define TEST_PARENT_NAME (@"parent_0")
 #define TEST_CHILDPERSIS_NAME (@"child_persis")//グローバルで所持する子供
+
+#define TEST_PARENT_NAME_2 (@"parent_2")
 #define TEST_CHILD_NAME_0 (@"child_0")
 #define TEST_CHILD_NAME_2 (@"child_2")
 #define TEST_CHILD_NAME_3 (@"child_3")
@@ -37,6 +39,7 @@
 #define TEST_EXEC_2 (@"testExec_2")
 #define TEST_EXEC_3 (@"testExec_3")
 #define TEST_PARENT_INVOKE	(@"testParentExec")
+#define TEST_PARENT_MULTICHILD	(@"子だくさん")
 
 
 
@@ -77,7 +80,10 @@
  ティアダウン
  */
 - (void) tearDown {
+	STAssertTrue([parent retainCount] == 1, @"parent　カウントがおかしい_%d", [parent retainCount]);
 	[parent release];
+	
+	STAssertTrue([child_persis retainCount] == 1, @"child_persis　カウントがおかしい_%d", [child_persis retainCount]);
 	[child_persis release];
 	NSLog(@"tearDown");
 }
@@ -117,9 +123,11 @@
 - (void) m_testChild0:(NSNotification * )notification {
 	//MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
 	
-	NSLog(@"testChild_%@",notification);
+	//NSLog(@"testChild_%@",notification);
 	
 	NSMutableDictionary * dict = (NSMutableDictionary *)[notification userInfo];
+	
+	
 	
 	NSString * exec = [dict valueForKey:MS_EXECUTE];
 	NSLog(@"exec_%@",exec);
@@ -214,15 +222,22 @@
  Deallocコード
  */
 - (void) testDealloc {
-//	NSString * code = [NSString stringWithFormat:@"仮に"];
-//	NSLog(@"code_retainCount_%d", [code retainCount]);//この時点で１ならOK、というレベル。
-//	NSLog(@"code_%@", code);
+	NSString * code = [[NSString stringWithFormat:@"仮に"] autorelease];
+	NSLog(@"code_retainCount_%d", [code retainCount]);//この時点で１ならOK、というレベル。
+	NSLog(@"code_%@", code);
 	//[code release];//リリースしちゃいけないのか！
 //	NSLog(@"code_retainCount2_%d", [code retainCount]);//releaseした後でも１を保つが、参照すると吹っ飛ぶ。
 
 	
 	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
-//	STAssertTrue([child_0 retainCount] == 1, [NSString stringWithFormat:@"解放準備ができていない%d", [child_0 retainCount]]);
+	STAssertTrue([child_0 retainCount] == 1, [NSString stringWithFormat:@"解放準備ができていない1_%d", [child_0 retainCount]]);
+	
+	
+	[child_0 inputParent:TEST_PARENT_NAME];
+	[child_0 removeFromParent];
+	
+	STAssertTrue([child_0 retainCount] == 1, [NSString stringWithFormat:@"解放準備ができていない2_%d", [child_0 retainCount]]);
+	
 	[child_0 release];
 }
 
@@ -232,7 +247,7 @@
 - (void) testGetParentName {
 	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
 	
-	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];
+	[child_0 inputParent:TEST_PARENT_NAME];
 	STAssertEquals([child_0 getMyParentName], TEST_PARENT_NAME, @"親の名前が想定と違う");
 	
 	STAssertTrue([child_0 hasParent], @"親がセットされている筈なのに判定がおかしい");//child_0には親がセットされている筈
@@ -247,7 +262,7 @@
 - (void) testInputToParent {
 	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
 	
-	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];
+	[child_0 inputParent:TEST_PARENT_NAME];
 	STAssertEquals([child_0 getMyParentMID], [parent getMyMID], [NSString stringWithFormat:@"親のIDが想定と違う/child_0_%@, parent_%@", [child_0 getMyParentMID], [parent getMyMID]]);
 	[child_0 release];
 }
@@ -259,12 +274,12 @@
 - (void) testRemoveChild {
 	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
 	
-	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];
+	[child_0 inputParent:TEST_PARENT_NAME];
 	STAssertTrue([[child_0 getMyParentMID] isEqualToString:[parent getMyMID]], [NSString stringWithFormat:@"親のIDが想定と違う/child_0_%@, parent_%@", [child_0 getMyParentMID], [parent getMyMID]]);
 	
-	[parent removeChildData];
+	[parent removeAllChild];
 	
-	STAssertTrue([[child_0 getMyParentMID] isEqualToString:PARENTMID_DEFAULT], [NSString stringWithFormat:@"親のIDが想定と違う/child_0_%@, parent_%@", [child_0 getMyParentMID], [parent getMyMID]]);
+	STAssertTrue([[child_0 getMyParentMID] isEqualToString:MS_DEFAULT_PARENTMID], [NSString stringWithFormat:@"親のIDが想定と違う/child_0_%@, parent_%@", [child_0 getMyParentMID], [parent getMyMID]]);
 	[child_0 release];
 }
 
@@ -273,7 +288,7 @@
  こういうのは、failになるような条件で書いて、Failかどうかを判定するのがいいんだろうか。判断を考えないとな。
  */
 //- (void) testInputToParentfailure {
-//	[child_0 inputToMyParentWithName:TEST_FAIL_PARENT_NAME];
+//	[child_0 inputParent:TEST_FAIL_PARENT_NAME];
 //	STFail(@"到達してはいけない");
 //}
 
@@ -286,7 +301,7 @@
 - (void) testGetChildDict {
 	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
 	
-	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];
+	[child_0 inputParent:TEST_PARENT_NAME];
 	
 	NSMutableDictionary * dict = [parent getChildDict];
 	STAssertEquals([dict valueForKey:[child_0 getMyMID]], [child_0 getMyName], [NSString stringWithFormat:@"多分なにやらまちがえたんかも_%@", dict]);
@@ -306,7 +321,7 @@
 	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
 	
 	//ログファイルがもくろみ通り作成されているかのテスト
-	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];
+	[child_0 inputParent:TEST_PARENT_NAME];
 	
 	//この時点で、子供は親へと宣言を送った、さらに親がそれを受け止めて返した、というログを持っているはず。
 	NSDictionary * logDict = [child_0 getLogStore];
@@ -324,7 +339,7 @@
 - (void) testReadLog {
 	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
 	
-	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];
+	[child_0 inputParent:TEST_PARENT_NAME];
 	
 	//この時点で、子供は親へと宣言を送ったというログを持っているはず。
 	[child_0 release];
@@ -336,7 +351,7 @@
 - (void) testAddLog {
 	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
 	
-	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];
+	[child_0 inputParent:TEST_PARENT_NAME];
 	
 	//この時点で、子供は親へと宣言を送ったというログを持っているはず。
 	[child_0 release];
@@ -361,7 +376,7 @@
  */
 - (void) testCall {
 	
-	[child_persis inputToMyParentWithName:TEST_PARENT_NAME];//発信、親認定で+2件
+	[child_persis inputParent:TEST_PARENT_NAME];//発信、親認定で+2件
 	
 	NSDictionary * logDict = [child_persis getLogStore];
 	STAssertTrue([logDict count] == 2, [NSString stringWithFormat:@"子供認定2 内容が合致しません_%d", [logDict count]]);
@@ -415,7 +430,7 @@
 - (void) testCallToNotChild {
 	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
 	NSLog(@"testCallToNotChildテスト到達-1");
-	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];//発信、親認定で+2件
+	[child_0 inputParent:TEST_PARENT_NAME];//発信、親認定で+2件
 	NSLog(@"testCallToNotChildテスト到達0");
 	MessengerSystem * child_2 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild2:) withName:TEST_CHILD_NAME_2];
 	[parent call:[child_2 getMyName] withExec:TEST_EXEC, nil];//無効な呼び出し
@@ -436,7 +451,7 @@
 - (void) testCallToNotChild_continue {
 	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
 	
-	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];//発信、親認定で+2件
+	[child_0 inputParent:TEST_PARENT_NAME];//発信、親認定で+2件
 	NSLog(@"testCallToNotChild_continueテスト到達1");
 	MessengerSystem * child_2 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild2:) withName:TEST_CHILD_NAME_2];
 	[parent call:[child_2 getMyName] withExec:TEST_EXEC, nil];//無効な呼び出し
@@ -449,7 +464,7 @@
 	//親の辞書を調べてみる。
 //	NSDictionary * parentDict = [parent getLogStore];
 	
-	[child_2 inputToMyParentWithName:[parent getMyName]];//発信、親認定で+2件
+	[child_2 inputParent:[parent getMyName]];//発信、親認定で+2件
 	
 	NSDictionary * child_2Dict = [child_2 getLogStore];
 	STAssertTrue([child_2Dict count] == 2, [NSString stringWithFormat:@"子の内容1_内容が合致しません_%d", [child_2Dict count]]);
@@ -492,10 +507,10 @@
 	
 	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
 	NSLog(@"テスト到達2");
-	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];//発信、親認定で+2件
+	[child_0 inputParent:TEST_PARENT_NAME];//発信、親認定で+2件
 	NSLog(@"テスト到達2.5");
 	
-	[child_2 inputToMyParentWithName:TEST_PARENT_NAME];//発信、親認定で+2件
+	[child_2 inputParent:TEST_PARENT_NAME];//発信、親認定で+2件
 	NSLog(@"テスト到達3");
 	NSDictionary * child_0Dict = [child_0 getLogStore];
 	STAssertTrue([child_0Dict count] == 2, [NSString stringWithFormat:@"子の内容1_内容が合致しません_%d", [child_0Dict count]]);
@@ -507,29 +522,31 @@
 	[parent call:TEST_CHILD_NAME_0 withExec:TEST_EXEC, nil];
 	[parent call:TEST_CHILD_NAME_2 withExec:TEST_EXEC, nil];
 	
-	[child_0 release];
 	[child_2 release];
+	[child_0 release];
 }
 
 
-//２人目の子供が駄目説
+/**
+ 複数の子供のDealloc確認
+ */
 - (void) test2Child {
 	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
 	
 	MessengerSystem * child_2 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild2:) withName:TEST_CHILD_NAME_2];
 	MessengerSystem * child_3 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild3:) withName:TEST_CHILD_NAME_3];
 	
-	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];//発信、親認定で+2件
-	[child_2 inputToMyParentWithName:TEST_PARENT_NAME];//発信、親認定で+2件
-	[child_3 inputToMyParentWithName:TEST_PARENT_NAME];//発信、親認定で+2件
+	[child_0 inputParent:TEST_PARENT_NAME];//発信、親認定で+2件
+	[child_2 inputParent:TEST_PARENT_NAME];//発信、親認定で+2件
+	[child_3 inputParent:TEST_PARENT_NAME];//発信、親認定で+2件
 
 	[parent call:TEST_CHILD_NAME_0 withExec:TEST_EXEC, nil];
 	[parent call:TEST_CHILD_NAME_2 withExec:TEST_EXEC, nil];
 	[parent call:TEST_CHILD_NAME_3 withExec:TEST_EXEC, nil];
 	
-//	STAssertTrue([child_0 retainCount] == 1, @"test2Child　カウントがおかしい_%d", [child_0 retainCount]);
-//	STAssertTrue([child_2 retainCount] == 1, @"test2Child　2カウントがおかしい_%d", [child_2 retainCount]);
-//	STAssertTrue([child_3 retainCount] == 1, @"test2Child　3カウントがおかしい_%d", [child_3 retainCount]);
+	STAssertTrue([child_0 retainCount] == 1, @"test2Child　カウントがおかしい_%d", [child_0 retainCount]);
+	STAssertTrue([child_2 retainCount] == 1, @"test2Child　2カウントがおかしい_%d", [child_2 retainCount]);
+	STAssertTrue([child_3 retainCount] == 1, @"test2Child　3カウントがおかしい_%d", [child_3 retainCount]);
 	
 	[child_0 release];
 	[child_2 release];
@@ -548,16 +565,23 @@
 	MessengerSystem * child_04 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
 	
 	
-	[child_00 inputToMyParentWithName:[parent getMyName]];
-	[child_01 inputToMyParentWithName:[parent getMyName]];
-	[child_02 inputToMyParentWithName:[parent getMyName]];
-	[child_03 inputToMyParentWithName:[parent getMyName]];
-	[child_04 inputToMyParentWithName:[parent getMyName]];
+	[child_00 inputParent:[parent getMyName]];
+	[child_01 inputParent:[parent getMyName]];
+	[child_02 inputParent:[parent getMyName]];
+	[child_03 inputParent:[parent getMyName]];
+	[child_04 inputParent:[parent getMyName]];
 	
 	STAssertTrue([parent hasChild], @"子供がいない事になってる");
 	STAssertTrue([[parent getChildDict] count] == 5, @"子供が足りない");
 	
-	[child_00 removeMyParentData];
+	[child_00 removeFromParent];
+	
+	
+	
+	//親から子供にコールすると、全員に届く筈
+	[parent call:[child_00 getMyName] withExec:TEST_PARENT_MULTICHILD,nil];
+	
+	
 	
 	
 	
@@ -576,7 +600,7 @@
 - (void) testCallParent {
 	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
 	
-	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];//2件
+	[child_0 inputParent:TEST_PARENT_NAME];//2件
 	NSDictionary * child_0Dict = [child_0 getLogStore];
 	
 	STAssertTrue([child_0Dict count] == 2, [NSString stringWithFormat:@"子の内容2_内容が合致しません_%d", [child_0Dict count]]);
@@ -619,7 +643,7 @@
 - (void) testMultiParent {
 	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
 	
-	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];//2件
+	[child_0 inputParent:TEST_PARENT_NAME];//2件
 	MessengerSystem * parent2 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testParent:) withName:TEST_PARENT_NAME];
 	
 	
@@ -650,8 +674,8 @@
 	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
 	MessengerSystem * child_2 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild2:) withName:TEST_CHILD_NAME_2];
 	
-	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];
-	[child_2 inputToMyParentWithName:TEST_PARENT_NAME];
+	[child_0 inputParent:TEST_PARENT_NAME];
+	[child_2 inputParent:TEST_PARENT_NAME];
 	
 	
 	NSMutableDictionary * dict = [parent getChildDict];//親の辞書をチェックする
@@ -670,9 +694,9 @@
 	MessengerSystem * child_2 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild2:) withName:TEST_CHILD_NAME_2];
 	
 	
-	[child_persis inputToMyParentWithName:TEST_PARENT_NAME];
+	[child_persis inputParent:TEST_PARENT_NAME];
 	
-	[child_2 inputToMyParentWithName:[child_persis getMyName]];
+	[child_2 inputParent:[child_persis getMyName]];
 	
 	//child_0の子供としてchild_2をセットした際、child_0の名前がchild_2のmyParentにセットしてあるはず。
 	NSMutableDictionary * dict1 = [child_persis getChildDict];
@@ -692,18 +716,18 @@
 	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
 	MessengerSystem * child_2 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild2:) withName:TEST_CHILD_NAME_2];
 	
-	[child_0 inputToMyParentWithName:[parent getMyName]];
-	[child_2 inputToMyParentWithName:[parent getMyName]];
+	[child_0 inputParent:[parent getMyName]];
+	[child_2 inputParent:[parent getMyName]];
 	
 	
-	[child_0 removeMyParentData];//親情報をリセットする
+	[child_0 removeFromParent];//親情報をリセットする
 	//親には子供がいる　_2
 	//子供２には親がいる 
 	STAssertTrue(![child_0 hasParent], @"親設定があります_0");
 	STAssertTrue([child_2 hasParent], @"親設定がありません_2");
 	STAssertTrue([parent hasChild], @"子供がいません");
 	
-	[child_2 removeMyParentData];//親情報をリセットする
+	[child_2 removeFromParent];//親情報をリセットする
 	//親には子供がいない
 	//子供２には親がいない
 	STAssertTrue(![child_0 hasParent], @"親設定があります_0　その２");
@@ -728,13 +752,13 @@
 	
 	
 	
-	[child_0 inputToMyParentWithName:[parent getMyName]];
+	[child_0 inputParent:[parent getMyName]];
 	
 	NSMutableDictionary * parentChildDict = [parent getChildDict];
 	STAssertTrue([parentChildDict count] == 1, [NSString stringWithFormat:@"親の持っている子供辞書が1件になっていない_%d", [parentChildDict count]]);
 	
 	NSLog(@"child_0の親を抹消");
-	[child_0 removeMyParentData];//親情報をリセットする
+	[child_0 removeFromParent];//親情報をリセットする
 	NSLog(@"child_0の親抹消済みの筈_親ID_%@", [child_0 getMyParentMID]);
 	
 	//parentの子供辞書を調べてみる、一件も無くなっている筈
@@ -744,7 +768,7 @@
 	
 	
 	
-	[child_0 inputToMyParentWithName:[child_2 getMyName]];//新規親情報
+	[child_0 inputParent:[child_2 getMyName]];//新規親情報
 	
 	
 	
@@ -778,7 +802,7 @@
  */
 - (void) testRemoteInvoke {
 	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:@"じぶん"];
-	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];
+	[child_0 inputParent:TEST_PARENT_NAME];
 	
 	
 	//親から子供0のメソッドを実行する
@@ -877,15 +901,18 @@
 	MessengerViewController * mView = [[MessengerViewController alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
 	
 	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
-	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];//一件成立している親子関係がある筈
+	[child_0 inputParent:TEST_PARENT_NAME];//一件成立している親子関係がある筈
 	
 	
 	//view側で受け取れており、Dictに情報がたまっていればOK
-	NSMutableDictionary * mViewDict = [mView getViewDictionary];
+	NSMutableDictionary * mViewDict = [mView getMessengerList];
 	STAssertTrue([mViewDict count] == 1, [NSString stringWithFormat:@"ViewDict件数が合っていない_%d", [mViewDict count]]);
 	
-	NSMutableDictionary * mButtonDict = [mView getButtonDictionary];
-	STAssertTrue([mButtonDict count] == 1, [NSString stringWithFormat:@"ButtonDict件数が合っていない_%d", [mButtonDict count]]);
+	NSMutableDictionary * mButtonDict = [mView getButtonList];
+	STAssertTrue([mButtonDict count] == 1, [NSString stringWithFormat:@"buttonList件数が合っていない_%d", [mButtonDict count]]);
+	
+	
+	
 	
 	
 	[mView release];
@@ -898,32 +925,56 @@
 - (void) testMessengerViewRemoveChild {
 	MessengerViewController * mView = [[MessengerViewController alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
 	
-	NSMutableDictionary * mViewDict = [mView getViewDictionary];
-	NSMutableDictionary * mButtonDict = [mView getButtonDictionary];
+	NSMutableDictionary * mMessengerList = [mView getMessengerList];
+	NSMutableDictionary * mButtonList = [mView getButtonList];
 	
 	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
-	MessengerSystem * parent2 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testParent:) withName:TEST_PARENT_NAME];
 	
-	
-	[child_0 inputToMyParentWithName:TEST_PARENT_NAME];//一件成立している親子関係がある筈
-	STAssertTrue([mViewDict count] == 1, [NSString stringWithFormat:@"ViewDict件数が合っていない_%d", [mViewDict count]]);
-	STAssertTrue([mButtonDict count] == 1, [NSString stringWithFormat:@"ButtonDict件数が合っていない_%d", [mButtonDict count]]);
+	STAssertTrue([mMessengerList count] == 1, [NSString stringWithFormat:@"ViewDict件数が合っていない1_%d", [mMessengerList count]]);
+	STAssertTrue([mButtonList count] == 1, [NSString stringWithFormat:@"buttonList件数が合っていない1_%d", [mButtonList count]]);
 
-	[child_0 removeMyParentData];//一件成立している親子関係を破壊
+	MessengerSystem * parent2 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testParent:) withName:TEST_PARENT_NAME_2];
+	
+	NSLog(@"code1_retainCount_%d", [child_0 retainCount]);
+	[child_0 inputParent:TEST_PARENT_NAME];//一件成立している親子関係がある筈
+	NSLog(@"code2_retainCount_%d", [child_0 retainCount]);
+	STAssertTrue([mMessengerList count] == 2, [NSString stringWithFormat:@"ViewDict件数が合っていない2_%d", [mMessengerList count]]);
+	STAssertTrue([mButtonList count] == 2, [NSString stringWithFormat:@"buttonList件数が合っていない2_%d", [mButtonList count]]);
+
+	
+	[child_0 removeFromParent];//一件成立している親子関係を破壊
 	
 	//この時点で親ラインが消えている筈
-	STAssertTrue([mViewDict count] == 0, [NSString stringWithFormat:@"ViewDict件数が合っていない_%d", [mViewDict count]]);
-	STAssertTrue([mButtonDict count] == 0, [NSString stringWithFormat:@"ButtonDict件数が合っていない_%d", [mButtonDict count]]);
-
-	[child_0 inputToMyParentWithName:[parent2 getMyName]];//一件成立している親子関係がある筈
+	STAssertTrue([mMessengerList count] == 2, [NSString stringWithFormat:@"ViewDict件数が合っていない3_%d", [mMessengerList count]]);
+	STAssertTrue([mButtonList count] == 2, [NSString stringWithFormat:@"buttonList件数が合っていない3_%d", [mButtonList count]]);
+	//from子To親で、ラインが引ける筈。
 	
-	//この時点で親ラインが出ている筈
-	STAssertTrue([mViewDict count] == 1, [NSString stringWithFormat:@"ViewDict件数が合っていない_%d", [mViewDict count]]);
-	STAssertTrue([mButtonDict count] == 1, [NSString stringWithFormat:@"ButtonDict件数が合っていない_%d", [mButtonDict count]]);
-
-	[mView release];
-	[child_0 release];
+	
+	//子供１のボタンの、関係性の親の部分がデフォルトになってる筈
+	NSString * defaultKey = [mView getMessengerInformationKey:MS_DEFAULT_PARENTNAME withMID:MS_DEFAULT_PARENTMID];
+	NSString * child_0sParentValue = [mMessengerList valueForKey:[mView getMessengerInformationKey:[child_0 getMyName]  withMID:[child_0 getMyMID]]];//現在のchild_0情報を引き出す
+	STAssertTrue([child_0sParentValue isEqualToString:defaultKey], @"共通ではない_%@", child_0sParentValue);
+	
+	
+	
+//	//この時点で親ラインが出ている筈
+//	STAssertTrue([mViewDict count] == 2, [NSString stringWithFormat:@"ViewDict件数が合っていない_%d", [mViewDict count]]);
+//	STAssertTrue([mButtonDict count] == 2, [NSString stringWithFormat:@"buttonList件数が合っていない_%d", [mButtonDict count]]);
+	
+	NSLog(@"child_0 デス開始");
+	[child_0 release];//ここでchild_0がデスしてない?。
+	NSLog(@"child_0 デス完了");
+	
+	NSLog(@"mMessengerList_%@", mMessengerList);
+	//この時点でchild_0関連のデータが消えている筈
+	STAssertTrue([mMessengerList count] == 1, [NSString stringWithFormat:@"ViewDict件数が合っていない_%d", [mMessengerList count]]);
+	STAssertTrue([mButtonList count] == 1, [NSString stringWithFormat:@"buttonList件数が合っていない_%d", [mButtonList count]]);
+	
+	
 	[parent2 release];
+	
+	
+	[mView release];
 }
 
 /**

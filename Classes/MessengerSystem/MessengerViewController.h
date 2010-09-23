@@ -16,8 +16,8 @@
 	//追加するインスタンス
 	
 	//通信者記録用の辞書
-	NSMutableDictionary * viewListDict;//ビュー自体が持つMessengerの辞書
-	NSMutableDictionary * buttonDict;//ボタン辞書
+	NSMutableDictionary * messengerList;//ビュー自体が持つMessengerの辞書
+	NSMutableDictionary * buttonList;//ボタン辞書
 	
 	MessengerDisplayView * messengerInterfaceView;//ボタン、ラインをセットするビュー
 	
@@ -26,30 +26,37 @@
 - (id) initWithBodyID:(id)body_id withSelector:(SEL)body_selector withName:(NSString * )name;//オーバーライド、アサートを架けて使用禁止
 - (id) initWithFrame:(CGRect)frame;//初期化メソッド
 
+
+/**
+ メッセンジャーの生成情報をviewDictへと保持しておくメソッド
+ */
+- (void) insertMessengerInformation:(NSString * )senderName 
+							withMID:(NSString * )senderMID;
 /**
  通信してきた対象の情報をviewDictへと保持しておくメソッド
  */
-- (void) setMessengerInformation:(NSString * )senderName 
+- (void) updateParentInformation:(NSString * )senderName 
 						withMID:(NSString * )senderMID 
 				  withParentName:(NSString * )sendersParentName 
-				  withParentMID:(NSString * )sendersParentMSID;
+				  withParentMID:(NSString * )sendersParentMID;
 /**
  通信してきた対象の情報をviwDictから削除するメソッド
  */
-- (void) removeMessengerInformation:(NSString * )senderName 
-						   withMID:(NSString * )senderMID 
-					 withParentName:(NSString * )sendersParentName 
-					 withParentMID:(NSString * )sendersParentMSID;
+- (void) deleteMessengerInformation:(NSString * )senderName 
+						   withMID:(NSString * )senderMID;
+
+
+
 /**
  NameとMIDのペアを作るメソッド
  */
-- (NSString * ) createMessengerInformation:(NSString * )name withMID:(NSString * )MID;
+- (NSString * ) getMessengerInformationKey:(NSString * )name withMID:(NSString * )MID;
 
 /**
  ボタン、Messengerのリスト辞書を渡す
  */
-- (NSMutableDictionary * ) getButtonDictionary;
-- (NSMutableDictionary * ) getViewDictionary;
+- (NSMutableDictionary * ) getButtonList;
+- (NSMutableDictionary * ) getMessengerList;
 
 /**
  ビューを返す
@@ -77,13 +84,18 @@
 
 
 //実行処理系(オーバーライドで無効化)
-- (void) inputToMyParentWithName:(NSString * )parent;//空実装
+- (void) inputParent:(NSString * )parent;//空実装
 - (void) innerPerform:(NSNotification * )notification;//受け取りの条件を緩和する
 
 - (void) callMyself:(NSString * )exec, ...;//空実装
 - (void) call:(NSString * )name withExec:(NSString * )exec, ...;//空実装
 - (void) callChild:(NSString * )childName withMID:(NSString * ) withCommand:(NSString * )exec, ...;//空実装
 - (void) callParent:(NSString * )exec, ...;//空実装8
+
+//Notice系(オーバーライドで無効化)
+- (void) createdNotice;//作成完了声明発行メソッド
+- (void) updatedNotice:(NSString * )parentName withParentMID:(NSString * )parentMID;//更新発行メソッド
+- (void) killedNotice;//自死声明発行メソッド
 
 /**
  Dealloc

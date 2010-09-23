@@ -9,9 +9,6 @@
 #import <Foundation/Foundation.h>
 
 
-//Objective-C id情報
-#define MS_SENDERID		(@"MESSENGER_SYSTEM_COMMAND:SENDER_ID")//自分固有のObjective-C IDに類するキー
-
 
 //カテゴリ系タグ メッセージの種類を用途ごとに分ける
 #define MS_CATEGOLY	(@"MESSENGER_SYSTEM_COMMAND")//コマンドに類するキー
@@ -19,13 +16,20 @@
 	#define MS_CATEGOLY_CALLCHILD		(@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_CALL_CHILD")//子供呼び出し
 	#define	MS_CATEGOLY_CALLPARENT		(@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_CALL_PARENT")//親呼び出し
 	#define MS_CATEGOLY_PARENTSEARCH	(@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_PARENTSEARCH")//親探索
-	#define MS_CATEGOLY_GOTPARENT		(@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_GOT_PARENT")//親取得完了
 	#define MS_CATEGOLY_REMOVE_PARENT	(@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_REMOVEPARENT")//親の登録を消す
 	#define MS_CATEGOLY_REMOVE_CHILD	(@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_REMOVECHILD")//子供の登録を消す
 
 
+//通知系タグ
+	#define	MS_NOTICE_CREATED		(@"MESSENGER_SYSTEM_COMMAND:NOTICE_CREATED")//自分の発生を通知
+	#define MS_NOTICE_UPDATE		(@"MESSENGER_SYSTEM_COMMAND:NOTICE_GOT_PARENT")//自分の親取得完了を通知
+	#define MS_NOTICE_DEATH			(@"MESSENGER_SYSTEM_COMMAND:NOTICE_DEATH")//自分の削除を通知
+
+
+//送信者名、送信者MIDにかんするタグ
 #define MS_SENDERNAME	(@"MESSENGER_SYSTEM_COMMAND:LOGGED_SENDER_NAME")//自分の名前に類するキー
 #define MS_SENDERMID	(@"MESSENGER_SYSTEM_COMMAND:LOGGED_SENDER_MID")//自分固有のMIDに類するキー
+
 
 //実行内容に関するタグ
 #define MS_ADDRESS_NAME	(@"MESSENGER_SYSTEM_COMMAND:ADDRESS_NAME")//宛先名
@@ -62,9 +66,10 @@
 
 
 //初期化内容
-#define PARENTNAME_DEFAULT	(@"MESSENGER_SYSTEM_COMMAND:PARENTNAME_DEFAULT")//デフォルトのmyParentName
-#define PARENTMID_DEFAULT	(@"MESSENGER_SYSTEM_COMMAND:PARENTMID_DEFAULT")//デフォルトのmyParentMID
-#define VIEW_NAME_DEFAULT	(@"MESSENGER_SYSTEM_COMMAND:VIEW_NAME_DEFAULT")//デフォルトのViewのName
+#define MS_DEFAULT_PARENTNAME	(@"MESSENGER_SYSTEM_COMMAND:MS_DEFAULT_PARENTNAME")//デフォルトのmyParentName
+#define MS_DEFAULT_PARENTMID	(@"MESSENGER_SYSTEM_COMMAND:MS_DEFAULT_PARENTMID")//デフォルトのmyParentMID
+
+#define VIEW_NAME_DEFAULT	(@"MESSENGER_SYSTEM_COMMAND:VIEW_NAME_DEFAULT")//デフォルトのViewのName ここに記述することで名称衝突を防ぐ
 
 
 @interface MessengerSystem : NSObject {
@@ -115,9 +120,9 @@
 
 
 //実行メソッド
-- (void) inputToMyParentWithName:(NSString * )parent;//親への登録メソッド
-- (void) removeMyParentData;//親情報を初期化する通信を行うメソッド
-- (void) removeChildData;//自分を親に設定している子供に対して解除を促すメソッド
+- (void) inputParent:(NSString * )parent;//親への登録メソッド
+- (void) removeFromParent;//自分→親の関係を解除するメソッド
+- (void) removeAllChild;//自分→子の関係を解除するメソッド
 
 - (void) callMyself:(NSString * )exec, ...;//自分自身への通信メソッド
 - (void) call:(NSString * )childName withExec:(NSString * )exec, ...;//特定の子への通信用メソッド

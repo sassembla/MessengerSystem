@@ -12,12 +12,13 @@
 
 @implementation MessengerViewController
 //上書きしなければいけないのは、初期化メソッドと、実行時のメソッド
+//あと、このビューメッセンジャー自身の生き死にを記録しては行けないので、自分の存在についての言及は意図的に避ける。
 
 /**
  使用禁止の初期化メソッド
  */
 - (id) initWithBodyID:(id)body_id withSelector:(SEL)body_selector withName:(NSString * )name {
-	NSAssert(false, @"initメソッドを使用してください");
+	NSAssert(false, @"initWithFrameメソッドを使用してください");
 	
 	if (self = [super init]) {
 	}
@@ -39,8 +40,8 @@
 		[self initMyMID];
 		[self initMyParentData];
 		
-		buttonDict = [[NSMutableDictionary alloc] init];
-		viewListDict = [[NSMutableDictionary alloc] init];
+		buttonList = [[NSMutableDictionary alloc] init];
+		messengerList = [[NSMutableDictionary alloc] init];
 		
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(innerPerform:) name:OBSERVER_ID object:nil];
 	}
@@ -85,7 +86,14 @@
 	//宛名、ログは確認しない。
 	
 	
-	if ([commandName isEqualToString:MS_CATEGOLY_GOTPARENT]) {//親設定の完了コマンドを判断￥
+	//生成
+	if ([commandName isEqualToString:MS_NOTICE_CREATED]) {
+		[self insertMessengerInformation:senderName withMID:senderMID];
+		return;
+	}
+	
+	//更新
+	if ([commandName isEqualToString:MS_NOTICE_UPDATE]) {
 		
 		NSString * sendersParentName = [dict valueForKey:MS_PARENTNAME];
 		if (!sendersParentName) {//送信者の親Name不詳であれば無視する
@@ -93,45 +101,43 @@
 			return;
 		}
 
-		NSString * sendersParentMSID = [dict valueForKey:MS_PARENTMID];
-		if (!sendersParentMSID) {//送信者の親MID不詳であれば無視する
+		NSString * sendersParentMID = [dict valueForKey:MS_PARENTMID];
+		if (!sendersParentMID) {//送信者の親MID不詳であれば無視する
 			NSLog(@"送信者親MID不詳");
 			return;
 		}
 		
-		//[親を見つけたので子供になった宣言]から、関係性を記録する。
-		[self setMessengerInformation:senderName withMID:senderMID withParentName:sendersParentName withParentMID:sendersParentMSID];
+		[self updateParentInformation:senderName withMID:senderMID withParentName:sendersParentName withParentMID:sendersParentMID];
 		
 		return;
 	}
 	
 	
+	//自死
+	if ([commandName isEqualToString:MS_NOTICE_DEATH]) {
+		NSLog(@"MS_NOTICE_DEATH_到着_%@, MID_%@", senderName, senderMID);
+	//	NSAssert(FALSE, @"到達");
+		[self deleteMessengerInformation:senderName withMID:senderMID];
+		return;
+	}
 	
-	if ([commandName isEqualToString:MS_CATEGOLY_REMOVE_PARENT]) {//親設定の解除コマンドを判断
-		NSString * sendersParentName = [dict valueForKey:MS_ADDRESS_NAME];
-		if (!sendersParentName) {//送信者の親Name不詳であれば無視する
-			NSLog(@"送信者親Name不詳");
-			return;
-		}
-		
-		NSString * sendersParentMSID = [dict valueForKey:MS_ADDRESS_MID];
-		if (!sendersParentMSID) {//送信者の親MID不詳であれば無視する
-			NSLog(@"送信者親MID不詳");
-			return;
-		}
-		
-		
-		//[親を解消した宣言]から、関係性を削除する。
-		[self removeMessengerInformation:senderName withMID:senderMID withParentName:sendersParentName withParentMID:sendersParentMSID];
+	
+	
+	
+	
 
+	//その他、認識するが何もしないメソッド
+	
+	if ([commandName isEqualToString:MS_CATEGOLY_REMOVE_PARENT]) {
+		//親設定の解除コマンドを判断
 		return;
 	}
 	
 	
-	if ([commandName isEqualToString:MS_CATEGOLY_REMOVE_CHILD]) {//子供設定の解除コマンドを判断
-		
+	if ([commandName isEqualToString:MS_CATEGOLY_REMOVE_CHILD]) {
+		//子供設定の解除コマンドを判断
+		return;
 	}
-	
 	
 	
 	if ([commandName isEqualToString:MS_CATEGOLY_CALLCHILD]) {
@@ -148,45 +154,37 @@
 		//だれかからだれか自身へのメッセージ
 		return;
 	}
+	
+	if ([commandName isEqualToString:MS_CATEGOLY_PARENTSEARCH]) {
+		//親決定のメソッド
+		return;
+	}
+	
+	NSAssert(FALSE, @"MessengeViewController　innerPerformの終端_%@", commandName);
 }
 
 
 /**
- 通信してきた対象の情報を保持しておく
+ メッセンジャーの誕生をビューに反映する
  */
-- (void) setMessengerInformation:(NSString * )senderName 
-						withMID:(NSString * )senderMID 
-				  withParentName:(NSString * )sendersParentName 
-				  withParentMID:(NSString * )sendersParentMSID {
+- (void) insertMessengerInformation:(NSString * )senderName 
+							withMID:(NSString * )senderMID {
 	
 	
 	//Messengerをアイデンティファイするキーを作成
-	NSString * newKey = [self createMessengerInformation:senderName withMID:senderMID];
+	NSString * newKey = [self getMessengerInformationKey:senderName withMID:senderMID];
 	
 	
 	//既に存在している場合は無視する
-	for (id key in viewListDict) {
+	for (id key in messengerList) {
 		if ([key isEqualToString:newKey]) {
-			NSLog(@"既に含まれている");
-			
-			//情報更新があれば、更新。
-			
+			NSAssert(FALSE, @"二度生まれてる？");
 			return;
 		}
 	}
 	
 	
-	/*
-	 UIButtonTypeCustom = 0,
-	 UIButtonTypeRoundedRect,
-	 UIButtonTypeDetailDisclosure,
-	 UIButtonTypeInfoLight,
-	 UIButtonTypeInfoDark,
-	 UIButtonTypeContactAdd,
-	 */
-	
 	//ビュー、辞書に要素を加える
-	
 	UIButton * newButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];//[UIButton buttonWithType:UIButtonTypeDetailDisclosure];
 	
 	[newButton setHidden:FALSE];
@@ -195,36 +193,75 @@
 	CGPoint point = CGPointMake(0, 120);
 	[newButton setFrame:CGRectMake(point.x, point.y, newButton.frame.size.width, newButton.frame.size.height)];
 	
-	[newButton setBackgroundColor:[UIColor grayColor]];//一応範囲付け、かなあ。
-	
+	[newButton setBackgroundColor:[UIColor colorWithRed:10.6 green:10 blue:1 alpha:1]];//一応範囲付け、かなあ。
 	[newButton addTarget:self action:@selector(tapped:) forControlEvents:UIControlEventTouchUpInside];
 	
 	
-	[buttonDict setValue:newButton forKey:newKey];//ボタン自体を保存
-	//[buttonDict setValue:point forKey:newButton];//座標ポイントを保存
+	[buttonList setValue:newButton forKey:newKey];//ボタン自体を保存、座標もここに含まれる
 	
-	[viewListDict setValue:[self createMessengerInformation:sendersParentName withMID:sendersParentMSID] forKey:newKey];
-
+	//新規インスタンスなので、親設定は無い。自分自身から親への関係性を保存する。
+	[messengerList setValue:[self getMessengerInformationKey:MS_DEFAULT_PARENTNAME withMID:MS_DEFAULT_PARENTMID] forKey:newKey];
+	
+	
 	[messengerInterfaceView addSubview:newButton];//ビューに加える
-	[messengerInterfaceView setDrawDict:buttonDict];
+	[messengerInterfaceView updateDrawList:buttonList];//ボタン座標データをビューの描画リストにセットする
 	
 }
 /**
- 通信してきた対象の情報を削除する
+ 通信してきた対象の情報がアップデートされ、親情報が変更された
+ 
+ 正確に更新が行われていれば、線が残るような事は発生しない筈。
  */
-- (void) removeMessengerInformation:(NSString * )senderName 
+- (void) updateParentInformation:(NSString * )senderName 
 						withMID:(NSString * )senderMID 
 				  withParentName:(NSString * )sendersParentName 
-				  withParentMID:(NSString * )sendersParentMSID {
+				  withParentMID:(NSString * )sendersParentMID {
 	
+	//すでに存在している筈
+	NSString * myKey = [self getMessengerInformationKey:senderName withMID:senderMID];
+	
+	
+	//既に存在している場合は無視する
+	for (id key in messengerList) {
+		if ([key isEqualToString:myKey]) {
+			
+			[messengerList setValue:[self getMessengerInformationKey:sendersParentName withMID:sendersParentMID] forKey:key];
+			
+			return;
+		}
+	}
+	
+	//ビューよりも前から存在していたか、それともインスタンスのよみがえりか。
+	//インスタンス寿命とぴったりと一致している訳では無い？
+	
+	NSAssert1(FALSE, @"updateParentInformation_一度も生まれてない_%@", myKey);
+}
+
+/**
+ メッセンジャーの削除をビューに反映する
+ */
+- (void) deleteMessengerInformation:(NSString * )senderName 
+							withMID:(NSString * )senderMID {
 	
 	//Messengerをアイデンティファイするキーを作成
-	NSString * removeKey = [self createMessengerInformation:senderName withMID:senderMID];
+	NSString * removeKey = [self getMessengerInformationKey:senderName withMID:senderMID];
 	
-	[[buttonDict valueForKey:removeKey] removeFromSuperview];//ビューから外す
+	if (![messengerList valueForKey:removeKey]) {
+		
+		NSLog(@"messengerList_%@", messengerList);
+		NSLog(@"removeKey_%@", removeKey);
+		NSAssert(FALSE, @"deleteMessengerInformation_一度も生まれていない");
+	}
 	
-	[buttonDict removeObjectForKey:removeKey];
-	[viewListDict removeObjectForKey:removeKey];
+	[[buttonList valueForKey:removeKey] removeFromSuperview];//ビューから外す
+	[buttonList removeObjectForKey:removeKey];
+	
+	
+	[messengerInterfaceView updateDrawList:buttonList];//更新
+	
+	
+	[messengerList removeObjectForKey:removeKey];//登録抹消
+	NSLog(@"登録抹消が行われた_%@", removeKey);
 }
 
 
@@ -240,7 +277,7 @@
 /**
  NameとMIDのペアを作るメソッド
  */
-- (NSString * ) createMessengerInformation:(NSString * )name withMID:(NSString * )MID {
+- (NSString * ) getMessengerInformationKey:(NSString * )name withMID:(NSString * )MID {
 	return [NSString stringWithFormat:@"%@:%@", name, MID];
 }
 
@@ -248,15 +285,15 @@
 /**
  ボタン用の辞書を取得する
  */
-- (NSMutableDictionary * ) getButtonDictionary {
-	return buttonDict;
+- (NSMutableDictionary * ) getButtonList {
+	return buttonList;
 }
 
 /**
  View用の辞書を取得する
  */
-- (NSMutableDictionary * ) getViewDictionary {
-	return viewListDict;
+- (NSMutableDictionary * ) getMessengerList {
+	return messengerList;
 }
 
 
@@ -309,8 +346,8 @@
  myParent関連情報を初期化する
  */
 - (void) initMyParentData {
-	[self setMyParentName:PARENTNAME_DEFAULT];
-	myParentMID = PARENTMID_DEFAULT;
+	[self setMyParentName:MS_DEFAULT_PARENTNAME];
+	myParentMID = MS_DEFAULT_PARENTMID;
 }
 
 
@@ -323,13 +360,15 @@
 
 
 //オーバーライドするメソッド、特に何もさせない。
-- (void) inputToMyParentWithName:(NSString * )parent {}
+- (void) inputParent:(NSString * )parent {}
 - (void) callMyself:(NSString * )exec, ...{}
 - (void) call:(NSString * )name withExec:(NSString * )exec, ...{}
 - (void) callChild:(NSString * )childName withMID:(NSString * ) withCommand:(NSString * )exec, ...{}
 - (void) callParent:(NSString * )exec, ...{}
 
-
+- (void) createdNotice {}
+- (void) updatedNotice:(NSString * )parentName withParentMID:(NSString * )parentMID {}
+- (void) killedNotice {}
 
 
 
@@ -339,8 +378,8 @@
 	[super dealloc];
 	
 	
-	[viewListDict removeAllObjects];
-	[buttonDict removeAllObjects];
+	[messengerList removeAllObjects];
+	[buttonList removeAllObjects];
 }
 
 @end

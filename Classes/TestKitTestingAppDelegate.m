@@ -275,13 +275,13 @@
 	
 	
 	
-	[child_0 inputToMyParentWithName:[paren getMyName]];
+	[child_0 inputParent:[paren getMyName]];
 	
 	NSMutableDictionary * parentChildDict = [paren getChildDict];
 //	STAssertTrue([parentChildDict count] == 1, [NSString stringWithFormat:@"親の持っている子供辞書が1件になっていない_%d", [parentChildDict count]]);
 	
 	NSLog(@"child_0の親を抹消");
-	[child_0 removeMyParentData];//親情報をリセットする
+	[child_0 removeFromParent];//親情報をリセットする
 	NSLog(@"child_0の親抹消済みの筈_親ID_%@", [child_0 getMyParentMID]);
 	
 	//parentの子供辞書を調べてみる、一件も無くなっている筈
@@ -291,7 +291,7 @@
 	
 	
 	
-	[child_0 inputToMyParentWithName:[child_2 getMyName]];//新規親情報
+	[child_0 inputParent:[child_2 getMyName]];//新規親情報
 	
 	
 	NSLog(@"子供が知ってる親の名前_%@", [child_0 getMyParentName]);

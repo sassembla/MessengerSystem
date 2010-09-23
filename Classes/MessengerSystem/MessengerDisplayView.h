@@ -16,7 +16,7 @@
 @interface MessengerDisplayView : UIView {
 	NSMutableDictionary * drawDict;
 }
-- (void) setDrawDict:(NSMutableDictionary * )dict;
+- (void) updateDrawList:(NSMutableDictionary * )dict;
 - (id)initWithMessengerDisplayFrame:(CGRect)frame;
 
 @end

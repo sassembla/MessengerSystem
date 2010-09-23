@@ -39,8 +39,10 @@
 
 
 //プライベート実行メソッド
-- (void) decidedParentName:(NSString * )parentName withParentMID:(NSString * )parentMID;//親への登録完了時の声明発行メソッド
-
+- (void) remoteInvocation:(id)inv withDict:(NSMutableDictionary * )dict, ...;//遅延実行　プライベート版
+- (void) createdNotice;//作成完了声明発行メソッド
+- (void) updatedNotice:(NSString * )parentName withParentMID:(NSString * )parentMID;//更新発行メソッド
+- (void) killedNotice;//自死声明発行メソッド
 
 
 //子供辞書関連
@@ -91,9 +93,6 @@
 - (void) innerPerform:(NSNotification * )notification {
 	NSMutableDictionary * dict = (NSMutableDictionary *)[notification userInfo];
 	
-	
-	
-	
 	//コマンド名について確認
 	NSString * commandName = [dict valueForKey:MS_CATEGOLY];
 	if (!commandName) {
@@ -120,7 +119,7 @@
 	//宛名確認
 	NSString * address = [dict valueForKey:MS_ADDRESS_NAME];
 	if (!address) {
-		NSLog(@"宛名が無い_%@ Iam_%@", commandName, [self getMyName]);
+//		NSLog(@"宛名が無い_%@ Iam_%@", commandName, [self getMyName]);
 		return;
 	}
 	
@@ -134,7 +133,7 @@
 		//メッセージIDについて確認
 		NSString * messageID = [recievedLogDict valueForKey:MS_LOG_MESSAGEID];
 		if (!messageID) {
-			NSLog(@"メッセージIDが無いため、何の処理も行われずに帰る");
+//			NSLog(@"メッセージIDが無いため、何の処理も行われずに帰る");
 			return;
 		}		
 	}
@@ -297,17 +296,10 @@
 //		NSLog(@"自分以外の誰かが、自分をparentとして設定しようと通信してきている。_%@", calledParentName);
 		if ([calledParentName isEqualToString:[self getMyName]]) {//それが自分だったら
 			
-			id senderID = [dict valueForKey:MS_SENDERID];
-			if (!senderID) {
-				//				NSLog(@"senderID(送信者のselfポインタ)が無い");
-				return;
-			}
-			
-			
-			
+			id invocatorId = [notification object];
 			//親は先着順で設定される。既に子供が自分と同名の親にアクセスし、そのMIDを持っている場合があり得るため、ここで子供の持っている親MIDを確認する必要がある
-			if (![[senderID getMyParentMID] isEqualToString:PARENTMID_DEFAULT]) {
-				//				NSLog(@"親は先着順で既に設定されているようです");
+			if ([invocatorId hasParent]) {
+				NSAssert(FALSE, @"親が既に存在している");//現在は複数の親を許容する仕様ではないので、エラーとして発生させる
 				return;
 			}
 			
@@ -315,22 +307,12 @@
 			[self saveLogForReceived:recievedLogDict];
 			
 			
-			//親が居ないと子が生まれない構造。 senderMIDをキーとし、子供辞書を作る。
+			//遠隔実行で子供の親名簿に自分のMIDを登録する 子供がもつ、引数１の関数[setMyParentMID　を親から実行する。]
+			[self remoteInvocation:invocatorId withDict:dict, [self getMyMID], nil];
+			
+			
+			//遠隔実行後、自分の子供として記録する
 			[self setChildDictChildNameAsValue:senderName withMIDAsKey:senderMID];
-			
-			
-			[self getChildDict];
-			
-			//送り届けられたメソッドを使い、Child宛に登録した旨の返答を行う。
-			
-			
-			NSString * myMSIDforChild = [self getMyMID];//遠隔実行のための引数を出し、渡せるようにする。
-			
-			
-			//遠隔実行を行う
-			[self remoteInvocation:dict, myMSIDforChild, nil];
-			
-			
 			
 			return;
 		}
@@ -390,7 +372,7 @@
 	
 	
 	
-	NSAssert(false, commandName);
+	NSAssert1(false, @"MessengerSystem_innerPerform_想定外のコマンド_%@",commandName);
 }
 
 /**
@@ -398,7 +380,7 @@
  */
 - (void) sendPerform:(NSMutableDictionary * )dict {
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:OBSERVER_ID object:nil userInfo:(id)dict];
+	[[NSNotificationCenter defaultCenter] postNotificationName:OBSERVER_ID object:self userInfo:(id)dict];
 	
 }
 
@@ -408,6 +390,7 @@
 - (void) sendPerform:(NSMutableDictionary * )dict withDelay:(float)delay {
 	[self performSelector:@selector(sendPerform:) withObject:dict afterDelay:delay];
 }
+
 
 /**
  ログを取り、実行する。
@@ -433,14 +416,94 @@
 
 //プライベート実行メソッド
 /**
+ 遠隔実行発行メソッド
+ プライベート版、可変長引数受付
+*/
+- (void) remoteInvocation:(id)inv withDict:(NSMutableDictionary * )dict, ... {
+	
+	if (![self isIncludeRemote:dict]) {
+		NSAssert(FALSE, @"リモート実行コマンドが設定されていないメッセージに対してremoteInvocationメソッドを実行しています。");
+		return;
+	}
+	
+	NSDictionary * invokeDict = [dict valueForKey:MS_RETURN];
+	
+	id invocatorId;
+	id signature;
+	SEL method;
+	
+	id invocation;
+	
+	
+	invocatorId = inv;//[invokeDict valueForKey:MS_RETURNID];
+	if (!invocatorId) {
+		NSAssert(FALSE, @"MS_RETURNIDが無い");
+		return;
+	}
+	
+	signature = [invokeDict valueForKey:MS_RETURNSIGNATURE];
+	if (!signature) {
+		NSAssert(FALSE, @"MS_RETURNSIGNATUREが無い");
+		return;
+	}
+	
+	method = NSSelectorFromString([invokeDict valueForKey:MS_RETURNSELECTOR]);
+	if (!method) {
+		NSAssert(FALSE, @"MS_RETURNSELECTORが無い");
+		return;
+	}
+	
+	
+	//NSInvocationを使った実装
+	invocation = [NSInvocation invocationWithMethodSignature:signature];
+	[invocation setSelector:method];
+	[invocation setTarget:invocatorId];
+	
+	
+	int i = 2;//0,1が埋まっているから固定値 2から先に値を渡せるようにする必要がある
+	
+	va_list ap;
+	id param;
+	va_start(ap, dict);
+	param = va_arg(ap, id);
+	
+	while (param) {
+		
+		[invocation setArgument:&param atIndex:i];
+		i++;
+		
+		param = va_arg(ap, id);
+	}
+	va_end(ap);
+	
+	[invocation invoke];//実行
+	
+}
+
+/**
+ 自分が作成完了した事をお知らせする
+ 受け取っても行う処理の存在しない、宛先の無いメソッド
+ */
+- (void) createdNotice {
+	NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:3];
+	
+	[dict setValue:MS_NOTICE_CREATED forKey:MS_CATEGOLY];
+	[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
+	[dict setValue:[self getMyMID] forKey:MS_SENDERMID];
+	
+	//最終送信処理
+	[self sendPerform:dict];
+}
+
+/**
  親が決定した事をお知らせする
  受け取っても行う処理の存在しない、宛先の無いメソッド
  */
-- (void) decidedParentName:(NSString * )parentName withParentMID:(NSString * )parentMID {
+- (void) updatedNotice:(NSString * )parentName withParentMID:(NSString * )parentMID {
 	
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] dictionaryWithCapacity:5];
+	NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:5];
 	
-	[dict setValue:MS_CATEGOLY_GOTPARENT forKey:MS_CATEGOLY];
+	[dict setValue:MS_NOTICE_UPDATE forKey:MS_CATEGOLY];
 	
 	[dict setValue:[self getMyParentName] forKey:MS_PARENTNAME];
 	[dict setValue:[self getMyParentMID] forKey:MS_PARENTMID];
@@ -451,6 +514,24 @@
 	//最終送信処理
 	[self sendPerform:dict];
 }
+
+/**
+ 自死をお知らせする
+ 受け取っても行う処理の存在しない、宛先の無いメソッド
+ */
+- (void) killedNotice {
+	NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:3];
+	
+	[dict setValue:MS_NOTICE_DEATH forKey:MS_CATEGOLY];
+	
+	[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
+	[dict setValue:[self getMyMID] forKey:MS_SENDERMID];
+	
+	//最終送信処理
+	[self sendPerform:dict];
+}
+
+
 
 
 //子供辞書関連
@@ -482,8 +563,12 @@
 	//特定のメソッドの実行を命令づける設定
 	//IMP func = [self methodForSelector:@selector(setMyParentMID:)];
 	//(*func)(self,@selector(setMyParentMID:),@"ついた");
+	
+	id inv = mySelf;
+	if (mySelf == self) inv = @"DUMMY_POINTER"; 
+	
 	NSDictionary * retDict = [NSDictionary dictionaryWithObjectsAndKeys:
-							  mySelf,	MS_RETURNID, 
+							  inv,	MS_RETURNID, 
 							  [mySelf methodSignatureForSelector:sel],	MS_RETURNSIGNATURE, 
 							  NSStringFromSelector(sel),	MS_RETURNSELECTOR, 
 							  nil];
@@ -609,8 +694,8 @@
  myParent関連情報を初期化する
  */
 - (void) initMyParentData {
-	[self setMyParentName:PARENTNAME_DEFAULT];
-	myParentMID = PARENTMID_DEFAULT;
+	[self setMyParentName:MS_DEFAULT_PARENTNAME];
+	myParentMID = MS_DEFAULT_PARENTMID;
 }
 
 
@@ -619,7 +704,7 @@
  (親のchildDictからも消す)
  */
 - (void) resetMyParentData {
-	[self removeMyParentData];
+	[self removeFromParent];
 }
 
 
@@ -639,14 +724,14 @@
  本メソッドは条件を満たした親から起動されるメソッドになっており、自分から呼ぶ事は無い。
  */
 - (void) setMyParentMID:(NSString * )parentMID {
-	if ([[self getMyParentMID] isEqualToString:PARENTMID_DEFAULT]) {
+	if ([[self getMyParentMID] isEqualToString:MS_DEFAULT_PARENTMID]) {
 		
 		[self saveToLogStore:@"setMyParentMID" log:[self tag:MS_LOG_LOGTYPE_GOTP val:[self getMyParentName]]];
 		
 		
 		myParentMID = parentMID;
 		
-		[self decidedParentName:[self getMyParentName] withParentMID:[self getMyParentMID]];
+		[self updatedNotice:[self getMyParentName] withParentMID:[self getMyParentMID]];
 	}	
 }
 
@@ -696,14 +781,12 @@
 		[self initMyParentData];
 	}
 	
-	childDict = [[NSMutableDictionary alloc] init];//[NSMutableDictionary dictionaryWithCapacity:1];で初期化していたのだが、バグの元でした。SIGABRTバグの原因になり、カウントが壊れます。
+	childDict = [[NSMutableDictionary alloc] init];
 	logDict = [[NSMutableDictionary alloc] init];
-	
-	
-	
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(innerPerform:) name:OBSERVER_ID object:nil];
 	
+	[self createdNotice];
 	
 	return self;
 }
@@ -725,48 +808,47 @@
  親へと自分が子供である事の通知を行い、返り値として親のMIDを受け取るメソッド
  受け取り用のメソッドの情報を親へと渡し、親からの入力をダイレクトに受ける。
  */
-- (void) inputToMyParentWithName:(NSString * )parent {
+- (void) inputParent:(NSString * )parent {
 	
-	NSAssert([[self getMyParentName] isEqualToString:PARENTNAME_DEFAULT], @"デフォルト以外の親が既にセットされています。親を再設定する場合、resetMyParentDataメソッドを実行してから親指定を行ってください。");
+	NSAssert([[self getMyParentName] isEqualToString:MS_DEFAULT_PARENTNAME], @"デフォルト以外の親が既にセットされています。親を再設定する場合、resetMyParentDataメソッドを実行してから親指定を行ってください。");
 	
 	//親の名前を設定
 	[self setMyParentName:parent];
 	
 	
-	NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:8];
+	NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:7];
 	
 	[dict setValue:MS_CATEGOLY_PARENTSEARCH forKey:MS_CATEGOLY];
 	[dict setValue:[self getMyParentName] forKey:MS_ADDRESS_NAME];
 
 	[dict setValue:[self getMyParentName] forKey:MS_PARENTNAME];
 	
-	
-	
 	[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
 	[dict setValue:[self getMyMID] forKey:MS_SENDERMID];
 	
 	
-	[dict setValue:self forKey:MS_SENDERID];
-	
-	
 	//遠隔実装メソッドを設定
-	[dict setValue:[self setRemoteInvocationFrom:self withSelector:@selector(setMyParentMID:)] forKey:MS_RETURN];
-	
+	[dict setValue:[self setRemoteInvocationFrom:self withSelector:@selector(setMyParentMID:)] forKey:MS_RETURN];//ここで外部向けに参照が1増える
+	//[self release];
 	
 	
 	//ログを作成する
 	[self addCreationLog:dict];
 	
 	//最終送信処理
-	[self sendPerform:dict];
+	[self sendPerform:dict];//プライベート版の遠隔実行で、相手から親登録を実行する。
 	
-	NSAssert1(![[self getMyParentMID] isEqualToString:PARENTMID_DEFAULT], @"指定した親が存在しないようです。parentに指定している名前を確認してください_現在指定されているparentは_%@",[self getMyParentName]);
+	//この時点で親からの実行が完了。
+	[dict removeAllObjects];
+	
+	
+	NSAssert1([self hasParent], @"指定した親が存在しないようです。inputParentに指定している名前を確認してください_現在探して見つからなかった親の名前は_%@",[self getMyParentName]);
 }
 
 /**
  現在の親情報を削除する
  */
-- (void) removeMyParentData {
+- (void) removeFromParent {
 	NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:6];
 	
 	[dict setValue:MS_CATEGOLY_REMOVE_PARENT forKey:MS_CATEGOLY];
@@ -774,24 +856,31 @@
 	[dict setValue:[self getMyParentName] forKey:MS_ADDRESS_NAME];
 	[dict setValue:[self getMyParentMID] forKey:MS_ADDRESS_MID];
 	
+//	NSLog(@"[[self getMyParentName] hash]_%d", [[self getMyParentName] hash]);
+//	NSLog(@"[[dict valueForKey:MS_ADDRESS_NAME] hash]_%d", [[dict valueForKey:MS_ADDRESS_NAME] hash]);
+	
 	[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
 	[dict setValue:[self getMyMID] forKey:MS_SENDERMID];
 	
 	//ログを作成する
 	[self addCreationLog:dict];
-	
+
 	//最終送信処理
-	[self sendPerform:dict];
+	[self sendPerform:dict];//送信に失敗すると、親子関係は終了しない。この部分でエラーが出るのがたより。
 	
 	//初期化
-	[self initMyParentData];
+	[self initMyParentData];//初期化 この時点で子供から見た親情報はデフォルトになる	
+	
+	//更新通知
+	[self updatedNotice:[self getMyParentName] withParentMID:[self getMyParentMID]];
+
 }
 
 /**
  子供との関連性を解除する
  自分の事を親に設定している全てのオブジェクトから離脱するブロードコールを行う。
  */
-- (void) removeChildData {
+- (void) removeAllChild {
 	NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:6];
 	
 	[dict setValue:MS_CATEGOLY_REMOVE_CHILD forKey:MS_CATEGOLY];
@@ -804,11 +893,15 @@
 	
 	//ログを作成する
 	[self addCreationLog:dict];
-	
+
 	//最終送信処理
 	[self sendPerform:dict];
 	
+	//初期化
 	[[self getChildDict] removeAllObjects];
+	
+	//通知
+	[self updatedNotice:[self getMyParentName] withParentMID:[self getMyParentMID]];
 }
 
 
@@ -862,7 +955,7 @@
 - (void) call:(NSString * )childName withExec:(NSString * )exec, ... {
 	
 	NSAssert(![childName isEqualToString:[self getMyName]], @"自分自身/同名の子供達へのメッセージブロードキャストをこのメソッドで行う事はできません。　callMyselfメソッドを使用してください");
-	NSAssert(![childName isEqualToString:PARENTNAME_DEFAULT], @"システムで予約してあるデフォルトの名称です。　この名称を使ってのシステム使用は、その、なんだ、お勧めしません。");
+	NSAssert(![childName isEqualToString:MS_DEFAULT_PARENTNAME], @"システムで予約してあるデフォルトの名称です。　この名称を使ってのシステム使用は、その、なんだ、お勧めしません。");
 	
 	
 	//特定のキーが含まれているか
@@ -1020,9 +1113,8 @@
 
 //遠隔実行実装
 /**
- 遠隔実行発行メソッド
- 可変長引数受付
- 引数にはid型のみ受け付ける。NSObjectの拡張クラスで無ければ、Assertを発生させてしまうが、この辺がメソッド化の限界かなあ。
+ 遠隔実行実装
+ パブリック用
  */
 - (void) remoteInvocation:(NSMutableDictionary * )dict, ... {
 	
@@ -1084,7 +1176,6 @@
 	[invocation invoke];//実行
 	
 }
-
 
 
 
@@ -1193,7 +1284,7 @@
  親が設定されているか否か返す
  */
 - (BOOL) hasParent {
-	if (![[self getMyParentMID] isEqual:PARENTMID_DEFAULT]) {//デフォルトでない
+	if (![[self getMyParentMID] isEqual:MS_DEFAULT_PARENTMID]) {//デフォルトでない
 		return TRUE;
 	}
 	return FALSE;
@@ -1277,22 +1368,23 @@
  
  */
 - (void) dealloc {
-	NSLog(@"削除_%@", [self getMyName]);
-	//通信のくびきを切る。
+	
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:OBSERVER_ID object:nil];
 	
-	
+	NSLog(@"deallocに到達_%@", [self getMyName]);
 	
 	if ([self hasChild]) {
-		NSLog(@"子供がいる");
-		[self removeChildData];
+		NSLog(@"子供がいる_%@",[self getMyName]);
+		[self removeAllChild];
 	}
 	
 	if ([self hasParent]) {
-		NSLog(@"親がいる");
-		[self removeMyParentData];
+		NSLog(@"親がいる_%@",[self getMyName]);
+		[self removeFromParent];
 	}
 	
+	[self killedNotice];
+
 	
 	//本体のID
 	myBodyID = nil;
@@ -1319,6 +1411,7 @@
 	[childDict removeAllObjects];
 //	NSLog(@"解除！_%@, %d", [self getMyName], [childDict retainCount]);
 	
+	//ログ削除
 	[logDict removeAllObjects];
 	
 	
