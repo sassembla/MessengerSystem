@@ -9,10 +9,10 @@
 #import "TestKitTestingAppDelegate.h"
 #import "MessengerViewController.h"
 
-#import "coTestObject.h"
 
 
 #import "NameList.h"//適当な名称一致用リスト
+
 
 @implementation TestKitTestingAppDelegate
 
@@ -77,9 +77,9 @@
 //	 [paren tag:@"three" val:@"3"],nil];
 	
 	
+	objectOv = [[coTestObject alloc] init2];
 	
-	
-	coTestObject * cTest2 = [[coTestObject alloc] init2];
+//	coTestObject * cTest2 = [[coTestObject alloc] init2];
 
 	
 	//	coTestObject * cTest3 = [[coTestObject alloc] init];
@@ -115,19 +115,26 @@
 //	 nil];
 	
 	
-	[paren callMyself:COMMAND_ADD_CHILD,
-	 [paren withDelay:0.01],
-	 [paren withRemoteFrom:self withSelector:@selector(ignition:)],
+//	[paren callMyself:COMMAND_ADD_CHILD,
+//	 [paren withDelay:0.01],
+//	 [paren withRemoteFrom:self withSelector:@selector(ignition:)],
+//	 nil];
+//	
+//	
+//	[paren callMyself:COMMAND_OOPS,
+//	 [paren withDelay:0.5],
+//	 nil];
+	
+	
+	//[paren callMyself:COMMAND_YEAH,
+//	 [paren withDelay:5],
+//	 nil];
+	
+	[paren callMyself:COMMAND_DELETE,
+	 [paren withDelay:3],
 	 nil];
 	
 	
-	[paren callMyself:COMMAND_OOPS,
-	 [paren withDelay:0.5],
-	 nil];
-	
-	[paren callMyself:COMMAND_YEAH,
-	 [paren withDelay:5],
-	 nil];
 	
     [window makeKeyAndVisible];
 	
@@ -158,8 +165,7 @@
 	switch (n) {
 		case -1295402496://COMMAND_YEAH//この部分をマクロで書ければ最高。
 			
-			
-			[paren removeAllChild];
+			//[paren removeAllChild];
 			[paren callMyself:COMMAND_YEAH,
 			 [paren withDelay:6],
 			 nil];
@@ -221,7 +227,22 @@
 			
 			break;
 			
+				
+		case 1073565673://COMMAND_DELETE
+			[objectOv autorelease];
+			
+			objectOv = [[coTestObject alloc] init2];
+			
+			[paren callMyself:COMMAND_DELETE,
+			 [paren withDelay:0.1],
+			 nil];
+			
+			
+			break;
+			
+
 		default:
+
 			NSLog(@"per_%d", n);//コマンドの数字を出す
 			break;
 	}
@@ -326,6 +347,7 @@
 
 
 - (void)dealloc {
+	[paren release];
     [window release];
     [super dealloc];
 }

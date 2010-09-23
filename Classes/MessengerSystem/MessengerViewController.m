@@ -9,6 +9,7 @@
 #import "MessengerViewController.h"
 #import "MessengerIDGenerator.h"
 
+#define NSLog( m, args... )
 
 @implementation MessengerViewController
 //上書きしなければいけないのは、初期化メソッドと、実行時のメソッド

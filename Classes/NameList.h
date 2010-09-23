@@ -5,7 +5,7 @@
 #define PARENTNAME (@"親設定のMessenger")
 #define CHILD_1			(@"子供その１")
 #define CHILD_2			(@"子供その２")
-
+#define CHILD_3			(@"子供その3")
 
 #define COMMAND_YEAH	(@"実験コマンド①")
 #define COMMAND_OOPS	(@"実験コマンド②")
@@ -17,3 +17,4 @@
 #define COMMAND_LOOP	(@"ループ")
 #define COMMAND_ADD_CHILD	(@"動的にクラス作成する")
 #define COMMAND_ADD_CHILD2	(@"動的にクラス作成、ワンステップ")
+#define	COMMAND_DELETE		(@"クラスのリリース")

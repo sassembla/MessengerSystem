@@ -23,8 +23,8 @@
 
 - (id) init2 {
 	if (self = [super init]) {
-		messenger = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:CHILD_1];
-		//[messenger inputParent:PARENTNAME];
+		messenger = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:CHILD_3];
+		[messenger inputParent:PARENTNAME];
 	}
 	return self;
 }
@@ -130,6 +130,11 @@
  */
 - (void) forInvocaton:(NSString * )str {
 	NSLog(@"forInvocaton_%@",str);
+}
+
+- (void) dealloc {
+	[messenger release];
+	[super dealloc];
 }
 
 

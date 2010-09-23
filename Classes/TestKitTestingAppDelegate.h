@@ -9,10 +9,14 @@
 #import <UIKit/UIKit.h>
 
 #import "MessengerSystem.h"
+#import "coTestObject.h"
+
 
 @interface TestKitTestingAppDelegate : NSObject <UIApplicationDelegate> {
     UIWindow *window;
 	MessengerSystem * paren;
+	coTestObject * objectOv;
+	
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;

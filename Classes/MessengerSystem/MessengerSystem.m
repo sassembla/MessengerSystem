@@ -10,7 +10,7 @@
 #import "MessengerIDGenerator.h"
 
 
-//#define NSLog( m, args... )
+#define NSLog( m, args... )
 
 
 

@@ -9,6 +9,7 @@
 #import "MessengerDisplayView.h"
 #import "GlyphTable.h"
 
+#define NSLog( m, args... )
 
 @implementation MessengerDisplayView
 
