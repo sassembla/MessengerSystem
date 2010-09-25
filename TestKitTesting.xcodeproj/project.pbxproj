@@ -272,10 +272,10 @@
 			files = (
 				13A2E99412407C6E007685AD /* MessengerIDGenerator.m in Sources */,
 				134551B3122A4D0200E348F5 /* MessengerSystem.m in Sources */,
-				13AC407E123CB3E700AAF658 /* MessengerViewController.m in Sources */,
 				1321AF5A124745DD00C5D3F6 /* MessengerDisplayView.m in Sources */,
-				134551B5122A4D1600E348F5 /* MessengerSystemTest.m in Sources */,
+				13AC407E123CB3E700AAF658 /* MessengerViewController.m in Sources */,
 				13B64BD9124BB94000D9E800 /* GlyphTable.m in Sources */,
+				134551B5122A4D1600E348F5 /* MessengerSystemTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -17,6 +17,7 @@
 	MessengerSystem * paren;
 	coTestObject * objectOv;
 	
+	
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;

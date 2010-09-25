@@ -9,7 +9,7 @@
 #import "MessengerViewController.h"
 #import "MessengerIDGenerator.h"
 
-#define NSLog( m, args... )
+//#define NSLog( m, args... )
 
 @implementation MessengerViewController
 //上書きしなければいけないのは、初期化メソッドと、実行時のメソッド
@@ -208,6 +208,9 @@
 	
 	
 	[messengerInterfaceView addSubview:newButton];//ビューに加える
+	
+	
+	
 	[self drawDataUpdate];
 }
 /**
@@ -224,18 +227,41 @@
 	NSString * myKey = [self getMessengerInformationKey:senderName withMID:senderMID];
 	
 	
-	//既に存在している場合は無視する
+	//既に存在している場合のみ対応
 	for (id key in [self getMessengerList]) {
 		if ([key isEqualToString:myKey]) {
 			
 			[[self getMessengerList] setValue:[self getMessengerInformationKey:sendersParentName withMID:sendersParentMID] forKey:key];
+			
+			
+//			//指定したキーの、親がリストに存在していない場合の配慮 もっと上位のレイヤーから解決できないかな。
+//			//パターンA
+////			if (![[[self getMessengerList] allKeys] containsObject:[self getMessengerInformationKey:sendersParentName withMID:sendersParentMID]]) {
+////				NSLog(@"発生タイミングではまだビューが無かった_%@", [self getMessengerInformationKey:sendersParentName withMID:sendersParentMID]);
+////				[self insertMessengerInformation:sendersParentName withMID:sendersParentMID];
+////			}
+//			
+//				
+//			//パターンB
+//			for (id key in [self getMessengerList]) {
+//				if ([key isEqualToString:myKey]) {//親は含まれている
+//					[self drawDataUpdate];
+//					
+//					return;
+//				}
+//			}
+//			
+//			
+//			//親が存在していないものだったので、画面に追加する。
+//			[self insertMessengerInformation:sendersParentName withMID:sendersParentMID];
+			
+			
 			[self drawDataUpdate];
 			return;
 		}
 	}
 	
-	//ビューよりも前から存在していたか、それともインスタンスのよみがえりか。
-	//インスタンス寿命とぴったりと一致している訳では無い？
+	
 	
 	NSAssert1(FALSE, @"updateParentInformation_一度も生まれてない_%@", myKey);
 }
@@ -276,16 +302,22 @@
 	
 	NSMutableDictionary * connectionList = [[NSMutableDictionary alloc] init];
 	
+	
+	
 	for (id key in [self getMessengerList]) {
+		
+		//親の関係性の値がデフォルトでない場合のみ、線を引く大本のデータとして扱う。
 		if (![[[self getMessengerList] valueForKey:key] isEqualToString:[self getMessengerInformationKey:MS_DEFAULT_PARENTNAME withMID:MS_DEFAULT_PARENTMID]]) {//接続先が存在するキー
 			//ボタンの位置から位置に対して線が引ければそれでいいんだけど、なんか引く方向とか考えておくといい事がある気がする。
 			//from to　みたいな形で、CGPointが持てればいいのかな。
 			//同じキーでつれるボタン辞書の内容がある
 			UIButton * sButton = [[self getButtonList] valueForKey:key];//始点
 			NSAssert(sButton, @"始点ボタンが無い");
+			NSLog(@"始点ボタン_%@", sButton);
 			
 			UIButton * eButton = [[self getButtonList] valueForKey:[[self getMessengerList] valueForKey:key]];//終点
 			NSAssert(eButton, @"終点ボタンが無い");
+			NSLog(@"終点ボタン_%@", eButton);
 			
 			//子から親にラインを引く用に点を出す
 			NSArray * positionArray = [[NSArray alloc] initWithObjects:

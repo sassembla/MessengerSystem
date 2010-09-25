@@ -896,6 +896,10 @@
 
 /**
  子供の追加を確認
+ 
+ ビュー自体が最初から存在していた訳では無いケース、、
+ 親にあたるビューを認識するには、子供から親のデータも貰う以外に無い。親子のインプット時にどうするか。
+ 
  */
 - (void) testMessengerViewAddChild {
 	MessengerViewController * mView = [[MessengerViewController alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
@@ -906,14 +910,10 @@
 	
 	//view側で受け取れており、Dictに情報がたまっていればOK
 	NSMutableDictionary * mViewDict = [mView getMessengerList];
-	STAssertTrue([mViewDict count] == 1, [NSString stringWithFormat:@"ViewDict件数が合っていない_%d", [mViewDict count]]);
+	STAssertTrue([mViewDict count] == 2, [NSString stringWithFormat:@"ViewDict件数が合っていない_%d", [mViewDict count]]);
 	
 	NSMutableDictionary * mButtonDict = [mView getButtonList];
-	STAssertTrue([mButtonDict count] == 1, [NSString stringWithFormat:@"buttonList件数が合っていない_%d", [mButtonDict count]]);
-	
-	
-	
-	
+	STAssertTrue([mButtonDict count] == 2, [NSString stringWithFormat:@"buttonList件数が合っていない_%d", [mButtonDict count]]);
 	
 	[mView release];
 	[child_0 release];
@@ -935,19 +935,24 @@
 
 	MessengerSystem * parent2 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testParent:) withName:TEST_PARENT_NAME_2];
 	
-	NSLog(@"code1_retainCount_%d", [child_0 retainCount]);
-	[child_0 inputParent:TEST_PARENT_NAME];//一件成立している親子関係がある筈
-	NSLog(@"code2_retainCount_%d", [child_0 retainCount]);
 	STAssertTrue([mMessengerList count] == 2, [NSString stringWithFormat:@"ViewDict件数が合っていない2_%d", [mMessengerList count]]);
 	STAssertTrue([mButtonList count] == 2, [NSString stringWithFormat:@"buttonList件数が合っていない2_%d", [mButtonList count]]);
 
 	
+	[child_0 inputParent:TEST_PARENT_NAME];//親子関係を成立、
+	
+	
+	STAssertTrue([mMessengerList count] == 3, [NSString stringWithFormat:@"ViewDict件数が合っていない3_%d", [mMessengerList count]]);
+	STAssertTrue([mButtonList count] == 3, [NSString stringWithFormat:@"buttonList件数が合っていない3_%d", [mButtonList count]]);
+
+	
+	
 	[child_0 removeFromParent];//一件成立している親子関係を破壊
 	
-	//この時点で親ラインが消えている筈
+	//この時点で親子のラインが消えている筈
 	STAssertTrue([mMessengerList count] == 2, [NSString stringWithFormat:@"ViewDict件数が合っていない3_%d", [mMessengerList count]]);
 	STAssertTrue([mButtonList count] == 2, [NSString stringWithFormat:@"buttonList件数が合っていない3_%d", [mButtonList count]]);
-	//from子To親で、ラインが引ける筈。
+	
 	
 	
 	//子供１のボタンの、関係性の親の部分がデフォルトになってる筈
@@ -955,6 +960,8 @@
 	NSString * child_0sParentValue = [mMessengerList valueForKey:[mView getMessengerInformationKey:[child_0 getMyName]  withMID:[child_0 getMyMID]]];//現在のchild_0情報を引き出す
 	STAssertTrue([child_0sParentValue isEqualToString:defaultKey], @"共通ではない_%@", child_0sParentValue);
 	
+	
+	STFail(@"到達");
 	
 	
 //	//この時点で親ラインが出ている筈
