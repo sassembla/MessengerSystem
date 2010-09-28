@@ -21,6 +21,7 @@
 	
 	MessengerDisplayView * messengerInterfaceView;//ボタン、ラインをセットするビュー
 	
+	int numberOfRelationship;
 }
 //初期化
 - (id) initWithBodyID:(id)body_id withSelector:(SEL)body_selector withName:(NSString * )name;//オーバーライド、アサートを架けて使用禁止
@@ -60,6 +61,15 @@
  */
 - (NSMutableDictionary * ) getButtonList;
 - (NSMutableDictionary * ) getMessengerList;
+
+
+/**
+ 関係性の本数を返すメソッド
+ */
+- (void) setNumberOfRelationship:(int)number;
+- (int) getNumberOfRelationship;
+
+
 
 /**
  ビューを返す

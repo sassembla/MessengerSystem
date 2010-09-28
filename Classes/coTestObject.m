@@ -134,7 +134,9 @@
 }
 
 - (void) dealloc {
+	
 	[messenger release];
+	
 	[super dealloc];
 }
 

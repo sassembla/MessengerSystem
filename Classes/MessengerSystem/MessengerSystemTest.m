@@ -924,6 +924,8 @@
  */
 - (void) testMessengerViewRemoveChild {
 	MessengerViewController * mView = [[MessengerViewController alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
+	//ビューを作った時点で、既にPARENTが存在している。
+	
 	
 	NSMutableDictionary * mMessengerList = [mView getMessengerList];
 	NSMutableDictionary * mButtonList = [mView getButtonList];
@@ -945,13 +947,16 @@
 	STAssertTrue([mMessengerList count] == 3, [NSString stringWithFormat:@"ViewDict件数が合っていない3_%d", [mMessengerList count]]);
 	STAssertTrue([mButtonList count] == 3, [NSString stringWithFormat:@"buttonList件数が合っていない3_%d", [mButtonList count]]);
 
-	
+	//このタイミングで、ラインは一本
 	
 	[child_0 removeFromParent];//一件成立している親子関係を破壊
 	
+	//このタイミングで、ラインは０本
+	
 	//この時点で親子のラインが消えている筈
-	STAssertTrue([mMessengerList count] == 2, [NSString stringWithFormat:@"ViewDict件数が合っていない3_%d", [mMessengerList count]]);
-	STAssertTrue([mButtonList count] == 2, [NSString stringWithFormat:@"buttonList件数が合っていない3_%d", [mButtonList count]]);
+	STAssertTrue([mMessengerList count] == 3, [NSString stringWithFormat:@"ViewDict件数が合っていない3_%d", [mMessengerList count]]);
+	STAssertTrue([mButtonList count] == 3, [NSString stringWithFormat:@"buttonList件数が合っていない3_%d", [mButtonList count]]);
+	
 	
 	
 	
@@ -960,38 +965,156 @@
 	NSString * child_0sParentValue = [mMessengerList valueForKey:[mView getMessengerInformationKey:[child_0 getMyName]  withMID:[child_0 getMyMID]]];//現在のchild_0情報を引き出す
 	STAssertTrue([child_0sParentValue isEqualToString:defaultKey], @"共通ではない_%@", child_0sParentValue);
 	
+	[child_0 release];
 	
-	STFail(@"到達");
+	
+	//この時点でchild_0関連のデータが消えている筈
+	STAssertTrue([mMessengerList count] == 2, [NSString stringWithFormat:@"ViewDict件数が合っていない_%d", [mMessengerList count]]);
+	STAssertTrue([mButtonList count] == 2, [NSString stringWithFormat:@"buttonList件数が合っていない_%d", [mButtonList count]]);
 	
 	
-//	//この時点で親ラインが出ている筈
-//	STAssertTrue([mViewDict count] == 2, [NSString stringWithFormat:@"ViewDict件数が合っていない_%d", [mViewDict count]]);
-//	STAssertTrue([mButtonDict count] == 2, [NSString stringWithFormat:@"buttonList件数が合っていない_%d", [mButtonDict count]]);
+	[parent2 release];
 	
-	NSLog(@"child_0 デス開始");
-	[child_0 release];//ここでchild_0がデスしてない?。
-	NSLog(@"child_0 デス完了");
-	
-	NSLog(@"mMessengerList_%@", mMessengerList);
 	//この時点でchild_0関連のデータが消えている筈
 	STAssertTrue([mMessengerList count] == 1, [NSString stringWithFormat:@"ViewDict件数が合っていない_%d", [mMessengerList count]]);
 	STAssertTrue([mButtonList count] == 1, [NSString stringWithFormat:@"buttonList件数が合っていない_%d", [mButtonList count]]);
 	
+	[mView release];
+}
+
+
+
+/**
+ ビューに関するテスト
+ 子供を足す
+ */
+- (void) testViewAddChild {
+	MessengerViewController * mView = [[MessengerViewController alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
+	//ビューを作った時点で、既にPARENTが存在している。が、認識されていない。
 	
-	[parent2 release];
+	NSMutableDictionary * mMessengerList = [mView getMessengerList];
+	NSMutableDictionary * mButtonList = [mView getButtonList];
+	
+	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
+	[child_0 inputParent:TEST_PARENT_NAME];//親子関係を成立、この時点で線が引かれる筈
+	
+	STAssertTrue([mMessengerList count] == 2, [NSString stringWithFormat:@"ViewDict件数が合っていない_%d", [mMessengerList count]]);
+	STAssertTrue([mButtonList count] == 2, [NSString stringWithFormat:@"buttonList件数が合っていない_%d", [mButtonList count]]);
 	
 	
 	[mView release];
 }
 
-/**
- あと、テストできる要素は、グラフィカルな物かなあ。
- ボタンを追加する、消す、
- ボタンからラインを引く
- ボタンの名称、形状とかを見たいね。
- とりあえずインスタンスをリスト化してもつところからスタートかしら。
- */
 
+/**
+ 子供関係を解消
+ */
+- (void) testViewRemoveChild {
+	MessengerViewController * mView = [[MessengerViewController alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
+	//ビューを作った時点で、既にPARENTが存在している。が、認識されていない。
+	
+	NSMutableDictionary * mMessengerList = [mView getMessengerList];
+	NSMutableDictionary * mButtonList = [mView getButtonList];
+	
+	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
+	[child_0 inputParent:TEST_PARENT_NAME];//親子関係を成立、この時点で線が引かれる筈
+	
+	STAssertTrue([mView getNumberOfRelationship] == 1, @"関係性の本数が1本ではない");
+	
+	[child_0 removeFromParent];
+	
+	STAssertTrue([mView getNumberOfRelationship] == 0, @"関係性の本数が0本ではない");
+	
+	
+	STAssertTrue([mMessengerList count] == 2, [NSString stringWithFormat:@"ViewDict件数が合っていない_%d", [mMessengerList count]]);
+	STAssertTrue([mButtonList count] == 2, [NSString stringWithFormat:@"buttonList件数が合っていない_%d", [mButtonList count]]);
+	
+	
+	[mView release];
+}
+
+
+
+/**
+ 子供化からの急性自殺
+ */
+- (void) testViewEraseChild {
+	MessengerViewController * mView = [[MessengerViewController alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
+	//ビューを作った時点で、既にPARENTが存在している。が、認識されていない。
+	
+	NSMutableDictionary * mMessengerList = [mView getMessengerList];
+	NSMutableDictionary * mButtonList = [mView getButtonList];
+	
+	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
+	[child_0 inputParent:TEST_PARENT_NAME];//親子関係を成立、この時点で線が引かれる筈
+	
+	STAssertTrue([mView getNumberOfRelationship] == 1, @"関係性の本数が1本ではない");
+	
+	[child_0 release];
+	
+	STAssertTrue([mMessengerList count] == 1, [NSString stringWithFormat:@"ViewDict件数が合っていない_%d", [mMessengerList count]]);
+	STAssertTrue([mButtonList count] == 1, [NSString stringWithFormat:@"buttonList件数が合っていない_%d", [mButtonList count]]);
+	
+	
+	[mView release];
+}
+
+
+
+/**
+ 親からの突然の子供解放
+ */
+- (void) testViewParentKillChild {
+	MessengerViewController * mView = [[MessengerViewController alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
+	//ビューを作った時点で、既にPARENTが存在している。が、認識されていない。
+	
+	NSMutableDictionary * mMessengerList = [mView getMessengerList];
+	NSMutableDictionary * mButtonList = [mView getButtonList];
+	
+	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
+	[child_0 inputParent:TEST_PARENT_NAME];//親子関係を成立、この時点で線が引かれる筈
+	[parent removeAllChild];
+	
+	STAssertTrue([mView getNumberOfRelationship] == 0, @"関係性の本数が0本ではない");
+	
+	STAssertTrue([mMessengerList count] == 2, [NSString stringWithFormat:@"ViewDict件数が合っていない_%d", [mMessengerList count]]);
+	STAssertTrue([mButtonList count] == 2, [NSString stringWithFormat:@"buttonList件数が合っていない_%d", [mButtonList count]]);
+	
+	
+	[mView release];
+}
+
+
+/**
+ 親の急逝
+ */
+- (void) testViewParentDeath {
+	MessengerViewController * mView = [[MessengerViewController alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
+	//ビューを作った時点で、既にPARENTが存在している。が、認識されていない。
+	
+	NSMutableDictionary * mMessengerList = [mView getMessengerList];
+	NSMutableDictionary * mButtonList = [mView getButtonList];
+	
+	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
+	[child_0 inputParent:TEST_PARENT_NAME];//親子関係を成立、この時点で線が引かれる筈
+	[parent release];
+	
+	STAssertTrue([mView getNumberOfRelationship] == 0, @"関係性の本数が0本ではない");
+	
+	STAssertTrue([mMessengerList count] == 1, [NSString stringWithFormat:@"ViewDict件数が合っていない_%d", [mMessengerList count]]);
+	STAssertTrue([mButtonList count] == 1, [NSString stringWithFormat:@"buttonList件数が合っていない_%d", [mButtonList count]]);
+	
+	parent = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testParent:) withName:TEST_PARENT_NAME];
+	
+	[mView release];
+}
+
+
+
+
+
+ 
+ 
 
 
 

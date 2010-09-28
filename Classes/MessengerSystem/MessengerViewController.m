@@ -13,7 +13,7 @@
 
 @implementation MessengerViewController
 //上書きしなければいけないのは、初期化メソッドと、実行時のメソッド
-//あと、このビューメッセンジャー自身の生き死にを記録しては行けないので、自分の存在についての言及は意図的に避ける。
+//このビューメッセンジャー自身の生き死にを記録してはいけないので、自分の存在についての言及は意図的に避ける。
 
 /**
  使用禁止の初期化メソッド
@@ -108,6 +108,7 @@
 			return;
 		}
 		
+		
 		[self updateParentInformation:senderName withMID:senderMID withParentName:sendersParentName withParentMID:sendersParentMID];
 		
 		return;
@@ -175,6 +176,10 @@
 	//Messengerをアイデンティファイするキーを作成
 	NSString * newKey = [self getMessengerInformationKey:senderName withMID:senderMID];
 	
+	if ([newKey isEqualToString:[self getMessengerInformationKey:MS_DEFAULT_PARENTNAME withMID:MS_DEFAULT_PARENTMID]]) {
+		NSLog(@"入力しようとした要素がデフォルト値なので消える");
+		return;
+	}
 	
 	//既に存在している場合は無視する
 	for (id key in [self getMessengerList]) {
@@ -233,29 +238,18 @@
 			
 			[[self getMessengerList] setValue:[self getMessengerInformationKey:sendersParentName withMID:sendersParentMID] forKey:key];
 			
-			
-//			//指定したキーの、親がリストに存在していない場合の配慮 もっと上位のレイヤーから解決できないかな。
-//			//パターンA
-////			if (![[[self getMessengerList] allKeys] containsObject:[self getMessengerInformationKey:sendersParentName withMID:sendersParentMID]]) {
-////				NSLog(@"発生タイミングではまだビューが無かった_%@", [self getMessengerInformationKey:sendersParentName withMID:sendersParentMID]);
-////				[self insertMessengerInformation:sendersParentName withMID:sendersParentMID];
-////			}
-//			
-//				
-//			//パターンB
-//			for (id key in [self getMessengerList]) {
-//				if ([key isEqualToString:myKey]) {//親は含まれている
-//					[self drawDataUpdate];
-//					
-//					return;
-//				}
-//			}
-//			
-//			
-//			//親が存在していないものだったので、画面に追加する。
-//			[self insertMessengerInformation:sendersParentName withMID:sendersParentMID];
+			//親が存在しているかどうかのチェック
+			NSString * myParentKey = [self getMessengerInformationKey:sendersParentName withMID:sendersParentMID];
+			for (id key in [self getMessengerList]) {
+				if ([key isEqualToString:myParentKey]) {
+					[self drawDataUpdate];
+					return;
+				}
+			}
 			
 			
+			//ここまで通過しているということは、親キーがまだリスト内に存在しない
+			[self insertMessengerInformation:sendersParentName withMID:sendersParentMID];//追加する。
 			[self drawDataUpdate];
 			return;
 		}
@@ -327,13 +321,28 @@
 									   [NSNumber numberWithFloat:eButton.center.y],//endY
 									   nil];
 			
+			
+			
 			[connectionList setValue:positionArray forKey:key];
 		}
 	}
 	
-	
+	[self setNumberOfRelationship:[connectionList count]];
 	
 	[messengerInterfaceView updateDrawList:[self getButtonList] andConnectionList:connectionList];//ボタン座標データをビューの描画リストにセットする
+}
+
+
+
+/**
+ 関係性の本数を返すメソッド
+ */
+- (void) setNumberOfRelationship:(int)number {
+	numberOfRelationship = number;
+}
+
+- (int) getNumberOfRelationship {
+	return numberOfRelationship;
 }
 
 /**
