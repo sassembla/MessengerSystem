@@ -35,100 +35,8 @@
 	
 	
 	paren = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:PARENTNAME];
-	coTestObject * cTest = [[coTestObject alloc] init];
-	
-//	[paren callMyself:COMMAND_OOPS,
-//	 [paren tag:@"one" val:@"1"],
-//	 [paren tag:@"two" val:@"2"],
-//	 [paren tag:@"three" val:@"3"],
-//	 [paren withDelay:1.0],
-//	 nil];
-	
-	
-//	//子供を自分自身から呼ぶコード10/09/19 9:20:13
-//	[paren callMyself:COMMAND_OOPS,
-//	 [paren tag:@"one" val:@"1"],
-//	 [paren tag:@"two" val:@"2"],
-//	 [paren tag:@"three" val:@"3"],
-//	 [paren withDelay:1.0],
-//	 nil];
-	
-	
-	
-//	//子供を直接呼ぶコード
-//	[paren call:CHILD_1 withExec:COMMAND_OOPS,
-//	 [paren tag:@"one" val:@"1"],
-//	 [paren withDelay:0.75],
-//	 nil];
-	
-	
-	
-//	[paren callMyself:COMMAND_YEAH, 
-//	 [paren tag:@"one" val:@"1"],
-//	 [paren tag:@"two" val:@"2"],
-//	 [paren tag:@"three" val:@"3"],
-////	 [paren withDelay:0.3],
-//	 nil];
-	
-	
-	//	[paren call:CHILD_1 withExec:COMMAND_YEAH, 
-//	 [paren tag:@"one" val:@"1"],
-//	 [paren tag:@"two" val:@"2"],
-//	 [paren tag:@"three" val:@"3"],nil];
-	
-	
-	objectOv = [[coTestObject alloc] init2];
-	
-//	coTestObject * cTest2 = [[coTestObject alloc] init2];
-
-	
-	//	coTestObject * cTest3 = [[coTestObject alloc] init];
-	
-	//coTestObject * cTest4 = [[coTestObject alloc] init2];
-	
-//	[paren call:CHILD_1 withExec:COMMAND_OOPS, 
-//	 [paren tag:@"one" val:@"1"],
-//	 [paren tag:@"two" val:@"2"],
-//	 [paren tag:@"three" val:@"3"],nil];
-	
-	
-//	[paren callMyself:COMMAND_YEAH, 
-//	 [paren tag:@"one" val:@"1"],
-//	 [paren tag:@"two" val:@"2"],
-//	 [paren tag:@"three" val:@"3"],nil];
-//
-//	
-//	
-//	//子供を自分自身から呼ぶコード
-//	[paren callMyself:COMMAND_CHILDS,
-//	 [paren tag:@"one" val:@"1"],
-//	 [paren tag:@"two" val:@"2"],
-//	 [paren tag:@"three" val:@"3"],
-//	 [paren withDelay:0.01],
-//	 nil];
-//	
-//	
-//
-//	[paren call:CHILD_1 withExec:COMMAND_DELAYANDREMOTE, 
-//	 [paren withDelay:0.5],
-//	 [paren withRemoteFrom:self withSelector:@selector(ignition:)],
-//	 nil];
-	
-	
-//	[paren callMyself:COMMAND_ADD_CHILD,
-//	 [paren withDelay:0.01],
-//	 [paren withRemoteFrom:self withSelector:@selector(ignition:)],
-//	 nil];
-//	
-//	
-//	[paren callMyself:COMMAND_OOPS,
-//	 [paren withDelay:0.5],
-//	 nil];
-	
-	
-	//[paren callMyself:COMMAND_YEAH,
-//	 [paren withDelay:5],
-//	 nil];
+//	coTestObject * cTest = [[coTestObject alloc] init];
+//	objectOv = [[coTestObject alloc] init2];
 	
 	[paren callMyself:COMMAND_DELETE,
 	 [paren withDelay:3],
@@ -229,14 +137,19 @@
 			
 				
 		case 1073565673://COMMAND_DELETE
-			[objectOv autorelease];
+			//[objectOv autorelease];
+//			
+//			objectOv = [[coTestObject alloc] init2];
+		{
 			
-			objectOv = [[coTestObject alloc] init2];
+			MessengerSystem * messenger = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:@"子"];
+			[messenger inputParent:[paren getMyName]];
 			
 			[paren callMyself:COMMAND_DELETE,
 			 [paren withDelay:0.1],
 			 nil];
 			
+		}
 			
 			break;
 			
@@ -285,53 +198,6 @@
      Called when the application is about to terminate.
      See also applicationDidEnterBackground:.
      */
-}
-
-- (void) testResetParent {
-	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:@"子供の名前①"];
-	MessengerSystem * child_2 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:@"子供の名前②"];
-	
-	
-	
-	[child_0 inputParent:[paren getMyName]];
-	
-	NSMutableDictionary * parentChildDict = [paren getChildDict];
-
-	
-	NSLog(@"child_0の親を抹消");
-	[child_0 removeFromParent];//親情報をリセットする
-	NSLog(@"child_0の親抹消済みの筈_親ID_%@", [child_0 getMyParentMID]);
-	
-	//parentの子供辞書を調べてみる、一件も無くなっている筈
-//	STAssertTrue([parentChildDict count] == 0, [NSString stringWithFormat:@"親の持っている子供辞書が0件になっていない_%d", [parentChildDict count]]);
-//	STAssertTrue(![child_0 hasParent], @"子供がまだ親情報を持っている");
-//	STAssertTrue(![paren hasChild], @"親がまだ子供情報を持っている");
-	
-	
-	
-	[child_0 inputParent:[child_2 getMyName]];//新規親情報
-	
-	
-	NSLog(@"子供が知ってる親の名前_%@", [child_0 getMyParentName]);
-	//親が知ってる子供の情報、という部分において、他のオブジェクト（子供残骸＞）
-	
-//	STAssertTrue([child_0 hasParent], @"子供がまだ親情報を持っている");
-//	STAssertTrue(![paren hasChild], @"親がまだ子供情報を持っている");
-//	STAssertTrue([child_2 hasParent], @"子供2が子供情報を持っていない");
-	NSAssert([child_2 hasParent], @"問題がある");
-	
-	NSMutableDictionary * dict2 = [child_2 getChildDict];
-//	STAssertTrue([dict2 count] == 1, [NSString stringWithFormat:@"dict2の持っている子供辞書が1件になっていない_%d", [dict2 count]]);
-	
-	NSLog(@"dict2_%@", dict2);
-//	STAssertTrue([[dict2 valueForKey:[child_0 getMyMID]] isEqualToString:[child_0 getMyName]], @"child_2の親登録が違った");
-	
-	[child_2 call:[child_0 getMyName] withExec:@"試し",nil];
-	
-	
-	//STAssertEquals([dict1 valueForKey:[child_2 getMyMID]], [child_2 getMyName], @"child_2の親登録が違った");
-	[child_0 release];
-	[child_2 release];
 }
 
 

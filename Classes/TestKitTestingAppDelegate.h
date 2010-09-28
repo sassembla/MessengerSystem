@@ -23,6 +23,6 @@
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 
 - (void)test:(NSNotification * )notification;
-- (void) testResetParent;
+
 @end
 

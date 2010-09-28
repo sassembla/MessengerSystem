@@ -32,9 +32,10 @@
 - (id) init3 {
 	if (self = [super init]) {
 		messenger = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:CHILD_2];
-		[messenger callMyself:COMMAND_YEAH,
-		 [messenger withDelay:0.4],
-		 nil];
+		[messenger inputParent:CHILD_3];
+		//[messenger callMyself:COMMAND_YEAH,
+//		 [messenger withDelay:0.4],
+//		 nil];
 	}
 	return self;
 }
