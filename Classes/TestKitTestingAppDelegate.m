@@ -23,8 +23,7 @@
 #pragma mark Application lifecycle
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
-   // coTestObject * cTest = [[coTestObject alloc] init];
-	
+   
 	
 	
 	MessengerViewController * view = [[MessengerViewController alloc] initWithFrame:window.frame];
@@ -33,18 +32,100 @@
 	
 	[window addSubview:[view getMessengerInterfaceView]];
 	
-	
 	paren = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:PARENTNAME];
-//	coTestObject * cTest = [[coTestObject alloc] init];
-//	objectOv = [[coTestObject alloc] init2];
 	
+	if (TRUE) {
+		MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:@"じぶん"];
+		[child_0 inputParent:[paren getMyName]];
+		NSMutableDictionary * logD = [child_0 getLogStore];
+		
+		
+		NSMutableDictionary * logDP = [paren getLogStore];
+		
+		
+		
+		[child_0 callMyself:@"テスト",
+		 [child_0 withDelay:0.3],
+		 nil];
+		NSLog(@"child_count_0_%d",[child_0 retainCount]);
+		
+		[child_0 callParent:@"テスト",
+		 [child_0 withDelay:0.3],
+		 nil];
+		NSLog(@"child_count_1_%d",[child_0 retainCount]);
+		
+		
+		//	[parent callMyself:@"テスト",
+		//	 [parent withDelay:0.5],
+		//	 nil];
+		//	
+		
+//		STAssertTrue([logD count] == 4, @"送信できてない1_%d", [logD count]);
+//		STAssertTrue([logDP count] == 1, @"受信してる？");
+		NSLog(@"child_count_2_%d",[child_0 retainCount]);
+		int n = [child_0 retainCount];
+		
+			for (int i = 0; i < n; i++) {
+			[child_0 release];//不意に自殺
+		}
+		
+//		STAssertTrue([logDP count] == 2, @"受信してる？_%d", [logDP count]);//親は子供からの親受付と、子供の消滅通知を受け取ってる。
+		NSLog(@"[logDP count]_%d",[logDP count]);
+		int  m = [logDP count];
+		//１つに、死んだ子供の遅延メッセージを受けてもダメージを受けない事、
+		//２つに、関係なくカウントは動く事。
+		while ([logDP count] != 3) {//親が受け取った、この時点で送信元の子供は死んでいる。つまり、受け取れない筈。
+			[[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1.0]];
+		}
+		
+		
+		NSLog(@"logDP_after_%@", logDP);
+		
+		//無事にたどり着けるだろうか
+		return TRUE;
+	}
+	
+	
+	
+	if (true) {
+		MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:@"じぶん"];
+		[child_0 inputParent:[paren getMyName]];
+		
+		NSMutableDictionary * logDP = [paren getLogStore];
+		//	STAssertTrue([logDP count] == 1, @"親のログ件数が増えている、受け取ってしまっている1？_%d", [logDP count]);
+		
+		
+		NSMutableDictionary * logD = [child_0 getLogStore];
+		
+		[child_0 callParent:@"テスト",
+		 [child_0 withDelay:0.3],
+		 nil];
+		
+		
+		[child_0 callMyself:@"テスト",
+		 [child_0 withDelay:0.3],
+		 nil];
+		
+		[paren removeAllChild];//ここで親が消える
+		//	STAssertTrue([logDP count] == 1, @"親のログ件数が増えている、受け取ってしまっている3？_%d", [logDP count]);
+		
+		
+		//	STAssertTrue([logD count] == 4, @"送信できてない1");
+		
+		while ([logD count] != 5) {//受け取りはするんだけれど、何もしない、というのを観測したい。。。 ここでは、子供が親への送信直後に自分で自分宛に送った物を受け取ったとする。
+			[[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1.0]];
+		}
+		//	STAssertTrue([logDP count] == 1, @"親のログ件数が増えている、受け取ってしまっている4？_%d", [logDP count]);
+		
+		[child_0 release];
+		
+		
+	}
 	[paren callMyself:COMMAND_DELETE,
 	 [paren withDelay:3],
 	 nil];
 	
-	
-	
-    [window makeKeyAndVisible];
+	[window makeKeyAndVisible];
 	
 	return YES;
 }

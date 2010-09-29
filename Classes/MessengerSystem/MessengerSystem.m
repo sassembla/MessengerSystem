@@ -139,6 +139,7 @@
 	}
 	
 	
+	
 	/**
 	 自分が今、誰なのかを考察する
 	 1,プロセスID
@@ -160,7 +161,6 @@
 	//	NSLog(@"Process Name:%@ Process ID:%d", processName, processID);
 	
 	//	NSLog(@"currentThread_0_self=%@, %@", [self getMyName], [NSThread currentThread]);
-	
 	
 	
 	//カテゴリごとの処理に移行
@@ -255,14 +255,16 @@
 			return;
 		}
 		
-		
-		[self saveLogForReceived:recievedLogDict];
-		
-		//設定されたbodyのメソッドを実行
-		IMP func = [[self getMyBodyID] methodForSelector:[self getMyBodySelector]];
-		(*func)([self getMyBodyID], [self getMyBodySelector], notification);
-		
-		
+		for (id key in [self getChildDict]) {//子供リストに含まれていなければ実行しないし、受け取らない。
+			if ([[[self getChildDict] objectForKey:key] isEqualToString:senderName]) {
+				[self saveLogForReceived:recievedLogDict];
+				
+				//設定されたbodyのメソッドを実行
+				IMP func = [[self getMyBodyID] methodForSelector:[self getMyBodySelector]];
+				(*func)([self getMyBodyID], [self getMyBodySelector], notification);
+				return;
+			}
+		}
 		
 		return;
 	}
@@ -354,7 +356,12 @@
 	if ([commandName isEqualToString:MS_CATEGOLY_REMOVE_CHILD]) {
 		NSLog(@"MS_CATEGOLY_REMOVE_CHILD到着");
 		
+		//自分自身を除外
+		if ([[self getMyMID] isEqualToString:senderMID]) {
+			return;
+		}
 		
+		//親を持っていなければ除外
 		if (![self hasParent]) {
 			return;
 		}
@@ -364,7 +371,12 @@
 			return;
 		}
 		
+		
+		//送信者のMIDが自分の親MIDと同一の場合のみ、実行
 		if ([senderMID isEqualToString:[self getMyParentMID]]) {
+			//ログ
+			[self saveLogForReceived:recievedLogDict];
+			
 			[self initMyParentData];
 			
 			//通知
@@ -383,6 +395,7 @@
  */
 - (void) sendPerform:(NSMutableDictionary * )dict {
 	
+	NSString * s = [self getMyName];
 	[[NSNotificationCenter defaultCenter] postNotificationName:OBSERVER_ID object:self userInfo:(id)dict];
 	
 }
@@ -965,8 +978,7 @@
 	//	[childDict allValues]//NSArray コストは概ね一緒かな。 特定のキーが含まれているか否か、を隠蔽したいか否か
 	
 	//親から子へのブロードキャスト MIDで送り先を限定しない。
-	for (id key in [self getChildDict]) {//この時点か、この中なのか。
-		//NSLog(@"key: %@, value: %@", key, [childDict objectForKey:key]);//この件数分だけ出す必要は無い！　一件出せればいい。特に限定が必要な場合もそう。
+	for (id key in [self getChildDict]) {
 		if ([[childDict objectForKey:key] isEqualToString:childName]) {//一つでも合致する内容のものがあれば、メッセージを送る対象として見る。
 			NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:5];
 			
@@ -1372,7 +1384,9 @@
  */
 - (void) dealloc {
 	
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:OBSERVER_ID object:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:OBSERVER_ID object:nil];//ノーティフィケーションから外す
+	
+	//予定している処理があったら、消す。 なかなか効果的にならない。
 	
 	NSLog(@"deallocに到達_%@", [self getMyName]);
 	
@@ -1388,6 +1402,8 @@
 	
 	[self killedNotice];
 
+	
+	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(sendPerform:) object:self];
 	
 	
 	//自分の名前	NSString
@@ -1410,9 +1426,9 @@
 	
 	
 	//子供の名前とIDを保存する辞書	NSMutableDictionary
-	NSAssert([childDict count] == 0, @"childDict_%d",[childDict count]);
-	[childDict removeAllObjects];
-	[childDict release];
+	NSAssert([[self getChildDict] count] == 0, @"childDict_%d",[[self getChildDict] count]);
+	[[self getChildDict] removeAllObjects];
+	[[self getChildDict] release];
 	
 	//ログ削除
 //	NSAssert([logDict count] == 0, @"logDict_%d",[logDict count]);

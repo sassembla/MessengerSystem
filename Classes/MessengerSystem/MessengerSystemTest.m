@@ -823,16 +823,335 @@
 - (void) testCallWithDelay {
 	
 	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:@"じぶん"];
+	
+	NSMutableDictionary * logD = [child_0 getLogStore];
+	
 	[child_0 callMyself:@"テスト",
 	 [child_0 withDelay:0.3],
 	 nil];
 	
-	//STFail(@"確認");
-	//テストの結果を知るには、、、、どうすればいいんだ。返り値を判断する機構でもあればいいんだけど。
-//	STAssertTrue([child_0 retainCount] == 1, @"testCallWithDelay　カウントがおかしい_%d", [child_0 retainCount]);
+	STAssertTrue([logD count] == 1, @"送信できてない1");
+	//ログのカウントが２になったら終了
+	
+	while ([logD count] != 2) {
+		[[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1.0]];
+	}
+	
+	
+	NSLog(@"無事に非同期で抜けた");
+	
+	STAssertTrue([logD count] == 2, @"送信できてない2");
+	
+	
 	[child_0 release];
 	
 }
+
+/**
+ 遅延実行で、子から親への遅延作成後に親が受け取らないで消えるケース
+ 消え方、死亡と子供解除
+ */
+- (void) testDelayCallFromChildToParent_Death {
+	
+	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:@"じぶん"];
+	[child_0 inputParent:[parent getMyName]];
+	
+	
+	NSMutableDictionary * logD = [child_0 getLogStore];
+	
+	[child_0 callParent:@"テスト",
+	 [child_0 withDelay:0.3],
+	 nil];
+	
+	[child_0 callMyself:@"テスト",
+	 [child_0 withDelay:0.3],
+	 nil];
+	
+	int r = [parent retainCount];
+	for (int i = 0; i < r; i++) {
+		[parent release];
+	}
+	
+	STAssertTrue([logD count] == 5, @"送信できてない1_%d", [logD count]);
+	
+	while ([logD count] != 6) {//受け取りはするんだけれど、何もしない、というのを観測したい。。。 ここでは、子供が親への送信直後に自分で自分宛に送った物を受け取ったとする。
+		[[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1.0]];
+	}
+	
+	
+	
+	parent = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testParent:) withName:TEST_PARENT_NAME];
+	[child_0 release];
+}
+
+- (void) testDelayCallFromChildToParent_Removed {
+	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:@"じぶん"];
+	[child_0 inputParent:[parent getMyName]];
+	
+	NSMutableDictionary * logDP = [parent getLogStore];
+	STAssertTrue([logDP count] == 1, @"親のログ件数が増えている、受け取ってしまっている1？_%d", [logDP count]);
+	
+	
+	
+	NSMutableDictionary * logD = [child_0 getLogStore];
+	
+	[child_0 callParent:@"テスト",
+	 [child_0 withDelay:0.3],
+	 nil];
+	
+	
+	[child_0 callMyself:@"テスト",
+	 [child_0 withDelay:0.3],
+	 nil];
+		
+	[parent removeAllChild];//ここで親が消える、送信記録１件
+	
+	STAssertTrue([logDP count] == 2, @"親のログ件数が増えている、受け取ってしまっている3？_%d", [logDP count]);
+	NSLog(@"logDP_before_%@", logDP);
+	
+	
+	STAssertTrue([logD count] == 5, @"送信できてない1");
+	
+	while ([logD count] != 6) {//受け取りはするんだけれど、何もしない、というのを観測したい。。。 ここでは、子供が親への送信直後に自分で自分宛に送った物を受け取ったとする。
+		[[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1.0]];
+	}
+	NSLog(@"logDP_after_%@", logDP);
+	STAssertTrue([logDP count] == 2, @"親のログ件数が増えている、受け取ってしまっている4？_%d", [logDP count]);
+	
+	[child_0 release];
+	
+} 
+
+
+
+
+/**
+ 遅延実行で、親から子への遅延作成後に子が受け取らないで消えるケース
+ 消え方、死亡と子供からの解除
+ */
+- (void) testDelayCallFromParentToChild_Death {
+	
+	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:@"じぶん"];
+	[child_0 inputParent:[parent getMyName]];
+	
+	
+	NSMutableDictionary * logD = [child_0 getLogStore];
+	NSMutableDictionary * logDP = [parent getLogStore];
+	
+	STAssertTrue([logD count] == 2, @"送信できてない0_%d", [logD count]);
+	
+	
+	[parent call:[child_0 getMyName] withExec:@"テスト",
+	 [parent withDelay:0.3],
+	 nil];
+	
+	[parent callMyself:@"テスト",//+2
+	 [child_0 withDelay:0.3],
+	 nil];
+
+	STAssertTrue([logDP count] == 3, @"送信できてない1_%d", [logDP count]);
+	
+	STAssertTrue([logD count] == 2, @"送信できてない1_%d", [logD count]);
+	
+	int r = [child_0 retainCount];
+	for (int i = 0; i < r; i++) {
+		[child_0 release];
+	}
+	
+	//まあ、無理矢理消滅させようとしている時点で汚いのだが。
+	
+	STAssertTrue([logDP count] == 4, @"送信できてない1_%d", [logD count]);
+	
+	
+	while ([logDP count] != 5) {
+		[[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1.0]];
+	}
+}
+
+- (void) testDelayCallFromParentToChild_Removed {
+	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:@"じぶん"];
+	[child_0 inputParent:[parent getMyName]];
+	
+	NSMutableDictionary * logDP = [parent getLogStore];
+	STAssertTrue([logDP count] == 1, @"親のログ件数が増えている、受け取ってしまっている1？_%d", [logDP count]);
+	
+	NSMutableDictionary * logD = [child_0 getLogStore];
+	STAssertTrue([logD count] == 2, @"送信できてない1");
+	
+	
+	[parent call:[child_0 getMyName] withExec:@"テスト",
+	 [parent withDelay:0.3],
+	 nil];
+	
+	
+	[parent callMyself:@"テスト",
+	 [parent withDelay:0.3],
+	 nil];
+	
+	[child_0 removeFromParent];//ここで親から消える、送信記録１件
+
+	STAssertTrue([logDP count] == 4, @"親のログ件数が増えている、受け取ってしまっている3？_%d", [logDP count]);
+	STAssertTrue([logD count] == 3, @"送信できてない3_%d", [logD count]);
+	
+	
+	while ([logDP count] != 5) {//受け取りはするんだけれど、何もしない、というのを観測したい。。。 ここでは、子供が親への送信直後に自分で自分宛に送った物を受け取ったとする。
+		[[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1.0]];
+	}
+	
+	
+	[child_0 release];
+	
+}
+
+
+
+/**
+ 遅延実行で、送り主が消えるケース
+ 親から子、子が受け取る前に親が消える
+ */
+- (void) testDelayCallFromParentToChild_DeathBeforeReach {
+	if (TRUE) return;
+	
+	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:@"じぶん"];
+	[child_0 inputParent:[parent getMyName]];
+	
+	
+	NSMutableDictionary * logD = [child_0 getLogStore];
+	NSMutableDictionary * logDP = [parent getLogStore];
+	
+	STAssertTrue([logD count] == 2, @"送信できてない0_%d", [logD count]);
+	
+	
+	[parent call:[child_0 getMyName] withExec:@"テスト",
+	 [parent withDelay:0.3],
+	 nil];
+	
+	[child_0 callMyself:@"テスト",//+2
+	 [child_0 withDelay:0.3],
+	 nil];
+	
+	STAssertTrue([logDP count] == 2, @"送信できてない1_%d", [logDP count]);
+	
+	STAssertTrue([logD count] == 3, @"送信できてない1_%d", [logD count]);
+	
+	int r = [parent retainCount];
+	for (int i = 0; i < r; i++) {
+		[parent release];
+	}
+	
+	//まあ、無理矢理消滅させようとしている時点で汚いのだが。
+	
+	STAssertTrue([logD count] == 4, @"送信できてない1_%d", [logD count]);
+	
+	
+	while ([logD count] != 6) {
+		[[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1.0]];
+	}
+	
+	
+	[child_0 release];
+	
+	parent = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testParent:) withName:TEST_PARENT_NAME];
+	
+}
+
+- (void) testDelayCallFromParentToChild_RemoveBeforeReach {
+	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:@"じぶん"];
+	[child_0 inputParent:[parent getMyName]];
+	
+	NSMutableDictionary * logDP = [parent getLogStore];
+	STAssertTrue([logDP count] == 1, @"親のログ件数が増えている、受け取ってしまっている1？_%d", [logDP count]);
+	
+	NSMutableDictionary * logD = [child_0 getLogStore];
+	STAssertTrue([logD count] == 2, @"送信できてない1");
+	
+	
+	[parent call:[child_0 getMyName] withExec:@"テスト",
+	 [parent withDelay:0.3],
+	 nil];
+	
+	
+	[parent callMyself:@"テスト",
+	 [parent withDelay:0.3],
+	 nil];
+	
+	[parent removeAllChild];//ここで親が消える、送信記録１件
+
+	STAssertTrue([logDP count] == 4, @"親のログ件数が増えている、受け取ってしまっている3？_%d", [logDP count]);
+	STAssertTrue([logD count] == 3, @"送信できてない3_%d", [logD count]);
+	STAssertTrue([[child_0 getMyParentName] isEqualToString:MS_DEFAULT_PARENTNAME], @"親の名前がデフォルトになっていない");
+	
+	while ([logDP count] != 5) {
+		[[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1.0]];
+	}
+	
+	NSLog(@"chil_0'sParentName_%@", [child_0 getMyParentName]);//削除が完了していて、親の名前がデフォルトでなければいけない
+	STAssertTrue([logD count] == 3, @"受け取ってしまっている_%d", [logD count]);
+	
+	
+	[child_0 release];
+	
+}
+
+
+
+
+/**
+ 遅延実行で、自分自身へのメッセージを自死で受け取らないケース
+ これはエラーか。否。エラーの前に、死が確定した瞬間に、送信しているディレイがあるのでまだ死ねない系のアサートエラーを出すべき。
+ */
+- (void) testDelayCallFromChildToHimself_Death {
+	if (TRUE) return; 
+	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:@"じぶん"];
+	[child_0 inputParent:[parent getMyName]];
+	
+	NSMutableDictionary * logD = [child_0 getLogStore];
+	NSMutableDictionary * logDP = [parent getLogStore];
+	
+	[child_0 callMyself:@"テスト",
+	 [child_0 withDelay:0.3],
+	 nil];
+	
+	
+	[child_0 callParent:@"テスト",
+	 [child_0 withDelay:0.3],
+	 nil];
+	
+	
+//	[parent callMyself:@"テスト",
+//	 [parent withDelay:0.5],
+//	 nil];
+//	
+	
+	STAssertTrue([logD count] == 4, @"送信できてない1_%d", [logD count]);
+	STAssertTrue([logDP count] == 1, @"受信してる？");
+	
+	int r = [child_0 retainCount];
+	for (int i = 0; i < r; i++) {
+		[child_0 release];//不意に自殺
+	}
+	
+	STAssertTrue([logDP count] == 2, @"受信してる？_%d", [logDP count]);//親は子供からの親受付と、子供の消滅通知を受け取ってる。
+	
+	//１つに、死んだ子供の遅延メッセージを受けてもダメージを受けない事、
+	//２つに、関係なくカウントは動く事。
+	while ([logDP count] != 3) {//親が受け取った、この時点で送信元の子供は死んでいる。つまり、受け取れない筈。
+		[[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1.0]];
+	}
+	
+	//エラーが発生する事を正常な動作としたいのだが、内容のアナウンスはしたい。方法が見つかるまでは封印。
+	
+	NSLog(@"logDP_after_%@", logDP);
+} 
+
+
+
+
+
+
+
+
+
 
 
 /**
@@ -918,6 +1237,8 @@
 	[mView release];
 	[child_0 release];
 }
+
+
 
 /**
  子供の解消を確認
