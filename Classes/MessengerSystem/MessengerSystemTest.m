@@ -1101,9 +1101,13 @@
  これはエラーか。否。エラーの前に、死が確定した瞬間に、送信しているディレイがあるのでまだ死ねない系のアサートエラーを出すべき。
  */
 - (void) testDelayCallFromChildToHimself_Death {
-	if (TRUE) return; 
+	if (TRUE) return;
 	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:@"じぶん"];
+	STAssertTrue([child_0 retainCount] == 1, @"カウントが増えてる-1_%d", [child_0 retainCount]);
+	
 	[child_0 inputParent:[parent getMyName]];
+	
+	STAssertTrue([child_0 retainCount] == 1, @"カウントが増えてる0_%d", [child_0 retainCount]);
 	
 	NSMutableDictionary * logD = [child_0 getLogStore];
 	NSMutableDictionary * logDP = [parent getLogStore];
@@ -1117,11 +1121,6 @@
 	 [child_0 withDelay:0.3],
 	 nil];
 	
-	
-//	[parent callMyself:@"テスト",
-//	 [parent withDelay:0.5],
-//	 nil];
-//	
 	
 	STAssertTrue([logD count] == 4, @"送信できてない1_%d", [logD count]);
 	STAssertTrue([logDP count] == 1, @"受信してる？");
@@ -1147,8 +1146,47 @@
 
 
 
-
-
+/**
+ 遅延実行しているMessengerをReleaseしようとすると、アサートを出す。
+ アサートを正当化するためのtestでもある。
+ */
+- (void) testAssertDelay {
+	NSMutableDictionary * logDP = [parent getLogStore];
+	
+	
+	MessengerSystem * child_00 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:@"適当"];
+	
+	[child_00 callMyself:@"時間差",
+	 [child_00 withDelay:0.5],
+	 nil];
+		
+	[parent callMyself:@"観測者",
+	 [parent withDelay:0.5],
+	 nil];
+	
+	//要件はこうだ、
+	/**
+	 遅延実行を行っているケースで、まだ実行されていない場合のみ、キャンセルを行う必要がある。releaseコマンドを特化できないかな。
+	 それ以外に危険を知らせる方法はないか？ステータスを聞く、とか。
+	 →純粋にretainCountを聞くメソッドを作るかな。
+	 isReleasable メソッド
+	 */
+	if (![child_00 isReleasable]) {
+		[child_00 cancelPerform];
+	}
+	
+	int r = [child_00 retainCount];
+	for (int i = 0; i < r; i++) {
+		[child_00 release];
+	}
+	
+	NSLog(@"[parent retainCount]_before_%d", [parent retainCount]);
+	
+	while ([logDP count] != 2) {
+		[[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1.0]];
+	}
+	NSLog(@"[parent retainCount]_after_%d", [parent retainCount]);
+}
 
 
 

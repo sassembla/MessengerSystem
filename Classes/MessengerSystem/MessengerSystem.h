@@ -189,9 +189,9 @@
 
 
 
+
 //遠隔実行のコマンドがメッセージに含まれているか
 - (BOOL) isIncludeRemote:(NSMutableDictionary * )dict;
-
 
 
 /**
@@ -204,6 +204,14 @@
 - (NSString * )getMyMID;
 - (NSString * )getMyParentName;
 - (NSString * )getMyParentMID;
+
+
+
+//遅延実行のキャンセルを行う
+- (void) cancelPerform;
+
+//このメッセンジャーが解放可能かどうかを返すメソッド　遅延実行中であればFALSEを返す。
+- (BOOL) isReleasable;
 
 
 @end

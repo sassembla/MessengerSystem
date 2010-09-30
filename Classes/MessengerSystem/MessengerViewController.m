@@ -191,7 +191,9 @@
 	
 	
 	//ビュー、辞書に要素を加える
-	UIButton * newButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50., 50.)];//[UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+	UIButton * newButton;
+	newButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50., 50.)];//[UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+	[newButton autorelease];
 	
 	[newButton setHidden:FALSE];
 	
@@ -294,7 +296,7 @@
 	//子供　対　親なので、ポイントに換算して置ける筈。
 	NSLog(@"messengerList_%@", [self getMessengerList]);
 	
-	NSMutableDictionary * connectionList = [[NSMutableDictionary alloc] init];
+	NSMutableDictionary * connectionList = [[[NSMutableDictionary alloc] init] autorelease];
 	
 	
 	
@@ -314,12 +316,12 @@
 			NSLog(@"終点ボタン_%@", eButton);
 			
 			//子から親にラインを引く用に点を出す
-			NSArray * positionArray = [[NSArray alloc] initWithObjects:
+			NSArray * positionArray = [[[NSArray alloc] initWithObjects:
 									   [NSNumber numberWithFloat:sButton.center.x],//startX
 									   [NSNumber numberWithFloat:sButton.center.y],//startY
 									   [NSNumber numberWithFloat:eButton.center.x],//endX
 									   [NSNumber numberWithFloat:eButton.center.y],//endY
-									   nil];
+									   nil] autorelease];
 			
 			
 			

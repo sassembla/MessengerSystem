@@ -395,7 +395,6 @@
  */
 - (void) sendPerform:(NSMutableDictionary * )dict {
 	
-	NSString * s = [self getMyName];
 	[[NSNotificationCenter defaultCenter] postNotificationName:OBSERVER_ID object:self userInfo:(id)dict];
 	
 }
@@ -416,7 +415,7 @@
 	[self addCreationLog:dict];
 	
 	//遅延実行キーがある場合
-	NSNumber * delay = [dict valueForKey:MS_DELAY];//複数或る場合はエラーにしたい
+	NSNumber * delay = [dict valueForKey:MS_DELAY];
 	if (delay) {
 		float delayTime = [delay floatValue];
 		[self sendPerform:dict withDelay:delayTime];
@@ -1376,17 +1375,36 @@
 }
 
 
+/**
+ 遅延実行をキャンセルするメソッド
+ */
+- (void) cancelPerform {
+	[NSRunLoop cancelPreviousPerformRequestsWithTarget:self];
+}
+
+
+
+/**
+ メッセンジャーが解放可能かどうか、取得するメソッド
+ */
+- (BOOL) isReleasable {
+	if ([self retainCount] == 1) {
+		return TRUE;
+	}
+	return FALSE;
+}
 
 
 /**
  Dealloc
- 
  */
 - (void) dealloc {
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:OBSERVER_ID object:nil];//ノーティフィケーションから外す
 	
 	//予定している処理があったら、消す。 なかなか効果的にならない。
+	//そも、予定しているアクションの数が知りたい。
+	
 	
 	NSLog(@"deallocに到達_%@", [self getMyName]);
 	
@@ -1427,8 +1445,8 @@
 	
 	//子供の名前とIDを保存する辞書	NSMutableDictionary
 	NSAssert([[self getChildDict] count] == 0, @"childDict_%d",[[self getChildDict] count]);
-	[[self getChildDict] removeAllObjects];
-	[[self getChildDict] release];
+	[childDict removeAllObjects];
+	[childDict release];
 	
 	//ログ削除
 //	NSAssert([logDict count] == 0, @"logDict_%d",[logDict count]);
