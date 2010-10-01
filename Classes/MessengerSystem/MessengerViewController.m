@@ -41,8 +41,8 @@
 		[self initMyMID];
 		[self initMyParentData];
 		
-		buttonList = [[NSMutableDictionary alloc] init];
-		messengerList = [[NSMutableDictionary alloc] init];
+		m_buttonList = [[NSMutableDictionary alloc] init];
+		m_messengerList = [[NSMutableDictionary alloc] init];
 		
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(innerPerform:) name:OBSERVER_ID object:nil];
 	}
@@ -192,8 +192,7 @@
 	
 	//ビュー、辞書に要素を加える
 	UIButton * newButton;
-	newButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50., 50.)];//[UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-	[newButton autorelease];
+	newButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50., 50.)] autorelease];//[UIButton buttonWithType:UIButtonTypeDetailDisclosure];
 	
 	[newButton setHidden:FALSE];
 	
@@ -286,6 +285,7 @@
 	NSLog(@"登録抹消が行われた_%@", removeKey);
 }
 
+
 /**
  ドローデータの更新
  */
@@ -296,7 +296,7 @@
 	//子供　対　親なので、ポイントに換算して置ける筈。
 	NSLog(@"messengerList_%@", [self getMessengerList]);
 	
-	NSMutableDictionary * connectionList = [[[NSMutableDictionary alloc] init] autorelease];
+	NSMutableDictionary * m_connectionList = [[[NSMutableDictionary alloc] init] autorelease];
 	
 	
 	
@@ -325,13 +325,13 @@
 			
 			
 			
-			[connectionList setValue:positionArray forKey:key];
+			[m_connectionList setValue:positionArray forKey:key];
 		}
 	}
 	
-	[self setNumberOfRelationship:[connectionList count]];
+	[self setNumberOfRelationship:[m_connectionList count]];
 	
-	[messengerInterfaceView updateDrawList:[self getButtonList] andConnectionList:connectionList];//ボタン座標データをビューの描画リストにセットする
+	[messengerInterfaceView updateDrawList:[self getButtonList] andConnectionList:m_connectionList];//ボタン座標データをビューの描画リストにセットする
 }
 
 
@@ -340,11 +340,11 @@
  関係性の本数を返すメソッド
  */
 - (void) setNumberOfRelationship:(int)number {
-	numberOfRelationship = number;
+	m_numberOfRelationship = number;
 }
 
 - (int) getNumberOfRelationship {
-	return numberOfRelationship;
+	return m_numberOfRelationship;
 }
 
 /**
@@ -368,14 +368,14 @@
  ボタン用の辞書を取得する
  */
 - (NSMutableDictionary * ) getButtonList {
-	return buttonList;
+	return m_buttonList;
 }
 
 /**
  View用の辞書を取得する
  */
 - (NSMutableDictionary * ) getMessengerList {
-	return messengerList;
+	return m_messengerList;
 }
 
 
@@ -460,8 +460,8 @@
 	[super dealloc];
 	
 	
-	[messengerList removeAllObjects];
-	[buttonList removeAllObjects];
+	[m_messengerList removeAllObjects];
+	[m_buttonList removeAllObjects];
 }
 
 @end

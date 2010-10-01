@@ -16,12 +16,12 @@
 	//追加するインスタンス
 	
 	//通信者記録用の辞書
-	NSMutableDictionary * messengerList;//ビュー自体が持つMessengerの辞書
-	NSMutableDictionary * buttonList;//ボタン辞書
+	NSMutableDictionary * m_messengerList;//ビュー自体が持つMessengerの辞書
+	NSMutableDictionary * m_buttonList;//ボタン辞書
 	
 	MessengerDisplayView * messengerInterfaceView;//ボタン、ラインをセットするビュー
 	
-	int numberOfRelationship;
+	int m_numberOfRelationship;
 }
 //初期化
 - (id) initWithBodyID:(id)body_id withSelector:(SEL)body_selector withName:(NSString * )name;//オーバーライド、アサートを架けて使用禁止

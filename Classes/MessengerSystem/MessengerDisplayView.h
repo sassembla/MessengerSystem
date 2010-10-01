@@ -14,8 +14,8 @@
  
  */
 @interface MessengerDisplayView : UIView {
-	NSMutableDictionary * drawList;
-	NSMutableDictionary * connectionList;
+	NSMutableDictionary * m_drawList;
+	NSMutableDictionary * m_connectionList;
 	
 }
 

@@ -58,7 +58,7 @@
 
 //ログシステム
 - (void) addCreationLog:(NSMutableDictionary * )dict;//メッセージ初期作成ログを内部に保存する/返すメソッド
-- (void) saveLogForReceived:(NSMutableDictionary * )logDict;//受信時に付与するログを内部に保存するメソッド
+- (void) saveLogForReceived:(NSMutableDictionary * )m_logDict;//受信時に付与するログを内部に保存するメソッド
 - (NSMutableDictionary * ) createLogForReply;//返答送信時に付与するログを内部に保存する/返すメソッド
 
 - (void) saveToLogStore:(NSString * )name log:(NSDictionary * )value;
@@ -67,8 +67,6 @@
 
 
 //setter, initializer
-- (void) setMyBodyID:(id)bodyID;
-- (void) setMyBodySelector:(SEL)body_selector;
 - (void) setMyName:(NSString * )name;
 - (void) initMyMID;
 - (void) initMyParentData;
@@ -551,7 +549,7 @@
 
 //子供辞書関連
 /**
- 自分をParentとして指定してきたChildについて、子供のmyNameとmyMIDを自分のchildDictに登録する。
+ 自分をParentとして指定してきたChildについて、子供のmyNameとmyMIDを自分のm_childDictに登録する。
  */
 - (void) setChildDictChildNameAsValue:(NSString * )senderName withMIDAsKey:(NSString * )senderMID {
 	
@@ -559,7 +557,7 @@
 	
 }
 /**
- 子供からの要請で、childDictから該当の子供情報を削除する
+ 子供からの要請で、m_childDictから該当の子供情報を削除する
  */
 - (void) removeChildDictChildNameAsValue:(NSString * )senderName withMIDAsKey:(NSString * )senderMID {
 	[[self getChildDict] removeObjectForKey:senderMID];//無かったらどうしよう、、、
@@ -605,7 +603,7 @@
 	//メッセージに対してはメッセージIDひも付きの新規ログをつける事になる。
 	//ストアについては、新しいIDのものが出来るとIDの下に保存する。多元木構造になっちゃうなあ。カラムでやった方が良いのかしら？それとも絡み付いたKVSかしら。
 	
-	NSString * messageID = [MessengerIDGenerator getMID];//このメッセージのIDを出力(あとでID認識するため)
+	NSString * messageID = [[[MessengerIDGenerator getMID] copy] autorelease];//このメッセージのIDを出力(あとでID認識するため)
 	
 	
 	//ストアに保存する
@@ -646,9 +644,9 @@
 - (NSMutableDictionary * ) createLogForReply {
 	NSAssert(FALSE, @"createLogForReplyは未完成です。　使用禁止です。");
 	//ログタイプ、タイムスタンプを作成
-	[logDict setValue:@"仮のmessageID" forKey:MS_LOG_MESSAGEID];
+	[m_logDict setValue:@"仮のmessageID" forKey:MS_LOG_MESSAGEID];
 	
-	return logDict;
+	return m_logDict;
 }
 
 /**
@@ -659,10 +657,10 @@
 	
 	NSArray * key = [value allKeys];//1件しか無い内容を取得する
 	
-	[logDict setValue:
+	[m_logDict setValue:
 	 [NSString stringWithFormat:@"%@ %@", name, [value valueForKey:[key objectAtIndex:0]]] 
 			   forKey:
-	 [NSString stringWithFormat:@"%@ %@", [MessengerIDGenerator getMID], [NSDate date]]
+	 [NSString stringWithFormat:@"%@ %@", [[[MessengerIDGenerator getMID] copy] autorelease], [NSDate date]]
 	 ];
 	
 	
@@ -681,27 +679,12 @@
 }
 
 
-/**
- 自分のBodyIDをセットするメソッド
- */
-- (void) setMyBodyID:(id)bodyID {
-	myBodyID = bodyID;
-}
-
-
-/**
- 自分のBodyが提供するメソッドセレクターを、自分のセレクター用ポインタにセットするメソッド
- */
-- (void) setMyBodySelector:(SEL)body_selector {
-	myBodySelector = body_selector;
-}
-
 
 /**
  自分のMIDを初期化するメソッド
  */
 - (void)initMyMID {
-	myMID = [MessengerIDGenerator getMID];
+	myMID = [[MessengerIDGenerator getMID] copy];
 }
 
 
@@ -716,7 +699,7 @@
 
 /**
  親情報をリセットする
- (親のchildDictからも消す)
+ (親のm_childDictからも消す)
  */
 - (void) resetMyParentData {
 	[self removeFromParent];
@@ -796,8 +779,8 @@
 		[self initMyParentData];
 	}
 	
-	childDict = [[NSMutableDictionary alloc] init];
-	logDict = [[NSMutableDictionary alloc] init];
+	m_childDict = [[NSMutableDictionary alloc] init];
+	m_logDict = [[NSMutableDictionary alloc] init];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(innerPerform:) name:OBSERVER_ID object:nil];
 	
@@ -816,6 +799,24 @@
 //	}
 //	return self;
 //}
+
+
+
+/**
+ 自分のBodyIDをセットするメソッド
+ */
+- (void) setMyBodyID:(id)bodyID {
+	myBodyID = bodyID;
+}
+
+
+/**
+ 自分のBodyが提供するメソッドセレクターを、自分のセレクター用ポインタにセットするメソッド
+ */
+- (void) setMyBodySelector:(SEL)body_selector {
+	myBodySelector = body_selector;
+}
+
 
 
 //実行メソッド
@@ -974,47 +975,50 @@
 	
 	
 	//特定のキーが含まれているか
-	//	[childDict allValues]//NSArray コストは概ね一緒かな。 特定のキーが含まれているか否か、を隠蔽したいか否か
-	
-	//親から子へのブロードキャスト MIDで送り先を限定しない。
-	for (id key in [self getChildDict]) {
-		if ([[childDict objectForKey:key] isEqualToString:childName]) {//一つでも合致する内容のものがあれば、メッセージを送る対象として見る。
-			NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:5];
-			
-			[dict setValue:MS_CATEGOLY_CALLCHILD forKey:MS_CATEGOLY];
-			[dict setValue:childName forKey:MS_ADDRESS_NAME];
-			
-			[dict setValue:exec forKey:MS_EXECUTE];
-			[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
-			[dict setValue:[self getMyMID] forKey:MS_SENDERMID];
-			
-			va_list ap;
-			id kvDict;
-			
-			//NSLog(@"start_%@", exec);
-			
-			va_start(ap, exec);
-			kvDict = va_arg(ap, id);
-			
-			while (kvDict) {
-				//NSLog(@"kvDict_%@", kvDict);
-				
-				for (id key in kvDict) {
-					//					NSLog(@"[kvDict valueForKey:key]_%@, key_%@", [kvDict valueForKey:key], key);
-					[dict setValue:[kvDict valueForKey:key] forKey:key];
-				}
-				
-				kvDict = va_arg(ap, id);
-			}
-			va_end(ap);
-			
-			[self sendMessage:dict];
-			
-			return;//一通だけを送る
+	NSArray * arrays = [m_childDict allValues];
+	for (int i = 0; i <= [arrays count]; i++) {
+		if (i == [arrays count]) {
+			//NSAssert1(false, @"callメソッドに指定したmessengerが存在しないか、未知のものです。本messengerを親とした設定を行うよう、子から親を指定してください。_%@",name);
+			return;
+		}
+		
+		if ([[arrays objectAtIndex:i] isEqualToString:childName]) {
+			break;
 		}
 	}
 	
-	//NSAssert1(false, @"callメソッドに指定したmessengerが存在しないか、未知のものです。本messengerを親とした設定を行うよう、子から親を指定してください。_%@",name);
+	
+	NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:5];
+			
+	[dict setValue:MS_CATEGOLY_CALLCHILD forKey:MS_CATEGOLY];
+	[dict setValue:childName forKey:MS_ADDRESS_NAME];
+
+	[dict setValue:exec forKey:MS_EXECUTE];
+	[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
+	[dict setValue:[self getMyMID] forKey:MS_SENDERMID];
+
+	va_list ap;
+	id kvDict;
+
+	//NSLog(@"start_%@", exec);
+
+	va_start(ap, exec);
+	kvDict = va_arg(ap, id);
+
+	while (kvDict) {
+		//NSLog(@"kvDict_%@", kvDict);
+		
+		for (id key in kvDict) {
+			//					NSLog(@"[kvDict valueForKey:key]_%@, key_%@", [kvDict valueForKey:key], key);
+			[dict setValue:[kvDict valueForKey:key] forKey:key];
+		}
+		
+		kvDict = va_arg(ap, id);
+	}
+	va_end(ap);
+
+	[self sendMessage:dict];
+
 }
 
 /**
@@ -1204,7 +1208,7 @@
 	
 	//ストアの全容量を取り出す
 	
-	return logDict;
+	return m_logDict;
 }
 
 
@@ -1212,10 +1216,10 @@
 
 //子供辞書の取得
 /**
- childDictを返す
+ m_childDictを返す
  */
 - (NSMutableDictionary * ) getChildDict {
-	return childDict;
+	return m_childDict;
 }
 
 
@@ -1445,14 +1449,14 @@
 	
 	//子供の名前とIDを保存する辞書	NSMutableDictionary
 	NSAssert([[self getChildDict] count] == 0, @"childDict_%d",[[self getChildDict] count]);
-	[childDict removeAllObjects];
-	[childDict release];
+	[m_childDict removeAllObjects];
+	[m_childDict release];
 	
 	//ログ削除
-//	NSAssert([logDict count] == 0, @"logDict_%d",[logDict count]);
-	[logDict removeAllObjects];
-	NSAssert([logDict count] == 0, @"logDict_%d",[logDict count]);
-	[logDict release];
+//	NSAssert([m_logDict count] == 0, @"logDict_%d",[m_logDict count]);
+	[m_logDict removeAllObjects];
+	NSAssert([m_logDict count] == 0, @"logDict_%d",[m_logDict count]);
+	[m_logDict release];
 	
 	
     [super dealloc];

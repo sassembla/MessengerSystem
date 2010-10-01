@@ -17,6 +17,7 @@
 	MessengerSystem * paren;
 	coTestObject * objectOv;
 	
+	MessengerViewController * mViewCont;
 	
 }
 

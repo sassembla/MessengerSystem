@@ -95,11 +95,11 @@
 	
 	
 	//子供の名前とIDを保存する辞書	NSMutableDictionary
-	NSMutableDictionary * childDict;
+	NSMutableDictionary * m_childDict;
 	
 	
 	//ログ取り用の辞書				NSMutableDictionary
-	NSMutableDictionary * logDict;
+	NSMutableDictionary * m_logDict;
 }
 
 
@@ -117,6 +117,17 @@
 //初期化メソッド
 - (id) initWithBodyID:(id)body_id withSelector:(SEL)body_selector withName:(NSString * )name;
 
+
+
+/**
+ 自分のBodyIDをセットするメソッド
+ */
+- (void) setMyBodyID:(id)bodyID;
+
+/**
+ 自分のBodyが提供するメソッドセレクターを、自分のセレクター用ポインタにセットするメソッド
+ */
+- (void) setMyBodySelector:(SEL)body_selector;
 
 
 //実行メソッド

@@ -13,13 +13,13 @@
 
 /**
  MID発行メソッド
- UUIDを作成する 解放は使う側で行う。
+ UUIDを作成する
  */
 + (NSString * ) getMID {
 	CFUUIDRef	uuidObj = CFUUIDCreate(nil);
 	NSString * uuidString = (NSString * )CFUUIDCreateString(nil, uuidObj);
 	CFRelease(uuidObj);
-	return uuidString;
+	return [uuidString autorelease];
 }
 
 @end

@@ -212,10 +212,10 @@
 	[parent callMyself:@"To Myself!!",nil];
 	
 	//送信記録と受信記録が残る筈。
-	NSDictionary * logDict = [parent getLogStore];
+	NSDictionary * m_logDict = [parent getLogStore];
 	//自分自身への通信なので、送信と受信が一件ずつ残る筈
 	
-	STAssertTrue([logDict count] == 2, @"発信記録、受信記録が含まれていない");
+	STAssertTrue([m_logDict count] == 2, @"発信記録、受信記録が含まれていない");
 }
 
 /**
@@ -324,9 +324,9 @@
 	[child_0 inputParent:TEST_PARENT_NAME];
 	
 	//この時点で、子供は親へと宣言を送った、さらに親がそれを受け止めて返した、というログを持っているはず。
-	NSDictionary * logDict = [child_0 getLogStore];
+	NSDictionary * m_logDict = [child_0 getLogStore];
 	
-	STAssertTrue([logDict count] == 2, [NSString stringWithFormat:@"内容が合致しません_%d", [logDict count]]);
+	STAssertTrue([m_logDict count] == 2, [NSString stringWithFormat:@"内容が合致しません_%d", [m_logDict count]]);
 
 //	STAssertTrue([child_0 retainCount] == 1, @"testCreateLog　カウントがおかしい_%d", [child_0 retainCount]);
 	[child_0 release];//でてない,,,
@@ -378,8 +378,8 @@
 	
 	[child_persis inputParent:TEST_PARENT_NAME];//発信、親認定で+2件
 	
-	NSDictionary * logDict = [child_persis getLogStore];
-	STAssertTrue([logDict count] == 2, [NSString stringWithFormat:@"子供認定2 内容が合致しません_%d", [logDict count]]);
+	NSDictionary * m_logDict = [child_persis getLogStore];
+	STAssertTrue([m_logDict count] == 2, [NSString stringWithFormat:@"子供認定2 内容が合致しません_%d", [m_logDict count]]);
 	
 	
 	NSDictionary * parentLogDict = [parent getLogStore];//親の辞書 子供からの親設定を受信、受付+1 1件
@@ -397,14 +397,14 @@
 	
 	
 	//子供の受け取り確認 受け取り+1 3件
-	STAssertTrue([logDict count] == 3, [NSString stringWithFormat:@"親から子への送信3 内容が合致しません_%d", [logDict count]]);
+	STAssertTrue([m_logDict count] == 3, [NSString stringWithFormat:@"親から子への送信3 内容が合致しません_%d", [m_logDict count]]);
 	
 	
 	
 	[parent call:[child_persis getMyName] withExec:TEST_EXEC_2, nil];//親の送信で+1 子供からの返信で+1 4件
 	
 	//子供の受け取りログ+1、発信ログ+1 5件
-	STAssertTrue([logDict count] == 5, [NSString stringWithFormat:@"子供5 内容が合致しません_%d", [logDict count]]);
+	STAssertTrue([m_logDict count] == 5, [NSString stringWithFormat:@"子供5 内容が合致しません_%d", [m_logDict count]]);
 	
 	
 	
@@ -417,7 +417,7 @@
 	STAssertTrue([child1Dict_1 count] == 0, [NSString stringWithFormat:@"child1Dict_1_内容が合致しません_%d", [child1Dict_1 count]]);
 	
 	
-	STAssertTrue([logDict count] == 5, [NSString stringWithFormat:@"親から子への送信5_内容が合致しません_%d", [logDict count]]);
+	STAssertTrue([m_logDict count] == 5, [NSString stringWithFormat:@"親から子への送信5_内容が合致しません_%d", [m_logDict count]]);
 	
 	[parent2 release];
 	[child_1 release];
@@ -1270,7 +1270,7 @@
 	STAssertTrue([mViewDict count] == 2, [NSString stringWithFormat:@"ViewDict件数が合っていない_%d", [mViewDict count]]);
 	
 	NSMutableDictionary * mButtonDict = [mView getButtonList];
-	STAssertTrue([mButtonDict count] == 2, [NSString stringWithFormat:@"buttonList件数が合っていない_%d", [mButtonDict count]]);
+	STAssertTrue([mButtonDict count] == 2, [NSString stringWithFormat:@"m_buttonList件数が合っていない_%d", [mButtonDict count]]);
 	
 	[mView release];
 	[child_0 release];
@@ -1292,19 +1292,19 @@
 	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
 	
 	STAssertTrue([mMessengerList count] == 1, [NSString stringWithFormat:@"ViewDict件数が合っていない1_%d", [mMessengerList count]]);
-	STAssertTrue([mButtonList count] == 1, [NSString stringWithFormat:@"buttonList件数が合っていない1_%d", [mButtonList count]]);
+	STAssertTrue([mButtonList count] == 1, [NSString stringWithFormat:@"m_buttonList件数が合っていない1_%d", [mButtonList count]]);
 
 	MessengerSystem * parent2 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testParent:) withName:TEST_PARENT_NAME_2];
 	
 	STAssertTrue([mMessengerList count] == 2, [NSString stringWithFormat:@"ViewDict件数が合っていない2_%d", [mMessengerList count]]);
-	STAssertTrue([mButtonList count] == 2, [NSString stringWithFormat:@"buttonList件数が合っていない2_%d", [mButtonList count]]);
+	STAssertTrue([mButtonList count] == 2, [NSString stringWithFormat:@"m_buttonList件数が合っていない2_%d", [mButtonList count]]);
 
 	
 	[child_0 inputParent:TEST_PARENT_NAME];//親子関係を成立、
 	
 	
 	STAssertTrue([mMessengerList count] == 3, [NSString stringWithFormat:@"ViewDict件数が合っていない3_%d", [mMessengerList count]]);
-	STAssertTrue([mButtonList count] == 3, [NSString stringWithFormat:@"buttonList件数が合っていない3_%d", [mButtonList count]]);
+	STAssertTrue([mButtonList count] == 3, [NSString stringWithFormat:@"m_buttonList件数が合っていない3_%d", [mButtonList count]]);
 
 	//このタイミングで、ラインは一本
 	
@@ -1314,7 +1314,7 @@
 	
 	//この時点で親子のラインが消えている筈
 	STAssertTrue([mMessengerList count] == 3, [NSString stringWithFormat:@"ViewDict件数が合っていない3_%d", [mMessengerList count]]);
-	STAssertTrue([mButtonList count] == 3, [NSString stringWithFormat:@"buttonList件数が合っていない3_%d", [mButtonList count]]);
+	STAssertTrue([mButtonList count] == 3, [NSString stringWithFormat:@"m_buttonList件数が合っていない3_%d", [mButtonList count]]);
 	
 	
 	
@@ -1329,14 +1329,14 @@
 	
 	//この時点でchild_0関連のデータが消えている筈
 	STAssertTrue([mMessengerList count] == 2, [NSString stringWithFormat:@"ViewDict件数が合っていない_%d", [mMessengerList count]]);
-	STAssertTrue([mButtonList count] == 2, [NSString stringWithFormat:@"buttonList件数が合っていない_%d", [mButtonList count]]);
+	STAssertTrue([mButtonList count] == 2, [NSString stringWithFormat:@"m_buttonList件数が合っていない_%d", [mButtonList count]]);
 	
 	
 	[parent2 release];
 	
 	//この時点でchild_0関連のデータが消えている筈
 	STAssertTrue([mMessengerList count] == 1, [NSString stringWithFormat:@"ViewDict件数が合っていない_%d", [mMessengerList count]]);
-	STAssertTrue([mButtonList count] == 1, [NSString stringWithFormat:@"buttonList件数が合っていない_%d", [mButtonList count]]);
+	STAssertTrue([mButtonList count] == 1, [NSString stringWithFormat:@"m_buttonList件数が合っていない_%d", [mButtonList count]]);
 	
 	[mView release];
 }
@@ -1358,7 +1358,7 @@
 	[child_0 inputParent:TEST_PARENT_NAME];//親子関係を成立、この時点で線が引かれる筈
 	
 	STAssertTrue([mMessengerList count] == 2, [NSString stringWithFormat:@"ViewDict件数が合っていない_%d", [mMessengerList count]]);
-	STAssertTrue([mButtonList count] == 2, [NSString stringWithFormat:@"buttonList件数が合っていない_%d", [mButtonList count]]);
+	STAssertTrue([mButtonList count] == 2, [NSString stringWithFormat:@"m_buttonList件数が合っていない_%d", [mButtonList count]]);
 	
 	
 	[mView release];
@@ -1386,7 +1386,7 @@
 	
 	
 	STAssertTrue([mMessengerList count] == 2, [NSString stringWithFormat:@"ViewDict件数が合っていない_%d", [mMessengerList count]]);
-	STAssertTrue([mButtonList count] == 2, [NSString stringWithFormat:@"buttonList件数が合っていない_%d", [mButtonList count]]);
+	STAssertTrue([mButtonList count] == 2, [NSString stringWithFormat:@"m_buttonList件数が合っていない_%d", [mButtonList count]]);
 	
 	
 	[mView release];
@@ -1412,7 +1412,7 @@
 	[child_0 release];
 	
 	STAssertTrue([mMessengerList count] == 1, [NSString stringWithFormat:@"ViewDict件数が合っていない_%d", [mMessengerList count]]);
-	STAssertTrue([mButtonList count] == 1, [NSString stringWithFormat:@"buttonList件数が合っていない_%d", [mButtonList count]]);
+	STAssertTrue([mButtonList count] == 1, [NSString stringWithFormat:@"m_buttonList件数が合っていない_%d", [mButtonList count]]);
 	
 	
 	[mView release];
@@ -1437,7 +1437,7 @@
 	STAssertTrue([mView getNumberOfRelationship] == 0, @"関係性の本数が0本ではない");
 	
 	STAssertTrue([mMessengerList count] == 2, [NSString stringWithFormat:@"ViewDict件数が合っていない_%d", [mMessengerList count]]);
-	STAssertTrue([mButtonList count] == 2, [NSString stringWithFormat:@"buttonList件数が合っていない_%d", [mButtonList count]]);
+	STAssertTrue([mButtonList count] == 2, [NSString stringWithFormat:@"m_buttonList件数が合っていない_%d", [mButtonList count]]);
 	
 	
 	[mView release];
@@ -1461,7 +1461,7 @@
 	STAssertTrue([mView getNumberOfRelationship] == 0, @"関係性の本数が0本ではない");
 	
 	STAssertTrue([mMessengerList count] == 1, [NSString stringWithFormat:@"ViewDict件数が合っていない_%d", [mMessengerList count]]);
-	STAssertTrue([mButtonList count] == 1, [NSString stringWithFormat:@"buttonList件数が合っていない_%d", [mButtonList count]]);
+	STAssertTrue([mButtonList count] == 1, [NSString stringWithFormat:@"m_buttonList件数が合っていない_%d", [mButtonList count]]);
 	
 	parent = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testParent:) withName:TEST_PARENT_NAME];
 	

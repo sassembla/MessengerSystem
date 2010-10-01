@@ -27,15 +27,15 @@
  */
 - (void) updateDrawList:(NSMutableDictionary * )draw andConnectionList:(NSMutableDictionary * )connect {
 	
-	[drawList autorelease];
-	drawList = [draw copy];//ポインタの更新
-	NSLog(@"drawList_%@", drawList);
+	[m_drawList autorelease];
+	m_drawList = [draw copy];//ポインタの更新
+	NSLog(@"drawList_%@", m_drawList);
 	
 	
-	[connectionList autorelease];//コネクションの更新
-	connectionList = [connect copy];
+	[m_connectionList autorelease];//コネクションの更新
+	m_connectionList = [connect copy];
 	
-	NSLog(@"connectionList_%@", connectionList);
+	NSLog(@"connectionList_%@", m_connectionList);
 	
 	
 	NSLog(@"描画_アップデート");
@@ -62,10 +62,10 @@
 	
 	
 	//オブジェクトを描く
-	for (id key in drawList) {
+	for (id key in m_drawList) {
 		
 		
-		UIButton * b = [drawList valueForKey:key];
+		UIButton * b = [m_drawList valueForKey:key];
 		CGRect bRect = CGRectMake(b.frame.origin.x, b.frame.origin.y, b.frame.size.width, b.frame.size.height);
 		
 		CGContextSetLineWidth(context, 6.0);
@@ -79,9 +79,9 @@
 						   atX:b.frame.origin.x atY:b.frame.origin.y];
 		
 		//ラインを引く
-		for (id connectionKey in connectionList) {
+		for (id connectionKey in m_connectionList) {
 			if ([key isEqualToString:connectionKey]) {//一致するキーのラインを描く
-				NSArray * positionArray = [connectionList valueForKey:key];
+				NSArray * positionArray = [m_connectionList valueForKey:key];
 				
 				float sx = [[positionArray objectAtIndex:0] floatValue];
 				float sy = [[positionArray objectAtIndex:1] floatValue];
