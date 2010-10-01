@@ -75,7 +75,6 @@
 		return;
 	}
 	
-	
 	//送信者MID
 	NSString * senderMID = [dict valueForKey:MS_SENDERMID];
 	if (!senderMID) {//送信者不詳であれば無視する
@@ -118,7 +117,6 @@
 	//自死
 	if ([commandName isEqualToString:MS_NOTICE_DEATH]) {
 		NSLog(@"MS_NOTICE_DEATH_到着_%@, MID_%@", senderName, senderMID);
-	//	NSAssert(FALSE, @"到達");
 		[self deleteMessengerInformation:senderName withMID:senderMID];
 		return;
 	}
@@ -128,41 +126,41 @@
 	
 	
 
-	//その他、認識するが何もしないメソッド
-	
-	if ([commandName isEqualToString:MS_CATEGOLY_REMOVE_PARENT]) {
-		//親設定の解除コマンドを判断
-		return;
-	}
-	
-	
-	if ([commandName isEqualToString:MS_CATEGOLY_REMOVE_CHILD]) {
-		//子供設定の解除コマンドを判断
-		return;
-	}
-	
-	
-	if ([commandName isEqualToString:MS_CATEGOLY_CALLCHILD]) {
-		//親から子の関係性成立済み情報が載っている
-		return;
-	}
-		 
-	if ([commandName isEqualToString:MS_CATEGOLY_CALLPARENT]) {
-		//子から親の関係性成立済み情報が載っている
-		return;
-	}
-	
-	if ([commandName isEqualToString:MS_CATEGOLY_LOCAL]) {
-		//だれかからだれか自身へのメッセージ
-		return;
-	}
-	
-	if ([commandName isEqualToString:MS_CATEGOLY_PARENTSEARCH]) {
-		//親決定のメソッド
-		return;
-	}
-	
-	NSAssert(FALSE, @"MessengeViewController　innerPerformの終端_%@", commandName);
+//	//その他、認識するが何もしないメソッド
+//	
+//	if ([commandName isEqualToString:MS_CATEGOLY_REMOVE_PARENT]) {
+//		//親設定の解除コマンドを判断
+//		return;
+//	}
+//	
+//	
+//	if ([commandName isEqualToString:MS_CATEGOLY_REMOVE_CHILD]) {
+//		//子供設定の解除コマンドを判断
+//		return;
+//	}
+//	
+//	
+//	if ([commandName isEqualToString:MS_CATEGOLY_CALLCHILD]) {
+//		//親から子の関係性成立済み情報が載っている
+//		return;
+//	}
+//		 
+//	if ([commandName isEqualToString:MS_CATEGOLY_CALLPARENT]) {
+//		//子から親の関係性成立済み情報が載っている
+//		return;
+//	}
+//	
+//	if ([commandName isEqualToString:MS_CATEGOLY_LOCAL]) {
+//		//だれかからだれか自身へのメッセージ
+//		return;
+//	}
+//	
+//	if ([commandName isEqualToString:MS_CATEGOLY_PARENTSEARCH]) {
+//		//親決定のメソッド
+//		return;
+//	}
+//	
+//	NSAssert(FALSE, @"MessengeViewController　innerPerformの終端_%@", commandName);
 }
 
 

@@ -223,12 +223,17 @@ static void mapCharactersToGlyphsInFont(const fontTable *table, unichar characte
     }
 }
 
+
+
+
 /**
  文字列描画プログラム
  日本語対応
  外部から実行
  */
 + (void) drawString:(CGContextRef)context string:(NSString * )str withFont:(NSString * )fontName fontSize:(int)size atX:(float)x atY:(float)y {
+	NSAssert(0 < [str length], @"drawString_str must have length.");
+	if ([str length] == 0) return; 
 	
 	CGFontRef font = CGFontCreateWithFontName((CFStringRef)fontName);
 	
@@ -241,6 +246,7 @@ static void mapCharactersToGlyphsInFont(const fontTable *table, unichar characte
 		_chars[i] = [str characterAtIndex:i];
 	}
 	
+	
 	size_t griphLen = 0;
 	mapCharactersToGlyphsInFont(tbl, _chars, originalLen, _glyphs, &griphLen);
 	
@@ -252,6 +258,8 @@ static void mapCharactersToGlyphsInFont(const fontTable *table, unichar characte
 	CGContextSetTextPosition(context, x, y);
 	
 	CGContextShowGlyphs(context, _glyphs, griphLen);
+	
+	CFRelease(font);
 }
 
 @end

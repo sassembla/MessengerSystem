@@ -26,7 +26,7 @@
    
 	mViewCont = [[MessengerViewController alloc] initWithFrame:window.frame];
 	
-	UIViewController * vController = [[UIViewController alloc] init];//うーん、オーバーライド無しには回転するように出来ない、ってのはちと、、
+	m_vController = [[UIViewController alloc] init];//うーん、オーバーライド無しには回転するように出来ない、ってのはちと、、
 	
 	[window addSubview:[mViewCont getMessengerInterfaceView]];
 	
@@ -64,7 +64,7 @@
 	switch (n) {
 		case -1295402496://COMMAND_YEAH//この部分をマクロで書ければ最高。
 		
-			
+			break;
 		default:
 
 			NSLog(@"per_%d", n);//コマンドの数字を出す
@@ -127,6 +127,10 @@
 	[paren release];
     [window release];
 	[mViewCont release];
+	
+	[m_vController release];
+	
+	
     [super dealloc];
 }
 

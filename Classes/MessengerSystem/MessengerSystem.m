@@ -10,15 +10,6 @@
 #import "MessengerIDGenerator.h"
 
 
-#define NSLog( m, args... )
-
-
-
-
-
-
-
-
 
 
 /**
@@ -94,14 +85,14 @@
 	//コマンド名について確認
 	NSString * commandName = [dict valueForKey:MS_CATEGOLY];
 	if (!commandName) {
-		NSLog(@"コマンドが無いため、何の処理も行われずに帰る");
+//		NSLog(@"コマンドが無いため、何の処理も行われずに帰る");
 		return;
 	}
 	
 	//送信者名
 	NSString * senderName = [dict valueForKey:MS_SENDERNAME];
 	if (!senderName) {//送信者不詳であれば無視する
-		NSLog(@"送信者NAME不詳");
+//		NSLog(@"送信者NAME不詳");
 		return;
 	}
 	
@@ -109,7 +100,7 @@
 	//送信者MID
 	NSString * senderMID = [dict valueForKey:MS_SENDERMID];
 	if (!senderMID) {//送信者不詳であれば無視する
-		NSLog(@"送信者ID不詳");
+//		NSLog(@"送信者ID不詳");
 		return;
 	}
 	
@@ -170,12 +161,12 @@
 		
 		
 		if (![senderName isEqualToString:[self getMyName]]) {
-			NSLog(@"MS_CATEGOLY_LOCAL 名称が違う_%@", [self getMyName]);
+//			NSLog(@"MS_CATEGOLY_LOCAL 名称が違う_%@", [self getMyName]);
 			return;
 		}
 		
 		if (![senderMID isEqualToString:[self getMyMID]]) {//MIDが異なれば処理をしない
-			NSLog(@"名前が同様の異なるMIDを持つオブジェクト");
+//			NSLog(@"名前が同様の異なるMIDを持つオブジェクト");
 			return;
 		}
 		
@@ -199,7 +190,7 @@
 	if ([commandName isEqualToString:MS_CATEGOLY_CALLCHILD]) {
 		//宛名が自分の事でなかったら帰る
 		if (![address isEqualToString:[self getMyName]]) {
-			NSLog(@"自分宛ではないので却下_From_%@,	To_%@,	Iam_%@", senderName, address, [self getMyName]);
+//			NSLog(@"自分宛ではないので却下_From_%@,	To_%@,	Iam_%@", senderName, address, [self getMyName]);
 			return;
 		}
 		
@@ -234,7 +225,7 @@
 	if ([commandName isEqualToString:MS_CATEGOLY_CALLPARENT]) {//親に送られたメッセージ
 		
 		if (![address isEqualToString:[self getMyName]]) {//送信者の指定した宛先が自分か
-			NSLog(@"MS_CATEGOLY_CALLPARENT_宛先ではないMessnegerが受け取った");
+//			NSLog(@"MS_CATEGOLY_CALLPARENT_宛先ではないMessnegerが受け取った");
 			return;
 		}
 		
@@ -242,14 +233,14 @@
 		//宛先MIDのキーがあるか
 		NSString * calledParentMSID = [dict valueForKey:MS_ADDRESS_MID];
 		if (!calledParentMSID) {
-			NSLog(@"親のMIDの入力が無ければ無効");
+//			NSLog(@"親のMIDの入力が無ければ無効");
 			return;//値が無ければ無視する
 		}
 		
 		
 		//自分のMIDと一致するか
 		if (![calledParentMSID isEqualToString:[self getMyMID]]) {
-			NSLog(@"同名の親が存在するが、呼ばれている親と異なるため無効");
+//			NSLog(@"同名の親が存在するが、呼ばれている親と異なるため無効");
 			return;
 		}
 		
@@ -352,7 +343,7 @@
 	
 	//子供解消のコマンドが届いた
 	if ([commandName isEqualToString:MS_CATEGOLY_REMOVE_CHILD]) {
-		NSLog(@"MS_CATEGOLY_REMOVE_CHILD到着");
+//		NSLog(@"MS_CATEGOLY_REMOVE_CHILD到着");
 		
 		//自分自身を除外
 		if ([[self getMyMID] isEqualToString:senderMID]) {
@@ -760,7 +751,7 @@
  バージョンを返す
  */
 + (NSString * )version {
-    return @"0.5.0";//10/09/20 3:46:51
+	return MS_VERSION;
 }
 
 //初期化メソッド
@@ -790,15 +781,28 @@
 }
 
 
-//- (id) initWithManual {
-//	/*
-//	 マニュアル表示のプログラムを書こう！
-//	 */
-//	if (self = [super init]) {
-//		
-//	}
-//	return self;
-//}
+/**
+ マニュアルを初期化、表示するプログラム
+ 文字のみ。
+ */
+- (id) initWithManual {
+	/*
+	 マニュアル表示のプログラムを書こう！
+	 
+	 マニュアルを、システムと一緒に表示する。
+	 文章をメッセージシステムで構築、
+	 一定時間ごとにデモとして表示する。
+	 ここで、デモインスタンスをよびだす、ループを組んでしまう。
+	 
+	 デモの内容を考えよう。
+	 
+	 デモが終わったら、デモが終わったサインを出して終了する。
+	 */
+	if (self = [super init]) {
+		
+	}
+	return self;
+}
 
 
 
@@ -1408,17 +1412,15 @@
 	
 	//予定している処理があったら、消す。 なかなか効果的にならない。
 	//そも、予定しているアクションの数が知りたい。
-	
-	
-	NSLog(@"deallocに到達_%@", [self getMyName]);
+
 	
 	if ([self hasChild]) {
-		NSLog(@"子供がいる_%@",[self getMyName]);
+//		NSLog(@"子供がいる_%@",[self getMyName]);
 		[self removeAllChild];
 	}
 	
 	if ([self hasParent]) {
-		NSLog(@"親がいる_%@",[self getMyName]);
+//		NSLog(@"親がいる_%@",[self getMyName]);
 		[self removeFromParent];
 	}
 	

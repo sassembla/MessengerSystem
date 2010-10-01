@@ -10,6 +10,12 @@
 
 
 
+//(@"0.5.0")//10/09/20 3:46:51
+#define MS_VERSION	(@"0.8.0")//10/10/01 21:49:34
+
+
+
+
 //カテゴリ系タグ メッセージの種類を用途ごとに分ける
 #define MS_CATEGOLY	(@"MESSENGER_SYSTEM_COMMAND")//コマンドに類するキー
 	#define MS_CATEGOLY_LOCAL			(@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_LOCAL")//自分呼び出し
@@ -117,6 +123,9 @@
 //初期化メソッド
 - (id) initWithBodyID:(id)body_id withSelector:(SEL)body_selector withName:(NSString * )name;
 
+
+//マニュアルメソッド
+- (id) initWithManual;
 
 
 /**

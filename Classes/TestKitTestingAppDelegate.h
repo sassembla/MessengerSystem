@@ -10,12 +10,15 @@
 
 #import "MessengerSystem.h"
 #import "coTestObject.h"
+#import "MessengerViewController.h"
 
 
 @interface TestKitTestingAppDelegate : NSObject <UIApplicationDelegate> {
     UIWindow *window;
 	MessengerSystem * paren;
 	coTestObject * objectOv;
+	
+	UIViewController * vController;
 	
 	MessengerViewController * mViewCont;
 	
