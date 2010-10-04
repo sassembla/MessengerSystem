@@ -31,9 +31,19 @@
 	[window addSubview:[mViewCont getMessengerInterfaceView]];
 	
 	paren = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:PARENTNAME];
-	[paren callMyself:COMMAND_DELETE,
-	 [paren withDelay:3],
-	 nil];
+	
+	objectOv = [[coTestObject alloc] init];
+	
+	coTestObject * obj2 = [[coTestObject alloc] init];
+	
+	coTestObject * obj3 = [[coTestObject alloc] init2];
+	//coTestObject * obj4 = [[coTestObject alloc] init2];
+//	coTestObject * obj5 = [[coTestObject alloc] init2];
+	
+	
+//	[paren callMyself:COMMAND_DELETE,
+//	 [paren withDelay:3],
+//	 nil];
 	
 	[window makeKeyAndVisible];
 	

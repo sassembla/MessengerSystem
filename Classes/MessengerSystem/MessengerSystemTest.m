@@ -710,6 +710,32 @@
 
 
 /**
+ 一人目の子供に同名の複数の子供
+ */
+- (void) testChild_s_child_sameName {
+	MessengerSystem * child_2 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild2:) withName:TEST_CHILD_NAME_2];
+	MessengerSystem * child_3 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild2:) withName:TEST_CHILD_NAME_2];
+	
+	
+	[child_persis inputParent:TEST_PARENT_NAME];
+	
+	[child_2 inputParent:[child_persis getMyName]];
+	[child_3 inputParent:[child_persis getMyName]];
+	
+	//child_0の子供としてchild_2をセットした際、child_0の名前がchild_2のmyParentにセットしてあるはず。
+	NSMutableDictionary * dict1 = [child_persis getChildDict];
+	STAssertTrue([[dict1 valueForKey:[child_2 getMyMID]] isEqualToString:[child_2 getMyName]], @"child_2の親登録が違った");
+	
+	
+	//親に送る系の命令は、child_2からは0、0からはparentに行くはず。
+	//	STAssertTrue([child_2 retainCount] == 1, @"testChild_s_child　カウントがおかしい_%d", [child_2 retainCount]);
+	[child_2 release];
+	[child_3 release];
+}
+
+
+
+/**
  複数の子供を設定し、順に削除する
  */
 - (void) testMultiChild {
@@ -1469,11 +1495,76 @@
 }
 
 
+/**
+ 名前のコレクションを行い、異なる名前を集める。
+ X軸、ボタンのフレームのX値を更新する。
+ */
+- (void) testSortNameIndex {
+	MessengerViewController * mView = [[MessengerViewController alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
+	
+	MessengerSystem * mes1 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:@"テスト１"];
+	MessengerSystem * mes2 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:@"テスト１"];
+	MessengerSystem * mes3 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:@"テスト２"];
+	MessengerSystem * mes4 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:@"テスト３"];
+
+	//件数が3件ならOK
+	STAssertTrue([[mView getNameIndexDictionary] count] == 3, @"件数が一致しない");
+	
+	
+	[mes1 release];
+	[mes2 release];
+	[mes3 release];
+	[mes4 release];
+	
+	[mView release];
+}
+
+/**
+ X位置の更新確認
+ */
+- (void) testSortNameIndex_X {
+	MessengerViewController * mView = [[MessengerViewController alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
+	
+	MessengerSystem * mes1 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:@"テスト１"];
+	MessengerSystem * mes2 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:@"テスト１"];
+	MessengerSystem * mes3 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:@"テスト２"];
+	MessengerSystem * mes4 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:@"テスト３"];
+	
+	[mes1 inputParent:[parent getMyName]];
+	
+	
+	//parentが出現し、件数が４件に
+	STAssertTrue([[mView getNameIndexDictionary] count] == 4, @"件数が一致しない");
+	
+	//かつ、parentのインデックスがmes1よりも小さい＝左に来ていればOK
+	
+	int index = [[[mView getNameIndexDictionary] valueForKey:[parent getMyName]] intValue];
+	int index2 = [[[mView getNameIndexDictionary] valueForKey:[mes1 getMyName]] intValue];
+	STAssertTrue(index < index2, @"名称が一致しない_%d", index);
+	
+	
+	
+	[mes3 inputParent:[parent getMyName]];
+	[mes4 inputParent:[mes3 getMyName]];
+	
+	index = [[[mView getNameIndexDictionary] valueForKey:[parent getMyName]] intValue];
+	index2 = [[[mView getNameIndexDictionary] valueForKey:[mes1 getMyName]] intValue];
+	int index3 = [[[mView getNameIndexDictionary] valueForKey:[mes3 getMyName]] intValue];
+	int index4 = [[[mView getNameIndexDictionary] valueForKey:[mes4 getMyName]] intValue];
+	STAssertTrue(index < index2, @"名称が一致しない_%d", index);
+	STAssertTrue(index < index3, @"インデックスが想定通りではない_%d", index);
+	STAssertTrue(index3 < index4, @"インデックスが想定通りではない_%d", index);
+	
+	
+	[mes1 release];
+	[mes2 release];
+	[mes3 release];
+	[mes4 release];
+	
+	[mView release];
+}
 
 
-
- 
- 
 
 
 

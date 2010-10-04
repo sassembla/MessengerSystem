@@ -13,10 +13,10 @@
 @implementation coTestObject
 - (id) init {
 	if (self = [super init]) {
-		
+		messenger = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:CHILD_1];
+		[messenger inputParent:PARENTNAME];
 	}
-	messenger = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:CHILD_1];
-	[messenger inputParent:PARENTNAME];
+	
 	return self;
 }
 
@@ -24,7 +24,7 @@
 - (id) init2 {
 	if (self = [super init]) {
 		messenger = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:CHILD_3];
-		[messenger inputParent:PARENTNAME];
+		[messenger inputParent:CHILD_1];
 	}
 	return self;
 }

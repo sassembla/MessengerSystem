@@ -12,12 +12,21 @@
 
 #import <UIKit/UIKit.h>
 
+
+#define INTERVAL_WIDTH	(60)
+#define INTERVAL_HEIGHT	(50)
+#define OFFSET_X	(10)
+#define OFFSET_Y	(40)
+
+
+
 @interface MessengerViewController : MessengerSystem {
-	//追加するインスタンス
 	
 	//通信者記録用の辞書
 	NSMutableDictionary * m_messengerList;//ビュー自体が持つMessengerの辞書
 	NSMutableDictionary * m_buttonList;//ボタン辞書
+	
+	NSMutableDictionary * m_nameIndexDictionary;//何種類の名称が有るか、またそれが左から何番目か一時的に保存する辞書
 	
 	MessengerDisplayView * messengerInterfaceView;//ボタン、ラインをセットするビュー
 	
@@ -93,6 +102,17 @@
 
 - (void) setMyParentName:(NSString * )parent;
 
+
+/**
+ 表示補助用のインデックス　X軸カウント
+ */
+- (void) setNameIndexDictionary;
+- (NSMutableDictionary * ) getNameIndexDictionary;
+
+/**
+ 全ボタンの位置をソートする
+ */
+- (void) sortButtonsByParentOrder;
 
 
 

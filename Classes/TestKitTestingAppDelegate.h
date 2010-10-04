@@ -18,7 +18,7 @@
 	MessengerSystem * paren;
 	coTestObject * objectOv;
 	
-	UIViewController * vController;
+	UIViewController * m_vController;
 	
 	MessengerViewController * mViewCont;
 	

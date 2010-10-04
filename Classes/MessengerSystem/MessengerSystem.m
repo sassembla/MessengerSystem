@@ -284,13 +284,20 @@
 			return;//値が無ければ無視する
 		}
 		
-//		NSLog(@"自分以外の誰かが、自分をparentとして設定しようと通信してきている。_%@", calledParentName);
+		NSLog(@"自分以外の誰かが、自分をparentとして設定しようと通信してきている。_%@", calledParentName);
 		if ([calledParentName isEqualToString:[self getMyName]]) {//それが自分だったら
 			
 			id invocatorId = [notification object];
+			
+			NSLog(@"getMyName_%@",[invocatorId getMyName]);
+			NSLog(@"getMyParentName_%@",[invocatorId getMyParentName]);
+			NSLog(@"getMyParentMID_%@",[invocatorId getMyParentMID]);
+			
+			NSLog(@"getMyMID_%@", [self getMyMID]);
+			
 			//親は先着順で設定される。既に子供が自分と同名の親にアクセスし、そのMIDを持っている場合があり得るため、ここで子供の持っている親MIDを確認する必要がある
 			if ([invocatorId hasParent]) {
-				NSAssert(FALSE, @"親が既に存在している");//現在は複数の親を許容する仕様ではないので、エラーとして発生させる
+//				NSAssert(FALSE, @"親が既に存在している");//現在は複数の親を許容する仕様ではないので、エラーとして発生させる//えらーではないが、どうするか。固有識別できるならすべき。
 				return;
 			}
 			
@@ -569,7 +576,7 @@
 	//(*func)(self,@selector(setMyParentMID:),@"ついた");
 	
 	id inv = mySelf;
-	if (mySelf == self) inv = @"DUMMY_POINTER"; 
+	if (mySelf == self) inv = @"DUMMY_POINTER";//ここだけ、とても汚い遠隔実行のコード。メソッドを別けるべき。でもこうしないと、参照カウンタが増えてしまう。
 	
 	NSDictionary * retDict = [NSDictionary dictionaryWithObjectsAndKeys:
 							  inv,	MS_RETURNID, 

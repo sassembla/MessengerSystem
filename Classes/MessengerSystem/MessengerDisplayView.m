@@ -49,7 +49,6 @@
  */
 - (void)drawRect:(CGRect)rect {
 
-	NSLog(@"描画中");
 	CGContextRef context = UIGraphicsGetCurrentContext();
 	
 	CGContextSetGrayFillColor(context, 0., 1);
@@ -75,7 +74,7 @@
 		
 		
 		//名前を書く
-		[GlyphTable drawString:context string:key withFont:@"HiraKakuProN-W3" fontSize:20 
+		[GlyphTable drawString:context string:[key substringToIndex:5] withFont:@"HiraKakuProN-W3" fontSize:20 
 						   atX:b.frame.origin.x atY:b.frame.origin.y];
 		
 		//ラインを引く
