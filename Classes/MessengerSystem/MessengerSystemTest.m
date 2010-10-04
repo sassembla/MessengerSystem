@@ -429,102 +429,19 @@
  */
 - (void) testCallToNotChild {
 	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
-	NSLog(@"testCallToNotChildテスト到達-1");
+	
 	[child_0 inputParent:TEST_PARENT_NAME];//発信、親認定で+2件
-	NSLog(@"testCallToNotChildテスト到達0");
-	MessengerSystem * child_2 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild2:) withName:TEST_CHILD_NAME_2];
-	[parent call:[child_2 getMyName] withExec:TEST_EXEC, nil];//無効な呼び出し
-	NSLog(@"testCallToNotChildテスト到達1");
+	
+
 	NSDictionary * parentLogDict = [parent getLogStore];//親の辞書には、子供Aからの通信で1件、存在しない子供Bへの最初の書き込みで0件 1
 	STAssertTrue([parentLogDict count] == 1, [NSString stringWithFormat:@"testCallToNotChild_親の内容1_内容が合致しません_%d", [parentLogDict count]]);	
-	NSLog(@"testCallToNotChildテスト到達2");
-	[child_0 release];
-	[child_2 release];
-}
-
-
-
-
-/**
- 存在しなかった子供が存在できるようになったところから、続きとして動作するかテスト
- */
-- (void) testCallToNotChild_continue {
-	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
-	
-	[child_0 inputParent:TEST_PARENT_NAME];//発信、親認定で+2件
-	NSLog(@"testCallToNotChild_continueテスト到達1");
-	MessengerSystem * child_2 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild2:) withName:TEST_CHILD_NAME_2];
-	[parent call:[child_2 getMyName] withExec:TEST_EXEC, nil];//無効な呼び出し
 	
 	
-	NSDictionary * parentLogDict = [parent getLogStore];//親の辞書には、子供Aからの通信で1件、存在しない子供Bへの最初の書き込みで0件 1
-	STAssertTrue([parentLogDict count] == 1, [NSString stringWithFormat:@"親の内容1_内容が合致しません_%d", [parentLogDict count]]);
-	
-	NSLog(@"testCallToNotChild_continueテスト到達2");
-	//親の辞書を調べてみる。
-//	NSDictionary * parentDict = [parent getLogStore];
-	
-	[child_2 inputParent:[parent getMyName]];//発信、親認定で+2件
-	
-	NSDictionary * child_2Dict = [child_2 getLogStore];
-	STAssertTrue([child_2Dict count] == 2, [NSString stringWithFormat:@"子の内容1_内容が合致しません_%d", [child_2Dict count]]);
-	NSLog(@"testCallToNotChild_continueテスト到達3");
-	
-	//親の辞書には、子供Bからの通信で１件　+1 2
-	STAssertTrue([parentLogDict count] == 2, [NSString stringWithFormat:@"親の内容2_内容が合致しません_%d", [parentLogDict count]]);
-	
-	
-	NSLog(@"testCallToNotChild_continueテスト到達4");
-	
-	[parent call:[child_2 getMyName] withExec:TEST_EXEC, nil];//子供Bへの通信で１件 +1 3
-	
-	
-	STAssertTrue([parentLogDict count] == 3, [NSString stringWithFormat:@"親の内容3_内容が合致しません_%d", [parentLogDict count]]);
-	
-//	STAssertTrue([child_0 retainCount] == 1, @"testCallToNotChild_continue　カウントがおかしい_%d", [child_0 retainCount]);
-//	STAssertTrue([child_2 retainCount] == 1, @"testCallToNotChild_continue　2カウントがおかしい_%d", [child_2 retainCount]);
-	[child_0 release];
-	[child_2 release];
-}
-
-
-/**
- 親から子へ
- 子供からの通信順番をいじったバージョン
- 
- */
-- (void) testCallToNotChild_another {
-	
-	MessengerSystem * child_2 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild2:) withName:TEST_CHILD_NAME_2];
-	
-	[parent call:[child_2 getMyName] withExec:TEST_EXEC, nil];//無効
-	NSLog(@"テスト到達");
-	/**
-	 存在しているがセットされていない相手にcallした後の動作
-	 */
-	NSDictionary * parentLogDict = [parent getLogStore];//親の辞書には、存在しない子供Bへの最初の書き込みで0件 0
-	STAssertTrue([parentLogDict count] == 0, [NSString stringWithFormat:@"親の内容1_内容が合致しません_%d", [parentLogDict count]]);
-	
-	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
-	NSLog(@"テスト到達2");
-	[child_0 inputParent:TEST_PARENT_NAME];//発信、親認定で+2件
-	NSLog(@"テスト到達2.5");
-	
-	[child_2 inputParent:TEST_PARENT_NAME];//発信、親認定で+2件
-	NSLog(@"テスト到達3");
-	NSDictionary * child_0Dict = [child_0 getLogStore];
-	STAssertTrue([child_0Dict count] == 2, [NSString stringWithFormat:@"子の内容1_内容が合致しません_%d", [child_0Dict count]]);
-	NSLog(@"テスト到達4");
-	
-	//親の辞書には、子供Aからの通信で１件 、子供Bからの通信で１件 2
-	STAssertTrue([parentLogDict count] == 2, [NSString stringWithFormat:@"親の内容2_内容が合致しません_%d", [parentLogDict count]]);
-	
-	[parent call:TEST_CHILD_NAME_0 withExec:TEST_EXEC, nil];
-	[parent call:TEST_CHILD_NAME_2 withExec:TEST_EXEC, nil];
-	
-	[child_2 release];
 	[child_0 release];
 }
+
+
+
 
 
 /**
@@ -1540,20 +1457,20 @@
 	
 	int index = [[[mView getNameIndexDictionary] valueForKey:[parent getMyName]] intValue];
 	int index2 = [[[mView getNameIndexDictionary] valueForKey:[mes1 getMyName]] intValue];
-	STAssertTrue(index < index2, @"名称が一致しない_%d", index);
-	
+	STAssertTrue(index < index2, @"名称が一致しない0_%d", index);
 	
 	
 	[mes3 inputParent:[parent getMyName]];
 	[mes4 inputParent:[mes3 getMyName]];
 	
+	
 	index = [[[mView getNameIndexDictionary] valueForKey:[parent getMyName]] intValue];
 	index2 = [[[mView getNameIndexDictionary] valueForKey:[mes1 getMyName]] intValue];
 	int index3 = [[[mView getNameIndexDictionary] valueForKey:[mes3 getMyName]] intValue];
 	int index4 = [[[mView getNameIndexDictionary] valueForKey:[mes4 getMyName]] intValue];
-	STAssertTrue(index < index2, @"名称が一致しない_%d", index);
-	STAssertTrue(index < index3, @"インデックスが想定通りではない_%d", index);
-	STAssertTrue(index3 < index4, @"インデックスが想定通りではない_%d", index);
+	STAssertTrue(index < index2, @"インデックスが想定通りではない1_%d", index);
+	STAssertTrue(index < index3, @"インデックスが想定通りではない2_%d", index);
+	STAssertTrue(index3 < index4, @"インデックスが想定通りではない3_%d", index);
 	
 	
 	[mes1 release];
@@ -1565,8 +1482,65 @@
 }
 
 
+/**
+ 複数の同名の親が存在する場合に、特定のMIDを持つメッセンジャーを親にするテスト
+ */
+- (void) testInputParentWithSpecifiedMID {
+	MessengerSystem * mes1 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:@"テスト１"];
+	MessengerSystem * mes2 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:@"テスト２"];
+	MessengerSystem * mes3 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:@"テスト２"];
+	
+	[mes1 inputParent:[mes2 getMyName] withSpecifiedMID:[mes2 getMyMID]];
+	
+	STAssertTrue([mes1 hasParent], @"親が存在している筈なのに、存在していない");
+	STAssertTrue([[mes1 getMyParentMID] isEqualToString:[mes2 getMyMID]], @"親想定MIDが一致しない");
+	
+	STAssertTrue([mes2 hasChild], @"子供が存在する筈なのに、存在していない");
+	
+	STAssertTrue(![mes3 hasChild], @"子供が存在しない筈なのに、存在している");
+	
+	
+	//mes1には、親獲得記録が有る筈。
+	
+	[mes1 release];
+	[mes2 release];
+	[mes3 release];
+}
 
 
+/**
+ 複数の同名の子供が存在する場合に、特定のMIDを持つメッセンジャーにメッセージを送るテスト
+ */
+- (void) testCallChildWithSpecifiedMID {
+	MessengerSystem * mes1 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:@"テスト１"];
+	MessengerSystem * mes2 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:@"テスト１"];
+	
+	[mes1 inputParent:[parent getMyName]];	
+	[mes2 inputParent:[parent getMyName]];
+	
+	
+	//一人にだけ届くメッセージを送ってみる
+	[parent call:[mes1 getMyName] withSpecifiedMID:[mes1 getMyMID] withExec:@"プギャー", nil];
+	
+	NSMutableDictionary * mes1Log = [mes1 getLogStore];
+	STAssertTrue([mes1Log count] == 3, @"ログ件数が合致しない_%d", [mes1Log count]);
+	
+	
+	
+	
+	//２人に届くメッセージを送ってみる
+	[parent call:[mes1 getMyName] withExec:@"プギャー2", nil];
+	
+	
+	STAssertTrue([mes1Log count] == 4, @"ログ件数が合致しない_%d", [mes1Log count]);
+	
+	NSMutableDictionary * mes2Log = [mes2 getLogStore];
+	STAssertTrue([mes2Log count] == 3, @"ログ件数が合致しない_%d", [mes2Log count]);
+	
+	
+	[mes1 release];
+	[mes2 release];
+}
 
 
 

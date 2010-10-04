@@ -192,6 +192,16 @@
 		if (![address isEqualToString:[self getMyName]]) {
 //			NSLog(@"自分宛ではないので却下_From_%@,	To_%@,	Iam_%@", senderName, address, [self getMyName]);
 			return;
+		
+		}
+		
+		
+		//オプションでの特定MID宛先がある場合、合致する場合のみ処理を進める
+		NSString * specifiedMID = [dict valueForKey:MS_SPECIFYMID];
+		if (specifiedMID) {//特定MID宛先があり、自分宛ではない
+			if (![specifiedMID isEqualToString:[self getMyMID]]) {
+				return;
+			}
 		}
 		
 		
@@ -201,8 +211,7 @@
 		}
 		
 		
-		if ([senderName isEqualToString:[self getMyParentName]]) {
-			
+		if ([senderName isEqualToString:[self getMyParentName]]) {//送信者が自分の親の場合のみ、処理を進める
 			
 			[self saveLogForReceived:recievedLogDict];
 			
@@ -289,17 +298,28 @@
 			
 			id invocatorId = [notification object];
 			
-			NSLog(@"getMyName_%@",[invocatorId getMyName]);
-			NSLog(@"getMyParentName_%@",[invocatorId getMyParentName]);
-			NSLog(@"getMyParentMID_%@",[invocatorId getMyParentMID]);
-			
-			NSLog(@"getMyMID_%@", [self getMyMID]);
-			
-			//親は先着順で設定される。既に子供が自分と同名の親にアクセスし、そのMIDを持っている場合があり得るため、ここで子供の持っている親MIDを確認する必要がある
-			if ([invocatorId hasParent]) {
-//				NSAssert(FALSE, @"親が既に存在している");//現在は複数の親を許容する仕様ではないので、エラーとして発生させる//えらーではないが、どうするか。固有識別できるならすべき。
-				return;
+			//オプションでの特定MID宛先がある
+			NSString * specifiedMID = [dict valueForKey:MS_SPECIFYMID];
+			if (specifiedMID) {//特定MID宛先があり、自分宛ではない
+				if (![specifiedMID isEqualToString:[self getMyMID]]) {
+					
+					return;
+				}
+					  
+				if ([invocatorId hasParent]) {
+					NSAssert(FALSE, @"親が既に存在している");//現在は複数の親を許容する仕様ではないので、エラーとして発生させる
+				}
+				
+			} else {
+				
+				//特定MIDが無い場合、親は先着順で設定される。既に子供が自分と同名の親にアクセスし、そのMIDを持っている場合があり得るため、ここで子供の持っている親MIDを確認する必要がある
+				if ([invocatorId hasParent]) {
+					NSLog(@"すでに親が存在している、先着順");
+					return;
+				}
 			}
+
+			
 			
 			//受信時にログに受信記録を付け、保存する
 			[self saveLogForReceived:recievedLogDict];
@@ -832,10 +852,19 @@
 
 //実行メソッド
 /**
- 親へと自分が子供である事の通知を行い、返り値として親のMIDを受け取るメソッド
- 受け取り用のメソッドの情報を親へと渡し、親からの入力をダイレクトに受ける。
+ 親へと自分が子供である事の通知を行い、返り値として親のMIDをmyParentMIDとして受け取るメソッド
+ 受け取り用のメソッドの情報を親へと渡し、親からの遠隔MID入力を受ける。
  */
 - (void) inputParent:(NSString * )parent {
+	[self inputParent:parent withSpecifiedMID:nil];
+}
+
+
+/**
+ 親へと自分が子供である事の通知を行い、返り値として親のMIDをmyParentMIDとして受け取るメソッド
+ 親のMIDを特に特定できる場合に使用する。
+ */
+- (void) inputParent:(NSString *)parent withSpecifiedMID:(NSString * )mID {
 	
 	NSAssert([[self getMyParentName] isEqualToString:MS_DEFAULT_PARENTNAME], @"デフォルト以外の親が既にセットされています。親を再設定する場合、resetMyParentDataメソッドを実行してから親指定を行ってください。");
 	
@@ -847,16 +876,17 @@
 	
 	[dict setValue:MS_CATEGOLY_PARENTSEARCH forKey:MS_CATEGOLY];
 	[dict setValue:[self getMyParentName] forKey:MS_ADDRESS_NAME];
-
+	
 	[dict setValue:[self getMyParentName] forKey:MS_PARENTNAME];
 	
 	[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
 	[dict setValue:[self getMyMID] forKey:MS_SENDERMID];
 	
+	if (mID) [dict setValue:mID forKey:MS_SPECIFYMID];
 	
+	 
 	//遠隔実装メソッドを設定
-	[dict setValue:[self setRemoteInvocationFrom:self withSelector:@selector(setMyParentMID:)] forKey:MS_RETURN];//ここで外部向けに参照が1増える
-	//[self release];
+	[dict setValue:[self setRemoteInvocationFrom:self withSelector:@selector(setMyParentMID:)] forKey:MS_RETURN];
 	
 	
 	//ログを作成する
@@ -870,7 +900,10 @@
 	
 	
 	NSAssert1([self hasParent], @"指定した親が存在しないようです。inputParentに指定している名前を確認してください_現在探して見つからなかった親の名前は_%@",[self getMyParentName]);
+	
 }
+
+
 
 /**
  現在の親情報を削除する
@@ -985,11 +1018,11 @@
 	NSAssert(![childName isEqualToString:MS_DEFAULT_PARENTNAME], @"システムで予約してあるデフォルトの名称です。　この名称を使ってのシステム使用は、その、なんだ、お勧めしません。");
 	
 	
-	//特定のキーが含まれているか
-	NSArray * arrays = [m_childDict allValues];
+	//特定のvalが含まれているか
+	NSArray * arrays = [[self getChildDict] allValues];
 	for (int i = 0; i <= [arrays count]; i++) {
 		if (i == [arrays count]) {
-			//NSAssert1(false, @"callメソッドに指定したmessengerが存在しないか、未知のものです。本messengerを親とした設定を行うよう、子から親を指定してください。_%@",name);
+			NSAssert1(FALSE, @"Without MID call先に指定したmessengerが存在しないか、未知のものです。本messengerを親とした設定を行うよう、子から親を指定してください。_%@",childName);
 			return;
 		}
 		
@@ -1000,22 +1033,22 @@
 	
 	
 	NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:5];
-			
+	
 	[dict setValue:MS_CATEGOLY_CALLCHILD forKey:MS_CATEGOLY];
 	[dict setValue:childName forKey:MS_ADDRESS_NAME];
-
+	
 	[dict setValue:exec forKey:MS_EXECUTE];
 	[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
 	[dict setValue:[self getMyMID] forKey:MS_SENDERMID];
-
+	
 	va_list ap;
 	id kvDict;
-
+	
 	//NSLog(@"start_%@", exec);
-
+	
 	va_start(ap, exec);
 	kvDict = va_arg(ap, id);
-
+	
 	while (kvDict) {
 		//NSLog(@"kvDict_%@", kvDict);
 		
@@ -1027,16 +1060,66 @@
 		kvDict = va_arg(ap, id);
 	}
 	va_end(ap);
-
+	
 	[self sendMessage:dict];
-
+	
 }
 
 /**
  特定の子への通信を行うメソッド、特にMIDを使い、相手を最大限特定する。
  */
-- (void) call:(NSString * )childName withMID:(NSString * ) withExec:(NSString * )exec, ... {
-	NSAssert(false, @"開発中のメソッドです");
+- (void) call:(NSString * )childName withSpecifiedMID:(NSString * )mID withExec:(NSString * )exec, ... {
+	NSAssert(![childName isEqualToString:[self getMyName]], @"自分自身/同名の子供達へのメッセージブロードキャストをこのメソッドで行う事はできません。　callMyselfメソッドを使用してください");
+	NSAssert(![childName isEqualToString:MS_DEFAULT_PARENTNAME], @"システムで予約してあるデフォルトの名称です。　この名称を使ってのシステム使用は、その、なんだ、お勧めしません。");
+	NSAssert(mID ,@"mIDはnilでないNSStringである必要があります");
+	
+	//MIDキーが含まれているか、その値がchildNameと一致するか
+	NSString * val = [[self getChildDict] valueForKey:mID];
+	if (!val) {
+		NSAssert1(FALSE, @"with MID call先に指定したmessengerが存在しないか、未知のものです。本messengerを親とした設定を行うよう、子から親を指定してください。_%@",childName);
+		return;
+	}
+	
+	if (![val isEqualToString:childName]) {
+		NSAssert1(FALSE, @"with MID call先に指定したmessengerの名称とMIDのペアが一致しません_%@",childName);
+		return;
+	}
+	
+	
+	NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:6];
+	
+	[dict setValue:MS_CATEGOLY_CALLCHILD forKey:MS_CATEGOLY];
+	[dict setValue:childName forKey:MS_ADDRESS_NAME];
+	
+	[dict setValue:exec forKey:MS_EXECUTE];
+	[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
+	[dict setValue:[self getMyMID] forKey:MS_SENDERMID];
+	
+	[dict setValue:mID forKey:MS_SPECIFYMID];
+	
+	
+	va_list ap;
+	id kvDict;
+	
+	//NSLog(@"start_%@", exec);
+	
+	va_start(ap, exec);
+	kvDict = va_arg(ap, id);
+	
+	while (kvDict) {
+		//NSLog(@"kvDict_%@", kvDict);
+		
+		for (id key in kvDict) {
+			//					NSLog(@"[kvDict valueForKey:key]_%@, key_%@", [kvDict valueForKey:key], key);
+			[dict setValue:[kvDict valueForKey:key] forKey:key];
+		}
+		
+		kvDict = va_arg(ap, id);
+	}
+	va_end(ap);
+	
+	[self sendMessage:dict];
+
 }
 
 /**

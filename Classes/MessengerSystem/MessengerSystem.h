@@ -36,11 +36,11 @@
 #define MS_SENDERNAME	(@"MESSENGER_SYSTEM_COMMAND:LOGGED_SENDER_NAME")//自分の名前に類するキー
 #define MS_SENDERMID	(@"MESSENGER_SYSTEM_COMMAND:LOGGED_SENDER_MID")//自分固有のMIDに類するキー
 
-
 //実行内容に関するタグ
-#define MS_ADDRESS_NAME	(@"MESSENGER_SYSTEM_COMMAND:ADDRESS_NAME")//宛先名
-#define MS_ADDRESS_MID	(@"MESSENGER_SYSTEM_COMMAND:ADDRESS_MID")//宛先MID
-#define MS_EXECUTE		(@"MESSENGER_SYSTEM_COMMAND:EXECUTE")//実行内容名
+#define MS_ADDRESS_NAME	(@"MESSENGER_SYSTEM_COMMAND:ADDRESS_NAME")//宛先名に類するキー
+#define MS_ADDRESS_MID	(@"MESSENGER_SYSTEM_COMMAND:ADDRESS_MID")//宛先MIDに類するキー
+#define MS_EXECUTE		(@"MESSENGER_SYSTEM_COMMAND:EXECUTE")//実行内容名に類するキー
+#define MS_SPECIFYMID	(@"MESSENGER_SYSTEM_COMMAND:SPECIFY_MID")//特定の対象を識別するためのMIDに類するキー
 
 
 //Parentに関するタグ
@@ -140,14 +140,16 @@
 
 
 //実行メソッド
-- (void) inputParent:(NSString * )parent;//親への登録メソッド
+- (void) inputParent:(NSString * )parent;//親への自己登録メソッド
+- (void) inputParent:(NSString *)parent withSpecifiedMID:(NSString * )mID;//特定の親への自己登録メソッド
 - (void) removeFromParent;//自分→親の関係を解除するメソッド
 - (void) removeAllChild;//自分→子の関係を解除するメソッド
 
 - (void) callMyself:(NSString * )exec, ...;//自分自身への通信メソッド
 - (void) call:(NSString * )childName withExec:(NSString * )exec, ...;//特定の子への通信用メソッド
-- (void) call:(NSString * )childName withMID:(NSString * ) withExec:(NSString * )exec, ...;//特定の子への通信用メソッド childのMIDを用いる。
+- (void) call:(NSString * )childName withSpecifiedMID:(NSString * )mID withExec:(NSString * )exec, ...;//特定の子への通信用メソッド childのMIDを用いる。
 - (void) callParent:(NSString * )exec, ...;//親への通信用メソッド
+
 
 
 //タグシステム
