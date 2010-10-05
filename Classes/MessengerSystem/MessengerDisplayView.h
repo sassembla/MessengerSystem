@@ -16,13 +16,22 @@
 @interface MessengerDisplayView : UIView {
 	NSMutableDictionary * m_drawList;
 	NSMutableDictionary * m_connectionList;
-	
+	float m_scale;
 }
 
 
 - (void) updateDrawList:(NSMutableDictionary * )draw andConnectionList:(NSMutableDictionary * )connect;
 - (id)initWithMessengerDisplayFrame:(CGRect)frame;
 
-void lineFromTo(CGContextRef context, CGPoint start, CGPoint end);
+void lineFromTo(CGContextRef context, CGPoint start, CGPoint end, UIColor * color);
+
+
+/**
+ スケール関連
+ */
+- (void) setScale;
+- (float) getScale;
+
+
 
 @end

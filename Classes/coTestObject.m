@@ -23,7 +23,7 @@
 
 - (id) init2 {
 	if (self = [super init]) {
-		messenger = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:CHILD_3];
+		messenger = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:CHILD_2];
 		[messenger inputParent:CHILD_1];
 	}
 	return self;
@@ -31,11 +31,16 @@
 
 - (id) init3 {
 	if (self = [super init]) {
-		messenger = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:CHILD_2];
+		messenger = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:CHILD_3];
+		[messenger inputParent:CHILD_2];
+	}
+	return self;
+}
+
+- (id) init4 {
+	if (self = [super init]) {
+		messenger = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:CHILD_4];
 		[messenger inputParent:CHILD_3];
-		//[messenger callMyself:COMMAND_YEAH,
-//		 [messenger withDelay:0.4],
-//		 nil];
 	}
 	return self;
 }

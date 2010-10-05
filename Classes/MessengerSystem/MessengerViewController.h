@@ -12,9 +12,9 @@
 
 #import <UIKit/UIKit.h>
 
-
+#define DEFAULT_BUTTON_SIZE	(50)
 #define INTERVAL_WIDTH	(60)
-#define INTERVAL_HEIGHT	(50)
+#define INTERVAL_HEIGHT	(70)
 #define OFFSET_X	(10)
 #define OFFSET_Y	(40)
 
@@ -90,6 +90,10 @@
  ボタンが押された際のメソッド
  */
 - (void) tapped:(UIControlEvents * )event;
+- (void) resizeButton:(UIButton * )b;
+
+
+
 
 
 //setter, initializer 必要の或る物だけを用意

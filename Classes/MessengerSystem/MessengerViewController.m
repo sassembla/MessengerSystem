@@ -193,20 +193,11 @@
 	
 	//ビュー、辞書に要素を加える
 	UIButton * newButton;
-	newButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50., 50.)] autorelease];//[UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+	newButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, DEFAULT_BUTTON_SIZE, DEFAULT_BUTTON_SIZE)] autorelease];//[UIButton buttonWithType:UIButtonTypeDetailDisclosure];
 	
 	[newButton setHidden:FALSE];
 	
-	
-	
-	//ここで、ボタンの仮位置を作成
-	int x = [[self getButtonList] count]*30+(rand()%100);
-	int y = [[self getButtonList] count]*30+(rand()%100);
-	
-	CGPoint point = CGPointMake(0+x, 120+y);
-	[newButton setFrame:CGRectMake(point.x, point.y, newButton.frame.size.width, newButton.frame.size.height)];
-	
-	[newButton setBackgroundColor:[UIColor colorWithRed:10.6 green:10 blue:1 alpha:0.01]];//一応範囲付け、かなあ。
+	[newButton setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0]];//一応範囲付け、かなあ。
 	[newButton addTarget:self action:@selector(tapped:) forControlEvents:UIControlEventTouchUpInside];
 	
 	
@@ -306,16 +297,20 @@
 	[self sortButtonsByParentOrder];
 	
 	
+	for (id key in [self getMessengerList]) {//キーは全インスタンス、バリューはインスタンスに対するボタン
+		//インスタンスサイズの調整を行う
+		float globalScale = [messengerInterfaceView getScale];
+		float size = DEFAULT_BUTTON_SIZE * globalScale;
+		
+		UIButton * buttonFrame = [[self getButtonList] valueForKey:key];//始点
+		[buttonFrame setFrame:CGRectMake(buttonFrame.frame.origin.x*globalScale+OFFSET_X, buttonFrame.frame.origin.y*globalScale+OFFSET_Y, size, size)];
+	}
 	
-	//子供　対　親なので、ポイントに換算して置ける筈。
-
 	
+	//コネクションライン
 	NSMutableDictionary * m_connectionList = [[[NSMutableDictionary alloc] init] autorelease];
 	
-	
-	
 	for (id key in [self getMessengerList]) {//キーは全インスタンス、バリューはインスタンスに対するボタン
-		
 		//親の関係性の値がデフォルトでない場合のみ、線を引く大本のデータとして扱う。
 		if (![[[self getMessengerList] valueForKey:key] isEqualToString:[self getMessengerInformationKey:MS_DEFAULT_PARENTNAME withMID:MS_DEFAULT_PARENTMID]]) {//接続先が存在するキー
 			//ボタンの位置から位置に対して線が引ければそれでいいんだけど、なんか引く方向とか考えておくといい事がある気がする。
@@ -367,8 +362,7 @@
  表示補助用のインデックス　X軸カウント
  */
 - (void) setNameIndexDictionary {
-	//存在するリストから、後半MID分以外が一致していれば、という努力をしようか。
-	//messengerListからMIDをのぞいた文字数のキーを取得し、ソートする。E2FD8F50-F6E9-42F6-8949-E7DD20312CA0
+	//messengerListからMIDをのぞいた文字数のキーを取得し、名前カテゴリとしてソートする。E2FD8F50-F6E9-42F6-8949-E7DD20312CA0
 	
 	[m_nameIndexDictionary removeAllObjects];
 	
@@ -389,6 +383,7 @@
 		}
 	}
 	
+	
 }
 - (NSMutableDictionary * ) getNameIndexDictionary {
 	return m_nameIndexDictionary;
@@ -402,13 +397,8 @@
  */
 - (void) sortButtonsByParentOrder {
 	
-//	NSLog(@"m_nameIndexDictionary_before_%@", m_nameIndexDictionary);
-	
-	
-	NSMutableDictionary * dict = [[NSMutableDictionary alloc] initWithDictionary:m_nameIndexDictionary];
-	
 	//親子関係のキーを取得し、バリューである子供よりも左(=最終的に小さな値)にあるようにする。
-	for (id key in [self getMessengerList]) {//キーは全インスタンス、バリューはインスタンスに対するボタン
+	for (id key in [self getMessengerList]) {//キーは全インスタンス、バリューはインスタンスに対するボタン、なので、全ボタンについて発生しちゃうんだ。そんなにいらんだろう。
 		NSString * parentKey = [[self getMessengerList] valueForKey:key];
 		
 		//親の関係性の値がデフォルトでない場合のみ、親子関係が存在するとして、線を引く大本のデータとして扱う。
@@ -420,53 +410,50 @@
 			NSString * parentIndexKey = [parentKey substringToIndex:[parentKey length]-([[MessengerIDGenerator getMID] length]+1)];
 
 			
-			int n = [[m_nameIndexDictionary valueForKey:parentIndexKey] intValue];
-			int m = [[m_nameIndexDictionary valueForKey:indexKey] intValue];
+			//ココまでは、親子関連がどうなっているか、に準じる。
 			
 			
+			int pIndex = [[m_nameIndexDictionary valueForKey:parentIndexKey] intValue];//親
+			int cIndex = [[m_nameIndexDictionary valueForKey:indexKey] intValue];//子
 			
-			if (n < m) {
-				//何もしない
+			//親子関係があるので、
+			
+			if (pIndex < cIndex) {
+				//既に正しい状態なので、何もしない
 			}
 			
-			if (n == m) {
-				NSAssert(FALSE, @"システム的に間違えた。");
+			if (pIndex == cIndex) {
+			//	NSAssert(FALSE, @"システム的に間違えた。なんで発生するんだろ。");
 			}
 			
-			if (m < n) {
-				//子供〜親の間を+1し、親を下げる。 3が2の親だったとすると、
-				//123456
-				//134456
-				//143456
-				//123456
+			if (cIndex < pIndex) {
+				//子供〜親の間を+1し、親を下げる。 4が2の親だったとすると、
+				//1		C		3		P		5		6
+				//1		(C+1)	4		(P+1)	5		6
+				//1		(P+1)	(C+1)	4		5		6
+				//1		2		3		4		5		6
 				
-				for (id numberKey in dict) {
-					if ([dict valueForKey:numberKey]) {
+			
+				NSArray * keys = [m_nameIndexDictionary allKeys];
+				for (id numberKey in keys) {
+					if ([m_nameIndexDictionary valueForKey:numberKey]) {
 						int now = -1;
-						now = [[dict valueForKey:numberKey] intValue];
+						now = [[m_nameIndexDictionary valueForKey:numberKey] intValue];
 						
-						if (m <= now && now < n) {
+						if (cIndex <= now && now <= pIndex) {
 							int changed = now+1;
-							[m_nameIndexDictionary setValue:[NSNumber numberWithInt:changed] forKey:numberKey];//fastEnum中で値変えられたかな。。
-						}
+							[m_nameIndexDictionary setValue:[NSNumber numberWithInt:changed] forKey:numberKey];
+						}						
 					}
 				}
 				
-				
-				
 				//keyが親の物を、インデックス特定に持っていく
-				[m_nameIndexDictionary setValue:[NSNumber numberWithInt:m] forKey:parentIndexKey];
-				
+				[m_nameIndexDictionary setValue:[NSNumber numberWithInt:cIndex] forKey:parentIndexKey];
+
 			}
 		}
 	}
 	
-	
-	
-	[dict removeAllObjects];
-	[dict release];
-	
-//	NSLog(@"m_nameIndexDictionary_after_%@", m_nameIndexDictionary);
 	
 	
 	//インデックスに対して、画面上の位置を調整する。
@@ -479,7 +466,7 @@
 			//key2がm_nameIndexDictionaryの要素なのだが、これが一致する組み合わせを含んでいれば。結構もったいないかな。
 			if ([key2 isEqualToString:shortKey]) {
 				UIButton * sButton = [[self getButtonList] valueForKey:key];
-				[sButton setFrame:CGRectMake([[m_nameIndexDictionary valueForKey:key2] intValue]*INTERVAL_WIDTH+OFFSET_X, sButton.frame.origin.y, sButton.frame.size.width, sButton.frame.size.height)];//Xを係数に合わせて指定する
+				[sButton setFrame:CGRectMake([[m_nameIndexDictionary valueForKey:key2] intValue]*INTERVAL_WIDTH, sButton.frame.origin.y, sButton.frame.size.width, sButton.frame.size.height)];//Xを係数に合わせて指定する
 			}
 		}
 	}
@@ -496,7 +483,7 @@
 			
 			if ([key isEqualToString:shortKey]) {//存在数だけ、回数がまわる筈。
 				UIButton * sButton = [[self getButtonList] valueForKey:key2];
-				[sButton setFrame:CGRectMake(sButton.frame.origin.x, index*INTERVAL_HEIGHT+OFFSET_Y, sButton.frame.size.width, sButton.frame.size.height)];//Xを係数に合わせて指定する
+				[sButton setFrame:CGRectMake(sButton.frame.origin.x, index*INTERVAL_HEIGHT, sButton.frame.size.width, sButton.frame.size.height)];//Xを係数に合わせて指定する
 				index++;
 			}
 			
@@ -508,6 +495,8 @@
 
 
 
+
+
 /**
  ボタンが押された時のメソッド
  */
@@ -515,9 +504,43 @@
 	
 	//この座標を画面の中心にするように、全インターフェースの座標を置き換える、とか。
 	
-	NSLog(@"到達_%@", event);
+	NSLog(@"到達_%@", event);//イベントからボタンIDとか取得できる筈。っていうかそのままかよ。
+	UIButton * b = (UIButton * )event;
+	
+	//これは、ボタン配列として持っている筈。リストに含まれていれば
+	
+	//[self resizeButton:b];
 }
 
+
+/**
+ ボタンのインフォメーションを書き換え、再度描画
+ 
+ */
+- (void) resizeButton:(UIButton * )b {
+	float x = b.frame.origin.x;
+	float y = b.frame.origin.y;
+	float width = b.frame.size.width;
+	float height = b.frame.size.height;
+	
+	/**
+	 ここからのラインを確認する。
+	 通信の宛先に繋がっているラインをピックアップ、
+	 別途アップデートにかける。どうでもいいか。
+	 
+	 第一優先を色、完了
+	 第二優先を→、線の上につける、かなあ、
+	 第三優先を拡大縮小にしようか。画面のピッチに対する倍率を持てばいい。
+	 
+	 グローバル基点と、グローバルスケールを持つ。アップデートをタッチ離したときに取ればいい。
+	 
+	*/
+	
+	
+	//[b setFrame:CGRectMake(x/2, y/2, width/2, height/2)];
+	
+	//[messengerInterfaceView setNeedsDisplay];
+}
 
 
 /**

@@ -1468,6 +1468,7 @@
 	index2 = [[[mView getNameIndexDictionary] valueForKey:[mes1 getMyName]] intValue];
 	int index3 = [[[mView getNameIndexDictionary] valueForKey:[mes3 getMyName]] intValue];
 	int index4 = [[[mView getNameIndexDictionary] valueForKey:[mes4 getMyName]] intValue];
+	//多元順序付け、、並べかえのロジック、、に、見直しが必要。合ってない。
 	STAssertTrue(index < index2, @"インデックスが想定通りではない1_%d", index);
 	STAssertTrue(index < index3, @"インデックスが想定通りではない2_%d", index);
 	STAssertTrue(index3 < index4, @"インデックスが想定通りではない3_%d", index);
@@ -1540,6 +1541,15 @@
 	
 	[mes1 release];
 	[mes2 release];
+}
+
+
+/**
+ ビュー上のボタンがタップされたら色が変わったりする処理
+ */
+- (void) testButtonTapped{
+	
+	
 }
 
 
