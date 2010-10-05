@@ -22,6 +22,7 @@
 	NSAssert(false, @"initWithFrameメソッドを使用してください");
 	
 	if (self = [super init]) {
+		
 	}
 	
 	return self;
@@ -35,6 +36,8 @@
 		
 		messengerInterfaceView = [[MessengerDisplayView alloc] initWithMessengerDisplayFrame:frame];
 		
+		[messengerInterfaceView setControllerDelegate:self];
+		
 		[self setMyName:VIEW_NAME_DEFAULT];
 		[self setMyBodyID:nil];
 		[self setMyBodySelector:nil];
@@ -45,6 +48,8 @@
 		m_messengerList = [[NSMutableDictionary alloc] init];
 		
 		m_nameIndexDictionary = [[NSMutableDictionary alloc] init];
+		
+		[self setScale:SCALE_DEFAULT];//デフォルトスケールを設定
 		
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(innerPerform:) name:OBSERVER_ID object:nil];
 		
@@ -61,7 +66,6 @@
 - (void) innerPerform:(NSNotification * )notification {
 	
 	NSMutableDictionary * dict = (NSMutableDictionary *)[notification userInfo];
-	
 	
 	
 	//コマンド名について確認
@@ -251,9 +255,8 @@
 		}
 	}
 	
-	
-	
 	NSAssert1(FALSE, @"updateParentInformation_一度も生まれてない_%@", myKey);
+
 }
 
 /**
@@ -299,11 +302,10 @@
 	
 	for (id key in [self getMessengerList]) {//キーは全インスタンス、バリューはインスタンスに対するボタン
 		//インスタンスサイズの調整を行う
-		float globalScale = [messengerInterfaceView getScale];
-		float size = DEFAULT_BUTTON_SIZE * globalScale;
+		float size = DEFAULT_BUTTON_SIZE * [self getScale];
 		
 		UIButton * buttonFrame = [[self getButtonList] valueForKey:key];//始点
-		[buttonFrame setFrame:CGRectMake(buttonFrame.frame.origin.x*globalScale+OFFSET_X, buttonFrame.frame.origin.y*globalScale+OFFSET_Y, size, size)];
+		[buttonFrame setFrame:CGRectMake(buttonFrame.frame.origin.x*[self getScale]+OFFSET_X+m_worldX, buttonFrame.frame.origin.y*[self getScale]+OFFSET_Y+m_worldY, size, size)];
 	}
 	
 	
@@ -461,12 +463,12 @@
 		
 		NSString * shortKey = [key substringToIndex:[key length]-([[MessengerIDGenerator getMID] length]+1)];
 		
-		//Xについて、補正する。
+		//名称をカテゴリと見なして、X位置を調整する。
 		for (id key2 in m_nameIndexDictionary) {
-			//key2がm_nameIndexDictionaryの要素なのだが、これが一致する組み合わせを含んでいれば。結構もったいないかな。
+			
 			if ([key2 isEqualToString:shortKey]) {
 				UIButton * sButton = [[self getButtonList] valueForKey:key];
-				[sButton setFrame:CGRectMake([[m_nameIndexDictionary valueForKey:key2] intValue]*INTERVAL_WIDTH, sButton.frame.origin.y, sButton.frame.size.width, sButton.frame.size.height)];//Xを係数に合わせて指定する
+				[sButton setFrame:CGRectMake([[m_nameIndexDictionary valueForKey:key2] intValue]*INTERVAL_WIDTH, [[m_nameIndexDictionary valueForKey:key2] intValue]*20, sButton.frame.size.width, sButton.frame.size.height)];//Xを係数に合わせて指定する
 			}
 		}
 	}
@@ -474,7 +476,7 @@
 	
 	
 	
-	//数に対して、画面上の位置を調整する。
+	//数に対して、画面上のY位置を調整する。
 	for (id key in m_nameIndexDictionary) {//ボタンの名称：存在数
 		
 		int index = 0;
@@ -483,7 +485,7 @@
 			
 			if ([key isEqualToString:shortKey]) {//存在数だけ、回数がまわる筈。
 				UIButton * sButton = [[self getButtonList] valueForKey:key2];
-				[sButton setFrame:CGRectMake(sButton.frame.origin.x, index*INTERVAL_HEIGHT, sButton.frame.size.width, sButton.frame.size.height)];//Xを係数に合わせて指定する
+				[sButton setFrame:CGRectMake(sButton.frame.origin.x, sButton.frame.origin.y + index*INTERVAL_HEIGHT, sButton.frame.size.width, sButton.frame.size.height)];//Xを係数に合わせて指定する
 				index++;
 			}
 			
@@ -501,13 +503,11 @@
  ボタンが押された時のメソッド
  */
 - (void) tapped:(UIControlEvents * )event {
-	
+
 	//この座標を画面の中心にするように、全インターフェースの座標を置き換える、とか。
 	
-	NSLog(@"到達_%@", event);//イベントからボタンIDとか取得できる筈。っていうかそのままかよ。
-	UIButton * b = (UIButton * )event;
-	
-	//これは、ボタン配列として持っている筈。リストに含まれていれば
+	NSLog(@"到達_%@", event);//イベントからボタンIDとか取得できる筈。
+	UIButton * b = (UIButton * )event;//変形可能。
 	
 	//[self resizeButton:b];
 }
@@ -626,6 +626,64 @@
 - (void) setMyParentName:(NSString * )parent {
 	myParentName = parent;
 }
+
+
+
+
+
+
+
+/**
+ 平行移動、スケールに関する処理
+ */
+//平行移動
+- (void) setWorldX:(float)toX withY:(float)toY {
+	m_worldX = toX;
+	m_worldY = toY;
+	
+	[self drawDataUpdate];
+}
+
+- (void) moveWorldX:(float)diffX withY:(float)diffY {
+	m_worldX += diffX;
+	m_worldY += diffY;
+	
+	[self drawDataUpdate];
+}
+
+
+//スケール
+- (void) setScale:(float)scaleDiff {
+	m_scale = scaleDiff;
+	
+	[self drawDataUpdate];
+}
+
+
+- (float) getScale {
+	return m_scale;
+}
+
+
+/**
+ ビューからの直結イベント
+ */
+- (void) scaleReset {
+	[self setWorldX:0 withY:0];
+	[self setScale:SCALE_DEFAULT];
+}
+
+
+
+
+/**
+ タッチでのスケール変動
+ */
+- (void) touchInput {
+	
+}
+
+
 
 
 //オーバーライドするメソッド、特に何もさせない。

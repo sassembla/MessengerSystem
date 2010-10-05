@@ -12,6 +12,11 @@
 @interface GlyphTable : NSObject {
 
 }
-+ (void) drawString:(CGContextRef)ref string:(NSString * )str withFont:(NSString * )fontName fontSize:(int)size atX:(float)x atY:(float)y;
++ (void) drawString:(CGContextRef)context string:(NSString * )str 
+		   withFont:(NSString * )fontName 
+	   withFontSize:(int)size 
+		  withColor:(UIColor * )color
+				atX:(float)x 
+				atY:(float)y;
 
 @end

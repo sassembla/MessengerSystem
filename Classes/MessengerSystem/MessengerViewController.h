@@ -18,6 +18,7 @@
 #define OFFSET_X	(10)
 #define OFFSET_Y	(40)
 
+#define SCALE_DEFAULT	(1.0)
 
 
 @interface MessengerViewController : MessengerSystem {
@@ -31,7 +32,13 @@
 	MessengerDisplayView * messengerInterfaceView;//ボタン、ラインをセットするビュー
 	
 	int m_numberOfRelationship;
+	
+	float m_scale;
+	
+	float m_worldX, m_worldY;
+	
 }
+
 //初期化
 - (id) initWithBodyID:(id)body_id withSelector:(SEL)body_selector withName:(NSString * )name;//オーバーライド、アサートを架けて使用禁止
 - (id) initWithFrame:(CGRect)frame;//初期化メソッド
@@ -117,6 +124,20 @@
  全ボタンの位置をソートする
  */
 - (void) sortButtonsByParentOrder;
+
+
+
+
+/**
+ 移動、スケール関連
+ */
+- (void) setWorldX:(float)toX withY:(float)toY;
+- (void) moveWorldX:(float)diffX withY:(float)diffY;//差分での移動
+
+- (void) setScale:(float)scaleDiff;//差分でのスケール
+- (float) getScale;
+
+- (void) scaleReset;
 
 
 

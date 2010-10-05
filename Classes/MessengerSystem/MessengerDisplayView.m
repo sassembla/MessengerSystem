@@ -6,21 +6,27 @@
 //  Copyright 2010 KISSAKI. All rights reserved.
 //
 
+#import "MessengerViewController.h"
 #import "MessengerDisplayView.h"
 #import "GlyphTable.h"
 
-#define NSLog( m, args... )
 
 @implementation MessengerDisplayView
 
 
 - (id)initWithMessengerDisplayFrame:(CGRect)frame {
     if ((self = [super initWithFrame:frame])) {
-        m_scale = 1.0;
-		
-		
+		m_colorIndex = (int)rand() % NUM_OF_COLOR;
     }
     return self;
+}
+
+
+/**
+ コントローラのIDをセットする
+ */
+- (void) setControllerDelegate:(id)contID {
+	controllerId = contID;
 }
 
 
@@ -37,19 +43,7 @@
 	m_connectionList = [connect copy];
 	
 	
-	
-	NSLog(@"描画_アップデート");
 	[self setNeedsDisplay];
-}
-
-- (void) setScale {
-	//スケール タッチが動いた/画面から離れた時の２点間の距離
-	m_scale = m_scale;
-}
-
-
-- (float) getScale {
-	return m_scale;
 }
 
 
@@ -65,16 +59,21 @@
 	
 	CGContextSetGrayFillColor(context, 0., 1);
 	CGContextFillRect(context, [self bounds]);//背景
+	//この領域に対して、現在のスケールに併せた描画をおこなう、、かなあ。
+	
+	
+	
 	
 	//背景描画
 	CGContextSetGrayFillColor(context, 1., 0.5);
 	CGContextFillRect(context, [self bounds]);//背景
 	
-	int index = (int)rand()%8;//カラー
+	
+	
+	int index = m_colorIndex;//ラインカラー
 	
 	//オブジェクトを描く
 	for (id key in m_drawList) {
-		
 		
 		
 		UIButton * b = [m_drawList valueForKey:key];
@@ -82,13 +81,22 @@
 		
 		CGContextSetLineWidth(context, 6.0);
 		CGContextSetRGBStrokeColor(context, 1, 1, 1, 0.3);//状態によって色を変える
+		CGContextSetGrayFillColor(context, 1., 0.5);
+		
 		CGContextStrokeEllipseInRect(context, bRect);
 		CGContextFillEllipseInRect(context, CGRectMake(b.center.x-6, b.center.y-6, 12, 12));
 		
-		
+		UIColor * textCol = [UIColor whiteColor];
 		//名前を書く
-		[GlyphTable drawString:context string:[key substringToIndex:5] withFont:@"HiraKakuProN-W3" fontSize:20 
-						   atX:b.frame.origin.x atY:b.frame.origin.y];
+		[GlyphTable drawString:context 
+						 string:[key substringToIndex:10]
+					  withFont:@"HiraKakuProN-W3"
+				  withFontSize:12
+					 withColor:textCol
+						   atX:b.frame.origin.x 
+						   atY:b.frame.origin.y];
+		
+		
 		
 		//ラインを引く
 		for (id connectionKey in m_connectionList) {
@@ -151,10 +159,12 @@
 				}
 				
 				lineFromTo(context, CGPointMake(sx,sy), CGPointMake(ex, ey), col);
-				//pointTo();
+				//傾き、特定の点からの位置
+				
+				//pointTo();//終点に、子供マークを付ける。文字でOK、
 				[col release];
 				
-				index = (index + 1)%8;
+				index = (index + 1)%NUM_OF_COLOR;
 			}
 		}
 	}
@@ -162,6 +172,7 @@
 
 /**
  ラインを描画するメソッド
+ αは固定。
  */
 void lineFromTo(CGContextRef context, CGPoint start, CGPoint end, UIColor * color) {
 	CGContextSetLineWidth(context, 3.5);
@@ -180,17 +191,35 @@ void lineFromTo(CGContextRef context, CGPoint start, CGPoint end, UIColor * colo
 /**
  タッチ開始
  */
-- (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-	NSLog(@"たっち");
+- (void) touchesBegan:(NSSet * )touches withEvent:(UIEvent * )event {
+	
+	NSLog(@"touches_%@",[event allTouches]);//なるほど。こうしないとタッチ全体が見れない。
+	
 	for (UITouch * touch in touches) {
-		CGPoint p = [touch locationInView:self];
 		if (2 <= [touch tapCount]) {
-			//[messenger sendMessage:TOUCH_DOUBLETAPPED,[NSNumber numberWithFloat:p.x],[NSNumber numberWithFloat:p.y],nil];
+			[controllerId scaleReset];
 			return;
 		}
-		
-		//[messenger sendMessage:TOUCHES_BEGAN,[NSNumber numberWithFloat:p.x],[NSNumber numberWithFloat:p.y],nil];
 	}
+	
+	
+	/**
+	 イベントの記録
+	 カウントの数確認
+	 を行う。
+	 */
+	if (!pinchEvent) {//イベントの種類ごとに振り分ける事で、排他にできる、、という理由。
+		NSArray * t = [[event allTouches] allObjects];//配列化する
+		
+		if ([[event allTouches] count] == 2){
+			pinchEvent = event;//イベントをセットする。のちのち識別するため。この方法は面白い。でも弱点がありそう。
+			
+			lastPinchDist = fabs([[t objectAtIndex:0] locationInView:self].x - [[t objectAtIndex:1] locationInView:self].x);//開始時の2点間の距離を得る(xのみ)
+		} else {
+			lastPoint = CGPointMake([[t objectAtIndex:0] locationInView:self].x, [[t objectAtIndex:0] locationInView:self].y);
+		}		
+	} 
+	
 	
 }
 
@@ -200,11 +229,31 @@ void lineFromTo(CGContextRef context, CGPoint start, CGPoint end, UIColor * colo
  タッチの移動
  */
 - (void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-	NSLog(@"たっち移動");
-	for (UITouch * touch in touches) {
-		CGPoint p = [touch locationInView:self];
-		//[messenger sendMessage:TOUCHES_MOVED,[NSNumber numberWithFloat:p.x],[NSNumber numberWithFloat:p.y],nil];
+	
+	
+	if (event == pinchEvent && [[event allTouches] count] == 2) {
+		CGFloat thisPinchDist, pinchDiff;//最新の2点間の距離、開始時からの差分
+		
+		NSArray * t = [[event allTouches] allObjects];//配列化
+		thisPinchDist = fabs([[t objectAtIndex:0] locationInView:self].x - [[t objectAtIndex:1] locationInView:self].x);//最新の2点間の距離
+		
+		pinchDiff = (thisPinchDist - lastPinchDist)*0.01f;//差分
+		
+		[controllerId setScale:[controllerId getScale]+pinchDiff];
+		
+		lastPinchDist = thisPinchDist;//更新、、、？
+	} else {
+		
+		//前回の位置からの移動分だけ、worldを動かす。
+		NSArray * t = [[event allTouches] allObjects];//配列化
+		
+		[controllerId moveWorldX:[[t objectAtIndex:0] locationInView:self].x - lastPoint.x withY:[[t objectAtIndex:0] locationInView:self].y - lastPoint.y];
+		
+		lastPoint = CGPointMake([[t objectAtIndex:0] locationInView:self].x, [[t objectAtIndex:0] locationInView:self].y);
+	
 	}
+
+	
 }
 
 
@@ -213,10 +262,10 @@ void lineFromTo(CGContextRef context, CGPoint start, CGPoint end, UIColor * colo
  タッチの終了
  */
 - (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-	NSLog(@"たっち終了");
-	for (UITouch * touch in touches) {
-		CGPoint p = [touch locationInView:self];
-		//[messenger sendMessage:TOUCHES_ENDED,[NSNumber numberWithFloat:p.x],[NSNumber numberWithFloat:p.y],nil];
+	if (event == pinchEvent)
+	{
+		pinchEvent = nil;//イベント削除
+		return;
 	}
 }
 

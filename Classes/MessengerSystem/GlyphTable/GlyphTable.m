@@ -231,7 +231,12 @@ static void mapCharactersToGlyphsInFont(const fontTable *table, unichar characte
  日本語対応
  外部から実行
  */
-+ (void) drawString:(CGContextRef)context string:(NSString * )str withFont:(NSString * )fontName fontSize:(int)size atX:(float)x atY:(float)y {
++ (void) drawString:(CGContextRef)context string:(NSString * )str 
+		   withFont:(NSString * )fontName 
+	   withFontSize:(int)size 
+		  withColor:(UIColor * )color
+				atX:(float)x 
+				atY:(float)y {
 	NSAssert(0 < [str length], @"drawString_str must have length.");
 	if ([str length] == 0) return; 
 	
@@ -253,7 +258,9 @@ static void mapCharactersToGlyphsInFont(const fontTable *table, unichar characte
 	CGContextSetFont(context, font);
 	CGContextSetFontSize(context, size);
 	
-	CGAffineTransform myTextTransform = CGAffineTransformMake(1.0, 0.0, 0.0, -1.0, 0.0, 0.0);
+	//CGContextSetFillColorWithColor(context, CGColorCreateCopyWithAlpha([color CGColor], 0.8));
+	
+	CGAffineTransform myTextTransform = CGAffineTransformMake(1.0, 0.0, 0.0, -1.0, 0.0, 0.0);//上下逆
 	CGContextSetTextMatrix (context, myTextTransform);
 	CGContextSetTextPosition(context, x, y);
 	
