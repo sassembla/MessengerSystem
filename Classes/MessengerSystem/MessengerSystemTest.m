@@ -1155,7 +1155,7 @@
 	NSString * str;
 	
 	str = @"A7058498-B94C-4998-A2EF-4046BCB79AA3";
-	STAssertTrue([parent changeStrToNumber:str] == -812643022, [NSString stringWithFormat:@"異なる1_%d", [parent changeStrToNumber:str]]);
+	STAssertTrue([parent changeStrToNumber:str] == 635213667, [NSString stringWithFormat:@"異なる1_%d", [parent changeStrToNumber:str]]);
 }
 
 /**

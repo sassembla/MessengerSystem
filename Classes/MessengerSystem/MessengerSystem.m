@@ -1443,73 +1443,32 @@ unsigned int SDBMHash(char * str, unsigned int len) {
 	unsigned int length = [str lengthOfBytesUsingEncoding:NSUTF8StringEncoding];//長さ取得
 	
 	
-	int T1 = 0,T2 = 0;
 	unsigned int ret = 0;
 	int rem = length;//残りの文字数長だけ、４文字ずつ、各４ビットずらして溜め込んで、retへと足す処理を行う
-	
-	
-	BOOL patternMulle = TRUE;//1667 でもおんなじ。ということは、このロジック自体が複合を受け付けていないのだ。
 	
 	
 	NSLog(@"ret_%d, len_%d",ret, length);
 	
 	while (3 < rem) {
-		char t1 = bytes[length - rem];
 		
 		
-		ELF_STEP(bytes[length - rem]);
-		ELF_STEP(bytes[length - rem + 1]);
-		ELF_STEP(bytes[length - rem + 2]);
-		ELF_STEP(bytes[length - rem + 3]);
+		MULLE_ELF_STEP(bytes[length - rem]);
+		MULLE_ELF_STEP(bytes[length - rem + 1]);
+		MULLE_ELF_STEP(bytes[length - rem + 2]);
+		MULLE_ELF_STEP(bytes[length - rem + 3]);
 		rem -= 4;
 	}
 	switch (rem) {//ラスト、のこりの文字数部分を計算する
 		case 3:  
-			if (patternMulle) MULLE_ELF_STEP(bytes[length - 3]);
-			else {
-				ELF_STEP(bytes[length - 3]);
-			}
-
+			MULLE_ELF_STEP(bytes[length - 3]);
 			
 		case 2:
-		if (patternMulle) {//頭から処理してる
-			char t1 = bytes[length-2];
+			MULLE_ELF_STEP(bytes[length - 2]);
 			
-			NSLog(@"1文字目_%c",t1);//bになる
-			
-			do {
-				NSLog(@"ret/0_%d",ret);
-				
-				ret=(ret<<4)+t1;
-				NSLog(@"ret/1_%d",ret);
-				
-				ret^=(ret>>24)&0xF0;
-				NSLog(@"ret/2_%d",ret);
-				
-			} while(0);
-		} else {
-			ELF_STEP(bytes[length - 2]);
-		}
-
 		case 1:
-		if (patternMulle) {
-			char t1 = bytes[length-1];
-			NSLog(@"2文字目_%c",t1);//1568
+			MULLE_ELF_STEP(bytes[length - 1]);
 			
-			do {
-				NSLog(@"ret<<4_%d",ret<<4);
-				ret=(ret<<4)+t1;
-				NSLog(@"ret/3_%d",ret);
-				
-				NSLog(@"ret>>24_%d",(ret>>24));
-				ret^=(ret>>24)&0xF0;
-				NSLog(@"ret/4_%d",ret);
-				
-			} while(0);
-		} else {
-			ELF_STEP(bytes[length - 1]);
-		}
-
+			
 		case 0:{
 			
 		}  ;

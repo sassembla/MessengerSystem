@@ -258,7 +258,8 @@ static void mapCharactersToGlyphsInFont(const fontTable *table, unichar characte
 	CGContextSetFont(context, font);
 	CGContextSetFontSize(context, size);
 	
-	CGContextSetFillColorWithColor(context, CGColorCreateCopyWithAlpha([color CGColor], 0.8));
+	CGColorRef cCol = CGColorCreateCopyWithAlpha([color CGColor], 0.8);
+	CGContextSetFillColorWithColor(context, cCol);
 	
 	CGAffineTransform myTextTransform = CGAffineTransformMake(1.0, 0.0, 0.0, -1.0, 0.0, 0.0);//上下逆
 	CGContextSetTextMatrix (context, myTextTransform);
@@ -266,6 +267,8 @@ static void mapCharactersToGlyphsInFont(const fontTable *table, unichar characte
 	
 	CGContextShowGlyphs(context, _glyphs, griphLen);
 	
+	
+	CFRelease(cCol);
 	CFRelease(font);
 }
 
