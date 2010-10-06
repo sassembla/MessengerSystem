@@ -18,17 +18,17 @@
  */
 @interface MessengerDisplayView : UIView {
 	
-	id controllerId;
+	id m_controllerId;
 	
 	int m_colorIndex;
 	
 	NSMutableDictionary * m_drawList;
 	NSMutableDictionary * m_connectionList;
 	
-	UIEvent * pinchEvent;
+	UIEvent * m_pinchEvent;
 	
-	CGFloat	lastPinchDist;//2点間の距離
-	CGPoint lastPoint;//1点の位置
+	CGFloat	m_lastPinchDist;//2点間の距離
+	CGPoint m_lastPoint;//1点の位置
 	
 }
 
@@ -41,6 +41,13 @@
 void lineFromTo(CGContextRef context, CGPoint start, CGPoint end, UIColor * color);
 
 
+float linePrmGetA(float cx, float cy, float px, float py);
+float linePrmGetB(float cx, float cy, float px, float py);
+float linePrmGetC(float cx, float cy, float px, float py);
+CGPoint lineCrclCrsPt (float circleX, float circleY, float circleR, 
+					   float cx, float cy,
+					   float px,float py, 
+					   float nX,float nY);
 
 
 @end

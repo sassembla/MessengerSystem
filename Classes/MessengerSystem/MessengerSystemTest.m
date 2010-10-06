@@ -1155,39 +1155,18 @@
 	NSString * str;
 	
 	str = @"A7058498-B94C-4998-A2EF-4046BCB79AA3";
-	STAssertTrue([parent changeStrToNumber:str] == 635213667, [NSString stringWithFormat:@"異なる1_%d", [parent changeStrToNumber:str]]);
-
-	str = @"亜";
-	STAssertTrue([parent changeStrToNumber:str] == -65332, [NSString stringWithFormat:@"異なる2.0_%d", [parent changeStrToNumber:str]]);
-	
-	str = @"あ";
-	STAssertTrue([parent changeStrToNumber:str] == -64670, [NSString stringWithFormat:@"異なる2.1_%d", [parent changeStrToNumber:str]]);
-	
-	str = @"い";
-	STAssertTrue([parent changeStrToNumber:str] == -64668, [NSString stringWithFormat:@"異なる2.2_%d", [parent changeStrToNumber:str]]);
-	
-	str = @"う";
-	STAssertTrue([parent changeStrToNumber:str] == -64666, [NSString stringWithFormat:@"異なる2.3_%d", [parent changeStrToNumber:str]]);
-	
-	str = @"え";
-	STAssertTrue([parent changeStrToNumber:str] == -64664, [NSString stringWithFormat:@"異なる2.4_%d", [parent changeStrToNumber:str]]);
-	
-	
-	str = @"A7058498-B94C-4998-A2EF-4046BCB79AA4";
-	STAssertTrue([parent changeStrToNumber:str] == 635213668, [NSString stringWithFormat:@"異なる3_%d", [parent changeStrToNumber:str]]);
-	
-	str = @"A7058498-B94C-4998-A2EF-4046BCB79AA5";
-	STAssertTrue([parent changeStrToNumber:str] == 635213669, [NSString stringWithFormat:@"異なる4_%d", [parent changeStrToNumber:str]]);
-
-	str = @"AAAAAAA8-B94C-4998-A2EF-4046BCB79AA4";
-	STAssertTrue([parent changeStrToNumber:str] == -2084701500, [NSString stringWithFormat:@"異なる5_%d", [parent changeStrToNumber:str]]);
-	
-	str = @"A7058498-B94C-4998-A2EF-4046BCB79AA4";
-	STAssertTrue([parent changeStrToNumber:str] == 635213668, [NSString stringWithFormat:@"異なる6 s4_%d", [parent changeStrToNumber:str]]);
-	
+	STAssertTrue([parent changeStrToNumber:str] == -812643022, [NSString stringWithFormat:@"異なる1_%d", [parent changeStrToNumber:str]]);
 }
 
-
+/**
+ テスト中の数値の文字列化
+ ぐつーに
+ */
+- (void) testNumberToString {
+	NSString * str = [parent changeNumberToStr:[parent changeStrToNumber:@"bc"]];
+	STAssertTrue([str isEqualToString:@"bc"], @"合ってない_%@", str);
+	//STAssertTrue(FALSE, @"意図的終了");
+}
 
 
 /**
@@ -1542,6 +1521,8 @@
 	[mes1 release];
 	[mes2 release];
 }
+
+
 
 
 /**

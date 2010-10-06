@@ -111,7 +111,7 @@ static fontTable *readFontTableFromCGFont(CGFontRef font) {
                         unicodeSubtable = subtable;
                         //unicodeSubtablePlatformID = platformID;
                         unicodeSubtablePlatformSpecificID = platformSpecificID;
-                        unicodeSubtableFormat = format;
+                        unicodeSubtableFormat = (FontTableFormat)format;
                         break;
                     }
                 }
@@ -179,10 +179,10 @@ static void mapCharactersToGlyphsInFont(const fontTable *table, unichar characte
                             UInt16 idRangeOffset = OSReadBigInt16(table->cmap.format4.idRangeOffsets, segOffset);
                             if (idRangeOffset == 0) {
                                 UInt16 idDelta = OSReadBigInt16(table->cmap.format4.idDeltas, segOffset);
-                                outGlyphs[j] = (c + idDelta) % 65536;
+                                outGlyphs[j] = (CGGlyph)((c + idDelta) % 65536);
                             } else {
                                 // use the glyphIndexArray
-                                UInt16 glyphOffset = idRangeOffset + 2 * (c - startCode);
+                                UInt16 glyphOffset = (UInt16)(idRangeOffset + 2 * (c - startCode));
                                 outGlyphs[j] = OSReadBigInt16(&((UInt8*)table->cmap.format4.idRangeOffsets)[segOffset], glyphOffset);
                             }
                         }
@@ -258,7 +258,7 @@ static void mapCharactersToGlyphsInFont(const fontTable *table, unichar characte
 	CGContextSetFont(context, font);
 	CGContextSetFontSize(context, size);
 	
-	//CGContextSetFillColorWithColor(context, CGColorCreateCopyWithAlpha([color CGColor], 0.8));
+	CGContextSetFillColorWithColor(context, CGColorCreateCopyWithAlpha([color CGColor], 0.8));
 	
 	CGAffineTransform myTextTransform = CGAffineTransformMake(1.0, 0.0, 0.0, -1.0, 0.0, 0.0);//上下逆
 	CGContextSetTextMatrix (context, myTextTransform);

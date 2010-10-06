@@ -30,9 +30,9 @@
 	
 	[window addSubview:[mViewCont getMessengerInterfaceView]];
 	
-	paren = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:PARENTNAME];
+	m_paren = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:PARENTNAME];
 	
-	objectOv = [[coTestObject alloc] init];
+	m_objectOv = [[coTestObject alloc] init];
 	
 	coTestObject * obj2 = [[coTestObject alloc] init];
 	
@@ -50,9 +50,9 @@
 //	coTestObject * obj5 = [[coTestObject alloc] init2];
 	
 	
-//	[paren callMyself:COMMAND_DELETE,
-//	 [paren withDelay:3],
-//	 nil];
+	[m_paren callMyself:@"数字に変換するメソッドを作れとアレほど、、",
+	 [m_paren withDelay:3],
+	 nil];
 	
 	[window makeKeyAndVisible];
 	
@@ -75,15 +75,13 @@
 	
 	NSMutableDictionary * dict = (NSMutableDictionary *)[notification userInfo];
 	
-	NSLog(@"param_%@", [paren getExecAsString:dict]);
-	int n = [paren getExecAsIntFromDict:dict];
+	NSLog(@"param_%@", [m_paren getExecAsString:dict]);
+	int n = [m_paren getExecAsIntFromDict:dict];
 	NSLog(@"testn_%d",n);
 	
 	
 	switch (n) {
-		case -1295402496://COMMAND_YEAH//この部分をマクロで書ければ最高。
 		
-			break;
 		default:
 
 			NSLog(@"per_%d", n);//コマンドの数字を出す
@@ -143,7 +141,7 @@
 
 
 - (void)dealloc {
-	[paren release];
+	[m_paren release];
     [window release];
 	[mViewCont release];
 	

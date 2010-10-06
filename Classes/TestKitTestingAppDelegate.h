@@ -15,8 +15,8 @@
 
 @interface TestKitTestingAppDelegate : NSObject <UIApplicationDelegate> {
     UIWindow *window;
-	MessengerSystem * paren;
-	coTestObject * objectOv;
+	MessengerSystem * m_paren;
+	coTestObject * m_objectOv;
 	
 	UIViewController * m_vController;
 	

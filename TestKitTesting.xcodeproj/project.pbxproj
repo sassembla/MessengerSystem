@@ -38,7 +38,6 @@
 		134551B4122A4D1600E348F5 /* MessengerSystemTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessengerSystemTest.m; sourceTree = "<group>"; };
 		13455449122A6A0A00E348F5 /* coTestObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coTestObject.h; sourceTree = "<group>"; };
 		1345544A122A6A0A00E348F5 /* coTestObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = coTestObject.m; sourceTree = "<group>"; };
-		137DA94C122A26C700FB5497 /* TestBuncle-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TestBuncle-Info.plist"; sourceTree = "<group>"; };
 		137DA955122A26D500FB5497 /* TestBundle.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestBundle.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		137DA956122A26D500FB5497 /* TestBundle-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TestBundle-Info.plist"; sourceTree = "<group>"; };
 		13A2E99212407C6E007685AD /* MessengerIDGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessengerIDGenerator.h; sourceTree = "<group>"; };
@@ -141,7 +140,6 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				137DA94C122A26C700FB5497 /* TestBuncle-Info.plist */,
 				137DA956122A26D500FB5497 /* TestBundle-Info.plist */,
 			);
 			name = CustomTemplate;

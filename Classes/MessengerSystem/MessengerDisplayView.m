@@ -9,7 +9,7 @@
 #import "MessengerViewController.h"
 #import "MessengerDisplayView.h"
 #import "GlyphTable.h"
-
+#import "MessengerIDGenerator.h"
 
 @implementation MessengerDisplayView
 
@@ -26,7 +26,7 @@
  コントローラのIDをセットする
  */
 - (void) setControllerDelegate:(id)contID {
-	controllerId = contID;
+	m_controllerId = contID;
 }
 
 
@@ -59,9 +59,6 @@
 	
 	CGContextSetGrayFillColor(context, 0., 1);
 	CGContextFillRect(context, [self bounds]);//背景
-	//この領域に対して、現在のスケールに併せた描画をおこなう、、かなあ。
-	
-	
 	
 	
 	//背景描画
@@ -73,8 +70,10 @@
 	int index = m_colorIndex;//ラインカラー
 	
 	//オブジェクトを描く
-	for (id key in m_drawList) {
-		
+	NSArray * drawKeys = [m_drawList allKeys];
+	
+	for (int i = 0; i < [drawKeys count]; i++) {
+		id key = [drawKeys objectAtIndex:i];
 		
 		UIButton * b = [m_drawList valueForKey:key];
 		CGRect bRect = CGRectMake(b.frame.origin.x, b.frame.origin.y, b.frame.size.width, b.frame.size.height);
@@ -83,13 +82,16 @@
 		CGContextSetRGBStrokeColor(context, 1, 1, 1, 0.3);//状態によって色を変える
 		CGContextSetGrayFillColor(context, 1., 0.5);
 		
-		CGContextStrokeEllipseInRect(context, bRect);
-		CGContextFillEllipseInRect(context, CGRectMake(b.center.x-6, b.center.y-6, 12, 12));
+		CGContextStrokeEllipseInRect(context, bRect);//アウトライン
+		CGContextFillEllipseInRect(context, CGRectMake(b.center.x-6, b.center.y-6, 12, 12));//矩形内に円を描く
+		
 		
 		UIColor * textCol = [UIColor whiteColor];
-		//名前を書く
+		
+		//オブジェクトの名前を書く
+		
 		[GlyphTable drawString:context 
-						 string:[key substringToIndex:10]
+						 string:[key substringToIndex:[key length]-([[MessengerIDGenerator getMID] length]+1)]
 					  withFont:@"HiraKakuProN-W3"
 				  withFontSize:12
 					 withColor:textCol
@@ -101,6 +103,7 @@
 		//ラインを引く
 		for (id connectionKey in m_connectionList) {
 			if ([key isEqualToString:connectionKey]) {//一致するキーのラインを描く
+				
 				NSArray * positionArray = [m_connectionList valueForKey:key];
 				
 				float sx = [[positionArray objectAtIndex:0] floatValue];
@@ -159,16 +162,166 @@
 				}
 				
 				lineFromTo(context, CGPointMake(sx,sy), CGPointMake(ex, ey), col);
-				//傾き、特定の点からの位置
 				
-				//pointTo();//終点に、子供マークを付ける。文字でOK、
-				[col release];
+				
+				/**
+				 親/子のマーク、線の上に出してあげると嬉しい。色で分かる。
+				 円上の点を出す。より子供、親に近い方。
+				 */
+				
+				float adjustX = -3, adjustY = +3;
+				float r = bRect.size.width/4;
+				
+				
+				
+				
+				CGPoint cPoint = lineCrclCrsPt(sx,sy,r,	sx,sy,ex,ey,	ex,ey);//子の円と直線との交点で、親に近い方
+				
+				[GlyphTable drawString:context 
+								string:@"c"
+							  withFont:@"HiraKakuProN-W3"
+						  withFontSize:12
+							 withColor:col
+								   atX:cPoint.x+adjustX 
+								   atY:cPoint.y+adjustY];
+				
+				
+				CGPoint pPoint = lineCrclCrsPt(ex,ey,r,	sx,sy,ex,ey,	sx,sy);//親の円と直線との交点で、子に近い方
+				
+				[GlyphTable drawString:context 
+								string:@"P"
+							  withFont:@"HiraKakuProN-W3"
+						  withFontSize:12
+							 withColor:col
+								   atX:pPoint.x+adjustX
+								   atY:pPoint.y+adjustY];
+				
 				
 				index = (index + 1)%NUM_OF_COLOR;
 			}
 		}
 	}
 }
+
+
+/**
+ 2点間を通る線について、座標からax+by+c = 0 を出すメソッド
+ */
+float linePrmGetA(float cx, float cy, float px, float py) {
+	
+	float xlk = px - cx;
+	float ylk = py - cy;
+	float rsq = pow( xlk, 2 ) + pow( ylk, 2 );
+	
+	float rinv = 1/sqrt(rsq);
+	
+	
+	float a = -ylk * rinv;
+	return a;
+}
+
+float linePrmGetB(float cx, float cy, float px, float py) {
+	
+	float xlk = px - cx;
+	float ylk = py - cy;
+	float rsq = pow( xlk, 2 ) + pow( ylk, 2 );
+	
+	float rinv = 1/sqrt(rsq);
+	
+	
+	float b = xlk * rinv;
+	return b;
+}
+
+float linePrmGetC(float cx, float cy, float px, float py) {
+	
+	float xlk = px - cx;
+	float ylk = py - cy;
+	float rsq = pow( xlk, 2 ) + pow( ylk, 2 );
+	
+	float rinv = 1.0/sqrt(rsq);
+	
+	
+	float c = ((cx * py) - (px * cy)) * rinv;//桁が大きすぎる、、なんだこれ。
+	return c;
+}
+
+//直線と円の接点座標を返すメソッド
+CGPoint lineCrclCrsPt (float circleX, float circleY, float circleR, 
+						  float cx, float cy,
+						  float px,float py, 
+						  float nX,float nY) {
+	
+	//直線の各係数を求める
+	float a = linePrmGetA(cx,cy, px,py);
+	float b = linePrmGetB(cx,cy, px,py);
+	float c = linePrmGetC(cx,cy, px,py);
+	
+	
+	float rt = 1.0 / (pow(a, 2) + pow(b, 2));
+	
+	float factor = -c * rt;
+	float xo = a * factor;
+	float yo = b * factor;
+	
+	rt = sqrt(rt);//平方根
+	
+	float f =  b * rt;
+	float g = -a * rt;
+	
+	float fsq = f*f;
+	float gsq = g*g;
+	float fgsq = fsq+gsq;
+	
+
+	
+	float xjo = circleX - xo;
+	float yjo = circleY - yo;
+	float fygx = (f * yjo) - (g * xjo);
+	rt = ( circleR * circleR * fgsq ) - ( fygx * fygx );
+	
+	
+	
+	//交点なし
+	if( rt < 0 ) {
+		CGPoint ret = CGPointMake(0, 0);
+		return ret;
+	}
+	
+	float fxgy = (f*xjo)+(g*yjo);
+	
+	
+	//直線と円が接している場合
+	if( rt == 0 ){//floatなので0は無い。代替の手法が必要。
+		float t = fxgy / fgsq;
+		CGPoint ret = CGPointMake(xo + (f * t), yo + (g * t));
+		return ret;
+	}
+	
+	//交点が二つの場合	
+	rt = sqrt(rt);
+	
+	float fginv = 1.0 / fgsq;
+	float t1 = (fxgy - rt)*fginv;
+	float t2 = (fxgy + rt)*fginv;
+	float x1 = xo + (f * t1);
+	float y1 = yo + (g * t1);
+	float x2 = xo + (f * t2);
+	float y2 = yo + (g * t2);
+	
+	float sqdst1 = pow((nX - x1), 2) + pow((nY - y1), 2);
+	float sqdst2 = pow((nX - x2), 2 ) + pow((nY - y2), 2);
+	
+	//nearに近い方の交点を返す
+	CGPoint ret = CGPointMake(x2, y2);
+	
+	if (sqdst1 < sqdst2) {
+		ret = CGPointMake(x1, y1);
+	}
+	return ret;
+}
+
+
 
 /**
  ラインを描画するメソッド
@@ -177,13 +330,17 @@
 void lineFromTo(CGContextRef context, CGPoint start, CGPoint end, UIColor * color) {
 	CGContextSetLineWidth(context, 3.5);
 	
-	CGContextSetStrokeColorWithColor(context, CGColorCreateCopyWithAlpha([color CGColor], 0.2));
+	CGColorRef col  = CGColorCreateCopyWithAlpha([color CGColor], 0.2);
+	
+	CGContextSetStrokeColorWithColor(context, col);
 	
 	CGPoint p [2];
 	p[0] = start;
 	p[1] = end;
 	
 	CGContextStrokeLineSegments(context, p, 2);
+	
+	CFRelease(col);
 }
 
 
@@ -193,11 +350,15 @@ void lineFromTo(CGContextRef context, CGPoint start, CGPoint end, UIColor * colo
  */
 - (void) touchesBegan:(NSSet * )touches withEvent:(UIEvent * )event {
 	
-	NSLog(@"touches_%@",[event allTouches]);//なるほど。こうしないとタッチ全体が見れない。
-	
+//	NSLog(@"touches_%@",[event allTouches]);//タッチ全体はeventに入っている。 なんでTouchesに入ってないんだろう、、、 setなのに。
+//	→スタートだから、ということか。分解能での検出できる２点を見てるわけだ。
+	NSLog(@"Touches_count_%d",[touches count]);
 	for (UITouch * touch in touches) {
 		if (2 <= [touch tapCount]) {
-			[controllerId scaleReset];
+			CGPoint touchPoint = [touch locationInView:self];
+			
+			[m_controllerId scaleResetX:touchPoint.x withY:touchPoint.y];
+			
 			return;
 		}
 	}
@@ -208,15 +369,15 @@ void lineFromTo(CGContextRef context, CGPoint start, CGPoint end, UIColor * colo
 	 カウントの数確認
 	 を行う。
 	 */
-	if (!pinchEvent) {//イベントの種類ごとに振り分ける事で、排他にできる、、という理由。
+	if (!m_pinchEvent) {//イベントの種類ごとに振り分ける事で、排他にできる、、という理由。
 		NSArray * t = [[event allTouches] allObjects];//配列化する
 		
 		if ([[event allTouches] count] == 2){
-			pinchEvent = event;//イベントをセットする。のちのち識別するため。この方法は面白い。でも弱点がありそう。
+			m_pinchEvent = event;//のちのち識別するためイベントをセットする。この方法は面白い。でも弱点がありそう。
 			
-			lastPinchDist = fabs([[t objectAtIndex:0] locationInView:self].x - [[t objectAtIndex:1] locationInView:self].x);//開始時の2点間の距離を得る(xのみ)
+			m_lastPinchDist = fabs([[t objectAtIndex:0] locationInView:self].x - [[t objectAtIndex:1] locationInView:self].x);//開始時の2点間の距離を得る(xのみ)
 		} else {
-			lastPoint = CGPointMake([[t objectAtIndex:0] locationInView:self].x, [[t objectAtIndex:0] locationInView:self].y);
+			m_lastPoint = CGPointMake([[t objectAtIndex:0] locationInView:self].x, [[t objectAtIndex:0] locationInView:self].y);
 		}		
 	} 
 	
@@ -230,30 +391,27 @@ void lineFromTo(CGContextRef context, CGPoint start, CGPoint end, UIColor * colo
  */
 - (void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
 	
-	
-	if (event == pinchEvent && [[event allTouches] count] == 2) {
+	if (event == m_pinchEvent && [[event allTouches] count] == 2) {
 		CGFloat thisPinchDist, pinchDiff;//最新の2点間の距離、開始時からの差分
 		
 		NSArray * t = [[event allTouches] allObjects];//配列化
 		thisPinchDist = fabs([[t objectAtIndex:0] locationInView:self].x - [[t objectAtIndex:1] locationInView:self].x);//最新の2点間の距離
 		
-		pinchDiff = (thisPinchDist - lastPinchDist)*0.01f;//差分
+		pinchDiff = (thisPinchDist - m_lastPinchDist)*0.01f;//差分
 		
-		[controllerId setScale:[controllerId getScale]+pinchDiff];
+		[m_controllerId setScale:[m_controllerId getScale]+pinchDiff];
 		
-		lastPinchDist = thisPinchDist;//更新、、、？
+		m_lastPinchDist = thisPinchDist;//イベントが発生する度の更新なので、ここで上書き。
 	} else {
 		
 		//前回の位置からの移動分だけ、worldを動かす。
 		NSArray * t = [[event allTouches] allObjects];//配列化
 		
-		[controllerId moveWorldX:[[t objectAtIndex:0] locationInView:self].x - lastPoint.x withY:[[t objectAtIndex:0] locationInView:self].y - lastPoint.y];
+		[m_controllerId moveWorldX:[[t objectAtIndex:0] locationInView:self].x - m_lastPoint.x withY:[[t objectAtIndex:0] locationInView:self].y - m_lastPoint.y];
 		
-		lastPoint = CGPointMake([[t objectAtIndex:0] locationInView:self].x, [[t objectAtIndex:0] locationInView:self].y);
+		m_lastPoint = CGPointMake([[t objectAtIndex:0] locationInView:self].x, [[t objectAtIndex:0] locationInView:self].y);
 	
 	}
-
-	
 }
 
 
@@ -262,9 +420,9 @@ void lineFromTo(CGContextRef context, CGPoint start, CGPoint end, UIColor * colo
  タッチの終了
  */
 - (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-	if (event == pinchEvent)
+	if (event == m_pinchEvent)
 	{
-		pinchEvent = nil;//イベント削除
+		m_pinchEvent = nil;//イベント削除
 		return;
 	}
 }

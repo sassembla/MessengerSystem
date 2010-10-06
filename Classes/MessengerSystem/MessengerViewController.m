@@ -506,8 +506,8 @@
 
 	//この座標を画面の中心にするように、全インターフェースの座標を置き換える、とか。
 	
-	NSLog(@"到達_%@", event);//イベントからボタンIDとか取得できる筈。
-	UIButton * b = (UIButton * )event;//変形可能。
+//	NSLog(@"到達_%@", event);//イベントからボタンIDとか取得できる筈。
+//	UIButton * b = (UIButton * )event;//変形可能。
 	
 	//[self resizeButton:b];
 }
@@ -518,10 +518,10 @@
  
  */
 - (void) resizeButton:(UIButton * )b {
-	float x = b.frame.origin.x;
-	float y = b.frame.origin.y;
-	float width = b.frame.size.width;
-	float height = b.frame.size.height;
+//	float x = b.frame.origin.x;
+//	float y = b.frame.origin.y;
+//	float width = b.frame.size.width;
+//	float height = b.frame.size.height;
 	
 	/**
 	 ここからのラインを確認する。
@@ -667,10 +667,19 @@
 
 /**
  ビューからの直結イベント
+ ズームインかリセットを行う
  */
-- (void) scaleReset {
-	[self setWorldX:0 withY:0];
-	[self setScale:SCALE_DEFAULT];
+- (void) scaleResetX:(float)x withY:(float)y {
+	if ([self getScale] == SCALE_DEFAULT) {
+		
+		[self moveWorldX:x/2 withY:y/2];
+		[self setScale:SCALE_ZOOMED];
+		
+		
+	} else {//リセットを行う
+		[self setWorldX:0 withY:0];
+		[self setScale:SCALE_DEFAULT];
+	}
 }
 
 

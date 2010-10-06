@@ -19,6 +19,7 @@
 #define OFFSET_Y	(40)
 
 #define SCALE_DEFAULT	(1.0)
+#define SCALE_ZOOMED	(2.0)
 
 
 @interface MessengerViewController : MessengerSystem {
@@ -137,7 +138,7 @@
 - (void) setScale:(float)scaleDiff;//差分でのスケール
 - (float) getScale;
 
-- (void) scaleReset;
+- (void) scaleResetX:(float)x withY:(float)y;
 
 
 
