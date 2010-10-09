@@ -1,0 +1,65 @@
+\documentclass[a4paper]{book}
+\usepackage{makeidx}
+\usepackage{graphicx}
+\usepackage{multicol}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{textcomp}
+\usepackage{alltt}
+\usepackage{times}
+\usepackage{ifpdf}
+\ifpdf
+\usepackage[pdftex,
+            pagebackref=true,
+            colorlinks=true,
+            linkcolor=blue,
+            unicode
+           ]{hyperref}
+\else
+\usepackage[ps2pdf,
+            pagebackref=true,
+            colorlinks=true,
+            linkcolor=blue,
+            unicode
+           ]{hyperref}
+\usepackage{pspicture}
+\fi
+\usepackage[utf8]{inputenc}
+\usepackage{doxygen}
+\lstset{language=C++,inputencoding=utf8,basicstyle=\footnotesize,breaklines=true,breakatwhitespace=true,tabsize=8,numbers=left }
+\makeindex
+\setcounter{tocdepth}{3}
+\renewcommand{\footrulewidth}{0.4pt}
+\begin{document}
+\hypersetup{pageanchor=false}
+\begin{titlepage}
+\vspace*{7cm}
+\begin{center}
+{\Large MessengerSystem \\[1ex]\large 1.0 }\\
+\vspace*{1cm}
+{\large 作成： Doxygen 1.7.1}\\
+\vspace*{0.5cm}
+{\small Sat Oct 9 2010 21:28:45}\\
+\end{center}
+\end{titlepage}
+\clearemptydoublepage
+\pagenumbering{roman}
+\tableofcontents
+\clearemptydoublepage
+\pagenumbering{arabic}
+\hypersetup{pageanchor=true}
+\chapter{構成索引}
+\input{hierarchy}
+\chapter{構成索引}
+\input{annotated}
+\chapter{クラス}
+\input{d5/de6/structfont_table}
+\input{d1/dcc/interface_glyph_table}
+\input{d8/d39/interface_messenger_display_view}
+\input{df/dfd/interface_messenger_i_d_generator}
+\input{dc/dc9/interface_messenger_system}
+\input{d9/d39/interface_messenger_system_test}
+\input{d7/d34/interface_messenger_view_controller}
+\printindex
+\end{document}

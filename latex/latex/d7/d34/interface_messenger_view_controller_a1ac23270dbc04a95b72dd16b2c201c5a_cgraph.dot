@@ -1,0 +1,23 @@
+digraph G
+{
+  edge [fontname="FreeSans.ttf",fontsize="10",labelfontname="FreeSans.ttf",labelfontsize="10"];
+  node [fontname="FreeSans.ttf",fontsize="10",shape=record];
+  rankdir=LR;
+  Node1 [label="-[MessengerViewController initWithFrame:]",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid"];
+  Node2 [label="-[MessengerViewController initMyMID]",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d34/interface_messenger_view_controller.html#a2c2f7a46b94facbc66d66c7dd6da34bd"];
+  Node2 -> Node3 [color="midnightblue",fontsize="10",style="solid"];
+  Node3 [label="+[MessengerIDGenerator getMID]",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dfd/interface_messenger_i_d_generator.html#ad0d37385548ddcf8129fde71d41cf8ae"];
+  Node1 -> Node4 [color="midnightblue",fontsize="10",style="solid"];
+  Node4 [label="-[MessengerViewController initMyParentData]",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d34/interface_messenger_view_controller.html#a5728b61e9c4490af7aacddd874026bae"];
+  Node4 -> Node5 [color="midnightblue",fontsize="10",style="solid"];
+  Node5 [label="-[MessengerViewController setMyParentName:]",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d34/interface_messenger_view_controller.html#a9d6939385be720d5335fbf5b095cd63c"];
+  Node1 -> Node6 [color="midnightblue",fontsize="10",style="solid"];
+  Node6 [label="-[MessengerDisplayView setControllerDelegate:]",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d39/interface_messenger_display_view.html#ac1aa749dc5f3e7430d8d72841224c919"];
+  Node1 -> Node7 [color="midnightblue",fontsize="10",style="solid"];
+  Node7 [label="-[MessengerViewController setMyBodyID:]",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d34/interface_messenger_view_controller.html#abab9347cc7ed46bd04978ca00e081a0e"];
+  Node1 -> Node8 [color="midnightblue",fontsize="10",style="solid"];
+  Node8 [label="-[MessengerViewController setMyBodySelector:]",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d34/interface_messenger_view_controller.html#ade8005d21b7d8df69ddd12fba7440f6b"];
+  Node1 -> Node9 [color="midnightblue",fontsize="10",style="solid"];
+  Node9 [label="-[MessengerViewController setMyName:]",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d34/interface_messenger_view_controller.html#afe36a73932b47fb2c60412c6f03f67ac"];
+}

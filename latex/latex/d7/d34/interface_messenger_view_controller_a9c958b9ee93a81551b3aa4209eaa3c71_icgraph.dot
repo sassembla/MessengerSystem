@@ -1,0 +1,18 @@
+digraph G
+{
+  edge [fontname="FreeSans.ttf",fontsize="10",labelfontname="FreeSans.ttf",labelfontsize="10"];
+  node [fontname="FreeSans.ttf",fontsize="10",shape=record];
+  rankdir=LR;
+  Node1 [label="-[MessengerViewController getMessengerInformationKey:withMID:]",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir=back,color="midnightblue",fontsize="10",style="solid"];
+  Node2 [label="-[MessengerViewController deleteMessengerInformation:withMID:]",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d34/interface_messenger_view_controller.html#ab9c9343a0f520cdc1aa91b3985b31f7a"];
+  Node2 -> Node3 [dir=back,color="midnightblue",fontsize="10",style="solid"];
+  Node3 [label="-[MessengerViewController innerPerform:]",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d34/interface_messenger_view_controller.html#a2c415df83e46605177105d75c714e463"];
+  Node1 -> Node4 [dir=back,color="midnightblue",fontsize="10",style="solid"];
+  Node4 [label="-[MessengerViewController insertMessengerInformation:withMID:]",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d34/interface_messenger_view_controller.html#aa30151ef1d95034a10fa31e9c8a7da22"];
+  Node4 -> Node3 [dir=back,color="midnightblue",fontsize="10",style="solid"];
+  Node4 -> Node5 [dir=back,color="midnightblue",fontsize="10",style="solid"];
+  Node5 [label="-[MessengerViewController updateParentInformation:withMID:withParentName:withParentMID:]",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d34/interface_messenger_view_controller.html#a3eb404c4ef5fc51caae10e71136f35ff"];
+  Node5 -> Node3 [dir=back,color="midnightblue",fontsize="10",style="solid"];
+  Node1 -> Node5 [dir=back,color="midnightblue",fontsize="10",style="solid"];
+}

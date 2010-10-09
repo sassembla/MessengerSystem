@@ -1,0 +1,33 @@
+digraph G
+{
+  edge [fontname="FreeSans.ttf",fontsize="10",labelfontname="FreeSans.ttf",labelfontsize="10"];
+  node [fontname="FreeSans.ttf",fontsize="10",shape=record];
+  rankdir=LR;
+  Node1 [label="-[MessengerViewController getMessengerList]",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir=back,color="midnightblue",fontsize="10",style="solid"];
+  Node2 [label="-[MessengerViewController deleteMessengerInformation:withMID:]",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d34/interface_messenger_view_controller.html#ab9c9343a0f520cdc1aa91b3985b31f7a"];
+  Node2 -> Node3 [dir=back,color="midnightblue",fontsize="10",style="solid"];
+  Node3 [label="-[MessengerViewController innerPerform:]",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d34/interface_messenger_view_controller.html#a2c415df83e46605177105d75c714e463"];
+  Node1 -> Node4 [dir=back,color="midnightblue",fontsize="10",style="solid"];
+  Node4 [label="-[MessengerViewController drawDataUpdate]",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d34/interface_messenger_view_controller.html#aba89f37600bb5cc7258a034614257dc6"];
+  Node4 -> Node2 [dir=back,color="midnightblue",fontsize="10",style="solid"];
+  Node4 -> Node5 [dir=back,color="midnightblue",fontsize="10",style="solid"];
+  Node5 [label="-[MessengerViewController insertMessengerInformation:withMID:]",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d34/interface_messenger_view_controller.html#aa30151ef1d95034a10fa31e9c8a7da22"];
+  Node5 -> Node3 [dir=back,color="midnightblue",fontsize="10",style="solid"];
+  Node5 -> Node6 [dir=back,color="midnightblue",fontsize="10",style="solid"];
+  Node6 [label="-[MessengerViewController updateParentInformation:withMID:withParentName:withParentMID:]",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d34/interface_messenger_view_controller.html#a3eb404c4ef5fc51caae10e71136f35ff"];
+  Node6 -> Node3 [dir=back,color="midnightblue",fontsize="10",style="solid"];
+  Node4 -> Node7 [dir=back,color="midnightblue",fontsize="10",style="solid"];
+  Node7 [label="-[MessengerViewController setWorldX:withY:]",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d34/interface_messenger_view_controller.html#a3939f43ce30df6b8df0390712730282b"];
+  Node7 -> Node8 [dir=back,color="midnightblue",fontsize="10",style="solid"];
+  Node8 [label="-[MessengerViewController scaleResetX:withY:]",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d34/interface_messenger_view_controller.html#a9a0f05d1d3a3685a3d3ce7632c2bc7ee"];
+  Node4 -> Node6 [dir=back,color="midnightblue",fontsize="10",style="solid"];
+  Node1 -> Node5 [dir=back,color="midnightblue",fontsize="10",style="solid"];
+  Node1 -> Node9 [dir=back,color="midnightblue",fontsize="10",style="solid"];
+  Node9 [label="-[MessengerViewController setNameIndexDictionary]",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d34/interface_messenger_view_controller.html#a791916fe5a33b084e90d14cd12d9bc30"];
+  Node9 -> Node4 [dir=back,color="midnightblue",fontsize="10",style="solid"];
+  Node1 -> Node10 [dir=back,color="midnightblue",fontsize="10",style="solid"];
+  Node10 [label="-[MessengerViewController sortButtonsByParentOrder]",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d34/interface_messenger_view_controller.html#a6c8d083521df8a95e9e88612745d5981"];
+  Node10 -> Node4 [dir=back,color="midnightblue",fontsize="10",style="solid"];
+  Node1 -> Node6 [dir=back,color="midnightblue",fontsize="10",style="solid"];
+}

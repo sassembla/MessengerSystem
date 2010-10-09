@@ -1,0 +1,2336 @@
+{\rtf1\ansi\ansicpg932\uc1 \deff0\deflang1033\deflangfe1033
+{\fonttbl {\f0\froman\fcharset128\fprq2{\*\panose 02020603050405020304}Times New Roman;}
+{\f1\fswiss\fcharset128\fprq2{\*\panose 020b0604020202020204}Arial;}
+{\f2\fmodern\fcharset128\fprq1{\*\panose 02070309020205020404}Courier New;}
+{\f3\froman\fcharset2\fprq2{\*\panose 05050102010706020507}Symbol;}
+}
+{\colortbl;\red0\green0\blue0;\red0\green0\blue255;\red0\green255\blue255;\red0\green255\blue0;\red255\green0\blue255;\red255\green0\blue0;\red255\green255\blue0;\red255\green255\blue255;\red0\green0\blue128;\red0\green128\blue128;\red0\green128\blue0;\red128\green0\blue128;\red128\green0\blue0;\red128\green128\blue0;\red128\green128\blue128;\red192\green192\blue192;}
+{\stylesheet
+{\widctlpar\adjustright \fs20\cgrid \snext0 Normal;}
+{\s1\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs36\kerning36\cgrid \sbasedon0 \snext0 heading 1;}
+{\s2\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs28\kerning28\cgrid \sbasedon0 \snext0 heading 2;}
+{\s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid \sbasedon0 \snext0 heading 3;}
+{\s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid \sbasedon0 \snext0 heading 4;}{\*\cs10 \additive Default Paragraph Font;}
+{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid \sbasedon0 \snext0 heading 5;}{\*\cs10 \additive Default Paragraph Font;}
+{\s15\qc\sb240\sa60\widctlpar\outlinelevel0\adjustright \b\f1\fs32\kerning28\cgrid \sbasedon0 \snext15 Title;}
+{\s16\qc\sa60\widctlpar\outlinelevel1\adjustright \f1\cgrid \sbasedon0 \snext16 Subtitle;}
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid \sbasedon0 \snext17 BodyText;}
+{\s18\widctlpar\fs22\cgrid \sbasedon0 \snext18 DenseText;}
+{\s28\widctlpar\tqc\tx4320\tqr\tx8640\adjustright \fs20\cgrid \sbasedon0 \snext28 header;}
+{\s29\widctlpar\tqc\tx4320\tqr\tx8640\qr\adjustright \fs20\cgrid \sbasedon0 \snext29 footer;}
+{\s30\li360\sa60\sb120\keepn\widctlpar\adjustright \b\f1\fs20\cgrid \sbasedon0 \snext30 GroupHeader;}
+{\s40\li0\widctlpar\adjustright \shading1000\cbpat8 \f2\fs16\cgrid \sbasedon0 \snext41 Code Example 0;}
+{\s41\li360\widctlpar\adjustright \shading1000\cbpat8 \f2\fs16\cgrid \sbasedon0 \snext42 Code Example 1;}
+{\s42\li720\widctlpar\adjustright \shading1000\cbpat8 \f2\fs16\cgrid \sbasedon0 \snext43 Code Example 2;}
+{\s43\li1080\widctlpar\adjustright \shading1000\cbpat8 \f2\fs16\cgrid \sbasedon0 \snext44 Code Example 3;}
+{\s44\li1440\widctlpar\adjustright \shading1000\cbpat8 \f2\fs16\cgrid \sbasedon0 \snext45 Code Example 4;}
+{\s45\li1800\widctlpar\adjustright \shading1000\cbpat8 \f2\fs16\cgrid \sbasedon0 \snext46 Code Example 5;}
+{\s46\li2160\widctlpar\adjustright \shading1000\cbpat8 \f2\fs16\cgrid \sbasedon0 \snext47 Code Example 6;}
+{\s47\li2520\widctlpar\adjustright \shading1000\cbpat8 \f2\fs16\cgrid \sbasedon0 \snext48 Code Example 7;}
+{\s48\li2880\widctlpar\adjustright \shading1000\cbpat8 \f2\fs16\cgrid \sbasedon0 \snext49 Code Example 8;}
+{\s49\li3240\widctlpar\adjustright \shading1000\cbpat8 \f2\fs16\cgrid \sbasedon0 \snext49 Code Example 9;}
+{\s50\li0\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid \sbasedon0 \snext51 List Continue 0;}
+{\s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid \sbasedon0 \snext52 List Continue 1;}
+{\s52\li720\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid \sbasedon0 \snext53 List Continue 2;}
+{\s53\li1080\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid \sbasedon0 \snext54 List Continue 3;}
+{\s54\li1440\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid \sbasedon0 \snext55 List Continue 4;}
+{\s55\li1800\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid \sbasedon0 \snext56 List Continue 5;}
+{\s56\li2160\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid \sbasedon0 \snext57 List Continue 6;}
+{\s57\li2520\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid \sbasedon0 \snext58 List Continue 7;}
+{\s58\li2880\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid \sbasedon0 \snext59 List Continue 8;}
+{\s59\li3240\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid \sbasedon0 \snext59 List Continue 9;}
+{\s60\li0\widctlpar\ql\adjustright \fs20\cgrid \sbasedon0 \snext61 DescContinue 0;}
+{\s61\li360\widctlpar\ql\adjustright \fs20\cgrid \sbasedon0 \snext62 DescContinue 1;}
+{\s62\li720\widctlpar\ql\adjustright \fs20\cgrid \sbasedon0 \snext63 DescContinue 2;}
+{\s63\li1080\widctlpar\ql\adjustright \fs20\cgrid \sbasedon0 \snext64 DescContinue 3;}
+{\s64\li1440\widctlpar\ql\adjustright \fs20\cgrid \sbasedon0 \snext65 DescContinue 4;}
+{\s65\li1800\widctlpar\ql\adjustright \fs20\cgrid \sbasedon0 \snext66 DescContinue 5;}
+{\s66\li2160\widctlpar\ql\adjustright \fs20\cgrid \sbasedon0 \snext67 DescContinue 6;}
+{\s67\li2520\widctlpar\ql\adjustright \fs20\cgrid \sbasedon0 \snext68 DescContinue 7;}
+{\s68\li2880\widctlpar\ql\adjustright \fs20\cgrid \sbasedon0 \snext69 DescContinue 8;}
+{\s69\li3240\widctlpar\ql\adjustright \fs20\cgrid \sbasedon0 \snext69 DescContinue 9;}
+{\s70\li0\sa30\sb30\widctlpar\tqr\tldot\tx8640\adjustright \fs20\cgrid \sbasedon0 \snext81 LatexTOC 0;}
+{\s71\li360\sa27\sb27\widctlpar\tqr\tldot\tx8640\adjustright \fs20\cgrid \sbasedon0 \snext82 LatexTOC 1;}
+{\s72\li720\sa24\sb24\widctlpar\tqr\tldot\tx8640\adjustright \fs20\cgrid \sbasedon0 \snext83 LatexTOC 2;}
+{\s73\li1080\sa21\sb21\widctlpar\tqr\tldot\tx8640\adjustright \fs20\cgrid \sbasedon0 \snext84 LatexTOC 3;}
+{\s74\li1440\sa18\sb18\widctlpar\tqr\tldot\tx8640\adjustright \fs20\cgrid \sbasedon0 \snext85 LatexTOC 4;}
+{\s75\li1800\sa15\sb15\widctlpar\tqr\tldot\tx8640\adjustright \fs20\cgrid \sbasedon0 \snext86 LatexTOC 5;}
+{\s76\li2160\sa12\sb12\widctlpar\tqr\tldot\tx8640\adjustright \fs20\cgrid \sbasedon0 \snext87 LatexTOC 6;}
+{\s77\li2520\sa9\sb9\widctlpar\tqr\tldot\tx8640\adjustright \fs20\cgrid \sbasedon0 \snext88 LatexTOC 7;}
+{\s78\li2880\sa6\sb6\widctlpar\tqr\tldot\tx8640\adjustright \fs20\cgrid \sbasedon0 \snext89 LatexTOC 8;}
+{\s79\li3240\sa3\sb3\widctlpar\tqr\tldot\tx8640\adjustright \fs20\cgrid \sbasedon0 \snext89 LatexTOC 9;}
+{\s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid \sbasedon0 \snext81 \sautoupd List Bullet 0;}
+{\s81\fi-360\li720\widctlpar\jclisttab\tx720{\*\pn \pnlvlbody\ilvl0\ls2\pnrnot0\pndec }\ls2\adjustright \fs20\cgrid \sbasedon0 \snext82 \sautoupd List Bullet 1;}
+{\s82\fi-360\li1080\widctlpar\jclisttab\tx1080{\*\pn \pnlvlbody\ilvl0\ls3\pnrnot0\pndec }\ls3\adjustright \fs20\cgrid \sbasedon0 \snext83 \sautoupd List Bullet 2;}
+{\s83\fi-360\li1440\widctlpar\jclisttab\tx1440{\*\pn \pnlvlbody\ilvl0\ls4\pnrnot0\pndec }\ls4\adjustright \fs20\cgrid \sbasedon0 \snext84 \sautoupd List Bullet 3;}
+{\s84\fi-360\li1800\widctlpar\jclisttab\tx1800{\*\pn \pnlvlbody\ilvl0\ls5\pnrnot0\pndec }\ls5\adjustright \fs20\cgrid \sbasedon0 \snext85 \sautoupd List Bullet 4;}
+{\s85\fi-360\li2160\widctlpar\jclisttab\tx2160{\*\pn \pnlvlbody\ilvl0\ls6\pnrnot0\pndec }\ls6\adjustright \fs20\cgrid \sbasedon0 \snext86 \sautoupd List Bullet 5;}
+{\s86\fi-360\li2520\widctlpar\jclisttab\tx2520{\*\pn \pnlvlbody\ilvl0\ls7\pnrnot0\pndec }\ls7\adjustright \fs20\cgrid \sbasedon0 \snext87 \sautoupd List Bullet 6;}
+{\s87\fi-360\li2880\widctlpar\jclisttab\tx2880{\*\pn \pnlvlbody\ilvl0\ls8\pnrnot0\pndec }\ls8\adjustright \fs20\cgrid \sbasedon0 \snext88 \sautoupd List Bullet 7;}
+{\s88\fi-360\li3240\widctlpar\jclisttab\tx3240{\*\pn \pnlvlbody\ilvl0\ls9\pnrnot0\pndec }\ls9\adjustright \fs20\cgrid \sbasedon0 \snext89 \sautoupd List Bullet 8;}
+{\s89\fi-360\li3600\widctlpar\jclisttab\tx3600{\*\pn \pnlvlbody\ilvl0\ls10\pnrnot0\pndec }\ls10\adjustright \fs20\cgrid \sbasedon0 \snext89 \sautoupd List Bullet 9;}
+{\s90\fi-360\li360\widctlpar\fs20\cgrid \sbasedon0 \snext91 \sautoupd List Enum 0;}
+{\s91\fi-360\li720\widctlpar\fs20\cgrid \sbasedon0 \snext92 \sautoupd List Enum 1;}
+{\s92\fi-360\li1080\widctlpar\fs20\cgrid \sbasedon0 \snext93 \sautoupd List Enum 2;}
+{\s93\fi-360\li1440\widctlpar\fs20\cgrid \sbasedon0 \snext94 \sautoupd List Enum 3;}
+{\s94\fi-360\li1800\widctlpar\fs20\cgrid \sbasedon0 \snext95 \sautoupd List Enum 4;}
+{\s95\fi-360\li2160\widctlpar\fs20\cgrid \sbasedon0 \snext96 \sautoupd List Enum 5;}
+{\s96\fi-360\li2520\widctlpar\fs20\cgrid \sbasedon0 \snext96 \sautoupd List Enum 5;}
+{\s97\fi-360\li2880\widctlpar\fs20\cgrid \sbasedon0 \snext98 \sautoupd List Enum 7;}
+{\s98\fi-360\li3240\widctlpar\fs20\cgrid \sbasedon0 \snext99 \sautoupd List Enum 8;}
+{\s99\fi-360\li3600\widctlpar\fs20\cgrid \sbasedon0 \snext99 \sautoupd List Enum 9;}
+}
+{\comment begin body}
+{\info 
+{\title {\comment MessengerSystem  {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+1.0 \par
+}}MessengerSystem}
+{\comment \'8D\'EC\'90\'AC\'81FDoxgyen. }
+{\creatim \yr2010\mo10\dy9\hr21\min28\sec45}
+}\pard\plain 
+\sectd\pgnlcrm
+{\footer \s29\widctlpar\tqc\tx4320\tqr\tx8640\qr\adjustright \fs20\cgrid {\chpgn}}
+\pard\plain \s16\qc\sa60\widctlpar\outlinelevel1\adjustright \f1\cgrid 
+\vertalc\qc\par\par\par\par\par\par\par
+\pard\plain \s15\qc\sb240\sa60\widctlpar\outlinelevel0\adjustright \b\f1\fs32\kerning28\cgrid 
+{\field\fldedit {\*\fldinst TITLE \\*MERGEFORMAT}{\fldrslt TITLE}}\par
+\pard\plain \s16\qc\sa60\widctlpar\outlinelevel1\adjustright \f1\cgrid 
+\par
+\par\par\par\par\par\par\par\par\par\par\par\par
+\pard\plain \s16\qc\sa60\widctlpar\outlinelevel1\adjustright \f1\cgrid 
+{\field\fldedit {\*\fldinst AUTHOR \\*MERGEFORMAT}{\fldrslt AUTHOR}}\par
+Version 1.0\par{\field\fldedit {\*\fldinst CREATEDATE \\*MERGEFORMAT}{\fldrslt CREATEDATE}}\par
+\page\page\vertalt
+\pard\plain 
+\s1\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs36\kerning36\cgrid \'96\'DA\'8E\'9F\par
+\pard\plain \par
+{\field\fldedit {\*\fldinst TOC \\f \\*MERGEFORMAT}{\fldrslt Table of contents}}\par
+\pard\plain 
+\sect \sbkpage \pgndec \pgnrestart
+\sect \sectd \sbknone
+{\footer \s29\widctlpar\tqc\tx4320\tqr\tx8640\qr\adjustright \fs20\cgrid {\chpgn}}
+
+\pard\plain \sect\sbkpage
+\s1\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs36\kerning36\cgrid 
+\'8D\\'90\'AC\'8D\'F5\'88\'F8\par \pard\plain 
+{\tc \v \'8AK\'91w\'8D\'F5\'88\'F8}
+\pard\plain \s2\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs28\kerning28\cgrid 
+\'83N\'83\'89\'83X\'8AK\'91w\par \pard\plain 
+{
+\pard\plain \s17\sa60\sb30\widctlpar\qj \fs22\cgrid \'82\'B1\'82\'CC\'8Cp\'8F\'B3\'88\'EA\'97\'97\'82\'CD\'82\'A8\'82\'A8\'82\'DC\'82\'A9\'82\'C9\'82\'CD\'83\\'81[\'83g\'82\'B3\'82\'EA\'82\'C4\'82\'A2\'82\'DC\'82\'B7\'82\'AA\'81A\'8A\'AE\'91S\'82\'C9\'83A\'83\'8B\'83t\'83@\'83x\'83b\'83g\'8F\'87\'82\'C5\'83\\'81[\'83g\'82\'B3\'82\'EA\'82\'C4\'82\'CD\'82\'A2\'82\'DC\'82\'B9\'82\'F1\'81B}
+{
+\par
+\pard\plain \s71\li360\sa27\sb27\widctlpar\tqr\tldot\tx8640\adjustright \fs20\cgrid 
+fontTable\tab {\field\fldedit {\*\fldinst PAGEREF AAAAAAAAAA \\*MERGEFORMAT}{\fldrslt pagenum}}
+\par
+GlyphTable\tab {\field\fldedit {\*\fldinst PAGEREF AAAAAAAAAB \\*MERGEFORMAT}{\fldrslt pagenum}}
+\par
+MessengerDisplayView\tab {\field\fldedit {\*\fldinst PAGEREF AAAAAAAAAC \\*MERGEFORMAT}{\fldrslt pagenum}}
+\par
+MessengerIDGenerator\tab {\field\fldedit {\*\fldinst PAGEREF AAAAAAAAAD \\*MERGEFORMAT}{\fldrslt pagenum}}
+\par
+MessengerSystem\tab {\field\fldedit {\*\fldinst PAGEREF AAAAAAAAAE \\*MERGEFORMAT}{\fldrslt pagenum}}
+{
+\par
+\pard\plain \s72\li720\sa24\sb24\widctlpar\tqr\tldot\tx8640\adjustright \fs20\cgrid 
+MessengerViewController\tab {\field\fldedit {\*\fldinst PAGEREF AAAAAAAAAG \\*MERGEFORMAT}{\fldrslt pagenum}}
+\par
+}\par
+MessengerSystemTest\tab {\field\fldedit {\*\fldinst PAGEREF AAAAAAAAAF \\*MERGEFORMAT}{\fldrslt pagenum}}
+\par
+}
+\pard\plain \sect\sbkpage
+\s1\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs36\kerning36\cgrid 
+\'8D\\'90\'AC\'8D\'F5\'88\'F8\par \pard\plain 
+{\tc \v \'8D\\'90\'AC\'8D\'F5\'88\'F8}
+\pard\plain \s2\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs28\kerning28\cgrid 
+\'8D\\'90\'AC\par \pard\plain 
+{
+\pard\plain \s17\sa60\sb30\widctlpar\qj \fs22\cgrid \'83N\'83\'89\'83X\'81A\'8D\\'91\'A2\'91\'CC\'81A\'8B\'A4\'97p\'91\'CC\'81A\'83C\'83\'93\'83^\'83t\'83F\'81[\'83X\'82\'CC\'90\'E0\'96\'BE\'82\'C5\'82\'B7\'81B}
+{
+\par
+\pard\plain \s71\li360\sa27\sb27\widctlpar\tqr\tldot\tx8640\adjustright \fs20\cgrid 
+{\b {\b fontTable} } \tab {\field\fldedit {\*\fldinst PAGEREF AAAAAAAAAA \\*MERGEFORMAT}{\fldrslt pagenum}}
+\par
+{\b {\b GlyphTable} } \tab {\field\fldedit {\*\fldinst PAGEREF AAAAAAAAAB \\*MERGEFORMAT}{\fldrslt pagenum}}
+\par
+{\b {\b MessengerDisplayView} } \tab {\field\fldedit {\*\fldinst PAGEREF AAAAAAAAAC \\*MERGEFORMAT}{\fldrslt pagenum}}
+\par
+{\b {\b MessengerIDGenerator} } \tab {\field\fldedit {\*\fldinst PAGEREF AAAAAAAAAD \\*MERGEFORMAT}{\fldrslt pagenum}}
+\par
+{\b {\b MessengerSystem} } \tab {\field\fldedit {\*\fldinst PAGEREF AAAAAAAAAE \\*MERGEFORMAT}{\fldrslt pagenum}}
+\par
+{\b {\b MessengerSystemTest} } \tab {\field\fldedit {\*\fldinst PAGEREF AAAAAAAAAF \\*MERGEFORMAT}{\fldrslt pagenum}}
+\par
+{\b {\b MessengerViewController} } \tab {\field\fldedit {\*\fldinst PAGEREF AAAAAAAAAG \\*MERGEFORMAT}{\fldrslt pagenum}}
+\par
+\par}
+\pard\plain \sect\sbkpage
+\s1\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs36\kerning36\cgrid 
+\'83N\'83\'89\'83X{\tc \v \'83N\'83\'89\'83X}
+\par \pard\plain 
+\pard\plain \s2\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs28\kerning28\cgrid 
+\'8D\\'91\'A2\'91\'CC fontTable\par \pard\plain 
+{\tc\tcl2 \v fontTable}
+{\xe \v fontTable}
+{\bkmkstart AAAAAAAAAA}
+{\bkmkend AAAAAAAAAA}
+\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
+Protected \'95\'CF\'90\'94\par
+\pard\plain 
+
+{
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+CFDataRef {\b cmapTable}{\bkmkstart AAAAAAAAAH}
+{\bkmkend AAAAAAAAAH}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+FontTableFormat {\b format}{\bkmkstart AAAAAAAAAI}
+{\bkmkend AAAAAAAAAI}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+union \{\par
+
+{
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+\~ struct \{\par
+
+{
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+\~ \~ UInt16 {\b segCountX2}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+\~ \~ UInt16 * {\b endCodes}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+\~ \~ UInt16 * {\b startCodes}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+\~ \~ UInt16 * {\b idDeltas}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+\~ \~ UInt16 * {\b idRangeOffsets}\par
+}
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+\~ \} {\b format4}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+\~ struct \{\par
+
+{
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+\~ \~ UInt32 {\b nGroups}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+\~ \~ struct \{\par
+
+{
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+\~ \~ \~ UInt32 {\b startCharCode}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+\~ \~ \~ UInt32 {\b endCharCode}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+\~ \~ \~ UInt32 {\b startGlyphCode}\par
+}
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+\~ \~ \} {\b groups}\par
+}
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+\~ \} {\b format12}\par
+}
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+\} {\b cmap}{\bkmkstart AAAAAAAAAJ}
+{\bkmkend AAAAAAAAAJ}
+\par
+}
+{\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
+\'82\'B1\'82\'CC\'8D\\'91\'A2\'91\'CC\'82\'CC\'90\'E0\'96\'BE\'82\'CD\'8E\'9F\'82\'CC\'83t\'83@\'83C\'83\'8B\'82\'A9\'82\'E7\'90\'B6\'90\'AC\'82\'B3\'82\'EA\'82\'DC\'82\'B5\'82\'BD:{\par
+\pard\plain \s81\fi-360\li720\widctlpar\jclisttab\tx720{\*\pn \pnlvlbody\ilvl0\ls2\pnrnot0\pndec }\ls2\adjustright \fs20\cgrid 
+Classes/MessengerSystem/GlyphTable/GlyphTable.m\par
+}\par \pard\plain 
+
+\pard\plain \sect\sbkpage
+\s2\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs28\kerning28\cgrid 
+\pard\plain \s2\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs28\kerning28\cgrid 
+\'83N\'83\'89\'83X GlyphTable\par \pard\plain 
+{\tc\tcl2 \v GlyphTable}
+{\xe \v GlyphTable}
+{\bkmkstart AAAAAAAAAB}
+{\bkmkend AAAAAAAAAB}
+\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
+Static Public \'83\'81\'83\\'83b\'83h\par
+\pard\plain 
+
+{
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) + {\b drawString:string:withFont:withFontSize:withColor:atX:atY:}\par
+}
+{\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
+\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
+\'8A\'D6\'90\'94\par
+\pard\plain 
+{\xe \v drawString:string:withFont:withFontSize:withColor:atX:atY:\:GlyphTable}
+{\xe \v GlyphTable\:drawString:string:withFont:withFontSize:withColor:atX:atY:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
++ (void) drawString: (CGContextRef) {\i context} string: (NSString *) {\i str} withFont: (NSString *) {\i fontName} withFontSize: (int) {\i size} withColor: (UIColor *) {\i color} atX: (float) {\i x} atY: (float) {\i y}}
+}\par
+{\bkmkstart AAAAAAAAAK}
+{\bkmkend AAAAAAAAAK}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'95\'B6\'8E\'9A\'97\'F1\'95`\'89\'E6\'83v\'83\'8D\'83O\'83\'89\'83\'80 \'93\'FA\'96{\'8C\'EA\'91\'CE\'89\'9E \'8AO\'95\'94\'82\'A9\'82\'E7\'8E\'C0\'8Ds \par
+}}
+{\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
+\'82\'B1\'82\'CC\'83N\'83\'89\'83X\'82\'CC\'90\'E0\'96\'BE\'82\'CD\'8E\'9F\'82\'CC\'83t\'83@\'83C\'83\'8B\'82\'A9\'82\'E7\'90\'B6\'90\'AC\'82\'B3\'82\'EA\'82\'DC\'82\'B5\'82\'BD:{\par
+\pard\plain \s81\fi-360\li720\widctlpar\jclisttab\tx720{\*\pn \pnlvlbody\ilvl0\ls2\pnrnot0\pndec }\ls2\adjustright \fs20\cgrid 
+Classes/MessengerSystem/GlyphTable/GlyphTable.h\par
+\pard\plain \s81\fi-360\li720\widctlpar\jclisttab\tx720{\*\pn \pnlvlbody\ilvl0\ls2\pnrnot0\pndec }\ls2\adjustright \fs20\cgrid 
+Classes/MessengerSystem/GlyphTable/GlyphTable.m\par
+}\par \pard\plain 
+
+\pard\plain \sect\sbkpage
+\s2\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs28\kerning28\cgrid 
+\pard\plain \s2\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs28\kerning28\cgrid 
+\'83N\'83\'89\'83X MessengerDisplayView\par \pard\plain 
+{\tc\tcl2 \v MessengerDisplayView}
+{\xe \v MessengerDisplayView}
+{\bkmkstart AAAAAAAAAC}
+{\bkmkend AAAAAAAAAC}
+\par
+{
+{\f2 #import <MessengerDisplayView.h>}}\par
+\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
+Public \'83\'81\'83\\'83b\'83h\par
+\pard\plain 
+
+{
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b setControllerDelegate:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b updateDrawList:andConnectionList:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+(id) - {\b initWithMessengerDisplayFrame:}{\bkmkstart AAAAAAAAAL}
+{\bkmkend AAAAAAAAAL}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b lineFromTo}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(float) - {\b linePrmGetA}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+(float) - {\b linePrmGetB}{\bkmkstart AAAAAAAAAM}
+{\bkmkend AAAAAAAAAM}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+(float) - {\b linePrmGetC}{\bkmkstart AAAAAAAAAN}
+{\bkmkend AAAAAAAAAN}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+(CGPoint) - {\b lineCrclCrsPt}{\bkmkstart AAAAAAAAAO}
+{\bkmkend AAAAAAAAAO}
+\par
+}
+\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
+Protected \'95\'CF\'90\'94\par
+\pard\plain 
+
+{
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+id {\b m_controllerId}{\bkmkstart AAAAAAAAAP}
+{\bkmkend AAAAAAAAAP}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+int {\b m_colorIndex}{\bkmkstart AAAAAAAAAQ}
+{\bkmkend AAAAAAAAAQ}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+NSMutableDictionary * {\b m_drawList}{\bkmkstart AAAAAAAAAR}
+{\bkmkend AAAAAAAAAR}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+NSMutableDictionary * {\b m_connectionList}{\bkmkstart AAAAAAAAAS}
+{\bkmkend AAAAAAAAAS}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+UIEvent * {\b m_pinchEvent}{\bkmkstart AAAAAAAAAT}
+{\bkmkend AAAAAAAAAT}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+CGFloat {\b m_lastPinchDist}{\bkmkstart AAAAAAAAAU}
+{\bkmkend AAAAAAAAAU}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+CGPoint {\b m_lastPoint}{\bkmkstart AAAAAAAAAV}
+{\bkmkend AAAAAAAAAV}
+\par
+}
+{\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
+\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
+\'90\'E0\'96\'BE\par
+\pard\plain 
+{
+\pard\plain \s17\sa60\sb30\widctlpar\qj \fs22\cgrid {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'90e\'82\'C6\'82\'C8\'82\'E9\'83R\'83\'93\'83g\'83\'8D\'81[\'83\'89\'82\'A9\'82\'E7\'81A\'83{\'83^\'83\'93\'82\'F0\'83Z\'83b\'83g\'82\'B3\'82\'EA\'82\'E9\'91\'CE\'8F\'DB\'81B \'83{\'83^\'83\'93\'82\'CC\'89\'BA\'95~\'82\'AB\'82\'C9\'8F\'EE\'95\'F1\'81A\'83\'89\'83C\'83\'93\'82\'F0\'95`\'82\'AD\'81B \par
+}}
+{\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
+\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
+\'8A\'D6\'90\'94\par
+\pard\plain 
+{\xe \v lineFromTo\:MessengerDisplayView}
+{\xe \v MessengerDisplayView\:lineFromTo}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) lineFromTo (CGContextRef) {\i context}(CGPoint) {\i start}(CGPoint) {\i end}(UIColor *) {\i color}}
+}\par
+{\bkmkstart AAAAAAAAAW}
+{\bkmkend AAAAAAAAAW}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'83\'89\'83C\'83\'93\'82\'F0\'95`\'89\'E6\'82\'B7\'82\'E9\'83\'81\'83\\'83b\'83h \'83\'BF\'82\'CD\'8C\'C5\'92\'E8\'81B \par
+}}
+{\xe \v linePrmGetA\:MessengerDisplayView}
+{\xe \v MessengerDisplayView\:linePrmGetA}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (float) linePrmGetA (float) {\i cx}(float) {\i cy}(float) {\i px}(float) {\i py}}
+}\par
+{\bkmkstart AAAAAAAAAX}
+{\bkmkend AAAAAAAAAX}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+2\'93_\'8A\'D4\'82\'F0\'92\'CA\'82\'E9\'90\'FC\'82\'C9\'82\'C2\'82\'A2\'82\'C4\'81A\'8D\'C0\'95W\'82\'A9\'82\'E7ax+by+c = 0 \'82\'F0\'8Fo\'82\'B7\'83\'81\'83\\'83b\'83h \par
+}}
+{\xe \v setControllerDelegate:\:MessengerDisplayView}
+{\xe \v MessengerDisplayView\:setControllerDelegate:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) setControllerDelegate: (id) {\i contID}}
+}\par
+{\bkmkstart AAAAAAAAAY}
+{\bkmkend AAAAAAAAAY}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'83R\'83\'93\'83g\'83\'8D\'81[\'83\'89\'82\'CCID\'82\'F0\'83Z\'83b\'83g\'82\'B7\'82\'E9 \par
+}{
+\'8C\'C4\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d8/d39/interface_messenger_display_view_ac1aa749dc5f3e7430d8d72841224c919_icgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v updateDrawList:andConnectionList:\:MessengerDisplayView}
+{\xe \v MessengerDisplayView\:updateDrawList:andConnectionList:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) updateDrawList: (NSMutableDictionary *) {\i draw} andConnectionList: (NSMutableDictionary *) {\i connect}}
+}\par
+{\bkmkstart AAAAAAAAAZ}
+{\bkmkend AAAAAAAAAZ}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'8E\'AB\'8F\'91\'82\'F0\'8E\'F3\'82\'AF\'8E\'E6\'82\'E8\'8E\'A9\'8C\'C8\'82\'CC\'95`\'89\'E6\'83\'8A\'83X\'83g\'82\'F0\'8DX\'90V\'82\'B7\'82\'E9 \par
+}{
+\'8C\'C4\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d8/d39/interface_messenger_display_view_a3790ae1de28d367eb7ec15ec8ed545fb_icgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
+\'82\'B1\'82\'CC\'83N\'83\'89\'83X\'82\'CC\'90\'E0\'96\'BE\'82\'CD\'8E\'9F\'82\'CC\'83t\'83@\'83C\'83\'8B\'82\'A9\'82\'E7\'90\'B6\'90\'AC\'82\'B3\'82\'EA\'82\'DC\'82\'B5\'82\'BD:{\par
+\pard\plain \s81\fi-360\li720\widctlpar\jclisttab\tx720{\*\pn \pnlvlbody\ilvl0\ls2\pnrnot0\pndec }\ls2\adjustright \fs20\cgrid 
+Classes/MessengerSystem/MessengerDisplayView.h\par
+\pard\plain \s81\fi-360\li720\widctlpar\jclisttab\tx720{\*\pn \pnlvlbody\ilvl0\ls2\pnrnot0\pndec }\ls2\adjustright \fs20\cgrid 
+Classes/MessengerSystem/MessengerDisplayView.m\par
+}\par \pard\plain 
+
+\pard\plain \sect\sbkpage
+\s2\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs28\kerning28\cgrid 
+\pard\plain \s2\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs28\kerning28\cgrid 
+\'83N\'83\'89\'83X MessengerIDGenerator\par \pard\plain 
+{\tc\tcl2 \v MessengerIDGenerator}
+{\xe \v MessengerIDGenerator}
+{\bkmkstart AAAAAAAAAD}
+{\bkmkend AAAAAAAAAD}
+\par
+{
+{\f2 #import <MessengerIDGenerator.h>}}\par
+\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
+Static Public \'83\'81\'83\\'83b\'83h\par
+\pard\plain 
+
+{
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(NSString *) + {\b getMID}\par
+}
+{\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
+\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
+\'90\'E0\'96\'BE\par
+\pard\plain 
+{
+\pard\plain \s17\sa60\sb30\widctlpar\qj \fs22\cgrid {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+MID\'82\'F0\'94\'AD\'8Ds\'82\'B7\'82\'E9\'83N\'83\'89\'83X \'93\'C1\'82\'C9\'92\'99\'92~\'82\'C6\'82\'A9\'82\'CD\'82\'B5\'82\'C4\'82\'A2\'82\'C8\'82\'A2\'8E\'96\'82\'F0\'96\'BE\'8E\'A6\'82\'B7\'82\'E9\'82\'BD\'82\'DF\'82\'C9 \'83N\'83\'89\'83X\'83\'81\'83\\'83b\'83h\'82\'AA\'88\'EA\'82\'C2\'82\'A0\'82\'E9\'82\'CC\'82\'DD\'81B \par
+}}
+{\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
+\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
+\'8A\'D6\'90\'94\par
+\pard\plain 
+{\xe \v getMID\:MessengerIDGenerator}
+{\xe \v MessengerIDGenerator\:getMID}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
++ (NSString *) getMID }
+}\par
+{\bkmkstart AAAAAAAABA}
+{\bkmkend AAAAAAAABA}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+MID\'94\'AD\'8Ds\'83\'81\'83\\'83b\'83h UUID\'82\'F0\'8D\'EC\'90\'AC\'82\'B7\'82\'E9 \par
+}{
+\'8C\'C4\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "df/dfd/interface_messenger_i_d_generator_ad0d37385548ddcf8129fde71d41cf8ae_icgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
+\'82\'B1\'82\'CC\'83N\'83\'89\'83X\'82\'CC\'90\'E0\'96\'BE\'82\'CD\'8E\'9F\'82\'CC\'83t\'83@\'83C\'83\'8B\'82\'A9\'82\'E7\'90\'B6\'90\'AC\'82\'B3\'82\'EA\'82\'DC\'82\'B5\'82\'BD:{\par
+\pard\plain \s81\fi-360\li720\widctlpar\jclisttab\tx720{\*\pn \pnlvlbody\ilvl0\ls2\pnrnot0\pndec }\ls2\adjustright \fs20\cgrid 
+Classes/MessengerSystem/MessengerIDGenerator.h\par
+\pard\plain \s81\fi-360\li720\widctlpar\jclisttab\tx720{\*\pn \pnlvlbody\ilvl0\ls2\pnrnot0\pndec }\ls2\adjustright \fs20\cgrid 
+Classes/MessengerSystem/MessengerIDGenerator.m\par
+}\par \pard\plain 
+
+\pard\plain \sect\sbkpage
+\s2\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs28\kerning28\cgrid 
+\pard\plain \s2\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs28\kerning28\cgrid 
+\'83N\'83\'89\'83X MessengerSystem\par \pard\plain 
+{\tc\tcl2 \v MessengerSystem}
+{\xe \v MessengerSystem}
+{\bkmkstart AAAAAAAAAE}
+{\bkmkend AAAAAAAAAE}
+\par
+{
+{\b MessengerViewController}\'82\'C9\'8Cp\'8F\'B3\'82\'B3\'82\'EA\'82\'C4\'82\'A2\'82\'DC\'82\'B7\'81B}\par
+\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
+Public \'83\'81\'83\\'83b\'83h\par
+\pard\plain 
+
+{
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(id) - {\b initWithBodyID:withSelector:withName:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(id) - {\b initWithManual}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b setMyBodyID:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b setMyBodySelector:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b inputParent:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b inputParent:withSpecifiedMID:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b removeFromParent}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b removeAllChild}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b callMyself:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b call:withExec:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b call:withSpecifiedMID:withExec:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b callParent:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(NSDictionary *) - {\b tag:val:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(NSDictionary *) - {\b withRemoteFrom:withSelector:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(NSDictionary *) - {\b withDelay:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b remoteInvocation:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(NSMutableDictionary *) - {\b getLogStore}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(NSMutableDictionary *) - {\b getChildDict}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(NSString *) - {\b getExecAsString:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(int) - {\b getExecAsIntFromDict:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(int) - {\b getIntFromExec:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(int) - {\b changeStrToNumber:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(NSString *) - {\b changeNumberToStr:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(BOOL) - {\b hasParent}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(BOOL) - {\b hasChild}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(BOOL) - {\b isIncludeRemote:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(id) - {\b getMyBodyID}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(SEL) - {\b getMyBodySelector}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(NSString *) - {\b getMyName}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(NSString *) - {\b getMyMID}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(NSString *) - {\b getMyParentName}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(NSString *) - {\b getMyParentMID}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b cancelPerform}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(BOOL) - {\b isReleasable}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+(void) - {\b innerPerform:}{\bkmkstart AAAAAAAABB}
+{\bkmkend AAAAAAAABB}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+(void) - {\b sendPerform:}{\bkmkstart AAAAAAAABC}
+{\bkmkend AAAAAAAABC}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+(void) - {\b sendPerform:withDelay:}{\bkmkstart AAAAAAAABD}
+{\bkmkend AAAAAAAABD}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+(void) - {\b sendMessage:}{\bkmkstart AAAAAAAABE}
+{\bkmkend AAAAAAAABE}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+(void) - {\b remoteInvocation:withDict:}{\bkmkstart AAAAAAAABF}
+{\bkmkend AAAAAAAABF}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+(void) - {\b createdNotice}{\bkmkstart AAAAAAAABG}
+{\bkmkend AAAAAAAABG}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+(void) - {\b updatedNotice:withParentMID:}{\bkmkstart AAAAAAAABH}
+{\bkmkend AAAAAAAABH}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+(void) - {\b killedNotice}{\bkmkstart AAAAAAAABI}
+{\bkmkend AAAAAAAABI}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+(void) - {\b setChildDictChildNameAsValue:withMIDAsKey:}{\bkmkstart AAAAAAAABJ}
+{\bkmkend AAAAAAAABJ}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+(void) - {\b removeChildDictChildNameAsValue:withMIDAsKey:}{\bkmkstart AAAAAAAABK}
+{\bkmkend AAAAAAAABK}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+(NSDictionary *) - {\b setRemoteInvocationFrom:withSelector:}{\bkmkstart AAAAAAAABL}
+{\bkmkend AAAAAAAABL}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+(void) - {\b addCreationLog:}{\bkmkstart AAAAAAAABM}
+{\bkmkend AAAAAAAABM}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+(void) - {\b saveLogForReceived:}{\bkmkstart AAAAAAAABN}
+{\bkmkend AAAAAAAABN}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+(NSMutableDictionary *) - {\b createLogForReply}{\bkmkstart AAAAAAAABO}
+{\bkmkend AAAAAAAABO}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+(void) - {\b saveToLogStore:log:}{\bkmkstart AAAAAAAABP}
+{\bkmkend AAAAAAAABP}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+(void) - {\b setMyName:}{\bkmkstart AAAAAAAABQ}
+{\bkmkend AAAAAAAABQ}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+(void) - {\b initMyMID}{\bkmkstart AAAAAAAABR}
+{\bkmkend AAAAAAAABR}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+(void) - {\b initMyParentData}{\bkmkstart AAAAAAAABS}
+{\bkmkend AAAAAAAABS}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+(void) - {\b resetMyParentData}{\bkmkstart AAAAAAAABT}
+{\bkmkend AAAAAAAABT}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+(void) - {\b setMyParentName:}{\bkmkstart AAAAAAAABU}
+{\bkmkend AAAAAAAABU}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+(void) - {\b setMyParentMID:}{\bkmkstart AAAAAAAABV}
+{\bkmkend AAAAAAAABV}
+\par
+}
+\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
+Static Public \'83\'81\'83\\'83b\'83h\par
+\pard\plain 
+
+{
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(NSString *) + {\b version}\par
+}
+\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
+Protected \'95\'CF\'90\'94\par
+\pard\plain 
+
+{
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+id {\b myBodyID}{\bkmkstart AAAAAAAABW}
+{\bkmkend AAAAAAAABW}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+SEL {\b myBodySelector}{\bkmkstart AAAAAAAABX}
+{\bkmkend AAAAAAAABX}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+NSString * {\b myName}{\bkmkstart AAAAAAAABY}
+{\bkmkend AAAAAAAABY}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+NSString * {\b myMID}{\bkmkstart AAAAAAAABZ}
+{\bkmkend AAAAAAAABZ}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+NSString * {\b myParentName}{\bkmkstart AAAAAAAACA}
+{\bkmkend AAAAAAAACA}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+NSString * {\b myParentMID}{\bkmkstart AAAAAAAACB}
+{\bkmkend AAAAAAAACB}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+NSMutableDictionary * {\b m_childDict}{\bkmkstart AAAAAAAACC}
+{\bkmkend AAAAAAAACC}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+NSMutableDictionary * {\b m_logDict}{\bkmkstart AAAAAAAACD}
+{\bkmkend AAAAAAAACD}
+\par
+}
+{\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
+\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
+\'90\'E0\'96\'BE\par
+\pard\plain 
+{
+\pard\plain \s17\sa60\sb30\widctlpar\qj \fs22\cgrid {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'83v\'83\'89\'83C\'83x\'81[\'83g\'8E\'C0\'91\'95\par
+\'83p\'83u\'83\'8A\'83b\'83N\'8E\'C0\'91\'95 \par
+}}
+{\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
+\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
+\'8A\'D6\'90\'94\par
+\pard\plain 
+{\xe \v call:withExec:\:MessengerSystem}
+{\xe \v MessengerSystem\:call:withExec:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) call: (NSString *) {\i childName} withExec: (NSString *) {\i exec} ,  {\i ...}}
+}\par
+{\bkmkstart AAAAAAAACE}
+{\bkmkend AAAAAAAACE}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'93\'C1\'92\'E8\'82\'CC\'96\'BC\'91O\'82\'CCmessenger\'82\'D6\'82\'CC\'92\'CA\'90M\'82\'F0\'8Ds\'82\'A4\'83\'81\'83\\'83b\'83h \'88\'D9\'82\'C8\'82\'E9\'96\'BC\'91O\'82\'CC\'90e\'82\'A9\'82\'E7\'8Eq\'82\'D6\'82\'CC\'83\'81\'83b\'83Z\'81[\'83W\'8C\'C0\'92\'E8 \par
+}{
+{\b MessengerViewController} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAACF \\*MERGEFORMAT}{\fldrslt pagenum}}})\'82\'C5\'8D\'C4\'92\'E8\'8B`\'82\'B3\'82\'EA\'82\'C4\'82\'A2\'82\'DC\'82\'B7\'81B}\par
+{
+\'8A\'D6\'90\'94\'82\'CC\'8C\'C4\'82\'D1\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "dc/dc9/interface_messenger_system_ae9f0c6c7daf251eb28aad584b1eca292_cgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v call:withSpecifiedMID:withExec:\:MessengerSystem}
+{\xe \v MessengerSystem\:call:withSpecifiedMID:withExec:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) call: (NSString *) {\i childName} withSpecifiedMID: (NSString *) {\i mID} withExec: (NSString *) {\i exec} ,  {\i ...}}
+}\par
+{\bkmkstart AAAAAAAACG}
+{\bkmkend AAAAAAAACG}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'93\'C1\'92\'E8\'82\'CC\'8Eq\'82\'D6\'82\'CC\'92\'CA\'90M\'82\'F0\'8Ds\'82\'A4\'83\'81\'83\\'83b\'83h\'81A\'93\'C1\'82\'C9MID\'82\'F0\'8Eg\'82\'A2\'81A\'91\'8A\'8E\'E8\'82\'F0\'8D\'C5\'91\'E5\'8C\'C0\'93\'C1\'92\'E8\'82\'B7\'82\'E9\'81B \par
+}{
+\'8A\'D6\'90\'94\'82\'CC\'8C\'C4\'82\'D1\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "dc/dc9/interface_messenger_system_ae923fe829663d8974dc34063bd32c4a2_cgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v callMyself:\:MessengerSystem}
+{\xe \v MessengerSystem\:callMyself:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) callMyself: (NSString *) {\i exec} ,  {\i ...}}
+}\par
+{\bkmkstart AAAAAAAACH}
+{\bkmkend AAAAAAAACH}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'8E\'A9\'95\'AA\'8E\'A9\'90g\'82\'CCmessenger\'82\'D6\'82\'C6\'92\'CA\'90M\'82\'F0\'8Ds\'82\'A4\'83\'81\'83\\'83b\'83h \par
+}{
+{\b MessengerViewController} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAACI \\*MERGEFORMAT}{\fldrslt pagenum}}})\'82\'C5\'8D\'C4\'92\'E8\'8B`\'82\'B3\'82\'EA\'82\'C4\'82\'A2\'82\'DC\'82\'B7\'81B}\par
+{
+\'8A\'D6\'90\'94\'82\'CC\'8C\'C4\'82\'D1\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "dc/dc9/interface_messenger_system_a0d78a7be460a84be04e67d73ddcf4248_cgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v callParent:\:MessengerSystem}
+{\xe \v MessengerSystem\:callParent:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) callParent: (NSString *) {\i exec} ,  {\i ...}}
+}\par
+{\bkmkstart AAAAAAAACJ}
+{\bkmkend AAAAAAAACJ}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'90e\'82\'D6\'82\'CC\'92\'CA\'90M\'82\'F0\'8Ds\'82\'A4\'83\'81\'83\\'83b\'83h \par
+}{
+{\b MessengerViewController} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAACK \\*MERGEFORMAT}{\fldrslt pagenum}}})\'82\'C5\'8D\'C4\'92\'E8\'8B`\'82\'B3\'82\'EA\'82\'C4\'82\'A2\'82\'DC\'82\'B7\'81B}\par
+{
+\'8A\'D6\'90\'94\'82\'CC\'8C\'C4\'82\'D1\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "dc/dc9/interface_messenger_system_acf758deab41281c54d928be2a72fc9ba_cgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+{
+\'8C\'C4\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "dc/dc9/interface_messenger_system_acf758deab41281c54d928be2a72fc9ba_icgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v cancelPerform\:MessengerSystem}
+{\xe \v MessengerSystem\:cancelPerform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) cancelPerform }
+}\par
+{\bkmkstart AAAAAAAACL}
+{\bkmkend AAAAAAAACL}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'92x\'89\'84\'8E\'C0\'8Ds\'82\'F0\'83L\'83\'83\'83\'93\'83Z\'83\'8B\'82\'B7\'82\'E9\'83\'81\'83\\'83b\'83h \par
+}}
+{\xe \v changeNumberToStr:\:MessengerSystem}
+{\xe \v MessengerSystem\:changeNumberToStr:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (NSString *) changeNumberToStr: (int) {\i num}}
+}\par
+{\bkmkstart AAAAAAAACM}
+{\bkmkend AAAAAAAACM}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'90\'94\'92l\'82\'CC\'95\'B6\'8E\'9A\'97\'F1\'89\'BB\par
+\'90\'94\'92l\'82\'CC\'95\'B6\'8E\'9A\'97\'F1\'89\'BB \'8Fo\'97\'88\'82\'DC\'82\'B9\'82\'F1\'81B\'83\'8D\'83W\'83b\'83N\'93I\'82\'C9\'95s\'89\'C2\'8Bt\'81B \par
+}{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'90\'94\'8E\'9A\'82\'CC4\'95\'B6\'8E\'9A\'82\'F0\'82\'DC\'82\'C6\'82\'DF\'82\'C4\'8F\'88\'97\'9D\'82\'B5\'82\'C4\'82\'A2\'82\'E9\'81B\'8D\'C5\'8F\'AC\'82\'C51,\'82\'C6\'82\'A9\'82\'C8\'82\'CC\'82\'C5\'81A\'91\'AB\'82\'B5\'82\'BD\'82\'E0\'82\'CC\'82\'A9\'82\'E7\'95\'A1\'8D\'87\'82\'B7\'82\'E9\'82\'B5\'82\'A9\'82\'C8\'82\'A2\'81B\'88\'BD\'82\'E9\'88\'D3\'96\'A1\'88\'C3\'8D\'86\'81B\par
+}}\par
+}
+{\xe \v changeStrToNumber:\:MessengerSystem}
+{\xe \v MessengerSystem\:changeStrToNumber:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (int) changeStrToNumber: (NSString *) {\i str}}
+}\par
+{\bkmkstart AAAAAAAACN}
+{\bkmkend AAAAAAAACN}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'83X\'83g\'83\'8A\'83\'93\'83O\'82\'CC\'90\'94\'92l\'89\'BB\par
+\'95\'B6\'8E\'9A\'97\'F1\'82\'CC\'90\'94\'92l\'89\'BB \par
+}{
+\'8C\'C4\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "dc/dc9/interface_messenger_system_a9c32da2a99a87a32c2567b29b4d411ac_icgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v getChildDict\:MessengerSystem}
+{\xe \v MessengerSystem\:getChildDict}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (NSMutableDictionary *) getChildDict }
+}\par
+{\bkmkstart AAAAAAAACO}
+{\bkmkend AAAAAAAACO}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+m_childDict\'82\'F0\'95\'D4\'82\'B7 \par
+}{
+\'8C\'C4\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "dc/dc9/interface_messenger_system_a057d907e4e7325c927580ace6701f95c_icgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v getExecAsIntFromDict:\:MessengerSystem}
+{\xe \v MessengerSystem\:getExecAsIntFromDict:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (int) getExecAsIntFromDict: (NSMutableDictionary *) {\i dict}}
+}\par
+{\bkmkstart AAAAAAAACP}
+{\bkmkend AAAAAAAACP}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'83R\'83}\'83\'93\'83h\'8F\'EE\'95\'F1\'82\'F0\'90\'94\'92l\'82\'C5\'8E\'E6\'93\'BE\'82\'B7\'82\'E9 \'8E\'AB\'8F\'91\'82\'A9\'82\'E7switch\'95\'B6\'82\'C5\'8Eg\'97p\'82\'B7\'82\'E9\'90\'94\'92l\'82\'F0\'8E\'E6\'93\'BE\'82\'B7\'82\'E9\par
+\'8E\'C0\'8Ds\'8F\'88\'97\'9D\'96\'BC\'82\'F0\'8Ew\'92\'E8\'81AInt\'92l\'82\'F0\'8E\'E6\'93\'BE\'82\'B7\'82\'E9 \'82\'B1\'82\'CC\'8E\'9E\'93_\'82\'C5\'94\'F2\'82\'D1\'8D\'9E\'82\'F1\'82\'C5\'82\'AD\'82\'E9\'83X\'83g\'83\'8A\'83\'93\'83O\'82\'CC\'83|\'83C\'83\'93\'83^\'82\'C6\'93\'AF\'82\'B6\'92l\'82\'F0\'92\'BC\'91O\'82\'C5\'8Fo\'82\'B5\'82\'C4\'81A\'8D\'87\'92v\'82\'B7\'82\'E9\'92l\'82\'F0\'8Fo\'82\'B9\'82\'EA\'82\'CE\'82\'A2\'82\'A2\'82\'CC\'82\'A9\'81A\'81A\'82\'C1\'82\'C4\'92\'E8\'90\'94\'82\'B6\'82\'E1\'82\'C8\'82\'A2\'82\'AA\'81A\'81A\'88\'EA\'92v\'82\'CD\'8Fo\'97\'88\'82\'E9\'81A\'81A\'82\'A4\'81[\'82\'F1\'81B \par
+}{
+\'8A\'D6\'90\'94\'82\'CC\'8C\'C4\'82\'D1\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "dc/dc9/interface_messenger_system_aef3cf1f4d71c77f66e6053dcd277beba_cgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v getExecAsString:\:MessengerSystem}
+{\xe \v MessengerSystem\:getExecAsString:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (NSString *) getExecAsString: (NSMutableDictionary *) {\i dict}}
+}\par
+{\bkmkstart AAAAAAAACQ}
+{\bkmkend AAAAAAAACQ}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'83R\'83}\'83\'93\'83h\'8F\'EE\'95\'F1\'82\'F0\'95\'B6\'8E\'9A\'97\'F1\'82\'C5\'8E\'E6\'93\'BE\'82\'B7\'82\'E9\par
+\'8E\'C0\'8Ds\'8F\'88\'97\'9D\'96\'BC\'82\'F0\'8Ew\'92\'E8\'81AString\'92l\'82\'F0\'8E\'E6\'93\'BE\'82\'B7\'82\'E9 \par
+}}
+{\xe \v getIntFromExec:\:MessengerSystem}
+{\xe \v MessengerSystem\:getIntFromExec:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (int) getIntFromExec: (NSString *) {\i exec}}
+}\par
+{\bkmkstart AAAAAAAACR}
+{\bkmkend AAAAAAAACR}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'95\'B6\'8E\'9A\'97\'F1\'82\'A9\'82\'E7switch\'95\'B6\'82\'C5\'8Eg\'97p\'82\'B7\'82\'E9\'90\'94\'92l\'82\'F0\'8E\'E6\'93\'BE\'82\'B7\'82\'E9\par
+NSString\'82\'A9\'82\'E7Int\'92l\'82\'F0\'8Fo\'82\'B7 \par
+}{
+\'8A\'D6\'90\'94\'82\'CC\'8C\'C4\'82\'D1\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "dc/dc9/interface_messenger_system_a881655597ee31052ca7cd72acd1343c2_cgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v getLogStore\:MessengerSystem}
+{\xe \v MessengerSystem\:getLogStore}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (NSMutableDictionary *) getLogStore }
+}\par
+{\bkmkstart AAAAAAAACS}
+{\bkmkend AAAAAAAACS}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'8A\'CF\'8E@\'97p\'82\'C9\'82\'B1\'82\'CCmessenger\'82\'C9\'8F\'91\'82\'A9\'82\'EA\'82\'C4\'82\'A2\'82\'E9\'83\'8D\'83O\'82\'F0\'8E\'E6\'93\'BE\'82\'B7\'82\'E9\'83\'81\'83\\'83b\'83h \par
+}}
+{\xe \v getMyBodyID\:MessengerSystem}
+{\xe \v MessengerSystem\:getMyBodyID}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (id) getMyBodyID }
+}\par
+{\bkmkstart AAAAAAAACT}
+{\bkmkend AAAAAAAACT}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'83N\'83\'89\'83X\'82\'AA\'8E\'9D\'82\'C2\'92l\'82\'CC \'83Q\'83b\'83^\'81[\par
+\'8E\'A9\'95\'AA\'82\'CCBodyID\'82\'F0\'95\'D4\'82\'B7\'83\'81\'83\\'83b\'83h \par
+}}
+{\xe \v getMyBodySelector\:MessengerSystem}
+{\xe \v MessengerSystem\:getMyBodySelector}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (SEL) getMyBodySelector }
+}\par
+{\bkmkstart AAAAAAAACU}
+{\bkmkend AAAAAAAACU}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'8E\'A9\'95\'AA\'82\'CC\'83Z\'83\'8C\'83N\'83^\'81[\'97p\'83|\'83C\'83\'93\'83^\'82\'F0\'95\'D4\'82\'B7\'83\'81\'83\\'83b\'83h \par
+}}
+{\xe \v getMyMID\:MessengerSystem}
+{\xe \v MessengerSystem\:getMyMID}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (NSString *) getMyMID }
+}\par
+{\bkmkstart AAAAAAAACV}
+{\bkmkend AAAAAAAACV}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'8E\'A9\'95\'AA\'82\'CCMID\'82\'F0\'95\'D4\'82\'B7\'83\'81\'83\\'83b\'83h \par
+}{
+\'8C\'C4\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "dc/dc9/interface_messenger_system_a53fb306c1c478aafd66a039cf08e9f53_icgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v getMyName\:MessengerSystem}
+{\xe \v MessengerSystem\:getMyName}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (NSString *) getMyName }
+}\par
+{\bkmkstart AAAAAAAACW}
+{\bkmkend AAAAAAAACW}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'8E\'A9\'95\'AA\'82\'CC\'96\'BC\'8F\'CC\'82\'F0\'95\'D4\'82\'B7\'83\'81\'83\\'83b\'83h \par
+}{
+\'8C\'C4\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "dc/dc9/interface_messenger_system_a8d6c34458dcb7c44337b68b2c47c9050_icgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v getMyParentMID\:MessengerSystem}
+{\xe \v MessengerSystem\:getMyParentMID}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (NSString *) getMyParentMID }
+}\par
+{\bkmkstart AAAAAAAACX}
+{\bkmkend AAAAAAAACX}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'90e\'82\'CCMID\'82\'F0\'95\'D4\'82\'B7\'83\'81\'83\\'83b\'83h \par
+}{
+\'8C\'C4\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "dc/dc9/interface_messenger_system_a59c153b480be68325af6a66f18cecd0b_icgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v getMyParentName\:MessengerSystem}
+{\xe \v MessengerSystem\:getMyParentName}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (NSString *) getMyParentName }
+}\par
+{\bkmkstart AAAAAAAACY}
+{\bkmkend AAAAAAAACY}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'90e\'82\'CC\'96\'BC\'8F\'CC\'82\'F0\'95\'D4\'82\'B7\'83\'81\'83\\'83b\'83h \par
+}{
+\'8C\'C4\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "dc/dc9/interface_messenger_system_a8480affbc74b87d15b301d5b32681a70_icgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v hasChild\:MessengerSystem}
+{\xe \v MessengerSystem\:hasChild}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (BOOL) hasChild }
+}\par
+{\bkmkstart AAAAAAAACZ}
+{\bkmkend AAAAAAAACZ}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'8Eq\'8B\'9F\'82\'AA\'90\'DD\'92\'E8\'82\'B3\'82\'EA\'82\'C4\'82\'A2\'82\'E9\'82\'A9\'94\'DB\'82\'A9\'95\'D4\'82\'B7 \par
+}{
+\'8A\'D6\'90\'94\'82\'CC\'8C\'C4\'82\'D1\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "dc/dc9/interface_messenger_system_a9db1bcbbaf0abb9e8e1af5a2aa5bf9fa_cgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v hasParent\:MessengerSystem}
+{\xe \v MessengerSystem\:hasParent}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (BOOL) hasParent }
+}\par
+{\bkmkstart AAAAAAAADA}
+{\bkmkend AAAAAAAADA}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'83\'86\'81[\'83e\'83B\'83\'8A\'83e\'83B\par
+\'90e\'82\'AA\'90\'DD\'92\'E8\'82\'B3\'82\'EA\'82\'C4\'82\'A2\'82\'E9\'82\'A9\'94\'DB\'82\'A9\'95\'D4\'82\'B7 \par
+}{
+\'8A\'D6\'90\'94\'82\'CC\'8C\'C4\'82\'D1\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "dc/dc9/interface_messenger_system_a4ab801cff2356929a18a551b3537f435_cgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+{
+\'8C\'C4\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "dc/dc9/interface_messenger_system_a4ab801cff2356929a18a551b3537f435_icgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v initWithBodyID:withSelector:withName:\:MessengerSystem}
+{\xe \v MessengerSystem\:initWithBodyID:withSelector:withName:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (id) initWithBodyID: (id) {\i body_id} withSelector: (SEL) {\i body_selector} withName: (NSString *) {\i name}}
+}\par
+{\bkmkstart AAAAAAAADB}
+{\bkmkend AAAAAAAADB}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+MessengerSystem\'83C\'83\'93\'83X\'83^\'83\'93\'83X\'82\'CC\'8F\'89\'8A\'FA\'89\'BB\'83\'81\'83\\'83b\'83h\par
+body_id:\'82\'B1\'82\'CC\'83C\'83\'93\'83X\'83^\'83\'93\'83X\'82\'F0\'8F\'8A\'8E\'9D\'82\'B7\'82\'E9\'83I\'83u\'83W\'83F\'83N\'83g\'82\'CCID body_selector:\'82\'B1\'82\'CC\'83C\'83\'93\'83X\'83^\'83\'93\'83X\'82\'F0\'8F\'8A\'8E\'9D\'82\'B7\'82\'E9\'83I\'83u\'83W\'83F\'83N\'83g\'82\'AA\'8E\'A9\'93\'AE\'93I\'82\'C9\'8C\'C4\'82\'D1\'8Fo\'82\'B5\'82\'C4\'82\'D9\'82\'B5\'82\'A2\'83\'81\'83\\'83b\'83h\'82\'CCselector name:\'82\'B1\'82\'CC\'83\'81\'83b\'83Z\'83\'93\'83W\'83\'83\'81[\'82\'CC\'96\'BC\'8F\'CC \par
+}{
+{\b MessengerViewController} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAADC \\*MERGEFORMAT}{\fldrslt pagenum}}})\'82\'C5\'8D\'C4\'92\'E8\'8B`\'82\'B3\'82\'EA\'82\'C4\'82\'A2\'82\'DC\'82\'B7\'81B}\par
+{
+\'8A\'D6\'90\'94\'82\'CC\'8C\'C4\'82\'D1\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "dc/dc9/interface_messenger_system_a1127377a8d677d41693b435758790e79_cgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v initWithManual\:MessengerSystem}
+{\xe \v MessengerSystem\:initWithManual}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (id) initWithManual }
+}\par
+{\bkmkstart AAAAAAAADD}
+{\bkmkend AAAAAAAADD}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'83}\'83j\'83\'85\'83A\'83\'8B\'82\'F0\'8F\'89\'8A\'FA\'89\'BB\'81A\'95\\'8E\'A6\'82\'B7\'82\'E9\'83v\'83\'8D\'83O\'83\'89\'83\'80 \'95\'B6\'8E\'9A\'82\'CC\'82\'DD\'81B \par
+}}
+{\xe \v inputParent:\:MessengerSystem}
+{\xe \v MessengerSystem\:inputParent:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) inputParent: (NSString *) {\i parentName}}
+}\par
+{\bkmkstart AAAAAAAADE}
+{\bkmkend AAAAAAAADE}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'90e\'82\'D6\'82\'C6\'8E\'A9\'95\'AA\'82\'AA\'8Eq\'8B\'9F\'82\'C5\'82\'A0\'82\'E9\'8E\'96\'82\'CC\'92\'CA\'92m\'82\'F0\'8Ds\'82\'A2\'81A\'95\'D4\'82\'E8\'92l\'82\'C6\'82\'B5\'82\'C4\'90e\'82\'CCMID\'82\'F0myParentMID\'82\'C6\'82\'B5\'82\'C4\'8E\'F3\'82\'AF\'8E\'E6\'82\'E9\'83\'81\'83\\'83b\'83h \'8E\'F3\'82\'AF\'8E\'E6\'82\'E8\'97p\'82\'CC\'83\'81\'83\\'83b\'83h\'82\'CC\'8F\'EE\'95\'F1\'82\'F0\'90e\'82\'D6\'82\'C6\'93n\'82\'B5\'81A\'90e\'82\'A9\'82\'E7\'82\'CC\'89\'93\'8AuMID\'93\'FC\'97\'CD\'82\'F0\'8E\'F3\'82\'AF\'82\'E9\'81B \par
+}{
+{\b MessengerViewController} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAADF \\*MERGEFORMAT}{\fldrslt pagenum}}})\'82\'C5\'8D\'C4\'92\'E8\'8B`\'82\'B3\'82\'EA\'82\'C4\'82\'A2\'82\'DC\'82\'B7\'81B}\par
+{
+\'8A\'D6\'90\'94\'82\'CC\'8C\'C4\'82\'D1\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "dc/dc9/interface_messenger_system_a2dc1b363d2e1b00f232fd829225a9ff3_cgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v inputParent:withSpecifiedMID:\:MessengerSystem}
+{\xe \v MessengerSystem\:inputParent:withSpecifiedMID:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) inputParent: (NSString *) {\i parent} withSpecifiedMID: (NSString *) {\i mID}}
+}\par
+{\bkmkstart AAAAAAAADG}
+{\bkmkend AAAAAAAADG}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'90e\'82\'D6\'82\'C6\'8E\'A9\'95\'AA\'82\'AA\'8Eq\'8B\'9F\'82\'C5\'82\'A0\'82\'E9\'8E\'96\'82\'CC\'92\'CA\'92m\'82\'F0\'8Ds\'82\'A2\'81A\'95\'D4\'82\'E8\'92l\'82\'C6\'82\'B5\'82\'C4\'90e\'82\'CCMID\'82\'F0myParentMID\'82\'C6\'82\'B5\'82\'C4\'8E\'F3\'82\'AF\'8E\'E6\'82\'E9\'83\'81\'83\\'83b\'83h \'90e\'82\'CCMID\'82\'F0\'93\'C1\'82\'C9\'93\'C1\'92\'E8\'82\'C5\'82\'AB\'82\'E9\'8F\'EA\'8D\'87\'82\'C9\'8Eg\'97p\'82\'B7\'82\'E9\'81B \par
+}{
+\'8A\'D6\'90\'94\'82\'CC\'8C\'C4\'82\'D1\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "dc/dc9/interface_messenger_system_ae7f62ea0ebdb51b5f2628f3002add7e7_cgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+{
+\'8C\'C4\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "dc/dc9/interface_messenger_system_ae7f62ea0ebdb51b5f2628f3002add7e7_icgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v isIncludeRemote:\:MessengerSystem}
+{\xe \v MessengerSystem\:isIncludeRemote:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (BOOL) isIncludeRemote: (NSMutableDictionary *) {\i dict}}
+}\par
+{\bkmkstart AAAAAAAADH}
+{\bkmkend AAAAAAAADH}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'8E\'F3\'82\'AF\'8E\'E6\'82\'C1\'82\'BD\'83f\'81[\'83^\'82\'C9\'89\'93\'8Au\'8E\'C0\'8Ds\'82\'AA\'8A\'DC\'82\'DC\'82\'EA\'82\'C4\'82\'A2\'82\'E9\'82\'A9\'94\'DB\'82\'A9\'95\'D4\'82\'B7 \par
+}}
+{\xe \v isReleasable\:MessengerSystem}
+{\xe \v MessengerSystem\:isReleasable}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (BOOL) isReleasable }
+}\par
+{\bkmkstart AAAAAAAADI}
+{\bkmkend AAAAAAAADI}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'83\'81\'83b\'83Z\'83\'93\'83W\'83\'83\'81[\'82\'AA\'89\'F0\'95\'FA\'89\'C2\'94\\'82\'A9\'82\'C7\'82\'A4\'82\'A9\'81A\'8E\'E6\'93\'BE\'82\'B7\'82\'E9\'83\'81\'83\\'83b\'83h \par
+}}
+{\xe \v remoteInvocation:\:MessengerSystem}
+{\xe \v MessengerSystem\:remoteInvocation:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) remoteInvocation: (NSMutableDictionary *) {\i dict} ,  {\i ...}}
+}\par
+{\bkmkstart AAAAAAAADJ}
+{\bkmkend AAAAAAAADJ}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'89\'93\'8Au\'8E\'C0\'8Ds\'8E\'C0\'91\'95 \'83p\'83u\'83\'8A\'83b\'83N\'97p \par
+}{
+\'8C\'C4\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "dc/dc9/interface_messenger_system_aaaa066451fb04c37c88e6a7efc94c63e_icgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v removeAllChild\:MessengerSystem}
+{\xe \v MessengerSystem\:removeAllChild}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) removeAllChild }
+}\par
+{\bkmkstart AAAAAAAADK}
+{\bkmkend AAAAAAAADK}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'8Eq\'8B\'9F\'82\'C6\'82\'CC\'8A\'D6\'98A\'90\'AB\'82\'F0\'89\'F0\'8F\'9C\'82\'B7\'82\'E9 \'8E\'A9\'95\'AA\'82\'CC\'8E\'96\'82\'F0\'90e\'82\'C9\'90\'DD\'92\'E8\'82\'B5\'82\'C4\'82\'A2\'82\'E9\'91S\'82\'C4\'82\'CC\'83I\'83u\'83W\'83F\'83N\'83g\'82\'A9\'82\'E7\'97\'A3\'92E\'82\'B7\'82\'E9\'83u\'83\'8D\'81[\'83h\'83R\'81[\'83\'8B\'82\'F0\'8Ds\'82\'A4\'81B \par
+}{
+\'8A\'D6\'90\'94\'82\'CC\'8C\'C4\'82\'D1\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "dc/dc9/interface_messenger_system_abfbdbb7d723b910d012d980daacbcd9b_cgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v removeFromParent\:MessengerSystem}
+{\xe \v MessengerSystem\:removeFromParent}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) removeFromParent }
+}\par
+{\bkmkstart AAAAAAAADL}
+{\bkmkend AAAAAAAADL}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'8C\'BB\'8D\'DD\'82\'CC\'90e\'8F\'EE\'95\'F1\'82\'F0\'8D\'ED\'8F\'9C\'82\'B7\'82\'E9 \par
+}{
+\'8A\'D6\'90\'94\'82\'CC\'8C\'C4\'82\'D1\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "dc/dc9/interface_messenger_system_a1b95b2f06c63a72a776c853d74e11b03_cgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v setMyBodyID:\:MessengerSystem}
+{\xe \v MessengerSystem\:setMyBodyID:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) setMyBodyID: (id) {\i bodyID}}
+}\par
+{\bkmkstart AAAAAAAADM}
+{\bkmkend AAAAAAAADM}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'8E\'A9\'95\'AA\'82\'CCBodyID\'82\'F0\'83Z\'83b\'83g\'82\'B7\'82\'E9\'83\'81\'83\\'83b\'83h \par
+}{
+{\b MessengerViewController} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAADN \\*MERGEFORMAT}{\fldrslt pagenum}}})\'82\'C5\'8D\'C4\'92\'E8\'8B`\'82\'B3\'82\'EA\'82\'C4\'82\'A2\'82\'DC\'82\'B7\'81B}\par
+{
+\'8C\'C4\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "dc/dc9/interface_messenger_system_a2a5f63ed86009e8b451bbbb621e9a94b_icgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v setMyBodySelector:\:MessengerSystem}
+{\xe \v MessengerSystem\:setMyBodySelector:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) setMyBodySelector: (SEL) {\i body_selector}}
+}\par
+{\bkmkstart AAAAAAAADO}
+{\bkmkend AAAAAAAADO}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'8E\'A9\'95\'AA\'82\'CCBody\'82\'AA\'92\'F1\'8B\'9F\'82\'B7\'82\'E9\'83\'81\'83\\'83b\'83h\'83Z\'83\'8C\'83N\'83^\'81[\'82\'F0\'81A\'8E\'A9\'95\'AA\'82\'CC\'83Z\'83\'8C\'83N\'83^\'81[\'97p\'83|\'83C\'83\'93\'83^\'82\'C9\'83Z\'83b\'83g\'82\'B7\'82\'E9\'83\'81\'83\\'83b\'83h \par
+}{
+{\b MessengerViewController} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAADP \\*MERGEFORMAT}{\fldrslt pagenum}}})\'82\'C5\'8D\'C4\'92\'E8\'8B`\'82\'B3\'82\'EA\'82\'C4\'82\'A2\'82\'DC\'82\'B7\'81B}\par
+{
+\'8C\'C4\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "dc/dc9/interface_messenger_system_aafb5a2e5d48a09627f32a4d3c2e3fa29_icgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v tag:val:\:MessengerSystem}
+{\xe \v MessengerSystem\:tag:val:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (NSDictionary *) tag: (id) {\i obj_tag} val: (id) {\i obj_value}}
+}\par
+{\bkmkstart AAAAAAAADQ}
+{\bkmkend AAAAAAAADQ}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+tag value\'83\'81\'83\\'83b\'83h \'92l\'82\'C9nil\'82\'AA\'93\'FC\'82\'E9\'8E\'96\'81A \'83V\'83X\'83e\'83\'80\'82\'AA\'8Eg\'82\'A4\'82\'CC\'82\'C6\'93\'AF\'97l\'82\'CC\'83R\'83}\'83\'93\'83h\'82\'AA\'93\'FC\'82\'C1\'82\'C4\'82\'A2\'82\'E9\'8E\'96\'82\'C9\'8A\'D6\'82\'B5\'82\'C4\'82\'CD\'81A\'92\'8D\'88\'D3\'82\'B7\'82\'E9\'81B \par
+}{
+\'8C\'C4\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "dc/dc9/interface_messenger_system_ad4e20b8da148b72f520986386c7fb8a5_icgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v version\:MessengerSystem}
+{\xe \v MessengerSystem\:version}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
++ (NSString *) version }
+}\par
+{\bkmkstart AAAAAAAADR}
+{\bkmkend AAAAAAAADR}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'83o\'81[\'83W\'83\'87\'83\'93\'82\'F0\'95\'D4\'82\'B7 \par
+}}
+{\xe \v withDelay:\:MessengerSystem}
+{\xe \v MessengerSystem\:withDelay:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (NSDictionary *) withDelay: (float) {\i delay}}
+}\par
+{\bkmkstart AAAAAAAADS}
+{\bkmkend AAAAAAAADS}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'92x\'89\'84\'8E\'C0\'8Ds\'83^\'83O tag-Value\'82\'C6\'93\'AF\'8C`\'8E\'AE\'82\'C5\'83I\'83v\'83V\'83\'87\'83\'93\'82\'F0\'91}\'93\'FC\'82\'B7\'82\'E9\'83\'81\'83\\'83b\'83h \par
+}}
+{\xe \v withRemoteFrom:withSelector:\:MessengerSystem}
+{\xe \v MessengerSystem\:withRemoteFrom:withSelector:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (NSDictionary *) withRemoteFrom: (id) {\i mySelf} withSelector: (SEL) {\i sel}}
+}\par
+{\bkmkstart AAAAAAAADT}
+{\bkmkend AAAAAAAADT}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'89\'93\'8Au\'8E\'C0\'8Ds\'83^\'83O tag-Value\'82\'C6\'93\'AF\'8C`\'8E\'AE\'82\'C5\'89\'93\'8Au\'8E\'C0\'8Ds\'83I\'83v\'83V\'83\'87\'83\'93\'82\'F0\'91}\'93\'FC\'82\'B7\'82\'E9\'83\'81\'83\\'83b\'83h \par
+}}
+{\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
+\'82\'B1\'82\'CC\'83N\'83\'89\'83X\'82\'CC\'90\'E0\'96\'BE\'82\'CD\'8E\'9F\'82\'CC\'83t\'83@\'83C\'83\'8B\'82\'A9\'82\'E7\'90\'B6\'90\'AC\'82\'B3\'82\'EA\'82\'DC\'82\'B5\'82\'BD:{\par
+\pard\plain \s81\fi-360\li720\widctlpar\jclisttab\tx720{\*\pn \pnlvlbody\ilvl0\ls2\pnrnot0\pndec }\ls2\adjustright \fs20\cgrid 
+Classes/MessengerSystem/MessengerSystem.h\par
+\pard\plain \s81\fi-360\li720\widctlpar\jclisttab\tx720{\*\pn \pnlvlbody\ilvl0\ls2\pnrnot0\pndec }\ls2\adjustright \fs20\cgrid 
+Classes/MessengerSystem/MessengerSystem.m\par
+}\par \pard\plain 
+
+\pard\plain \sect\sbkpage
+\s2\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs28\kerning28\cgrid 
+\pard\plain \s2\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs28\kerning28\cgrid 
+\'83N\'83\'89\'83X MessengerSystemTest\par \pard\plain 
+{\tc\tcl2 \v MessengerSystemTest}
+{\xe \v MessengerSystemTest}
+{\bkmkstart AAAAAAAAAF}
+{\bkmkend AAAAAAAAAF}
+MessengerSystemTest\'82\'CC\'83R\'83\'89\'83{\'83\'8C\'81[\'83V\'83\'87\'83\'93\'90}{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d9/d7b/interface_messenger_system_test__coll__graph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+\par
+\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
+Public \'83\'81\'83\\'83b\'83h\par
+\pard\plain 
+
+{
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b m_testParent:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b m_testChild0:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b m_testChild1:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b m_testChild2:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b m_testChild3:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b sayHello:}\par
+}
+\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
+Protected \'95\'CF\'90\'94\par
+\pard\plain 
+
+{
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+{\b MessengerSystem} * {\b parent}{\bkmkstart AAAAAAAADU}
+{\bkmkend AAAAAAAADU}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+{\b MessengerSystem} * {\b child_persis}{\bkmkstart AAAAAAAADV}
+{\bkmkend AAAAAAAADV}
+\par
+}
+{\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
+\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
+\'8A\'D6\'90\'94\par
+\pard\plain 
+{\xe \v m_testChild0:\:MessengerSystemTest}
+{\xe \v MessengerSystemTest\:m_testChild0:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) m_testChild0: (NSNotification *) {\i notification}}
+}\par
+{\bkmkstart AAAAAAAADW}
+{\bkmkend AAAAAAAADW}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'83e\'83X\'83g\'97p\'82\'C9\'92@\'82\'A9\'82\'EA\'82\'E9\'83\'81\'83\\'83b\'83h\'81A \'8Eq\'8B\'9F\'97p\'81B child_persis\'82\'C5\'8Eg\'97p \par
+}{
+\'8A\'D6\'90\'94\'82\'CC\'8C\'C4\'82\'D1\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d9/d39/interface_messenger_system_test_ab2b931ec9d4901e4fd60204e53fc61e7_cgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v m_testChild1:\:MessengerSystemTest}
+{\xe \v MessengerSystemTest\:m_testChild1:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) m_testChild1: (NSNotification *) {\i notification}}
+}\par
+{\bkmkstart AAAAAAAADX}
+{\bkmkend AAAAAAAADX}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'83e\'83X\'83g\'97p\'82\'C9\'92@\'82\'A9\'82\'EA\'82\'E9\'83\'81\'83\\'83b\'83h\'81A \'8Eq\'8B\'9F\'97p\'81B 1\'82\'C5\'8Eg\'97p \par
+}}
+{\xe \v m_testChild2:\:MessengerSystemTest}
+{\xe \v MessengerSystemTest\:m_testChild2:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) m_testChild2: (NSNotification *) {\i notification}}
+}\par
+{\bkmkstart AAAAAAAADY}
+{\bkmkend AAAAAAAADY}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'83e\'83X\'83g\'97p\'82\'C9\'92@\'82\'A9\'82\'EA\'82\'E9\'83\'81\'83\\'83b\'83h\'81A \'8Eq\'8B\'9F\'97p2\'81B \par
+}}
+{\xe \v m_testChild3:\:MessengerSystemTest}
+{\xe \v MessengerSystemTest\:m_testChild3:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) m_testChild3: (NSNotification *) {\i notification}}
+}\par
+{\bkmkstart AAAAAAAADZ}
+{\bkmkend AAAAAAAADZ}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'83e\'83X\'83g\'97p\'82\'C9\'92@\'82\'A9\'82\'EA\'82\'E9\'83\'81\'83\\'83b\'83h\'81A \'8Eq\'8B\'9F\'97p3\'81B \par
+}}
+{\xe \v m_testParent:\:MessengerSystemTest}
+{\xe \v MessengerSystemTest\:m_testParent:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) m_testParent: (NSNotification *) {\i notification}}
+}\par
+{\bkmkstart AAAAAAAAEA}
+{\bkmkend AAAAAAAAEA}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'83e\'83X\'83g\'97p\'82\'C9\'82\'BD\'82\'BD\'82\'A9\'82\'EA\'82\'E9\'83\'81\'83\\'83b\'83h \par
+}{
+\'8A\'D6\'90\'94\'82\'CC\'8C\'C4\'82\'D1\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d9/d39/interface_messenger_system_test_ac0b879fa2580ba6ae8e38655e6dfe838_cgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v sayHello:\:MessengerSystemTest}
+{\xe \v MessengerSystemTest\:sayHello:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) sayHello: (NSString *) {\i str}}
+}\par
+{\bkmkstart AAAAAAAAEB}
+{\bkmkend AAAAAAAAEB}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'83e\'83X\'83g\'97p\'82\'C9\'89\'93\'8Au\'8E\'C0\'8Ds\'82\'B3\'82\'EA\'82\'E9\'83\'81\'83\\'83b\'83h \par
+}}
+{\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
+\'82\'B1\'82\'CC\'83N\'83\'89\'83X\'82\'CC\'90\'E0\'96\'BE\'82\'CD\'8E\'9F\'82\'CC\'83t\'83@\'83C\'83\'8B\'82\'A9\'82\'E7\'90\'B6\'90\'AC\'82\'B3\'82\'EA\'82\'DC\'82\'B5\'82\'BD:{\par
+\pard\plain \s81\fi-360\li720\widctlpar\jclisttab\tx720{\*\pn \pnlvlbody\ilvl0\ls2\pnrnot0\pndec }\ls2\adjustright \fs20\cgrid 
+Classes/MessengerSystem/MessengerSystemTest.m\par
+}\par \pard\plain 
+
+\pard\plain \sect\sbkpage
+\s2\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs28\kerning28\cgrid 
+\pard\plain \s2\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs28\kerning28\cgrid 
+\'83N\'83\'89\'83X MessengerViewController\par \pard\plain 
+{\tc\tcl2 \v MessengerViewController}
+{\xe \v MessengerViewController}
+{\bkmkstart AAAAAAAAAG}
+{\bkmkend AAAAAAAAAG}
+\par
+{
+{\b MessengerSystem}\'82\'F0\'8Cp\'8F\'B3\'82\'B5\'82\'C4\'82\'A2\'82\'DC\'82\'B7\'81B}\par
+MessengerViewController\'82\'CC\'83R\'83\'89\'83{\'83\'8C\'81[\'83V\'83\'87\'83\'93\'90}{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d2/d61/interface_messenger_view_controller__coll__graph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+\par
+\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
+Public \'83\'81\'83\\'83b\'83h\par
+\pard\plain 
+
+{
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(id) - {\b initWithBodyID:withSelector:withName:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(id) - {\b initWithFrame:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b insertMessengerInformation:withMID:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b updateParentInformation:withMID:withParentName:withParentMID:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b deleteMessengerInformation:withMID:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b drawDataUpdate}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(NSString *) - {\b getMessengerInformationKey:withMID:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(NSMutableDictionary *) - {\b getButtonList}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(NSMutableDictionary *) - {\b getMessengerList}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b setNumberOfRelationship:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+(int) - {\b getNumberOfRelationship}{\bkmkstart AAAAAAAAEC}
+{\bkmkend AAAAAAAAEC}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(UIView *) - {\b getMessengerInterfaceView}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b tapped:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b resizeButton:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b setMyName:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b setMyBodyID:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b setMyBodySelector:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b initMyMID}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b initMyParentData}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b setMyParentName:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b setNameIndexDictionary}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+(NSMutableDictionary *) - {\b getNameIndexDictionary}{\bkmkstart AAAAAAAAED}
+{\bkmkend AAAAAAAAED}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b sortButtonsByParentOrder}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b setWorldX:withY:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+(void) - {\b moveWorldX:withY:}{\bkmkstart AAAAAAAAEE}
+{\bkmkend AAAAAAAAEE}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+(void) - {\b setScale:}{\bkmkstart AAAAAAAAEF}
+{\bkmkend AAAAAAAAEF}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+(float) - {\b getScale}{\bkmkstart AAAAAAAAEG}
+{\bkmkend AAAAAAAAEG}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b scaleResetX:withY:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b inputParent:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b innerPerform:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b callMyself:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b call:withExec:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+(void) - {\b callChild:withMID:withCommand:}{\bkmkstart AAAAAAAAEH}
+{\bkmkend AAAAAAAAEH}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b callParent:}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+(void) - {\b createdNotice}{\bkmkstart AAAAAAAAEI}
+{\bkmkend AAAAAAAAEI}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+(void) - {\b updatedNotice:withParentMID:}{\bkmkstart AAAAAAAAEJ}
+{\bkmkend AAAAAAAAEJ}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+(void) - {\b killedNotice}{\bkmkstart AAAAAAAAEK}
+{\bkmkend AAAAAAAAEK}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+(void) - {\b dealloc}\par
+}
+\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
+Protected \'95\'CF\'90\'94\par
+\pard\plain 
+
+{
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+NSMutableDictionary * {\b m_messengerList}{\bkmkstart AAAAAAAAEL}
+{\bkmkend AAAAAAAAEL}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+NSMutableDictionary * {\b m_buttonList}{\bkmkstart AAAAAAAAEM}
+{\bkmkend AAAAAAAAEM}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+NSMutableDictionary * {\b m_nameIndexDictionary}{\bkmkstart AAAAAAAAEN}
+{\bkmkend AAAAAAAAEN}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+{\b MessengerDisplayView} * {\b messengerInterfaceView}{\bkmkstart AAAAAAAAEO}
+{\bkmkend AAAAAAAAEO}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+int {\b m_numberOfRelationship}{\bkmkstart AAAAAAAAEP}
+{\bkmkend AAAAAAAAEP}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+float {\b m_scale}{\bkmkstart AAAAAAAAEQ}
+{\bkmkend AAAAAAAAEQ}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+float {\b m_worldX}{\bkmkstart AAAAAAAAER}
+{\bkmkend AAAAAAAAER}
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+
+float {\b m_worldY}{\bkmkstart AAAAAAAAES}
+{\bkmkend AAAAAAAAES}
+\par
+}
+{\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
+\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
+\'8A\'D6\'90\'94\par
+\pard\plain 
+{\xe \v call:withExec:\:MessengerViewController}
+{\xe \v MessengerViewController\:call:withExec:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) call: (NSString *) {\i childName} withExec: (NSString *) {\i exec} ,  {\i ...}}
+}\par
+{\bkmkstart AAAAAAAACF}
+{\bkmkend AAAAAAAACF}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'93\'C1\'92\'E8\'82\'CC\'96\'BC\'91O\'82\'CCmessenger\'82\'D6\'82\'CC\'92\'CA\'90M\'82\'F0\'8Ds\'82\'A4\'83\'81\'83\\'83b\'83h \'88\'D9\'82\'C8\'82\'E9\'96\'BC\'91O\'82\'CC\'90e\'82\'A9\'82\'E7\'8Eq\'82\'D6\'82\'CC\'83\'81\'83b\'83Z\'81[\'83W\'8C\'C0\'92\'E8 \par
+}{
+{\b MessengerSystem} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAACE \\*MERGEFORMAT}{\fldrslt pagenum}}})\'82\'F0\'8D\'C4\'92\'E8\'8B`\'82\'B5\'82\'C4\'82\'A2\'82\'DC\'82\'B7\'81B}\par
+}
+{\xe \v callMyself:\:MessengerViewController}
+{\xe \v MessengerViewController\:callMyself:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) callMyself: (NSString *) {\i exec} ,  {\i ...}}
+}\par
+{\bkmkstart AAAAAAAACI}
+{\bkmkend AAAAAAAACI}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'8E\'A9\'95\'AA\'8E\'A9\'90g\'82\'CCmessenger\'82\'D6\'82\'C6\'92\'CA\'90M\'82\'F0\'8Ds\'82\'A4\'83\'81\'83\\'83b\'83h \par
+}{
+{\b MessengerSystem} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAACH \\*MERGEFORMAT}{\fldrslt pagenum}}})\'82\'F0\'8D\'C4\'92\'E8\'8B`\'82\'B5\'82\'C4\'82\'A2\'82\'DC\'82\'B7\'81B}\par
+}
+{\xe \v callParent:\:MessengerViewController}
+{\xe \v MessengerViewController\:callParent:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) callParent: (NSString *) {\i exec} ,  {\i ...}}
+}\par
+{\bkmkstart AAAAAAAACK}
+{\bkmkend AAAAAAAACK}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'90e\'82\'D6\'82\'CC\'92\'CA\'90M\'82\'F0\'8Ds\'82\'A4\'83\'81\'83\\'83b\'83h \par
+}{
+{\b MessengerSystem} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAACJ \\*MERGEFORMAT}{\fldrslt pagenum}}})\'82\'F0\'8D\'C4\'92\'E8\'8B`\'82\'B5\'82\'C4\'82\'A2\'82\'DC\'82\'B7\'81B}\par
+}
+{\xe \v dealloc\:MessengerViewController}
+{\xe \v MessengerViewController\:dealloc}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) dealloc }
+}\par
+{\bkmkstart AAAAAAAAET}
+{\bkmkend AAAAAAAAET}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Dealloc \par
+}}
+{\xe \v deleteMessengerInformation:withMID:\:MessengerViewController}
+{\xe \v MessengerViewController\:deleteMessengerInformation:withMID:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) deleteMessengerInformation: (NSString *) {\i senderName} withMID: (NSString *) {\i senderMID}}
+}\par
+{\bkmkstart AAAAAAAAEU}
+{\bkmkend AAAAAAAAEU}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'92\'CA\'90M\'82\'B5\'82\'C4\'82\'AB\'82\'BD\'91\'CE\'8F\'DB\'82\'CC\'8F\'EE\'95\'F1\'82\'F0viwDict\'82\'A9\'82\'E7\'8D\'ED\'8F\'9C\'82\'B7\'82\'E9\'83\'81\'83\\'83b\'83h\par
+\'83\'81\'83b\'83Z\'83\'93\'83W\'83\'83\'81[\'82\'CC\'8D\'ED\'8F\'9C\'82\'F0\'83r\'83\'85\'81[\'82\'C9\'94\'BD\'89f\'82\'B7\'82\'E9 \par
+}{
+\'8A\'D6\'90\'94\'82\'CC\'8C\'C4\'82\'D1\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d7/d34/interface_messenger_view_controller_ab9c9343a0f520cdc1aa91b3985b31f7a_cgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+{
+\'8C\'C4\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d7/d34/interface_messenger_view_controller_ab9c9343a0f520cdc1aa91b3985b31f7a_icgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v drawDataUpdate\:MessengerViewController}
+{\xe \v MessengerViewController\:drawDataUpdate}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) drawDataUpdate }
+}\par
+{\bkmkstart AAAAAAAAEV}
+{\bkmkend AAAAAAAAEV}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'95`\'89\'E6\'83f\'81[\'83^\'82\'CC\'83A\'83b\'83v\'83f\'81[\'83g\par
+\'83h\'83\'8D\'81[\'83f\'81[\'83^\'82\'CC\'8DX\'90V \par
+}{
+\'8A\'D6\'90\'94\'82\'CC\'8C\'C4\'82\'D1\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d7/d34/interface_messenger_view_controller_aba89f37600bb5cc7258a034614257dc6_cgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+{
+\'8C\'C4\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d7/d34/interface_messenger_view_controller_aba89f37600bb5cc7258a034614257dc6_icgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v getButtonList\:MessengerViewController}
+{\xe \v MessengerViewController\:getButtonList}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (NSMutableDictionary *) getButtonList }
+}\par
+{\bkmkstart AAAAAAAAEW}
+{\bkmkend AAAAAAAAEW}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'83{\'83^\'83\'93\'81AMessenger\'82\'CC\'83\'8A\'83X\'83g\'8E\'AB\'8F\'91\'82\'F0\'93n\'82\'B7\par
+\'83{\'83^\'83\'93\'97p\'82\'CC\'8E\'AB\'8F\'91\'82\'F0\'8E\'E6\'93\'BE\'82\'B7\'82\'E9 \par
+}{
+\'8C\'C4\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d7/d34/interface_messenger_view_controller_afa883d1d29e91d003087a0f4b839daf3_icgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v getMessengerInformationKey:withMID:\:MessengerViewController}
+{\xe \v MessengerViewController\:getMessengerInformationKey:withMID:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (NSString *) getMessengerInformationKey: (NSString *) {\i name} withMID: (NSString *) {\i MID}}
+}\par
+{\bkmkstart AAAAAAAAEX}
+{\bkmkend AAAAAAAAEX}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Name\'82\'C6MID\'82\'CC\'83y\'83A\'82\'F0\'8D\'EC\'82\'E9\'83\'81\'83\\'83b\'83h \par
+}{
+\'8C\'C4\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d7/d34/interface_messenger_view_controller_a9c958b9ee93a81551b3aa4209eaa3c71_icgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v getMessengerInterfaceView\:MessengerViewController}
+{\xe \v MessengerViewController\:getMessengerInterfaceView}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (UIView *) getMessengerInterfaceView }
+}\par
+{\bkmkstart AAAAAAAAEY}
+{\bkmkend AAAAAAAAEY}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'83r\'83\'85\'81[\'82\'F0\'95\'D4\'82\'B7\par
+View\'82\'F0\'8AO\'95\'94\'82\'C9\'95\'D4\'82\'B7 \par
+}}
+{\xe \v getMessengerList\:MessengerViewController}
+{\xe \v MessengerViewController\:getMessengerList}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (NSMutableDictionary *) getMessengerList }
+}\par
+{\bkmkstart AAAAAAAAEZ}
+{\bkmkend AAAAAAAAEZ}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+View\'97p\'82\'CC\'8E\'AB\'8F\'91\'82\'F0\'8E\'E6\'93\'BE\'82\'B7\'82\'E9 \par
+}{
+\'8C\'C4\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d7/d34/interface_messenger_view_controller_a2e4617fc57087279158f9df78fab0a87_icgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v initMyMID\:MessengerViewController}
+{\xe \v MessengerViewController\:initMyMID}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) initMyMID }
+}\par
+{\bkmkstart AAAAAAAAFA}
+{\bkmkend AAAAAAAAFA}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'8E\'A9\'95\'AA\'82\'CCMID\'82\'F0\'8F\'89\'8A\'FA\'89\'BB\'82\'B7\'82\'E9\'83\'81\'83\\'83b\'83h \par
+}{
+\'8A\'D6\'90\'94\'82\'CC\'8C\'C4\'82\'D1\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d7/d34/interface_messenger_view_controller_a2c2f7a46b94facbc66d66c7dd6da34bd_cgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+{
+\'8C\'C4\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d7/d34/interface_messenger_view_controller_a2c2f7a46b94facbc66d66c7dd6da34bd_icgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v initMyParentData\:MessengerViewController}
+{\xe \v MessengerViewController\:initMyParentData}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) initMyParentData }
+}\par
+{\bkmkstart AAAAAAAAFB}
+{\bkmkend AAAAAAAAFB}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+myParent\'8A\'D6\'98A\'8F\'EE\'95\'F1\'82\'F0\'8F\'89\'8A\'FA\'89\'BB\'82\'B7\'82\'E9 \par
+}{
+\'8A\'D6\'90\'94\'82\'CC\'8C\'C4\'82\'D1\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d7/d34/interface_messenger_view_controller_a5728b61e9c4490af7aacddd874026bae_cgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+{
+\'8C\'C4\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d7/d34/interface_messenger_view_controller_a5728b61e9c4490af7aacddd874026bae_icgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v initWithBodyID:withSelector:withName:\:MessengerViewController}
+{\xe \v MessengerViewController\:initWithBodyID:withSelector:withName:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (id) initWithBodyID: (id) {\i body_id} withSelector: (SEL) {\i body_selector} withName: (NSString *) {\i name}}
+}\par
+{\bkmkstart AAAAAAAADC}
+{\bkmkend AAAAAAAADC}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'8Eg\'97p\'8B\'D6\'8E~\'82\'CC\'8F\'89\'8A\'FA\'89\'BB\'83\'81\'83\\'83b\'83h \par
+}{
+{\b MessengerSystem} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAADB \\*MERGEFORMAT}{\fldrslt pagenum}}})\'82\'F0\'8D\'C4\'92\'E8\'8B`\'82\'B5\'82\'C4\'82\'A2\'82\'DC\'82\'B7\'81B}\par
+}
+{\xe \v initWithFrame:\:MessengerViewController}
+{\xe \v MessengerViewController\:initWithFrame:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (id) initWithFrame: (CGRect) {\i frame}}
+}\par
+{\bkmkstart AAAAAAAAFC}
+{\bkmkend AAAAAAAAFC}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'8F\'89\'8A\'FA\'89\'BB\'83\'81\'83\\'83b\'83h \par
+}{
+\'8A\'D6\'90\'94\'82\'CC\'8C\'C4\'82\'D1\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d7/d34/interface_messenger_view_controller_a1ac23270dbc04a95b72dd16b2c201c5a_cgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v innerPerform:\:MessengerViewController}
+{\xe \v MessengerViewController\:innerPerform:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) innerPerform: (NSNotification *) {\i notification}}
+}\par
+{\bkmkstart AAAAAAAAFD}
+{\bkmkend AAAAAAAAFD}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'93\'E0\'95\'94\'8F\'88\'97\'9D\'8E\'C0\'91\'95 \'83I\'81[\'83o\'81[\'83\'89\'83C\'83h\'82\'B5\'81A\'8E\'C0\'8Ds\'93\'E0\'97e\'82\'F0\'8C\'C0\'92\'E8\'82\'B7\'82\'E9 \par
+}{
+\'8A\'D6\'90\'94\'82\'CC\'8C\'C4\'82\'D1\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d7/d34/interface_messenger_view_controller_a2c415df83e46605177105d75c714e463_cgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v inputParent:\:MessengerViewController}
+{\xe \v MessengerViewController\:inputParent:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) inputParent: (NSString *) {\i parentName}}
+}\par
+{\bkmkstart AAAAAAAADF}
+{\bkmkend AAAAAAAADF}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'90e\'82\'D6\'82\'C6\'8E\'A9\'95\'AA\'82\'AA\'8Eq\'8B\'9F\'82\'C5\'82\'A0\'82\'E9\'8E\'96\'82\'CC\'92\'CA\'92m\'82\'F0\'8Ds\'82\'A2\'81A\'95\'D4\'82\'E8\'92l\'82\'C6\'82\'B5\'82\'C4\'90e\'82\'CCMID\'82\'F0myParentMID\'82\'C6\'82\'B5\'82\'C4\'8E\'F3\'82\'AF\'8E\'E6\'82\'E9\'83\'81\'83\\'83b\'83h \'8E\'F3\'82\'AF\'8E\'E6\'82\'E8\'97p\'82\'CC\'83\'81\'83\\'83b\'83h\'82\'CC\'8F\'EE\'95\'F1\'82\'F0\'90e\'82\'D6\'82\'C6\'93n\'82\'B5\'81A\'90e\'82\'A9\'82\'E7\'82\'CC\'89\'93\'8AuMID\'93\'FC\'97\'CD\'82\'F0\'8E\'F3\'82\'AF\'82\'E9\'81B \par
+}{
+{\b MessengerSystem} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAADE \\*MERGEFORMAT}{\fldrslt pagenum}}})\'82\'F0\'8D\'C4\'92\'E8\'8B`\'82\'B5\'82\'C4\'82\'A2\'82\'DC\'82\'B7\'81B}\par
+}
+{\xe \v insertMessengerInformation:withMID:\:MessengerViewController}
+{\xe \v MessengerViewController\:insertMessengerInformation:withMID:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) insertMessengerInformation: (NSString *) {\i senderName} withMID: (NSString *) {\i senderMID}}
+}\par
+{\bkmkstart AAAAAAAAFE}
+{\bkmkend AAAAAAAAFE}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'83\'81\'83b\'83Z\'83\'93\'83W\'83\'83\'81[\'82\'CC\'90\'B6\'90\'AC\'8F\'EE\'95\'F1\'82\'F0viewDict\'82\'D6\'82\'C6\'95\'DB\'8E\'9D\'82\'B5\'82\'C4\'82\'A8\'82\'AD\'83\'81\'83\\'83b\'83h\par
+\'83\'81\'83b\'83Z\'83\'93\'83W\'83\'83\'81[\'82\'CC\'92a\'90\'B6\'82\'F0\'83r\'83\'85\'81[\'82\'C9\'94\'BD\'89f\'82\'B7\'82\'E9 \par
+}{
+\'8A\'D6\'90\'94\'82\'CC\'8C\'C4\'82\'D1\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d7/d34/interface_messenger_view_controller_aa30151ef1d95034a10fa31e9c8a7da22_cgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+{
+\'8C\'C4\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d7/d34/interface_messenger_view_controller_aa30151ef1d95034a10fa31e9c8a7da22_icgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v resizeButton:\:MessengerViewController}
+{\xe \v MessengerViewController\:resizeButton:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) resizeButton: (UIButton *) {\i b}}
+}\par
+{\bkmkstart AAAAAAAAFF}
+{\bkmkend AAAAAAAAFF}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'83{\'83^\'83\'93\'82\'CC\'83C\'83\'93\'83t\'83H\'83\'81\'81[\'83V\'83\'87\'83\'93\'82\'F0\'8F\'91\'82\'AB\'8A\'B7\'82\'A6\'81A\'8D\'C4\'93x\'95`\'89\'E6 \par
+}{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'82\'B1\'82\'B1\'82\'A9\'82\'E7\'82\'CC\'83\'89\'83C\'83\'93\'82\'F0\'8Am\'94F\'82\'B7\'82\'E9\'81B \'92\'CA\'90M\'82\'CC\'88\'B6\'90\'E6\'82\'C9\'8Cq\'82\'AA\'82\'C1\'82\'C4\'82\'A2\'82\'E9\'83\'89\'83C\'83\'93\'82\'F0\'83s\'83b\'83N\'83A\'83b\'83v\'81A \'95\'CA\'93r\'83A\'83b\'83v\'83f\'81[\'83g\'82\'C9\'82\'A9\'82\'AF\'82\'E9\'81B\'82\'C7\'82\'A4\'82\'C5\'82\'E0\'82\'A2\'82\'A2\'82\'A9\'81B\par
+\'91\'E6\'88\'EA\'97D\'90\'E6\'82\'F0\'90F\'81A\'8A\'AE\'97\'B9 \'91\'E6\'93\'F1\'97D\'90\'E6\'82\'F0\'81\'A8\'81A\'90\'FC\'82\'CC\'8F\'E3\'82\'C9\'82\'C2\'82\'AF\'82\'E9\'81A\'82\'A9\'82\'C8\'82\'A0\'81A \'91\'E6\'8EO\'97D\'90\'E6\'82\'F0\'8Ag\'91\'E5\'8Fk\'8F\'AC\'82\'C9\'82\'B5\'82\'E6\'82\'A4\'82\'A9\'81B\'89\'E6\'96\'CA\'82\'CC\'83s\'83b\'83`\'82\'C9\'91\'CE\'82\'B7\'82\'E9\'94{\'97\'A6\'82\'F0\'8E\'9D\'82\'C4\'82\'CE\'82\'A2\'82\'A2\'81B\par
+\'83O\'83\'8D\'81[\'83o\'83\'8B\'8A\'EE\'93_\'82\'C6\'81A\'83O\'83\'8D\'81[\'83o\'83\'8B\'83X\'83P\'81[\'83\'8B\'82\'F0\'8E\'9D\'82\'C2\'81B\'83A\'83b\'83v\'83f\'81[\'83g\'82\'F0\'83^\'83b\'83`\'97\'A3\'82\'B5\'82\'BD\'82\'C6\'82\'AB\'82\'C9\'8E\'E6\'82\'EA\'82\'CE\'82\'A2\'82\'A2\'81B\par
+}}\par
+}
+{\xe \v scaleResetX:withY:\:MessengerViewController}
+{\xe \v MessengerViewController\:scaleResetX:withY:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) scaleResetX: (float) {\i x} withY: (float) {\i y}}
+}\par
+{\bkmkstart AAAAAAAAFG}
+{\bkmkend AAAAAAAAFG}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'83r\'83\'85\'81[\'82\'A9\'82\'E7\'82\'CC\'92\'BC\'8C\'8B\'83C\'83x\'83\'93\'83g \'83Y\'81[\'83\'80\'83C\'83\'93\'82\'A9\'83\'8A\'83Z\'83b\'83g\'82\'F0\'8Ds\'82\'A4 \par
+}{
+\'8A\'D6\'90\'94\'82\'CC\'8C\'C4\'82\'D1\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d7/d34/interface_messenger_view_controller_a9a0f05d1d3a3685a3d3ce7632c2bc7ee_cgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v setMyBodyID:\:MessengerViewController}
+{\xe \v MessengerViewController\:setMyBodyID:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) setMyBodyID: (id) {\i bodyID}}
+}\par
+{\bkmkstart AAAAAAAADN}
+{\bkmkend AAAAAAAADN}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'8E\'A9\'95\'AA\'82\'CCBodyID\'82\'F0\'83Z\'83b\'83g\'82\'B7\'82\'E9\'83\'81\'83\\'83b\'83h \par
+}{
+{\b MessengerSystem} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAADM \\*MERGEFORMAT}{\fldrslt pagenum}}})\'82\'F0\'8D\'C4\'92\'E8\'8B`\'82\'B5\'82\'C4\'82\'A2\'82\'DC\'82\'B7\'81B}\par
+{
+\'8C\'C4\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d7/d34/interface_messenger_view_controller_abab9347cc7ed46bd04978ca00e081a0e_icgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v setMyBodySelector:\:MessengerViewController}
+{\xe \v MessengerViewController\:setMyBodySelector:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) setMyBodySelector: (SEL) {\i body_selector}}
+}\par
+{\bkmkstart AAAAAAAADP}
+{\bkmkend AAAAAAAADP}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'8E\'A9\'95\'AA\'82\'CCBody\'82\'AA\'92\'F1\'8B\'9F\'82\'B7\'82\'E9\'83\'81\'83\\'83b\'83h\'83Z\'83\'8C\'83N\'83^\'81[\'82\'F0\'81A\'8E\'A9\'95\'AA\'82\'CC\'83Z\'83\'8C\'83N\'83^\'81[\'97p\'83|\'83C\'83\'93\'83^\'82\'C9\'83Z\'83b\'83g\'82\'B7\'82\'E9\'83\'81\'83\\'83b\'83h \par
+}{
+{\b MessengerSystem} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAADO \\*MERGEFORMAT}{\fldrslt pagenum}}})\'82\'F0\'8D\'C4\'92\'E8\'8B`\'82\'B5\'82\'C4\'82\'A2\'82\'DC\'82\'B7\'81B}\par
+{
+\'8C\'C4\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d7/d34/interface_messenger_view_controller_ade8005d21b7d8df69ddd12fba7440f6b_icgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v setMyName:\:MessengerViewController}
+{\xe \v MessengerViewController\:setMyName:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) setMyName: (NSString *) {\i name}}
+}\par
+{\bkmkstart AAAAAAAAFH}
+{\bkmkend AAAAAAAAFH}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'8E\'A9\'95\'AA\'82\'CC\'96\'BC\'8F\'CC\'82\'F0\'83Z\'83b\'83g\'82\'B7\'82\'E9\'83\'81\'83\\'83b\'83h \par
+}{
+\'8C\'C4\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d7/d34/interface_messenger_view_controller_afe36a73932b47fb2c60412c6f03f67ac_icgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v setMyParentName:\:MessengerViewController}
+{\xe \v MessengerViewController\:setMyParentName:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) setMyParentName: (NSString *) {\i parent}}
+}\par
+{\bkmkstart AAAAAAAAFI}
+{\bkmkend AAAAAAAAFI}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'90e\'82\'CC\'96\'BC\'8F\'CC\'82\'F0\'83Z\'83b\'83g\'82\'B7\'82\'E9\'83\'81\'83\\'83b\'83h \par
+}{
+\'8C\'C4\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d7/d34/interface_messenger_view_controller_a9d6939385be720d5335fbf5b095cd63c_icgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v setNameIndexDictionary\:MessengerViewController}
+{\xe \v MessengerViewController\:setNameIndexDictionary}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) setNameIndexDictionary }
+}\par
+{\bkmkstart AAAAAAAAFJ}
+{\bkmkend AAAAAAAAFJ}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'95\\'8E\'A6\'95\'E2\'8F\'95\'97p\'82\'CC\'83C\'83\'93\'83f\'83b\'83N\'83X\'81@X\'8E\'B2\'83J\'83E\'83\'93\'83g \par
+}{
+\'8A\'D6\'90\'94\'82\'CC\'8C\'C4\'82\'D1\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d7/d34/interface_messenger_view_controller_a791916fe5a33b084e90d14cd12d9bc30_cgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+{
+\'8C\'C4\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d7/d34/interface_messenger_view_controller_a791916fe5a33b084e90d14cd12d9bc30_icgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v setNumberOfRelationship:\:MessengerViewController}
+{\xe \v MessengerViewController\:setNumberOfRelationship:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) setNumberOfRelationship: (int) {\i number}}
+}\par
+{\bkmkstart AAAAAAAAFK}
+{\bkmkend AAAAAAAAFK}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'8A\'D6\'8CW\'90\'AB\'82\'CC\'96{\'90\'94\'82\'F0\'95\'D4\'82\'B7\'83\'81\'83\\'83b\'83h \par
+}{
+\'8C\'C4\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d7/d34/interface_messenger_view_controller_aa75f66a06d37f03a7d2b51e9c7149051_icgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v setWorldX:withY:\:MessengerViewController}
+{\xe \v MessengerViewController\:setWorldX:withY:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) setWorldX: (float) {\i toX} withY: (float) {\i toY}}
+}\par
+{\bkmkstart AAAAAAAAFL}
+{\bkmkend AAAAAAAAFL}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'88\'DA\'93\'AE\'81A\'83X\'83P\'81[\'83\'8B\'8A\'D6\'98A\par
+\'95\'BD\'8Ds\'88\'DA\'93\'AE\'81A\'83X\'83P\'81[\'83\'8B\'82\'C9\'8A\'D6\'82\'B7\'82\'E9\'8F\'88\'97\'9D \par
+}{
+\'8A\'D6\'90\'94\'82\'CC\'8C\'C4\'82\'D1\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d7/d34/interface_messenger_view_controller_a3939f43ce30df6b8df0390712730282b_cgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+{
+\'8C\'C4\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d7/d34/interface_messenger_view_controller_a3939f43ce30df6b8df0390712730282b_icgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v sortButtonsByParentOrder\:MessengerViewController}
+{\xe \v MessengerViewController\:sortButtonsByParentOrder}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) sortButtonsByParentOrder }
+}\par
+{\bkmkstart AAAAAAAAFM}
+{\bkmkend AAAAAAAAFM}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'91S\'83{\'83^\'83\'93\'82\'CC\'88\'CA\'92u\'82\'F0\'83\\'81[\'83g\'82\'B7\'82\'E9\par
+\'88\'EA\'94\'D4\'8D\'B6\'82\'A9\'82\'E7\'83\\'81[\'83g\'82\'F0\'82\'A9\'82\'AF\'82\'E9 \'90e\'8Eq\'8A\'D6\'8CW\'82\'CC\'83\'89\'83C\'83\'93\'82\'A9\'82\'E7\'81A\'83L\'81[\'82\'C9\'93\'FC\'82\'C1\'82\'C4\'82\'A2\'82\'E9\'83I\'83u\'83W\'83F\'83N\'83g\'82\'C9\'8Fd\'82\'DD\'95t\'82\'AF\'81Am_nameIndexDictionary \'93\'E0\'82\'CCX\'8E\'B2\'83J\'83E\'83\'93\'83g\'82\'F0\'90\'E6\'93\'AA\'82\'C9\'8E\'9D\'82\'C1\'82\'C4\'82\'A2\'82\'AD \par
+}{
+\'8A\'D6\'90\'94\'82\'CC\'8C\'C4\'82\'D1\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d7/d34/interface_messenger_view_controller_a6c8d083521df8a95e9e88612745d5981_cgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+{
+\'8C\'C4\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d7/d34/interface_messenger_view_controller_a6c8d083521df8a95e9e88612745d5981_icgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\xe \v tapped:\:MessengerViewController}
+{\xe \v MessengerViewController\:tapped:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) tapped: (UIControlEvents *) {\i event}}
+}\par
+{\bkmkstart AAAAAAAAFN}
+{\bkmkend AAAAAAAAFN}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'83{\'83^\'83\'93\'82\'AA\'89\'9F\'82\'B3\'82\'EA\'82\'BD\'8D\'DB\'82\'CC\'83\'81\'83\\'83b\'83h\par
+\'83{\'83^\'83\'93\'82\'AA\'89\'9F\'82\'B3\'82\'EA\'82\'BD\'8E\'9E\'82\'CC\'83\'81\'83\\'83b\'83h \par
+}}
+{\xe \v updateParentInformation:withMID:withParentName:withParentMID:\:MessengerViewController}
+{\xe \v MessengerViewController\:updateParentInformation:withMID:withParentName:withParentMID:}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+- (void) updateParentInformation: (NSString *) {\i senderName} withMID: (NSString *) {\i senderMID} withParentName: (NSString *) {\i sendersParentName} withParentMID: (NSString *) {\i sendersParentMID}}
+}\par
+{\bkmkstart AAAAAAAAFO}
+{\bkmkend AAAAAAAAFO}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\'92\'CA\'90M\'82\'B5\'82\'C4\'82\'AB\'82\'BD\'91\'CE\'8F\'DB\'82\'CC\'8F\'EE\'95\'F1\'82\'F0viewDict\'82\'D6\'82\'C6\'95\'DB\'8E\'9D\'82\'B5\'82\'C4\'82\'A8\'82\'AD\'83\'81\'83\\'83b\'83h\par
+\'92\'CA\'90M\'82\'B5\'82\'C4\'82\'AB\'82\'BD\'91\'CE\'8F\'DB\'82\'CC\'8F\'EE\'95\'F1\'82\'AA\'83A\'83b\'83v\'83f\'81[\'83g\'82\'B3\'82\'EA\'81A\'90e\'8F\'EE\'95\'F1\'82\'AA\'95\'CF\'8DX\'82\'B3\'82\'EA\'82\'BD\par
+\'90\'B3\'8Am\'82\'C9\'8DX\'90V\'82\'AA\'8Ds\'82\'ED\'82\'EA\'82\'C4\'82\'A2\'82\'EA\'82\'CE\'81A\'90\'FC\'82\'AA\'8Ec\'82\'E9\'82\'E6\'82\'A4\'82\'C8\'8E\'96\'82\'CD\'94\'AD\'90\'B6\'82\'B5\'82\'C8\'82\'A2\'94\'A4\'81B \par
+}{
+\'8A\'D6\'90\'94\'82\'CC\'8C\'C4\'82\'D1\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d7/d34/interface_messenger_view_controller_a3eb404c4ef5fc51caae10e71136f35ff_cgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+{
+\'8C\'C4\'8Fo\'82\'B5\'83O\'83\'89\'83t:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d7/d34/interface_messenger_view_controller_a3eb404c4ef5fc51caae10e71136f35ff_icgraph.png" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+}\par
+}
+{\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
+\'82\'B1\'82\'CC\'83N\'83\'89\'83X\'82\'CC\'90\'E0\'96\'BE\'82\'CD\'8E\'9F\'82\'CC\'83t\'83@\'83C\'83\'8B\'82\'A9\'82\'E7\'90\'B6\'90\'AC\'82\'B3\'82\'EA\'82\'DC\'82\'B5\'82\'BD:{\par
+\pard\plain \s81\fi-360\li720\widctlpar\jclisttab\tx720{\*\pn \pnlvlbody\ilvl0\ls2\pnrnot0\pndec }\ls2\adjustright \fs20\cgrid 
+Classes/MessengerSystem/MessengerViewController.h\par
+\pard\plain \s81\fi-360\li720\widctlpar\jclisttab\tx720{\*\pn \pnlvlbody\ilvl0\ls2\pnrnot0\pndec }\ls2\adjustright \fs20\cgrid 
+Classes/MessengerSystem/MessengerViewController.m\par
+}
+\pard\plain \sect\sbkpage
+\s1\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs36\kerning36\cgrid 
+\s1\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs36\kerning36\cgrid \'8D\'F5\'88\'F8\par 
+\pard\plain 
+{\tc \v \'8D\'F5\'88\'F8}
+{\field\fldedit {\*\fldinst INDEX \\c2 \\*MERGEFORMAT}{\fldrslt INDEX}}
+}

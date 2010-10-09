@@ -1,0 +1,292 @@
+.TH "MessengerSystem" 3 "Sat Oct 9 2010" "Version 1.0" "MessengerSystem" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+MessengerSystem \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fBMessengerViewController\fPに継承されています。
+.SS "Public メソッド"
+
+.in +1c
+.ti -1c
+.RI "(id) - \fBinitWithBodyID:withSelector:withName:\fP"
+.br
+.ti -1c
+.RI "(id) - \fBinitWithManual\fP"
+.br
+.ti -1c
+.RI "(void) - \fBsetMyBodyID:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBsetMyBodySelector:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBinputParent:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBinputParent:withSpecifiedMID:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBremoveFromParent\fP"
+.br
+.ti -1c
+.RI "(void) - \fBremoveAllChild\fP"
+.br
+.ti -1c
+.RI "(void) - \fBcallMyself:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBcall:withExec:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBcall:withSpecifiedMID:withExec:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBcallParent:\fP"
+.br
+.ti -1c
+.RI "(NSDictionary *) - \fBtag:val:\fP"
+.br
+.ti -1c
+.RI "(NSDictionary *) - \fBwithRemoteFrom:withSelector:\fP"
+.br
+.ti -1c
+.RI "(NSDictionary *) - \fBwithDelay:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBremoteInvocation:\fP"
+.br
+.ti -1c
+.RI "(NSMutableDictionary *) - \fBgetLogStore\fP"
+.br
+.ti -1c
+.RI "(NSMutableDictionary *) - \fBgetChildDict\fP"
+.br
+.ti -1c
+.RI "(NSString *) - \fBgetExecAsString:\fP"
+.br
+.ti -1c
+.RI "(int) - \fBgetExecAsIntFromDict:\fP"
+.br
+.ti -1c
+.RI "(int) - \fBgetIntFromExec:\fP"
+.br
+.ti -1c
+.RI "(int) - \fBchangeStrToNumber:\fP"
+.br
+.ti -1c
+.RI "(NSString *) - \fBchangeNumberToStr:\fP"
+.br
+.ti -1c
+.RI "(BOOL) - \fBhasParent\fP"
+.br
+.ti -1c
+.RI "(BOOL) - \fBhasChild\fP"
+.br
+.ti -1c
+.RI "(BOOL) - \fBisIncludeRemote:\fP"
+.br
+.ti -1c
+.RI "(id) - \fBgetMyBodyID\fP"
+.br
+.ti -1c
+.RI "(SEL) - \fBgetMyBodySelector\fP"
+.br
+.ti -1c
+.RI "(NSString *) - \fBgetMyName\fP"
+.br
+.ti -1c
+.RI "(NSString *) - \fBgetMyMID\fP"
+.br
+.ti -1c
+.RI "(NSString *) - \fBgetMyParentName\fP"
+.br
+.ti -1c
+.RI "(NSString *) - \fBgetMyParentMID\fP"
+.br
+.ti -1c
+.RI "(void) - \fBcancelPerform\fP"
+.br
+.ti -1c
+.RI "(BOOL) - \fBisReleasable\fP"
+.br
+.ti -1c
+.RI "(void) - \fBinnerPerform:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBsendPerform:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBsendPerform:withDelay:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBsendMessage:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBremoteInvocation:withDict:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBcreatedNotice\fP"
+.br
+.ti -1c
+.RI "(void) - \fBupdatedNotice:withParentMID:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBkilledNotice\fP"
+.br
+.ti -1c
+.RI "(void) - \fBsetChildDictChildNameAsValue:withMIDAsKey:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBremoveChildDictChildNameAsValue:withMIDAsKey:\fP"
+.br
+.ti -1c
+.RI "(NSDictionary *) - \fBsetRemoteInvocationFrom:withSelector:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBaddCreationLog:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBsaveLogForReceived:\fP"
+.br
+.ti -1c
+.RI "(NSMutableDictionary *) - \fBcreateLogForReply\fP"
+.br
+.ti -1c
+.RI "(void) - \fBsaveToLogStore:log:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBsetMyName:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBinitMyMID\fP"
+.br
+.ti -1c
+.RI "(void) - \fBinitMyParentData\fP"
+.br
+.ti -1c
+.RI "(void) - \fBresetMyParentData\fP"
+.br
+.ti -1c
+.RI "(void) - \fBsetMyParentName:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBsetMyParentMID:\fP"
+.br
+.in -1c
+.SS "Static Public メソッド"
+
+.in +1c
+.ti -1c
+.RI "(NSString *) + \fBversion\fP"
+.br
+.in -1c
+.SS "Protected 変数"
+
+.in +1c
+.ti -1c
+.RI "id \fBmyBodyID\fP"
+.br
+.ti -1c
+.RI "SEL \fBmyBodySelector\fP"
+.br
+.ti -1c
+.RI "NSString * \fBmyName\fP"
+.br
+.ti -1c
+.RI "NSString * \fBmyMID\fP"
+.br
+.ti -1c
+.RI "NSString * \fBmyParentName\fP"
+.br
+.ti -1c
+.RI "NSString * \fBmyParentMID\fP"
+.br
+.ti -1c
+.RI "NSMutableDictionary * \fBm_childDict\fP"
+.br
+.ti -1c
+.RI "NSMutableDictionary * \fBm_logDict\fP"
+.br
+.in -1c
+.SH "説明"
+.PP 
+プライベート実装
+.PP
+パブリック実装 
+.SH "関数"
+.PP 
+.SS "- (void) call: (NSString *) childName(NSString *) exec ..."特定の名前のmessengerへの通信を行うメソッド 異なる名前の親から子へのメッセージ限定 
+.PP
+\fBMessengerViewController\fPで再定義されています。
+.SS "- (void) call: (NSString *) childName(NSString *) mID(NSString *) exec ..."特定の子への通信を行うメソッド、特にMIDを使い、相手を最大限特定する。 
+.SS "- (void) callMyself: (NSString *) exec ..."自分自身のmessengerへと通信を行うメソッド 
+.PP
+\fBMessengerViewController\fPで再定義されています。
+.SS "- (void) callParent: (NSString *) exec ..."親への通信を行うメソッド 
+.PP
+\fBMessengerViewController\fPで再定義されています。
+.SS "- (void) cancelPerform "遅延実行をキャンセルするメソッド 
+.SS "- (NSString *) changeNumberToStr: (int) num"数値の文字列化
+.PP
+数値の文字列化 出来ません。ロジック的に不可逆。 
+.PP
+数字の4文字をまとめて処理している。最小で1,とかなので、足したものから複合するしかない。或る意味暗号。
+.SS "- (int) changeStrToNumber: (NSString *) str"ストリングの数値化
+.PP
+文字列の数値化 
+.SS "- (NSMutableDictionary *) getChildDict "m_childDictを返す 
+.SS "- (int) getExecAsIntFromDict: (NSMutableDictionary *) dict"コマンド情報を数値で取得する 辞書からswitch文で使用する数値を取得する
+.PP
+実行処理名を指定、Int値を取得する この時点で飛び込んでくるストリングのポインタと同じ値を直前で出して、合致する値を出せればいいのか、、って定数じゃないが、、一致は出来る、、うーん。 
+.SS "- (NSString *) getExecAsString: (NSMutableDictionary *) dict"コマンド情報を文字列で取得する
+.PP
+実行処理名を指定、String値を取得する 
+.SS "- (int) getIntFromExec: (NSString *) exec"文字列からswitch文で使用する数値を取得する
+.PP
+NSStringからInt値を出す 
+.SS "- (NSMutableDictionary *) getLogStore "観察用にこのmessengerに書かれているログを取得するメソッド 
+.SS "- (id) getMyBodyID "クラスが持つ値の ゲッター
+.PP
+自分のBodyIDを返すメソッド 
+.SS "- (SEL) getMyBodySelector "自分のセレクター用ポインタを返すメソッド 
+.SS "- (NSString *) getMyMID "自分のMIDを返すメソッド 
+.SS "- (NSString *) getMyName "自分の名称を返すメソッド 
+.SS "- (NSString *) getMyParentMID "親のMIDを返すメソッド 
+.SS "- (NSString *) getMyParentName "親の名称を返すメソッド 
+.SS "- (BOOL) hasChild "子供が設定されているか否か返す 
+.SS "- (BOOL) hasParent "ユーティリティ
+.PP
+親が設定されているか否か返す 
+.SS "- (id) initWithBodyID: (id) body_id(SEL) body_selector(NSString *) name"MessengerSystemインスタンスの初期化メソッド
+.PP
+body_id:このインスタンスを所持するオブジェクトのID body_selector:このインスタンスを所持するオブジェクトが自動的に呼び出してほしいメソッドのselector name:このメッセンジャーの名称 
+.PP
+\fBMessengerViewController\fPで再定義されています。
+.SS "- (id) initWithManual "マニュアルを初期化、表示するプログラム 文字のみ。 
+.SS "- (void) inputParent: (NSString *) parentName"親へと自分が子供である事の通知を行い、返り値として親のMIDをmyParentMIDとして受け取るメソッド 受け取り用のメソッドの情報を親へと渡し、親からの遠隔MID入力を受ける。 
+.PP
+\fBMessengerViewController\fPで再定義されています。
+.SS "- (void) inputParent: (NSString *) parent(NSString *) mID"親へと自分が子供である事の通知を行い、返り値として親のMIDをmyParentMIDとして受け取るメソッド 親のMIDを特に特定できる場合に使用する。 
+.SS "- (BOOL) isIncludeRemote: (NSMutableDictionary *) dict"受け取ったデータに遠隔実行が含まれているか否か返す 
+.SS "- (BOOL) isReleasable "メッセンジャーが解放可能かどうか、取得するメソッド 
+.SS "- (void) remoteInvocation: (NSMutableDictionary *) dict ..."遠隔実行実装 パブリック用 
+.SS "- (void) removeAllChild "子供との関連性を解除する 自分の事を親に設定している全てのオブジェクトから離脱するブロードコールを行う。 
+.SS "- (void) removeFromParent "現在の親情報を削除する 
+.SS "- (void) setMyBodyID: (id) bodyID"自分のBodyIDをセットするメソッド 
+.PP
+\fBMessengerViewController\fPで再定義されています。
+.SS "- (void) setMyBodySelector: (SEL) body_selector"自分のBodyが提供するメソッドセレクターを、自分のセレクター用ポインタにセットするメソッド 
+.PP
+\fBMessengerViewController\fPで再定義されています。
+.SS "- (NSDictionary *) tag: (id) obj_tag(id) obj_value"tag valueメソッド 値にnilが入る事、 システムが使うのと同様のコマンドが入っている事に関しては、注意する。 
+.SS "+ (NSString *) version "バージョンを返す 
+.SS "- (NSDictionary *) withDelay: (float) delay"遅延実行タグ tag-Valueと同形式でオプションを挿入するメソッド 
+.SS "- (NSDictionary *) withRemoteFrom: (id) mySelf(SEL) sel"遠隔実行タグ tag-Valueと同形式で遠隔実行オプションを挿入するメソッド 
+
+.SH "作者"
+.PP 
+MessengerSystemのソースから Doxygen により生成しました。

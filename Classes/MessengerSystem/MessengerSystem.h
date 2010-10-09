@@ -140,7 +140,7 @@
 
 
 //実行メソッド
-- (void) inputParent:(NSString * )parent;//親への自己登録メソッド
+- (void) inputParent:(NSString * )parentName;//親への自己登録メソッド
 - (void) inputParent:(NSString *)parent withSpecifiedMID:(NSString * )mID;//特定の親への自己登録メソッド
 - (void) removeFromParent;//自分→親の関係を解除するメソッド
 - (void) removeAllChild;//自分→子の関係を解除するメソッド

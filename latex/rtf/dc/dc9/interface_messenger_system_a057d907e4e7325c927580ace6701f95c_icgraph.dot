@@ -1,0 +1,15 @@
+digraph G
+{
+  edge [fontname="FreeSans.ttf",fontsize="10",labelfontname="FreeSans.ttf",labelfontsize="10"];
+  node [fontname="FreeSans.ttf",fontsize="10",shape=record];
+  rankdir=LR;
+  Node1 [label="-[MessengerSystem getChildDict]",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir=back,color="midnightblue",fontsize="10",style="solid",fontname="FreeSans.ttf"];
+  Node2 [label="-[MessengerSystem call:withExec:]",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/dc9/interface_messenger_system.html#ae9f0c6c7daf251eb28aad584b1eca292"];
+  Node1 -> Node3 [dir=back,color="midnightblue",fontsize="10",style="solid",fontname="FreeSans.ttf"];
+  Node3 [label="-[MessengerSystem call:withSpecifiedMID:withExec:]",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/dc9/interface_messenger_system.html#ae923fe829663d8974dc34063bd32c4a2"];
+  Node1 -> Node4 [dir=back,color="midnightblue",fontsize="10",style="solid",fontname="FreeSans.ttf"];
+  Node4 [label="-[MessengerSystem hasChild]",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/dc9/interface_messenger_system.html#a9db1bcbbaf0abb9e8e1af5a2aa5bf9fa"];
+  Node1 -> Node5 [dir=back,color="midnightblue",fontsize="10",style="solid",fontname="FreeSans.ttf"];
+  Node5 [label="-[MessengerSystem removeAllChild]",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/dc9/interface_messenger_system.html#abfbdbb7d723b910d012d980daacbcd9b"];
+}

@@ -1,0 +1,73 @@
+.TH "fontTable" 3 "Sat Oct 9 2010" "Version 1.0" "MessengerSystem" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+fontTable \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Protected 変数"
+
+.in +1c
+.ti -1c
+.RI "CFDataRef \fBcmapTable\fP"
+.br
+.ti -1c
+.RI "FontTableFormat \fBformat\fP"
+.br
+.ti -1c
+.RI "union {"
+.br
+.ti -1c
+.RI "   struct {"
+.br
+.ti -1c
+.RI "      UInt16 \fBsegCountX2\fP"
+.br
+.ti -1c
+.RI "      UInt16 * \fBendCodes\fP"
+.br
+.ti -1c
+.RI "      UInt16 * \fBstartCodes\fP"
+.br
+.ti -1c
+.RI "      UInt16 * \fBidDeltas\fP"
+.br
+.ti -1c
+.RI "      UInt16 * \fBidRangeOffsets\fP"
+.br
+.ti -1c
+.RI "   } \fBformat4\fP"
+.br
+.ti -1c
+.RI "   struct {"
+.br
+.ti -1c
+.RI "      UInt32 \fBnGroups\fP"
+.br
+.ti -1c
+.RI "      struct {"
+.br
+.ti -1c
+.RI "         UInt32 \fBstartCharCode\fP"
+.br
+.ti -1c
+.RI "         UInt32 \fBendCharCode\fP"
+.br
+.ti -1c
+.RI "         UInt32 \fBstartGlyphCode\fP"
+.br
+.ti -1c
+.RI "      } \fBgroups\fP"
+.br
+.ti -1c
+.RI "   } \fBformat12\fP"
+.br
+.ti -1c
+.RI "} \fBcmap\fP"
+.br
+.in -1c
+
+.SH "作者"
+.PP 
+MessengerSystemのソースから Doxygen により生成しました。

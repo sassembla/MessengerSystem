@@ -1,0 +1,231 @@
+.TH "MessengerViewController" 3 "Sat Oct 9 2010" "Version 1.0" "MessengerSystem" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+MessengerViewController \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fBMessengerSystem\fPを継承しています。
+.SS "Public メソッド"
+
+.in +1c
+.ti -1c
+.RI "(id) - \fBinitWithBodyID:withSelector:withName:\fP"
+.br
+.ti -1c
+.RI "(id) - \fBinitWithFrame:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBinsertMessengerInformation:withMID:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBupdateParentInformation:withMID:withParentName:withParentMID:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBdeleteMessengerInformation:withMID:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBdrawDataUpdate\fP"
+.br
+.ti -1c
+.RI "(NSString *) - \fBgetMessengerInformationKey:withMID:\fP"
+.br
+.ti -1c
+.RI "(NSMutableDictionary *) - \fBgetButtonList\fP"
+.br
+.ti -1c
+.RI "(NSMutableDictionary *) - \fBgetMessengerList\fP"
+.br
+.ti -1c
+.RI "(void) - \fBsetNumberOfRelationship:\fP"
+.br
+.ti -1c
+.RI "(int) - \fBgetNumberOfRelationship\fP"
+.br
+.ti -1c
+.RI "(UIView *) - \fBgetMessengerInterfaceView\fP"
+.br
+.ti -1c
+.RI "(void) - \fBtapped:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBresizeButton:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBsetMyName:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBsetMyBodyID:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBsetMyBodySelector:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBinitMyMID\fP"
+.br
+.ti -1c
+.RI "(void) - \fBinitMyParentData\fP"
+.br
+.ti -1c
+.RI "(void) - \fBsetMyParentName:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBsetNameIndexDictionary\fP"
+.br
+.ti -1c
+.RI "(NSMutableDictionary *) - \fBgetNameIndexDictionary\fP"
+.br
+.ti -1c
+.RI "(void) - \fBsortButtonsByParentOrder\fP"
+.br
+.ti -1c
+.RI "(void) - \fBsetWorldX:withY:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBmoveWorldX:withY:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBsetScale:\fP"
+.br
+.ti -1c
+.RI "(float) - \fBgetScale\fP"
+.br
+.ti -1c
+.RI "(void) - \fBscaleResetX:withY:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBinputParent:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBinnerPerform:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBcallMyself:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBcall:withExec:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBcallChild:withMID:withCommand:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBcallParent:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBcreatedNotice\fP"
+.br
+.ti -1c
+.RI "(void) - \fBupdatedNotice:withParentMID:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBkilledNotice\fP"
+.br
+.ti -1c
+.RI "(void) - \fBdealloc\fP"
+.br
+.in -1c
+.SS "Protected 変数"
+
+.in +1c
+.ti -1c
+.RI "NSMutableDictionary * \fBm_messengerList\fP"
+.br
+.ti -1c
+.RI "NSMutableDictionary * \fBm_buttonList\fP"
+.br
+.ti -1c
+.RI "NSMutableDictionary * \fBm_nameIndexDictionary\fP"
+.br
+.ti -1c
+.RI "\fBMessengerDisplayView\fP * \fBmessengerInterfaceView\fP"
+.br
+.ti -1c
+.RI "int \fBm_numberOfRelationship\fP"
+.br
+.ti -1c
+.RI "float \fBm_scale\fP"
+.br
+.ti -1c
+.RI "float \fBm_worldX\fP"
+.br
+.ti -1c
+.RI "float \fBm_worldY\fP"
+.br
+.in -1c
+.SH "関数"
+.PP 
+.SS "- (void) call: (NSString *) childName(NSString *) exec ..."特定の名前のmessengerへの通信を行うメソッド 異なる名前の親から子へのメッセージ限定 
+.PP
+\fBMessengerSystem\fPを再定義しています。
+.SS "- (void) callMyself: (NSString *) exec ..."自分自身のmessengerへと通信を行うメソッド 
+.PP
+\fBMessengerSystem\fPを再定義しています。
+.SS "- (void) callParent: (NSString *) exec ..."親への通信を行うメソッド 
+.PP
+\fBMessengerSystem\fPを再定義しています。
+.SS "- (void) dealloc "Dealloc 
+.SS "- (void) deleteMessengerInformation: (NSString *) senderName(NSString *) senderMID"通信してきた対象の情報をviwDictから削除するメソッド
+.PP
+メッセンジャーの削除をビューに反映する 
+.SS "- (void) drawDataUpdate "描画データのアップデート
+.PP
+ドローデータの更新 
+.SS "- (NSMutableDictionary *) getButtonList "ボタン、Messengerのリスト辞書を渡す
+.PP
+ボタン用の辞書を取得する 
+.SS "- (NSString *) getMessengerInformationKey: (NSString *) name(NSString *) MID"NameとMIDのペアを作るメソッド 
+.SS "- (UIView *) getMessengerInterfaceView "ビューを返す
+.PP
+Viewを外部に返す 
+.SS "- (NSMutableDictionary *) getMessengerList "View用の辞書を取得する 
+.SS "- (void) initMyMID "自分のMIDを初期化するメソッド 
+.SS "- (void) initMyParentData "myParent関連情報を初期化する 
+.SS "- (id) initWithBodyID: (id) body_id(SEL) body_selector(NSString *) name"使用禁止の初期化メソッド 
+.PP
+\fBMessengerSystem\fPを再定義しています。
+.SS "- (id) initWithFrame: (CGRect) frame"初期化メソッド 
+.SS "- (void) innerPerform: (NSNotification *) notification"内部処理実装 オーバーライドし、実行内容を限定する 
+.SS "- (void) inputParent: (NSString *) parentName"親へと自分が子供である事の通知を行い、返り値として親のMIDをmyParentMIDとして受け取るメソッド 受け取り用のメソッドの情報を親へと渡し、親からの遠隔MID入力を受ける。 
+.PP
+\fBMessengerSystem\fPを再定義しています。
+.SS "- (void) insertMessengerInformation: (NSString *) senderName(NSString *) senderMID"メッセンジャーの生成情報をviewDictへと保持しておくメソッド
+.PP
+メッセンジャーの誕生をビューに反映する 
+.SS "- (void) resizeButton: (UIButton *) b"ボタンのインフォメーションを書き換え、再度描画 
+.PP
+ここからのラインを確認する。 通信の宛先に繋がっているラインをピックアップ、 別途アップデートにかける。どうでもいいか。
+.PP
+第一優先を色、完了 第二優先を→、線の上につける、かなあ、 第三優先を拡大縮小にしようか。画面のピッチに対する倍率を持てばいい。
+.PP
+グローバル基点と、グローバルスケールを持つ。アップデートをタッチ離したときに取ればいい。
+.SS "- (void) scaleResetX: (float) x(float) y"ビューからの直結イベント ズームインかリセットを行う 
+.SS "- (void) setMyBodyID: (id) bodyID"自分のBodyIDをセットするメソッド 
+.PP
+\fBMessengerSystem\fPを再定義しています。
+.SS "- (void) setMyBodySelector: (SEL) body_selector"自分のBodyが提供するメソッドセレクターを、自分のセレクター用ポインタにセットするメソッド 
+.PP
+\fBMessengerSystem\fPを再定義しています。
+.SS "- (void) setMyName: (NSString *) name"自分の名称をセットするメソッド 
+.SS "- (void) setMyParentName: (NSString *) parent"親の名称をセットするメソッド 
+.SS "- (void) setNameIndexDictionary "表示補助用のインデックス　X軸カウント 
+.SS "- (void) setNumberOfRelationship: (int) number"関係性の本数を返すメソッド 
+.SS "- (void) setWorldX: (float) toX(float) toY"移動、スケール関連
+.PP
+平行移動、スケールに関する処理 
+.SS "- (void) sortButtonsByParentOrder "全ボタンの位置をソートする
+.PP
+一番左からソートをかける 親子関係のラインから、キーに入っているオブジェクトに重み付け、m_nameIndexDictionary 内のX軸カウントを先頭に持っていく 
+.SS "- (void) tapped: (UIControlEvents *) event"ボタンが押された際のメソッド
+.PP
+ボタンが押された時のメソッド 
+.SS "- (void) updateParentInformation: (NSString *) senderName(NSString *) senderMID(NSString *) sendersParentName(NSString *) sendersParentMID"通信してきた対象の情報をviewDictへと保持しておくメソッド
+.PP
+通信してきた対象の情報がアップデートされ、親情報が変更された
+.PP
+正確に更新が行われていれば、線が残るような事は発生しない筈。 
+
+.SH "作者"
+.PP 
+MessengerSystemのソースから Doxygen により生成しました。

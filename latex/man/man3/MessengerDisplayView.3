@@ -1,0 +1,76 @@
+.TH "MessengerDisplayView" 3 "Sat Oct 9 2010" "Version 1.0" "MessengerSystem" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+MessengerDisplayView \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#import <MessengerDisplayView.h>\fP
+.SS "Public メソッド"
+
+.in +1c
+.ti -1c
+.RI "(void) - \fBsetControllerDelegate:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBupdateDrawList:andConnectionList:\fP"
+.br
+.ti -1c
+.RI "(id) - \fBinitWithMessengerDisplayFrame:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBlineFromTo\fP"
+.br
+.ti -1c
+.RI "(float) - \fBlinePrmGetA\fP"
+.br
+.ti -1c
+.RI "(float) - \fBlinePrmGetB\fP"
+.br
+.ti -1c
+.RI "(float) - \fBlinePrmGetC\fP"
+.br
+.ti -1c
+.RI "(CGPoint) - \fBlineCrclCrsPt\fP"
+.br
+.in -1c
+.SS "Protected 変数"
+
+.in +1c
+.ti -1c
+.RI "id \fBm_controllerId\fP"
+.br
+.ti -1c
+.RI "int \fBm_colorIndex\fP"
+.br
+.ti -1c
+.RI "NSMutableDictionary * \fBm_drawList\fP"
+.br
+.ti -1c
+.RI "NSMutableDictionary * \fBm_connectionList\fP"
+.br
+.ti -1c
+.RI "UIEvent * \fBm_pinchEvent\fP"
+.br
+.ti -1c
+.RI "CGFloat \fBm_lastPinchDist\fP"
+.br
+.ti -1c
+.RI "CGPoint \fBm_lastPoint\fP"
+.br
+.in -1c
+.SH "説明"
+.PP 
+親となるコントローラから、ボタンをセットされる対象。 ボタンの下敷きに情報、ラインを描く。 
+.SH "関数"
+.PP 
+.SS "- (void) lineFromTo (CGContextRef) context(CGPoint) start(CGPoint) end(UIColor *) color"ラインを描画するメソッド αは固定。 
+.SS "- (float) linePrmGetA (float) cx(float) cy(float) px(float) py"2点間を通る線について、座標からax+by+c = 0 を出すメソッド 
+.SS "- (void) setControllerDelegate: (id) contID"コントローラのIDをセットする 
+.SS "- (void) updateDrawList: (NSMutableDictionary *) draw(NSMutableDictionary *) connect"辞書を受け取り自己の描画リストを更新する 
+
+.SH "作者"
+.PP 
+MessengerSystemのソースから Doxygen により生成しました。

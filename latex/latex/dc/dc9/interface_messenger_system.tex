@@ -1,0 +1,752 @@
+\hypertarget{interface_messenger_system}{
+\section{クラス MessengerSystem}
+\label{dc/dc9/interface_messenger_system}\index{MessengerSystem@{MessengerSystem}}
+}
+
+
+\hyperlink{interface_messenger_view_controller}{MessengerViewController}に継承されています。
+
+\subsection*{Public メソッド}
+\begin{DoxyCompactItemize}
+\item 
+(id) -\/ \hyperlink{interface_messenger_system_a1127377a8d677d41693b435758790e79}{initWithBodyID:withSelector:withName:}
+\item 
+(id) -\/ \hyperlink{interface_messenger_system_a12fac5bf1d29c2b960e02dab4db80944}{initWithManual}
+\item 
+(void) -\/ \hyperlink{interface_messenger_system_a2a5f63ed86009e8b451bbbb621e9a94b}{setMyBodyID:}
+\item 
+(void) -\/ \hyperlink{interface_messenger_system_aafb5a2e5d48a09627f32a4d3c2e3fa29}{setMyBodySelector:}
+\item 
+(void) -\/ \hyperlink{interface_messenger_system_a2dc1b363d2e1b00f232fd829225a9ff3}{inputParent:}
+\item 
+(void) -\/ \hyperlink{interface_messenger_system_ae7f62ea0ebdb51b5f2628f3002add7e7}{inputParent:withSpecifiedMID:}
+\item 
+(void) -\/ \hyperlink{interface_messenger_system_a1b95b2f06c63a72a776c853d74e11b03}{removeFromParent}
+\item 
+(void) -\/ \hyperlink{interface_messenger_system_abfbdbb7d723b910d012d980daacbcd9b}{removeAllChild}
+\item 
+(void) -\/ \hyperlink{interface_messenger_system_a0d78a7be460a84be04e67d73ddcf4248}{callMyself:}
+\item 
+(void) -\/ \hyperlink{interface_messenger_system_ae9f0c6c7daf251eb28aad584b1eca292}{call:withExec:}
+\item 
+(void) -\/ \hyperlink{interface_messenger_system_ae923fe829663d8974dc34063bd32c4a2}{call:withSpecifiedMID:withExec:}
+\item 
+(void) -\/ \hyperlink{interface_messenger_system_acf758deab41281c54d928be2a72fc9ba}{callParent:}
+\item 
+(NSDictionary $\ast$) -\/ \hyperlink{interface_messenger_system_ad4e20b8da148b72f520986386c7fb8a5}{tag:val:}
+\item 
+(NSDictionary $\ast$) -\/ \hyperlink{interface_messenger_system_ad7b796c0354f4a6f380392421d4abc0d}{withRemoteFrom:withSelector:}
+\item 
+(NSDictionary $\ast$) -\/ \hyperlink{interface_messenger_system_ac424d46f571c01154893e4747a665930}{withDelay:}
+\item 
+(void) -\/ \hyperlink{interface_messenger_system_aaaa066451fb04c37c88e6a7efc94c63e}{remoteInvocation:}
+\item 
+(NSMutableDictionary $\ast$) -\/ \hyperlink{interface_messenger_system_a857e1c7932fdb366b52b687832c8e0bf}{getLogStore}
+\item 
+(NSMutableDictionary $\ast$) -\/ \hyperlink{interface_messenger_system_a057d907e4e7325c927580ace6701f95c}{getChildDict}
+\item 
+(NSString $\ast$) -\/ \hyperlink{interface_messenger_system_a1a0013cb76d7f354e7d71e09e0456766}{getExecAsString:}
+\item 
+(int) -\/ \hyperlink{interface_messenger_system_aef3cf1f4d71c77f66e6053dcd277beba}{getExecAsIntFromDict:}
+\item 
+(int) -\/ \hyperlink{interface_messenger_system_a881655597ee31052ca7cd72acd1343c2}{getIntFromExec:}
+\item 
+(int) -\/ \hyperlink{interface_messenger_system_a9c32da2a99a87a32c2567b29b4d411ac}{changeStrToNumber:}
+\item 
+(NSString $\ast$) -\/ \hyperlink{interface_messenger_system_ace36dcb764d249819d4ea85fac0afe5c}{changeNumberToStr:}
+\item 
+(BOOL) -\/ \hyperlink{interface_messenger_system_a4ab801cff2356929a18a551b3537f435}{hasParent}
+\item 
+(BOOL) -\/ \hyperlink{interface_messenger_system_a9db1bcbbaf0abb9e8e1af5a2aa5bf9fa}{hasChild}
+\item 
+(BOOL) -\/ \hyperlink{interface_messenger_system_a975357de1acaa17f15d90e67d0203ff4}{isIncludeRemote:}
+\item 
+(id) -\/ \hyperlink{interface_messenger_system_a7ebd928ddb4092333370af98d34095ed}{getMyBodyID}
+\item 
+(SEL) -\/ \hyperlink{interface_messenger_system_a0c021c0bc0628174e8b16f664205ebf6}{getMyBodySelector}
+\item 
+(NSString $\ast$) -\/ \hyperlink{interface_messenger_system_a8d6c34458dcb7c44337b68b2c47c9050}{getMyName}
+\item 
+(NSString $\ast$) -\/ \hyperlink{interface_messenger_system_a53fb306c1c478aafd66a039cf08e9f53}{getMyMID}
+\item 
+(NSString $\ast$) -\/ \hyperlink{interface_messenger_system_a8480affbc74b87d15b301d5b32681a70}{getMyParentName}
+\item 
+(NSString $\ast$) -\/ \hyperlink{interface_messenger_system_a59c153b480be68325af6a66f18cecd0b}{getMyParentMID}
+\item 
+(void) -\/ \hyperlink{interface_messenger_system_a6ffde31c3597bd083b47e30d26eb926f}{cancelPerform}
+\item 
+(BOOL) -\/ \hyperlink{interface_messenger_system_adcebdb1f9788a0bb75bb4c0433849ace}{isReleasable}
+\item 
+\hypertarget{interface_messenger_system_acd15a25f39e26b450bb1c33edd1f2d51}{
+(void) -\/ {\bfseries innerPerform:}}
+\label{dc/dc9/interface_messenger_system_acd15a25f39e26b450bb1c33edd1f2d51}
+
+\item 
+\hypertarget{interface_messenger_system_a60cbd00cd24aa502aa77d86e4391a1b7}{
+(void) -\/ {\bfseries sendPerform:}}
+\label{dc/dc9/interface_messenger_system_a60cbd00cd24aa502aa77d86e4391a1b7}
+
+\item 
+\hypertarget{interface_messenger_system_a12e9a8d84b6cb12f55bf7453166cfab1}{
+(void) -\/ {\bfseries sendPerform:withDelay:}}
+\label{dc/dc9/interface_messenger_system_a12e9a8d84b6cb12f55bf7453166cfab1}
+
+\item 
+\hypertarget{interface_messenger_system_a0938a6c892b3a634870238b4555dc921}{
+(void) -\/ {\bfseries sendMessage:}}
+\label{dc/dc9/interface_messenger_system_a0938a6c892b3a634870238b4555dc921}
+
+\item 
+\hypertarget{interface_messenger_system_a51502df160822ba7c6fd754fdc6353de}{
+(void) -\/ {\bfseries remoteInvocation:withDict:}}
+\label{dc/dc9/interface_messenger_system_a51502df160822ba7c6fd754fdc6353de}
+
+\item 
+\hypertarget{interface_messenger_system_a7e77f9abb100c6123caaa291d7f92ffb}{
+(void) -\/ {\bfseries createdNotice}}
+\label{dc/dc9/interface_messenger_system_a7e77f9abb100c6123caaa291d7f92ffb}
+
+\item 
+\hypertarget{interface_messenger_system_a28703ac96f244da4d7c62207cf65ff69}{
+(void) -\/ {\bfseries updatedNotice:withParentMID:}}
+\label{dc/dc9/interface_messenger_system_a28703ac96f244da4d7c62207cf65ff69}
+
+\item 
+\hypertarget{interface_messenger_system_a127cce35cc1c079fed1bceecccf23a66}{
+(void) -\/ {\bfseries killedNotice}}
+\label{dc/dc9/interface_messenger_system_a127cce35cc1c079fed1bceecccf23a66}
+
+\item 
+\hypertarget{interface_messenger_system_a57dd4208efc5d477c50c5c5f55fe7ff1}{
+(void) -\/ {\bfseries setChildDictChildNameAsValue:withMIDAsKey:}}
+\label{dc/dc9/interface_messenger_system_a57dd4208efc5d477c50c5c5f55fe7ff1}
+
+\item 
+\hypertarget{interface_messenger_system_aadeb829f6e394bbc36d77593ed6fe677}{
+(void) -\/ {\bfseries removeChildDictChildNameAsValue:withMIDAsKey:}}
+\label{dc/dc9/interface_messenger_system_aadeb829f6e394bbc36d77593ed6fe677}
+
+\item 
+\hypertarget{interface_messenger_system_a60c9a5dc9cf6d420d944edead0c957d8}{
+(NSDictionary $\ast$) -\/ {\bfseries setRemoteInvocationFrom:withSelector:}}
+\label{dc/dc9/interface_messenger_system_a60c9a5dc9cf6d420d944edead0c957d8}
+
+\item 
+\hypertarget{interface_messenger_system_aa4f4f9dbed2ccb22b30fa3bc86229560}{
+(void) -\/ {\bfseries addCreationLog:}}
+\label{dc/dc9/interface_messenger_system_aa4f4f9dbed2ccb22b30fa3bc86229560}
+
+\item 
+\hypertarget{interface_messenger_system_aea64a6b2e2486edb5a3443a23d13934f}{
+(void) -\/ {\bfseries saveLogForReceived:}}
+\label{dc/dc9/interface_messenger_system_aea64a6b2e2486edb5a3443a23d13934f}
+
+\item 
+\hypertarget{interface_messenger_system_a51d6be48e11ee01ba98c720b46ae398e}{
+(NSMutableDictionary $\ast$) -\/ {\bfseries createLogForReply}}
+\label{dc/dc9/interface_messenger_system_a51d6be48e11ee01ba98c720b46ae398e}
+
+\item 
+\hypertarget{interface_messenger_system_a04b3995de0fb3486ee1f64bc8868b8f3}{
+(void) -\/ {\bfseries saveToLogStore:log:}}
+\label{dc/dc9/interface_messenger_system_a04b3995de0fb3486ee1f64bc8868b8f3}
+
+\item 
+\hypertarget{interface_messenger_system_a0388f0bc3b5d73f8404fb65ae9f2478d}{
+(void) -\/ {\bfseries setMyName:}}
+\label{dc/dc9/interface_messenger_system_a0388f0bc3b5d73f8404fb65ae9f2478d}
+
+\item 
+\hypertarget{interface_messenger_system_adac10123acd489108d70a63d1b42669c}{
+(void) -\/ {\bfseries initMyMID}}
+\label{dc/dc9/interface_messenger_system_adac10123acd489108d70a63d1b42669c}
+
+\item 
+\hypertarget{interface_messenger_system_ae32a19a0477498f6b079551dfa08a15e}{
+(void) -\/ {\bfseries initMyParentData}}
+\label{dc/dc9/interface_messenger_system_ae32a19a0477498f6b079551dfa08a15e}
+
+\item 
+\hypertarget{interface_messenger_system_a111b446c0453facea8fc35774323dae7}{
+(void) -\/ {\bfseries resetMyParentData}}
+\label{dc/dc9/interface_messenger_system_a111b446c0453facea8fc35774323dae7}
+
+\item 
+\hypertarget{interface_messenger_system_a77cb388881cfe26e1b6440a1409c7c23}{
+(void) -\/ {\bfseries setMyParentName:}}
+\label{dc/dc9/interface_messenger_system_a77cb388881cfe26e1b6440a1409c7c23}
+
+\item 
+\hypertarget{interface_messenger_system_a4b835de059160b6e22eadd4035769c04}{
+(void) -\/ {\bfseries setMyParentMID:}}
+\label{dc/dc9/interface_messenger_system_a4b835de059160b6e22eadd4035769c04}
+
+\end{DoxyCompactItemize}
+\subsection*{Static Public メソッド}
+\begin{DoxyCompactItemize}
+\item 
+(NSString $\ast$) + \hyperlink{interface_messenger_system_aebad51a1ea3a010f1bb20d2f3327adcc}{version}
+\end{DoxyCompactItemize}
+\subsection*{Protected 変数}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{interface_messenger_system_a90f9745297d9d34f403579d395744a71}{
+id {\bfseries myBodyID}}
+\label{dc/dc9/interface_messenger_system_a90f9745297d9d34f403579d395744a71}
+
+\item 
+\hypertarget{interface_messenger_system_a469a5e545f12673594bc0117c8441068}{
+SEL {\bfseries myBodySelector}}
+\label{dc/dc9/interface_messenger_system_a469a5e545f12673594bc0117c8441068}
+
+\item 
+\hypertarget{interface_messenger_system_aa6f745c063b7432f33409c4e74fad099}{
+NSString $\ast$ {\bfseries myName}}
+\label{dc/dc9/interface_messenger_system_aa6f745c063b7432f33409c4e74fad099}
+
+\item 
+\hypertarget{interface_messenger_system_ab0873dccec01721962a9feda60f881e9}{
+NSString $\ast$ {\bfseries myMID}}
+\label{dc/dc9/interface_messenger_system_ab0873dccec01721962a9feda60f881e9}
+
+\item 
+\hypertarget{interface_messenger_system_a768d13ac0ab2689e095bcae527cb3c1b}{
+NSString $\ast$ {\bfseries myParentName}}
+\label{dc/dc9/interface_messenger_system_a768d13ac0ab2689e095bcae527cb3c1b}
+
+\item 
+\hypertarget{interface_messenger_system_a160a088edbe00c0a701b5c51a36203d3}{
+NSString $\ast$ {\bfseries myParentMID}}
+\label{dc/dc9/interface_messenger_system_a160a088edbe00c0a701b5c51a36203d3}
+
+\item 
+\hypertarget{interface_messenger_system_a7596fd096f620d0141fac502665dcabf}{
+NSMutableDictionary $\ast$ {\bfseries m\_\-childDict}}
+\label{dc/dc9/interface_messenger_system_a7596fd096f620d0141fac502665dcabf}
+
+\item 
+\hypertarget{interface_messenger_system_adf17d60a0ff5e2c21cb2f3717d9b5b55}{
+NSMutableDictionary $\ast$ {\bfseries m\_\-logDict}}
+\label{dc/dc9/interface_messenger_system_adf17d60a0ff5e2c21cb2f3717d9b5b55}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{説明}
+プライベート実装
+
+パブリック実装 
+
+\subsection{関数}
+\hypertarget{interface_messenger_system_ae9f0c6c7daf251eb28aad584b1eca292}{
+\index{MessengerSystem@{MessengerSystem}!call:withExec:@{call:withExec:}}
+\index{call:withExec:@{call:withExec:}!MessengerSystem@{MessengerSystem}}
+\subsubsection[{call:withExec:}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (void) call: 
+\begin{DoxyParamCaption}
+\item[{dummy(NSString $\ast$)}]{ childName}
+\item[{withExec:(NSString $\ast$)}]{ exec}
+\item[{,}]{ ...}
+\end{DoxyParamCaption}
+}}
+\label{dc/dc9/interface_messenger_system_ae9f0c6c7daf251eb28aad584b1eca292}
+特定の名前のmessengerへの通信を行うメソッド 異なる名前の親から子へのメッセージ限定 
+
+\hyperlink{interface_messenger_view_controller_a7a416a5ec2bcd17f259e1b2fc017d6a6}{MessengerViewController}で再定義されています。
+
+
+
+関数の呼び出しグラフ:
+
+
+\hypertarget{interface_messenger_system_ae923fe829663d8974dc34063bd32c4a2}{
+\index{MessengerSystem@{MessengerSystem}!call:withSpecifiedMID:withExec:@{call:withSpecifiedMID:withExec:}}
+\index{call:withSpecifiedMID:withExec:@{call:withSpecifiedMID:withExec:}!MessengerSystem@{MessengerSystem}}
+\subsubsection[{call:withSpecifiedMID:withExec:}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (void) call: 
+\begin{DoxyParamCaption}
+\item[{dummy(NSString $\ast$)}]{ childName}
+\item[{withSpecifiedMID:(NSString $\ast$)}]{ mID}
+\item[{withExec:(NSString $\ast$)}]{ exec}
+\item[{,}]{ ...}
+\end{DoxyParamCaption}
+}}
+\label{dc/dc9/interface_messenger_system_ae923fe829663d8974dc34063bd32c4a2}
+特定の子への通信を行うメソッド、特にMIDを使い、相手を最大限特定する。 
+
+関数の呼び出しグラフ:
+
+
+\hypertarget{interface_messenger_system_a0d78a7be460a84be04e67d73ddcf4248}{
+\index{MessengerSystem@{MessengerSystem}!callMyself:@{callMyself:}}
+\index{callMyself:@{callMyself:}!MessengerSystem@{MessengerSystem}}
+\subsubsection[{callMyself:}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (void) callMyself: 
+\begin{DoxyParamCaption}
+\item[{dummy(NSString $\ast$)}]{ exec}
+\item[{,}]{ ...}
+\end{DoxyParamCaption}
+}}
+\label{dc/dc9/interface_messenger_system_a0d78a7be460a84be04e67d73ddcf4248}
+自分自身のmessengerへと通信を行うメソッド 
+
+\hyperlink{interface_messenger_view_controller_a416d9acd2e8346b9ab8870b64571f322}{MessengerViewController}で再定義されています。
+
+
+
+関数の呼び出しグラフ:
+
+
+\hypertarget{interface_messenger_system_acf758deab41281c54d928be2a72fc9ba}{
+\index{MessengerSystem@{MessengerSystem}!callParent:@{callParent:}}
+\index{callParent:@{callParent:}!MessengerSystem@{MessengerSystem}}
+\subsubsection[{callParent:}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (void) callParent: 
+\begin{DoxyParamCaption}
+\item[{dummy(NSString $\ast$)}]{ exec}
+\item[{,}]{ ...}
+\end{DoxyParamCaption}
+}}
+\label{dc/dc9/interface_messenger_system_acf758deab41281c54d928be2a72fc9ba}
+親への通信を行うメソッド 
+
+\hyperlink{interface_messenger_view_controller_afa8cf33ccddb2f83e214b192707bdbd6}{MessengerViewController}で再定義されています。
+
+
+
+関数の呼び出しグラフ:
+
+
+
+
+呼出しグラフ:
+
+
+\hypertarget{interface_messenger_system_a6ffde31c3597bd083b47e30d26eb926f}{
+\index{MessengerSystem@{MessengerSystem}!cancelPerform@{cancelPerform}}
+\index{cancelPerform@{cancelPerform}!MessengerSystem@{MessengerSystem}}
+\subsubsection[{cancelPerform}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (void) cancelPerform 
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+}}
+\label{dc/dc9/interface_messenger_system_a6ffde31c3597bd083b47e30d26eb926f}
+遅延実行をキャンセルするメソッド \hypertarget{interface_messenger_system_ace36dcb764d249819d4ea85fac0afe5c}{
+\index{MessengerSystem@{MessengerSystem}!changeNumberToStr:@{changeNumberToStr:}}
+\index{changeNumberToStr:@{changeNumberToStr:}!MessengerSystem@{MessengerSystem}}
+\subsubsection[{changeNumberToStr:}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (NSString $\ast$) changeNumberToStr: 
+\begin{DoxyParamCaption}
+\item[{dummy(int)}]{ num}
+\end{DoxyParamCaption}
+}}
+\label{dc/dc9/interface_messenger_system_ace36dcb764d249819d4ea85fac0afe5c}
+数値の文字列化
+
+数値の文字列化 出来ません。ロジック的に不可逆。 
+
+数字の4文字をまとめて処理している。最小で1,とかなので、足したものから複合するしかない。或る意味暗号。
+
+\hypertarget{interface_messenger_system_a9c32da2a99a87a32c2567b29b4d411ac}{
+\index{MessengerSystem@{MessengerSystem}!changeStrToNumber:@{changeStrToNumber:}}
+\index{changeStrToNumber:@{changeStrToNumber:}!MessengerSystem@{MessengerSystem}}
+\subsubsection[{changeStrToNumber:}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (int) changeStrToNumber: 
+\begin{DoxyParamCaption}
+\item[{dummy(NSString $\ast$)}]{ str}
+\end{DoxyParamCaption}
+}}
+\label{dc/dc9/interface_messenger_system_a9c32da2a99a87a32c2567b29b4d411ac}
+ストリングの数値化
+
+文字列の数値化 
+
+呼出しグラフ:
+
+
+\hypertarget{interface_messenger_system_a057d907e4e7325c927580ace6701f95c}{
+\index{MessengerSystem@{MessengerSystem}!getChildDict@{getChildDict}}
+\index{getChildDict@{getChildDict}!MessengerSystem@{MessengerSystem}}
+\subsubsection[{getChildDict}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (NSMutableDictionary $\ast$) getChildDict 
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+}}
+\label{dc/dc9/interface_messenger_system_a057d907e4e7325c927580ace6701f95c}
+m\_\-childDictを返す 
+
+呼出しグラフ:
+
+
+\hypertarget{interface_messenger_system_aef3cf1f4d71c77f66e6053dcd277beba}{
+\index{MessengerSystem@{MessengerSystem}!getExecAsIntFromDict:@{getExecAsIntFromDict:}}
+\index{getExecAsIntFromDict:@{getExecAsIntFromDict:}!MessengerSystem@{MessengerSystem}}
+\subsubsection[{getExecAsIntFromDict:}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (int) getExecAsIntFromDict: 
+\begin{DoxyParamCaption}
+\item[{dummy(NSMutableDictionary $\ast$)}]{ dict}
+\end{DoxyParamCaption}
+}}
+\label{dc/dc9/interface_messenger_system_aef3cf1f4d71c77f66e6053dcd277beba}
+コマンド情報を数値で取得する 辞書からswitch文で使用する数値を取得する
+
+実行処理名を指定、Int値を取得する この時点で飛び込んでくるストリングのポインタと同じ値を直前で出して、合致する値を出せればいいのか、、って定数じゃないが、、一致は出来る、、うーん。 
+
+関数の呼び出しグラフ:
+
+
+\hypertarget{interface_messenger_system_a1a0013cb76d7f354e7d71e09e0456766}{
+\index{MessengerSystem@{MessengerSystem}!getExecAsString:@{getExecAsString:}}
+\index{getExecAsString:@{getExecAsString:}!MessengerSystem@{MessengerSystem}}
+\subsubsection[{getExecAsString:}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (NSString $\ast$) getExecAsString: 
+\begin{DoxyParamCaption}
+\item[{dummy(NSMutableDictionary $\ast$)}]{ dict}
+\end{DoxyParamCaption}
+}}
+\label{dc/dc9/interface_messenger_system_a1a0013cb76d7f354e7d71e09e0456766}
+コマンド情報を文字列で取得する
+
+実行処理名を指定、String値を取得する \hypertarget{interface_messenger_system_a881655597ee31052ca7cd72acd1343c2}{
+\index{MessengerSystem@{MessengerSystem}!getIntFromExec:@{getIntFromExec:}}
+\index{getIntFromExec:@{getIntFromExec:}!MessengerSystem@{MessengerSystem}}
+\subsubsection[{getIntFromExec:}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (int) getIntFromExec: 
+\begin{DoxyParamCaption}
+\item[{dummy(NSString $\ast$)}]{ exec}
+\end{DoxyParamCaption}
+}}
+\label{dc/dc9/interface_messenger_system_a881655597ee31052ca7cd72acd1343c2}
+文字列からswitch文で使用する数値を取得する
+
+NSStringからInt値を出す 
+
+関数の呼び出しグラフ:
+
+
+\hypertarget{interface_messenger_system_a857e1c7932fdb366b52b687832c8e0bf}{
+\index{MessengerSystem@{MessengerSystem}!getLogStore@{getLogStore}}
+\index{getLogStore@{getLogStore}!MessengerSystem@{MessengerSystem}}
+\subsubsection[{getLogStore}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (NSMutableDictionary $\ast$) getLogStore 
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+}}
+\label{dc/dc9/interface_messenger_system_a857e1c7932fdb366b52b687832c8e0bf}
+観察用にこのmessengerに書かれているログを取得するメソッド \hypertarget{interface_messenger_system_a7ebd928ddb4092333370af98d34095ed}{
+\index{MessengerSystem@{MessengerSystem}!getMyBodyID@{getMyBodyID}}
+\index{getMyBodyID@{getMyBodyID}!MessengerSystem@{MessengerSystem}}
+\subsubsection[{getMyBodyID}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (id) getMyBodyID 
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+}}
+\label{dc/dc9/interface_messenger_system_a7ebd928ddb4092333370af98d34095ed}
+クラスが持つ値の ゲッター
+
+自分のBodyIDを返すメソッド \hypertarget{interface_messenger_system_a0c021c0bc0628174e8b16f664205ebf6}{
+\index{MessengerSystem@{MessengerSystem}!getMyBodySelector@{getMyBodySelector}}
+\index{getMyBodySelector@{getMyBodySelector}!MessengerSystem@{MessengerSystem}}
+\subsubsection[{getMyBodySelector}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (SEL) getMyBodySelector 
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+}}
+\label{dc/dc9/interface_messenger_system_a0c021c0bc0628174e8b16f664205ebf6}
+自分のセレクター用ポインタを返すメソッド \hypertarget{interface_messenger_system_a53fb306c1c478aafd66a039cf08e9f53}{
+\index{MessengerSystem@{MessengerSystem}!getMyMID@{getMyMID}}
+\index{getMyMID@{getMyMID}!MessengerSystem@{MessengerSystem}}
+\subsubsection[{getMyMID}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (NSString $\ast$) getMyMID 
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+}}
+\label{dc/dc9/interface_messenger_system_a53fb306c1c478aafd66a039cf08e9f53}
+自分のMIDを返すメソッド 
+
+呼出しグラフ:
+
+
+\hypertarget{interface_messenger_system_a8d6c34458dcb7c44337b68b2c47c9050}{
+\index{MessengerSystem@{MessengerSystem}!getMyName@{getMyName}}
+\index{getMyName@{getMyName}!MessengerSystem@{MessengerSystem}}
+\subsubsection[{getMyName}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (NSString $\ast$) getMyName 
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+}}
+\label{dc/dc9/interface_messenger_system_a8d6c34458dcb7c44337b68b2c47c9050}
+自分の名称を返すメソッド 
+
+呼出しグラフ:
+
+
+\hypertarget{interface_messenger_system_a59c153b480be68325af6a66f18cecd0b}{
+\index{MessengerSystem@{MessengerSystem}!getMyParentMID@{getMyParentMID}}
+\index{getMyParentMID@{getMyParentMID}!MessengerSystem@{MessengerSystem}}
+\subsubsection[{getMyParentMID}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (NSString $\ast$) getMyParentMID 
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+}}
+\label{dc/dc9/interface_messenger_system_a59c153b480be68325af6a66f18cecd0b}
+親のMIDを返すメソッド 
+
+呼出しグラフ:
+
+
+\hypertarget{interface_messenger_system_a8480affbc74b87d15b301d5b32681a70}{
+\index{MessengerSystem@{MessengerSystem}!getMyParentName@{getMyParentName}}
+\index{getMyParentName@{getMyParentName}!MessengerSystem@{MessengerSystem}}
+\subsubsection[{getMyParentName}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (NSString $\ast$) getMyParentName 
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+}}
+\label{dc/dc9/interface_messenger_system_a8480affbc74b87d15b301d5b32681a70}
+親の名称を返すメソッド 
+
+呼出しグラフ:
+
+
+\hypertarget{interface_messenger_system_a9db1bcbbaf0abb9e8e1af5a2aa5bf9fa}{
+\index{MessengerSystem@{MessengerSystem}!hasChild@{hasChild}}
+\index{hasChild@{hasChild}!MessengerSystem@{MessengerSystem}}
+\subsubsection[{hasChild}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (BOOL) hasChild 
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+}}
+\label{dc/dc9/interface_messenger_system_a9db1bcbbaf0abb9e8e1af5a2aa5bf9fa}
+子供が設定されているか否か返す 
+
+関数の呼び出しグラフ:
+
+
+\hypertarget{interface_messenger_system_a4ab801cff2356929a18a551b3537f435}{
+\index{MessengerSystem@{MessengerSystem}!hasParent@{hasParent}}
+\index{hasParent@{hasParent}!MessengerSystem@{MessengerSystem}}
+\subsubsection[{hasParent}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (BOOL) hasParent 
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+}}
+\label{dc/dc9/interface_messenger_system_a4ab801cff2356929a18a551b3537f435}
+ユーティリティ
+
+親が設定されているか否か返す 
+
+関数の呼び出しグラフ:
+
+
+
+
+呼出しグラフ:
+
+
+\hypertarget{interface_messenger_system_a1127377a8d677d41693b435758790e79}{
+\index{MessengerSystem@{MessengerSystem}!initWithBodyID:withSelector:withName:@{initWithBodyID:withSelector:withName:}}
+\index{initWithBodyID:withSelector:withName:@{initWithBodyID:withSelector:withName:}!MessengerSystem@{MessengerSystem}}
+\subsubsection[{initWithBodyID:withSelector:withName:}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (id) initWithBodyID: 
+\begin{DoxyParamCaption}
+\item[{dummy(id)}]{ body\_\-id}
+\item[{withSelector:(SEL)}]{ body\_\-selector}
+\item[{withName:(NSString $\ast$)}]{ name}
+\end{DoxyParamCaption}
+}}
+\label{dc/dc9/interface_messenger_system_a1127377a8d677d41693b435758790e79}
+MessengerSystemインスタンスの初期化メソッド
+
+body\_\-id:このインスタンスを所持するオブジェクトのID body\_\-selector:このインスタンスを所持するオブジェクトが自動的に呼び出してほしいメソッドのselector name:このメッセンジャーの名称 
+
+\hyperlink{interface_messenger_view_controller_a44c0a2552e50d6223a8230447be3e83a}{MessengerViewController}で再定義されています。
+
+
+
+関数の呼び出しグラフ:
+
+
+\hypertarget{interface_messenger_system_a12fac5bf1d29c2b960e02dab4db80944}{
+\index{MessengerSystem@{MessengerSystem}!initWithManual@{initWithManual}}
+\index{initWithManual@{initWithManual}!MessengerSystem@{MessengerSystem}}
+\subsubsection[{initWithManual}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (id) initWithManual 
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+}}
+\label{dc/dc9/interface_messenger_system_a12fac5bf1d29c2b960e02dab4db80944}
+マニュアルを初期化、表示するプログラム 文字のみ。 \hypertarget{interface_messenger_system_a2dc1b363d2e1b00f232fd829225a9ff3}{
+\index{MessengerSystem@{MessengerSystem}!inputParent:@{inputParent:}}
+\index{inputParent:@{inputParent:}!MessengerSystem@{MessengerSystem}}
+\subsubsection[{inputParent:}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (void) inputParent: 
+\begin{DoxyParamCaption}
+\item[{dummy(NSString $\ast$)}]{ parentName}
+\end{DoxyParamCaption}
+}}
+\label{dc/dc9/interface_messenger_system_a2dc1b363d2e1b00f232fd829225a9ff3}
+親へと自分が子供である事の通知を行い、返り値として親のMIDをmyParentMIDとして受け取るメソッド 受け取り用のメソッドの情報を親へと渡し、親からの遠隔MID入力を受ける。 
+
+\hyperlink{interface_messenger_view_controller_a33bb3cca76fba84a3e5b480131e5faf1}{MessengerViewController}で再定義されています。
+
+
+
+関数の呼び出しグラフ:
+
+
+\hypertarget{interface_messenger_system_ae7f62ea0ebdb51b5f2628f3002add7e7}{
+\index{MessengerSystem@{MessengerSystem}!inputParent:withSpecifiedMID:@{inputParent:withSpecifiedMID:}}
+\index{inputParent:withSpecifiedMID:@{inputParent:withSpecifiedMID:}!MessengerSystem@{MessengerSystem}}
+\subsubsection[{inputParent:withSpecifiedMID:}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (void) inputParent: 
+\begin{DoxyParamCaption}
+\item[{dummy(NSString $\ast$)}]{ parent}
+\item[{withSpecifiedMID:(NSString $\ast$)}]{ mID}
+\end{DoxyParamCaption}
+}}
+\label{dc/dc9/interface_messenger_system_ae7f62ea0ebdb51b5f2628f3002add7e7}
+親へと自分が子供である事の通知を行い、返り値として親のMIDをmyParentMIDとして受け取るメソッド 親のMIDを特に特定できる場合に使用する。 
+
+関数の呼び出しグラフ:
+
+
+
+
+呼出しグラフ:
+
+
+\hypertarget{interface_messenger_system_a975357de1acaa17f15d90e67d0203ff4}{
+\index{MessengerSystem@{MessengerSystem}!isIncludeRemote:@{isIncludeRemote:}}
+\index{isIncludeRemote:@{isIncludeRemote:}!MessengerSystem@{MessengerSystem}}
+\subsubsection[{isIncludeRemote:}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (BOOL) isIncludeRemote: 
+\begin{DoxyParamCaption}
+\item[{dummy(NSMutableDictionary $\ast$)}]{ dict}
+\end{DoxyParamCaption}
+}}
+\label{dc/dc9/interface_messenger_system_a975357de1acaa17f15d90e67d0203ff4}
+受け取ったデータに遠隔実行が含まれているか否か返す \hypertarget{interface_messenger_system_adcebdb1f9788a0bb75bb4c0433849ace}{
+\index{MessengerSystem@{MessengerSystem}!isReleasable@{isReleasable}}
+\index{isReleasable@{isReleasable}!MessengerSystem@{MessengerSystem}}
+\subsubsection[{isReleasable}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (BOOL) isReleasable 
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+}}
+\label{dc/dc9/interface_messenger_system_adcebdb1f9788a0bb75bb4c0433849ace}
+メッセンジャーが解放可能かどうか、取得するメソッド \hypertarget{interface_messenger_system_aaaa066451fb04c37c88e6a7efc94c63e}{
+\index{MessengerSystem@{MessengerSystem}!remoteInvocation:@{remoteInvocation:}}
+\index{remoteInvocation:@{remoteInvocation:}!MessengerSystem@{MessengerSystem}}
+\subsubsection[{remoteInvocation:}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (void) remoteInvocation: 
+\begin{DoxyParamCaption}
+\item[{dummy(NSMutableDictionary $\ast$)}]{ dict}
+\item[{,}]{ ...}
+\end{DoxyParamCaption}
+}}
+\label{dc/dc9/interface_messenger_system_aaaa066451fb04c37c88e6a7efc94c63e}
+遠隔実行実装 パブリック用 
+
+呼出しグラフ:
+
+
+\hypertarget{interface_messenger_system_abfbdbb7d723b910d012d980daacbcd9b}{
+\index{MessengerSystem@{MessengerSystem}!removeAllChild@{removeAllChild}}
+\index{removeAllChild@{removeAllChild}!MessengerSystem@{MessengerSystem}}
+\subsubsection[{removeAllChild}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (void) removeAllChild 
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+}}
+\label{dc/dc9/interface_messenger_system_abfbdbb7d723b910d012d980daacbcd9b}
+子供との関連性を解除する 自分の事を親に設定している全てのオブジェクトから離脱するブロードコールを行う。 
+
+関数の呼び出しグラフ:
+
+
+\hypertarget{interface_messenger_system_a1b95b2f06c63a72a776c853d74e11b03}{
+\index{MessengerSystem@{MessengerSystem}!removeFromParent@{removeFromParent}}
+\index{removeFromParent@{removeFromParent}!MessengerSystem@{MessengerSystem}}
+\subsubsection[{removeFromParent}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (void) removeFromParent 
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+}}
+\label{dc/dc9/interface_messenger_system_a1b95b2f06c63a72a776c853d74e11b03}
+現在の親情報を削除する 
+
+関数の呼び出しグラフ:
+
+
+\hypertarget{interface_messenger_system_a2a5f63ed86009e8b451bbbb621e9a94b}{
+\index{MessengerSystem@{MessengerSystem}!setMyBodyID:@{setMyBodyID:}}
+\index{setMyBodyID:@{setMyBodyID:}!MessengerSystem@{MessengerSystem}}
+\subsubsection[{setMyBodyID:}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (void) setMyBodyID: 
+\begin{DoxyParamCaption}
+\item[{dummy(id)}]{ bodyID}
+\end{DoxyParamCaption}
+}}
+\label{dc/dc9/interface_messenger_system_a2a5f63ed86009e8b451bbbb621e9a94b}
+自分のBodyIDをセットするメソッド 
+
+\hyperlink{interface_messenger_view_controller_abab9347cc7ed46bd04978ca00e081a0e}{MessengerViewController}で再定義されています。
+
+
+
+呼出しグラフ:
+
+
+\hypertarget{interface_messenger_system_aafb5a2e5d48a09627f32a4d3c2e3fa29}{
+\index{MessengerSystem@{MessengerSystem}!setMyBodySelector:@{setMyBodySelector:}}
+\index{setMyBodySelector:@{setMyBodySelector:}!MessengerSystem@{MessengerSystem}}
+\subsubsection[{setMyBodySelector:}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (void) setMyBodySelector: 
+\begin{DoxyParamCaption}
+\item[{dummy(SEL)}]{ body\_\-selector}
+\end{DoxyParamCaption}
+}}
+\label{dc/dc9/interface_messenger_system_aafb5a2e5d48a09627f32a4d3c2e3fa29}
+自分のBodyが提供するメソッドセレクターを、自分のセレクター用ポインタにセットするメソッド 
+
+\hyperlink{interface_messenger_view_controller_ade8005d21b7d8df69ddd12fba7440f6b}{MessengerViewController}で再定義されています。
+
+
+
+呼出しグラフ:
+
+
+\hypertarget{interface_messenger_system_ad4e20b8da148b72f520986386c7fb8a5}{
+\index{MessengerSystem@{MessengerSystem}!tag:val:@{tag:val:}}
+\index{tag:val:@{tag:val:}!MessengerSystem@{MessengerSystem}}
+\subsubsection[{tag:val:}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (NSDictionary $\ast$) tag: 
+\begin{DoxyParamCaption}
+\item[{dummy(id)}]{ obj\_\-tag}
+\item[{val:(id)}]{ obj\_\-value}
+\end{DoxyParamCaption}
+}}
+\label{dc/dc9/interface_messenger_system_ad4e20b8da148b72f520986386c7fb8a5}
+tag valueメソッド 値にnilが入る事、 システムが使うのと同様のコマンドが入っている事に関しては、注意する。 
+
+呼出しグラフ:
+
+
+\hypertarget{interface_messenger_system_aebad51a1ea3a010f1bb20d2f3327adcc}{
+\index{MessengerSystem@{MessengerSystem}!version@{version}}
+\index{version@{version}!MessengerSystem@{MessengerSystem}}
+\subsubsection[{version}]{\setlength{\rightskip}{0pt plus 5cm}+ (NSString $\ast$) version 
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+}}
+\label{dc/dc9/interface_messenger_system_aebad51a1ea3a010f1bb20d2f3327adcc}
+バージョンを返す \hypertarget{interface_messenger_system_ac424d46f571c01154893e4747a665930}{
+\index{MessengerSystem@{MessengerSystem}!withDelay:@{withDelay:}}
+\index{withDelay:@{withDelay:}!MessengerSystem@{MessengerSystem}}
+\subsubsection[{withDelay:}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (NSDictionary $\ast$) withDelay: 
+\begin{DoxyParamCaption}
+\item[{dummy(float)}]{ delay}
+\end{DoxyParamCaption}
+}}
+\label{dc/dc9/interface_messenger_system_ac424d46f571c01154893e4747a665930}
+遅延実行タグ tag-\/Valueと同形式でオプションを挿入するメソッド \hypertarget{interface_messenger_system_ad7b796c0354f4a6f380392421d4abc0d}{
+\index{MessengerSystem@{MessengerSystem}!withRemoteFrom:withSelector:@{withRemoteFrom:withSelector:}}
+\index{withRemoteFrom:withSelector:@{withRemoteFrom:withSelector:}!MessengerSystem@{MessengerSystem}}
+\subsubsection[{withRemoteFrom:withSelector:}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (NSDictionary $\ast$) withRemoteFrom: 
+\begin{DoxyParamCaption}
+\item[{dummy(id)}]{ mySelf}
+\item[{withSelector:(SEL)}]{ sel}
+\end{DoxyParamCaption}
+}}
+\label{dc/dc9/interface_messenger_system_ad7b796c0354f4a6f380392421d4abc0d}
+遠隔実行タグ tag-\/Valueと同形式で遠隔実行オプションを挿入するメソッド 
+
+このクラスの説明は次のファイルから生成されました:\begin{DoxyCompactItemize}
+\item 
+Classes/MessengerSystem/MessengerSystem.h\item 
+Classes/MessengerSystem/MessengerSystem.m\end{DoxyCompactItemize}

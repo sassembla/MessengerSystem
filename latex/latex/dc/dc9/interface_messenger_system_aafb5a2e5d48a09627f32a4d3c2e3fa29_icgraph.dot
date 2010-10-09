@@ -1,0 +1,9 @@
+digraph G
+{
+  edge [fontname="FreeSans.ttf",fontsize="10",labelfontname="FreeSans.ttf",labelfontsize="10"];
+  node [fontname="FreeSans.ttf",fontsize="10",shape=record];
+  rankdir=LR;
+  Node1 [label="-[MessengerSystem setMyBodySelector:]",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir=back,color="midnightblue",fontsize="10",style="solid"];
+  Node2 [label="-[MessengerSystem initWithBodyID:withSelector:withName:]",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/dc9/interface_messenger_system.html#a1127377a8d677d41693b435758790e79"];
+}

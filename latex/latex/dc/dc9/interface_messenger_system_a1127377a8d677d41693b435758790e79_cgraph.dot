@@ -1,0 +1,11 @@
+digraph G
+{
+  edge [fontname="FreeSans.ttf",fontsize="10",labelfontname="FreeSans.ttf",labelfontsize="10"];
+  node [fontname="FreeSans.ttf",fontsize="10",shape=record];
+  rankdir=LR;
+  Node1 [label="-[MessengerSystem initWithBodyID:withSelector:withName:]",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid"];
+  Node2 [label="-[MessengerSystem setMyBodyID:]",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/dc9/interface_messenger_system.html#a2a5f63ed86009e8b451bbbb621e9a94b"];
+  Node1 -> Node3 [color="midnightblue",fontsize="10",style="solid"];
+  Node3 [label="-[MessengerSystem setMyBodySelector:]",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/dc9/interface_messenger_system.html#aafb5a2e5d48a09627f32a4d3c2e3fa29"];
+}

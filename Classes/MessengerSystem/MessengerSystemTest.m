@@ -1160,7 +1160,7 @@
 
 /**
  テスト中の数値の文字列化
- ぐつーに
+ 普通に。
  */
 - (void) testNumberToString {
 	NSString * str = [parent changeNumberToStr:[parent changeStrToNumber:@"bc"]];

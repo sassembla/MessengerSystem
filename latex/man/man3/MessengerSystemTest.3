@@ -1,0 +1,52 @@
+.TH "MessengerSystemTest" 3 "Sat Oct 9 2010" "Version 1.0" "MessengerSystem" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+MessengerSystemTest \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Public メソッド"
+
+.in +1c
+.ti -1c
+.RI "(void) - \fBm_testParent:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBm_testChild0:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBm_testChild1:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBm_testChild2:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBm_testChild3:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBsayHello:\fP"
+.br
+.in -1c
+.SS "Protected 変数"
+
+.in +1c
+.ti -1c
+.RI "\fBMessengerSystem\fP * \fBparent\fP"
+.br
+.ti -1c
+.RI "\fBMessengerSystem\fP * \fBchild_persis\fP"
+.br
+.in -1c
+.SH "関数"
+.PP 
+.SS "- (void) m_testChild0: (NSNotification *) notification"テスト用に叩かれるメソッド、 子供用。 child_persisで使用 
+.SS "- (void) m_testChild1: (NSNotification *) notification"テスト用に叩かれるメソッド、 子供用。 1で使用 
+.SS "- (void) m_testChild2: (NSNotification *) notification"テスト用に叩かれるメソッド、 子供用2。 
+.SS "- (void) m_testChild3: (NSNotification *) notification"テスト用に叩かれるメソッド、 子供用3。 
+.SS "- (void) m_testParent: (NSNotification *) notification"テスト用にたたかれるメソッド 
+.SS "- (void) sayHello: (NSString *) str"テスト用に遠隔実行されるメソッド 
+
+.SH "作者"
+.PP 
+MessengerSystemのソースから Doxygen により生成しました。

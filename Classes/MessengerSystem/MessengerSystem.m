@@ -782,6 +782,13 @@
 }
 
 //初期化メソッド
+/**
+ MessengerSystemインスタンスの初期化メソッド
+ 
+ body_id:このインスタンスを所持するオブジェクトのID
+ body_selector:このインスタンスを所持するオブジェクトが自動的に呼び出してほしいメソッドのselector
+ name:このメッセンジャーの名称
+ */
 - (id) initWithBodyID:(id)body_id withSelector:(SEL)body_selector withName:(NSString * )name {
 	if (self = [super init]) {
 		NSAssert(name, @"withName引数がnilです。　名称をセットしてください。");
@@ -815,6 +822,21 @@
 - (id) initWithManual {
 	/*
 	 マニュアル表示のプログラムを書こう！
+	 
+	 メッセンジャーを何個か持ち、通信してみる。
+	 タイムインターバルで何でもしてみる。
+	 サンプルオブジェクトを持つ、かなあ。やり過ぎかなあ。
+	 
+	 初期化する
+	 ・だれかと親子になってみる
+	 
+	 ・親子間でメッセージ
+		子から親、親から子
+	 
+	 ・親から複数の子にメッセージ
+	 
+	 ・子から親にメッセージ
+	 
 	 
 	 マニュアルを、システムと一緒に表示する。
 	 文章をメッセージシステムで構築、
@@ -855,8 +877,9 @@
  親へと自分が子供である事の通知を行い、返り値として親のMIDをmyParentMIDとして受け取るメソッド
  受け取り用のメソッドの情報を親へと渡し、親からの遠隔MID入力を受ける。
  */
-- (void) inputParent:(NSString * )parent {
-	[self inputParent:parent withSpecifiedMID:nil];
+- (void) inputParent:(NSString * )parentName {
+	NSAssert1(![parentName isEqualToString:[self getMyName]], @"同名のmessengerを親に指定する事は出来ません_指定されたparentName_%@", parentName);
+	[self inputParent:parentName withSpecifiedMID:nil];
 }
 
 
@@ -1005,12 +1028,7 @@
 
 /**
  特定の名前のmessengerへの通信を行うメソッド
- 親から子限定
- 
- 子供辞書を持っており、かつ、nameに該当する子供がいる
- 送り先の名称が自分と異なる場合のみ、送る事が出来る
- →同名の子供群まで対象に入れると、メッセージの判別手段にグループの概念を持ち込まなければいけないために存在する制限。
- 
+ 異なる名前の親から子へのメッセージ限定
  */
 - (void) call:(NSString * )childName withExec:(NSString * )exec, ... {
 	

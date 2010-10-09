@@ -1,0 +1,46 @@
+\hypertarget{structfont_table}{
+\section{fontTable Struct Reference}
+\label{structfont_table}\index{fontTable@{fontTable}}
+}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structfont_table_a10684dd302ce6666316589812d0c6b3d}{
+CFDataRef {\bfseries cmapTable}}
+\label{structfont_table_a10684dd302ce6666316589812d0c6b3d}
+
+\item 
+\hypertarget{structfont_table_a74cf5f8d0396ba7edc7f10ccfa693412}{
+FontTableFormat {\bfseries format}}
+\label{structfont_table_a74cf5f8d0396ba7edc7f10ccfa693412}
+
+\item 
+\hypertarget{structfont_table_ad0e8fb59595629610324fce8211c4b91}{
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>UInt16 {\bfseries segCountX2}\\
+\>\>UInt16 $\ast$ {\bfseries endCodes}\\
+\>\>UInt16 $\ast$ {\bfseries startCodes}\\
+\>\>UInt16 $\ast$ {\bfseries idDeltas}\\
+\>\>UInt16 $\ast$ {\bfseries idRangeOffsets}\\
+\>\} {\bfseries format4}\\
+\>struct \{\\
+\>\>UInt32 {\bfseries nGroups}\\
+\>\>struct \{\\
+\>\>\>UInt32 {\bfseries startCharCode}\\
+\>\>\>UInt32 {\bfseries endCharCode}\\
+\>\>\>UInt32 {\bfseries startGlyphCode}\\
+\>\>\} {\bfseries groups}\\
+\>\} {\bfseries format12}\\
+\} {\bfseries cmap}}
+\label{structfont_table_ad0e8fb59595629610324fce8211c4b91}
+\\
+
+\end{tabbing}\end{DoxyCompactItemize}
+
+
+The documentation for this struct was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+Classes/MessengerSystem/GlyphTable/GlyphTable.m\end{DoxyCompactItemize}
