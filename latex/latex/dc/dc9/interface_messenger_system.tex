@@ -2,10 +2,12 @@
 \section{クラス MessengerSystem}
 \label{dc/dc9/interface_messenger_system}\index{MessengerSystem@{MessengerSystem}}
 }
-
-
-\hyperlink{interface_messenger_view_controller}{MessengerViewController}に継承されています。
-
+MessengerSystemに対する継承グラフ\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{dc/dc9/interface_messenger_system}
+\end{center}
+\end{figure}
 \subsection*{Public メソッド}
 \begin{DoxyCompactItemize}
 \item 
@@ -253,11 +255,6 @@ NSMutableDictionary $\ast$ {\bfseries m\_\-logDict}}
 
 \hyperlink{interface_messenger_view_controller_a7a416a5ec2bcd17f259e1b2fc017d6a6}{MessengerViewController}で再定義されています。
 
-
-
-関数の呼び出しグラフ:
-
-
 \hypertarget{interface_messenger_system_ae923fe829663d8974dc34063bd32c4a2}{
 \index{MessengerSystem@{MessengerSystem}!call:withSpecifiedMID:withExec:@{call:withSpecifiedMID:withExec:}}
 \index{call:withSpecifiedMID:withExec:@{call:withSpecifiedMID:withExec:}!MessengerSystem@{MessengerSystem}}
@@ -270,12 +267,7 @@ NSMutableDictionary $\ast$ {\bfseries m\_\-logDict}}
 \end{DoxyParamCaption}
 }}
 \label{dc/dc9/interface_messenger_system_ae923fe829663d8974dc34063bd32c4a2}
-特定の子への通信を行うメソッド、特にMIDを使い、相手を最大限特定する。 
-
-関数の呼び出しグラフ:
-
-
-\hypertarget{interface_messenger_system_a0d78a7be460a84be04e67d73ddcf4248}{
+特定の子への通信を行うメソッド、特にMIDを使い、相手を最大限特定する。 \hypertarget{interface_messenger_system_a0d78a7be460a84be04e67d73ddcf4248}{
 \index{MessengerSystem@{MessengerSystem}!callMyself:@{callMyself:}}
 \index{callMyself:@{callMyself:}!MessengerSystem@{MessengerSystem}}
 \subsubsection[{callMyself:}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (void) callMyself: 
@@ -288,11 +280,6 @@ NSMutableDictionary $\ast$ {\bfseries m\_\-logDict}}
 自分自身のmessengerへと通信を行うメソッド 
 
 \hyperlink{interface_messenger_view_controller_a416d9acd2e8346b9ab8870b64571f322}{MessengerViewController}で再定義されています。
-
-
-
-関数の呼び出しグラフ:
-
 
 \hypertarget{interface_messenger_system_acf758deab41281c54d928be2a72fc9ba}{
 \index{MessengerSystem@{MessengerSystem}!callParent:@{callParent:}}
@@ -307,16 +294,6 @@ NSMutableDictionary $\ast$ {\bfseries m\_\-logDict}}
 親への通信を行うメソッド 
 
 \hyperlink{interface_messenger_view_controller_afa8cf33ccddb2f83e214b192707bdbd6}{MessengerViewController}で再定義されています。
-
-
-
-関数の呼び出しグラフ:
-
-
-
-
-呼出しグラフ:
-
 
 \hypertarget{interface_messenger_system_a6ffde31c3597bd083b47e30d26eb926f}{
 \index{MessengerSystem@{MessengerSystem}!cancelPerform@{cancelPerform}}
@@ -353,12 +330,7 @@ NSMutableDictionary $\ast$ {\bfseries m\_\-logDict}}
 \label{dc/dc9/interface_messenger_system_a9c32da2a99a87a32c2567b29b4d411ac}
 ストリングの数値化
 
-文字列の数値化 
-
-呼出しグラフ:
-
-
-\hypertarget{interface_messenger_system_a057d907e4e7325c927580ace6701f95c}{
+文字列の数値化 \hypertarget{interface_messenger_system_a057d907e4e7325c927580ace6701f95c}{
 \index{MessengerSystem@{MessengerSystem}!getChildDict@{getChildDict}}
 \index{getChildDict@{getChildDict}!MessengerSystem@{MessengerSystem}}
 \subsubsection[{getChildDict}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (NSMutableDictionary $\ast$) getChildDict 
@@ -367,12 +339,7 @@ NSMutableDictionary $\ast$ {\bfseries m\_\-logDict}}
 \end{DoxyParamCaption}
 }}
 \label{dc/dc9/interface_messenger_system_a057d907e4e7325c927580ace6701f95c}
-m\_\-childDictを返す 
-
-呼出しグラフ:
-
-
-\hypertarget{interface_messenger_system_aef3cf1f4d71c77f66e6053dcd277beba}{
+m\_\-childDictを返す \hypertarget{interface_messenger_system_aef3cf1f4d71c77f66e6053dcd277beba}{
 \index{MessengerSystem@{MessengerSystem}!getExecAsIntFromDict:@{getExecAsIntFromDict:}}
 \index{getExecAsIntFromDict:@{getExecAsIntFromDict:}!MessengerSystem@{MessengerSystem}}
 \subsubsection[{getExecAsIntFromDict:}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (int) getExecAsIntFromDict: 
@@ -383,12 +350,7 @@ m\_\-childDictを返す
 \label{dc/dc9/interface_messenger_system_aef3cf1f4d71c77f66e6053dcd277beba}
 コマンド情報を数値で取得する 辞書からswitch文で使用する数値を取得する
 
-実行処理名を指定、Int値を取得する この時点で飛び込んでくるストリングのポインタと同じ値を直前で出して、合致する値を出せればいいのか、、って定数じゃないが、、一致は出来る、、うーん。 
-
-関数の呼び出しグラフ:
-
-
-\hypertarget{interface_messenger_system_a1a0013cb76d7f354e7d71e09e0456766}{
+実行処理名を指定、Int値を取得する この時点で飛び込んでくるストリングのポインタと同じ値を直前で出して、合致する値を出せればいいのか、、って定数じゃないが、、一致は出来る、、うーん。 \hypertarget{interface_messenger_system_a1a0013cb76d7f354e7d71e09e0456766}{
 \index{MessengerSystem@{MessengerSystem}!getExecAsString:@{getExecAsString:}}
 \index{getExecAsString:@{getExecAsString:}!MessengerSystem@{MessengerSystem}}
 \subsubsection[{getExecAsString:}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (NSString $\ast$) getExecAsString: 
@@ -410,12 +372,7 @@ m\_\-childDictを返す
 \label{dc/dc9/interface_messenger_system_a881655597ee31052ca7cd72acd1343c2}
 文字列からswitch文で使用する数値を取得する
 
-NSStringからInt値を出す 
-
-関数の呼び出しグラフ:
-
-
-\hypertarget{interface_messenger_system_a857e1c7932fdb366b52b687832c8e0bf}{
+NSStringからInt値を出す \hypertarget{interface_messenger_system_a857e1c7932fdb366b52b687832c8e0bf}{
 \index{MessengerSystem@{MessengerSystem}!getLogStore@{getLogStore}}
 \index{getLogStore@{getLogStore}!MessengerSystem@{MessengerSystem}}
 \subsubsection[{getLogStore}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (NSMutableDictionary $\ast$) getLogStore 
@@ -453,12 +410,7 @@ NSStringからInt値を出す
 \end{DoxyParamCaption}
 }}
 \label{dc/dc9/interface_messenger_system_a53fb306c1c478aafd66a039cf08e9f53}
-自分のMIDを返すメソッド 
-
-呼出しグラフ:
-
-
-\hypertarget{interface_messenger_system_a8d6c34458dcb7c44337b68b2c47c9050}{
+自分のMIDを返すメソッド \hypertarget{interface_messenger_system_a8d6c34458dcb7c44337b68b2c47c9050}{
 \index{MessengerSystem@{MessengerSystem}!getMyName@{getMyName}}
 \index{getMyName@{getMyName}!MessengerSystem@{MessengerSystem}}
 \subsubsection[{getMyName}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (NSString $\ast$) getMyName 
@@ -467,12 +419,7 @@ NSStringからInt値を出す
 \end{DoxyParamCaption}
 }}
 \label{dc/dc9/interface_messenger_system_a8d6c34458dcb7c44337b68b2c47c9050}
-自分の名称を返すメソッド 
-
-呼出しグラフ:
-
-
-\hypertarget{interface_messenger_system_a59c153b480be68325af6a66f18cecd0b}{
+自分の名称を返すメソッド \hypertarget{interface_messenger_system_a59c153b480be68325af6a66f18cecd0b}{
 \index{MessengerSystem@{MessengerSystem}!getMyParentMID@{getMyParentMID}}
 \index{getMyParentMID@{getMyParentMID}!MessengerSystem@{MessengerSystem}}
 \subsubsection[{getMyParentMID}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (NSString $\ast$) getMyParentMID 
@@ -481,12 +428,7 @@ NSStringからInt値を出す
 \end{DoxyParamCaption}
 }}
 \label{dc/dc9/interface_messenger_system_a59c153b480be68325af6a66f18cecd0b}
-親のMIDを返すメソッド 
-
-呼出しグラフ:
-
-
-\hypertarget{interface_messenger_system_a8480affbc74b87d15b301d5b32681a70}{
+親のMIDを返すメソッド \hypertarget{interface_messenger_system_a8480affbc74b87d15b301d5b32681a70}{
 \index{MessengerSystem@{MessengerSystem}!getMyParentName@{getMyParentName}}
 \index{getMyParentName@{getMyParentName}!MessengerSystem@{MessengerSystem}}
 \subsubsection[{getMyParentName}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (NSString $\ast$) getMyParentName 
@@ -495,12 +437,7 @@ NSStringからInt値を出す
 \end{DoxyParamCaption}
 }}
 \label{dc/dc9/interface_messenger_system_a8480affbc74b87d15b301d5b32681a70}
-親の名称を返すメソッド 
-
-呼出しグラフ:
-
-
-\hypertarget{interface_messenger_system_a9db1bcbbaf0abb9e8e1af5a2aa5bf9fa}{
+親の名称を返すメソッド \hypertarget{interface_messenger_system_a9db1bcbbaf0abb9e8e1af5a2aa5bf9fa}{
 \index{MessengerSystem@{MessengerSystem}!hasChild@{hasChild}}
 \index{hasChild@{hasChild}!MessengerSystem@{MessengerSystem}}
 \subsubsection[{hasChild}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (BOOL) hasChild 
@@ -509,12 +446,7 @@ NSStringからInt値を出す
 \end{DoxyParamCaption}
 }}
 \label{dc/dc9/interface_messenger_system_a9db1bcbbaf0abb9e8e1af5a2aa5bf9fa}
-子供が設定されているか否か返す 
-
-関数の呼び出しグラフ:
-
-
-\hypertarget{interface_messenger_system_a4ab801cff2356929a18a551b3537f435}{
+子供が設定されているか否か返す \hypertarget{interface_messenger_system_a4ab801cff2356929a18a551b3537f435}{
 \index{MessengerSystem@{MessengerSystem}!hasParent@{hasParent}}
 \index{hasParent@{hasParent}!MessengerSystem@{MessengerSystem}}
 \subsubsection[{hasParent}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (BOOL) hasParent 
@@ -525,17 +457,7 @@ NSStringからInt値を出す
 \label{dc/dc9/interface_messenger_system_a4ab801cff2356929a18a551b3537f435}
 ユーティリティ
 
-親が設定されているか否か返す 
-
-関数の呼び出しグラフ:
-
-
-
-
-呼出しグラフ:
-
-
-\hypertarget{interface_messenger_system_a1127377a8d677d41693b435758790e79}{
+親が設定されているか否か返す \hypertarget{interface_messenger_system_a1127377a8d677d41693b435758790e79}{
 \index{MessengerSystem@{MessengerSystem}!initWithBodyID:withSelector:withName:@{initWithBodyID:withSelector:withName:}}
 \index{initWithBodyID:withSelector:withName:@{initWithBodyID:withSelector:withName:}!MessengerSystem@{MessengerSystem}}
 \subsubsection[{initWithBodyID:withSelector:withName:}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (id) initWithBodyID: 
@@ -551,11 +473,6 @@ MessengerSystemインスタンスの初期化メソッド
 body\_\-id:このインスタンスを所持するオブジェクトのID body\_\-selector:このインスタンスを所持するオブジェクトが自動的に呼び出してほしいメソッドのselector name:このメッセンジャーの名称 
 
 \hyperlink{interface_messenger_view_controller_a44c0a2552e50d6223a8230447be3e83a}{MessengerViewController}で再定義されています。
-
-
-
-関数の呼び出しグラフ:
-
 
 \hypertarget{interface_messenger_system_a12fac5bf1d29c2b960e02dab4db80944}{
 \index{MessengerSystem@{MessengerSystem}!initWithManual@{initWithManual}}
@@ -579,11 +496,6 @@ body\_\-id:このインスタンスを所持するオブジェクトのID body\_
 
 \hyperlink{interface_messenger_view_controller_a33bb3cca76fba84a3e5b480131e5faf1}{MessengerViewController}で再定義されています。
 
-
-
-関数の呼び出しグラフ:
-
-
 \hypertarget{interface_messenger_system_ae7f62ea0ebdb51b5f2628f3002add7e7}{
 \index{MessengerSystem@{MessengerSystem}!inputParent:withSpecifiedMID:@{inputParent:withSpecifiedMID:}}
 \index{inputParent:withSpecifiedMID:@{inputParent:withSpecifiedMID:}!MessengerSystem@{MessengerSystem}}
@@ -594,17 +506,7 @@ body\_\-id:このインスタンスを所持するオブジェクトのID body\_
 \end{DoxyParamCaption}
 }}
 \label{dc/dc9/interface_messenger_system_ae7f62ea0ebdb51b5f2628f3002add7e7}
-親へと自分が子供である事の通知を行い、返り値として親のMIDをmyParentMIDとして受け取るメソッド 親のMIDを特に特定できる場合に使用する。 
-
-関数の呼び出しグラフ:
-
-
-
-
-呼出しグラフ:
-
-
-\hypertarget{interface_messenger_system_a975357de1acaa17f15d90e67d0203ff4}{
+親へと自分が子供である事の通知を行い、返り値として親のMIDをmyParentMIDとして受け取るメソッド 親のMIDを特に特定できる場合に使用する。 \hypertarget{interface_messenger_system_a975357de1acaa17f15d90e67d0203ff4}{
 \index{MessengerSystem@{MessengerSystem}!isIncludeRemote:@{isIncludeRemote:}}
 \index{isIncludeRemote:@{isIncludeRemote:}!MessengerSystem@{MessengerSystem}}
 \subsubsection[{isIncludeRemote:}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (BOOL) isIncludeRemote: 
@@ -632,12 +534,7 @@ body\_\-id:このインスタンスを所持するオブジェクトのID body\_
 \end{DoxyParamCaption}
 }}
 \label{dc/dc9/interface_messenger_system_aaaa066451fb04c37c88e6a7efc94c63e}
-遠隔実行実装 パブリック用 
-
-呼出しグラフ:
-
-
-\hypertarget{interface_messenger_system_abfbdbb7d723b910d012d980daacbcd9b}{
+遠隔実行実装 パブリック用 \hypertarget{interface_messenger_system_abfbdbb7d723b910d012d980daacbcd9b}{
 \index{MessengerSystem@{MessengerSystem}!removeAllChild@{removeAllChild}}
 \index{removeAllChild@{removeAllChild}!MessengerSystem@{MessengerSystem}}
 \subsubsection[{removeAllChild}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (void) removeAllChild 
@@ -646,12 +543,7 @@ body\_\-id:このインスタンスを所持するオブジェクトのID body\_
 \end{DoxyParamCaption}
 }}
 \label{dc/dc9/interface_messenger_system_abfbdbb7d723b910d012d980daacbcd9b}
-子供との関連性を解除する 自分の事を親に設定している全てのオブジェクトから離脱するブロードコールを行う。 
-
-関数の呼び出しグラフ:
-
-
-\hypertarget{interface_messenger_system_a1b95b2f06c63a72a776c853d74e11b03}{
+子供との関連性を解除する 自分の事を親に設定している全てのオブジェクトから離脱するブロードコールを行う。 \hypertarget{interface_messenger_system_a1b95b2f06c63a72a776c853d74e11b03}{
 \index{MessengerSystem@{MessengerSystem}!removeFromParent@{removeFromParent}}
 \index{removeFromParent@{removeFromParent}!MessengerSystem@{MessengerSystem}}
 \subsubsection[{removeFromParent}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (void) removeFromParent 
@@ -660,12 +552,7 @@ body\_\-id:このインスタンスを所持するオブジェクトのID body\_
 \end{DoxyParamCaption}
 }}
 \label{dc/dc9/interface_messenger_system_a1b95b2f06c63a72a776c853d74e11b03}
-現在の親情報を削除する 
-
-関数の呼び出しグラフ:
-
-
-\hypertarget{interface_messenger_system_a2a5f63ed86009e8b451bbbb621e9a94b}{
+現在の親情報を削除する \hypertarget{interface_messenger_system_a2a5f63ed86009e8b451bbbb621e9a94b}{
 \index{MessengerSystem@{MessengerSystem}!setMyBodyID:@{setMyBodyID:}}
 \index{setMyBodyID:@{setMyBodyID:}!MessengerSystem@{MessengerSystem}}
 \subsubsection[{setMyBodyID:}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (void) setMyBodyID: 
@@ -677,11 +564,6 @@ body\_\-id:このインスタンスを所持するオブジェクトのID body\_
 自分のBodyIDをセットするメソッド 
 
 \hyperlink{interface_messenger_view_controller_abab9347cc7ed46bd04978ca00e081a0e}{MessengerViewController}で再定義されています。
-
-
-
-呼出しグラフ:
-
 
 \hypertarget{interface_messenger_system_aafb5a2e5d48a09627f32a4d3c2e3fa29}{
 \index{MessengerSystem@{MessengerSystem}!setMyBodySelector:@{setMyBodySelector:}}
@@ -696,11 +578,6 @@ body\_\-id:このインスタンスを所持するオブジェクトのID body\_
 
 \hyperlink{interface_messenger_view_controller_ade8005d21b7d8df69ddd12fba7440f6b}{MessengerViewController}で再定義されています。
 
-
-
-呼出しグラフ:
-
-
 \hypertarget{interface_messenger_system_ad4e20b8da148b72f520986386c7fb8a5}{
 \index{MessengerSystem@{MessengerSystem}!tag:val:@{tag:val:}}
 \index{tag:val:@{tag:val:}!MessengerSystem@{MessengerSystem}}
@@ -711,12 +588,7 @@ body\_\-id:このインスタンスを所持するオブジェクトのID body\_
 \end{DoxyParamCaption}
 }}
 \label{dc/dc9/interface_messenger_system_ad4e20b8da148b72f520986386c7fb8a5}
-tag valueメソッド 値にnilが入る事、 システムが使うのと同様のコマンドが入っている事に関しては、注意する。 
-
-呼出しグラフ:
-
-
-\hypertarget{interface_messenger_system_aebad51a1ea3a010f1bb20d2f3327adcc}{
+tag valueメソッド 値にnilが入る事、 システムが使うのと同様のコマンドが入っている事に関しては、注意する。 \hypertarget{interface_messenger_system_aebad51a1ea3a010f1bb20d2f3327adcc}{
 \index{MessengerSystem@{MessengerSystem}!version@{version}}
 \index{version@{version}!MessengerSystem@{MessengerSystem}}
 \subsubsection[{version}]{\setlength{\rightskip}{0pt plus 5cm}+ (NSString $\ast$) version 

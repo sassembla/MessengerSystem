@@ -1,7 +1,7 @@
 digraph G
 {
-  edge [fontname="FreeSans.ttf",fontsize="10",labelfontname="FreeSans.ttf",labelfontsize="10"];
-  node [fontname="FreeSans.ttf",fontsize="10",shape=record];
+  edge [fontname="FreeSans.ttf",fontsize="24",labelfontname="FreeSans.ttf",labelfontsize="24"];
+  node [fontname="FreeSans.ttf",fontsize="24",shape=record];
   rankdir=LR;
-  Node1 [label="fontTable",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/de6/structfont_table.html"];
+  Node1 [label="MessengerDisplayView",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d39/interface_messenger_display_view.html"];
 }

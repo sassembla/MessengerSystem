@@ -173,6 +173,7 @@
 		
 		[self saveLogForReceived:recievedLogDict];
 		
+		
 		//設定されたbodyのメソッドを実行
 		IMP func = [[self getMyBodyID] methodForSelector:[self getMyBodySelector]];
 		(*func)([self getMyBodyID], [self getMyBodySelector], notification);
@@ -644,6 +645,8 @@
  */
 - (void) saveLogForReceived:(NSMutableDictionary * ) recievedLogDict {
 	
+	
+	
 	//ログタイプ、タイムスタンプを作成
 	NSString * messageID = (NSString * )[recievedLogDict valueForKey:MS_LOG_MESSAGEID];
 	
@@ -660,7 +663,7 @@
  記録をログ末尾に付け加えたログを返す。
  */
 - (NSMutableDictionary * ) createLogForReply {
-	NSAssert(FALSE, @"createLogForReplyは未完成です。　使用禁止です。");
+	NSAssert(FALSE, @"createLogForReplyは未完成のため、使用禁止です。");
 	//ログタイプ、タイムスタンプを作成
 	[m_logDict setValue:@"仮のmessageID" forKey:MS_LOG_MESSAGEID];
 	

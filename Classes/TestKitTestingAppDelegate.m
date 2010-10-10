@@ -34,24 +34,25 @@
 	
 	m_objectOv = [[coTestObject alloc] init];
 	
-//	coTestObject * obj2 = [[coTestObject alloc] init];
-//	
-//	coTestObject * obj3 = [[coTestObject alloc] init2];
-//	coTestObject * obj4 = [[coTestObject alloc] init2];
-//	
-//	coTestObject * obj5 = [[coTestObject alloc] init3];
-//	coTestObject * obj6 = [[coTestObject alloc] init3];
-//	coTestObject * obj7 = [[coTestObject alloc] init3];
-//	
-//	coTestObject * obj8 = [[coTestObject alloc] init4];
+	coTestObject * obj2 = [[coTestObject alloc] init];
+	
+	coTestObject * obj3 = [[coTestObject alloc] init2];
+	coTestObject * obj4 = [[coTestObject alloc] init2];
+	
+	coTestObject * obj5 = [[coTestObject alloc] init3];
+	coTestObject * obj6 = [[coTestObject alloc] init3];
+	coTestObject * obj7 = [[coTestObject alloc] init3];
+	
+	coTestObject * obj8 = [[coTestObject alloc] init4];
+	coTestObject * obj9 = [[coTestObject alloc] init5];
 	
 	
 	//coTestObject * obj4 = [[coTestObject alloc] init2];
 //	coTestObject * obj5 = [[coTestObject alloc] init2];
 	
 	
-	[m_paren callMyself:@"数字に変換するメソッドを作れとアレほど、、",
-	 [m_paren withDelay:3],
+	[m_paren callMyself:@"数字に変換するメソッドとロジック作成中",
+	 [m_paren withDelay:0.3],
 	 nil];
 	
 	[window makeKeyAndVisible];

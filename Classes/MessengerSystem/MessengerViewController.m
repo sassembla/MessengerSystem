@@ -145,23 +145,32 @@
 //		//子供設定の解除コマンドを判断
 //		return;
 //	}
-//	
-//	
-//	if ([commandName isEqualToString:MS_CATEGOLY_CALLCHILD]) {
-//		//親から子の関係性成立済み情報が載っている
-//		return;
-//	}
-//		 
-//	if ([commandName isEqualToString:MS_CATEGOLY_CALLPARENT]) {
-//		//子から親の関係性成立済み情報が載っている
-//		return;
-//	}
-//	
-//	if ([commandName isEqualToString:MS_CATEGOLY_LOCAL]) {
-//		//だれかからだれか自身へのメッセージ
-//		return;
-//	}
-//	
+
+	
+	
+	if ([commandName isEqualToString:MS_CATEGOLY_CALLCHILD]) {
+		//親から子の関係性成立済み情報が載っている
+		[self drawCallLineFrom:[dict valueForKey:MS_SENDERNAME] withMID:[dict valueForKey:MS_SENDERMID]
+							to:[dict valueForKey:MS_ADDRESS_NAME] withMID:[dict valueForKey:MS_ADDRESS_MID]];
+		return;
+	}
+		 
+	if ([commandName isEqualToString:MS_CATEGOLY_CALLPARENT]) {
+		//子から親の関係性成立済み情報が載っている
+		[self drawCallLineFrom:[dict valueForKey:MS_SENDERNAME] withMID:[dict valueForKey:MS_SENDERMID]
+							to:[dict valueForKey:MS_ADDRESS_NAME] withMID:[dict valueForKey:MS_ADDRESS_MID]];
+		
+		return;
+	}
+
+	if ([commandName isEqualToString:MS_CATEGOLY_LOCAL]) {
+		//だれか自身からだれか自身へのメッセージ
+		[self drawCallLineFrom:[dict valueForKey:MS_SENDERNAME] withMID:[dict valueForKey:MS_SENDERMID]
+							to:[dict valueForKey:MS_ADDRESS_NAME] withMID:[dict valueForKey:MS_ADDRESS_MID]];
+		
+		return;
+	}
+	
 //	if ([commandName isEqualToString:MS_CATEGOLY_PARENTSEARCH]) {
 //		//親決定のメソッド
 //		return;
@@ -201,7 +210,7 @@
 	
 	[newButton setHidden:FALSE];
 	
-	[newButton setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0]];//一応範囲付け、かなあ。
+//	[newButton setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.5]];//一応可視範囲付け
 	[newButton addTarget:self action:@selector(tapped:) forControlEvents:UIControlEventTouchUpInside];
 	
 	
@@ -215,6 +224,7 @@
 	
 	[self drawDataUpdate];
 }
+
 /**
  通信してきた対象の情報がアップデートされ、親情報が変更された
  
@@ -344,6 +354,15 @@
 	[self setNumberOfRelationship:[m_connectionList count]];
 	
 	[messengerInterfaceView updateDrawList:[self getButtonList] andConnectionList:m_connectionList];//ボタン座標データをビューの描画リストにセットする
+}
+
+
+
+/**
+ 通信の発生を確認し、表示するメソッド
+ */
+- (void) drawCallLineFrom:(NSString * )senderName withMID:(NSString * )senderMID to:(NSString * )addressName withMID:(NSString * )addressMID {
+	NSLog(@"%@から%@へと通信発生",senderName, addressName);
 }
 
 
@@ -504,42 +523,15 @@
  */
 - (void) tapped:(UIControlEvents * )event {
 
-	//この座標を画面の中心にするように、全インターフェースの座標を置き換える、とか。
+	UIButton * b = (UIButton * )event;
 	
-//	NSLog(@"到達_%@", event);//イベントからボタンIDとか取得できる筈。
-//	UIButton * b = (UIButton * )event;//変形可能。
+//	[messengerInterfaceView setAnimation];
 	
-	//[self resizeButton:b];
-}
-
-
-/**
- ボタンのインフォメーションを書き換え、再度描画
- 
- */
-- (void) resizeButton:(UIButton * )b {
-//	float x = b.frame.origin.x;
-//	float y = b.frame.origin.y;
-//	float width = b.frame.size.width;
-//	float height = b.frame.size.height;
+	//スクリーン中心にアイテムを移動(手抜き)
+	[self setWorldX:[self getScreenWidth]/2 - (b.center.x - m_worldX) withY:[self getScreenHeight]/2 - (b.center.y - m_worldY)];
 	
-	/**
-	 ここからのラインを確認する。
-	 通信の宛先に繋がっているラインをピックアップ、
-	 別途アップデートにかける。どうでもいいか。
-	 
-	 第一優先を色、完了
-	 第二優先を→、線の上につける、かなあ、
-	 第三優先を拡大縮小にしようか。画面のピッチに対する倍率を持てばいい。
-	 
-	 グローバル基点と、グローバルスケールを持つ。アップデートをタッチ離したときに取ればいい。
-	 
-	*/
+//	[messengerInterfaceView commitAnimation];
 	
-	
-	//[b setFrame:CGRectMake(x/2, y/2, width/2, height/2)];
-	
-	//[messengerInterfaceView setNeedsDisplay];
 }
 
 
@@ -638,6 +630,7 @@
  */
 //平行移動
 - (void) setWorldX:(float)toX withY:(float)toY {
+	
 	m_worldX = toX;
 	m_worldY = toY;
 	
@@ -685,14 +678,17 @@
 
 
 
+
 /**
- タッチでのスケール変動
+ スクリーン情報取得
  */
-- (void) touchInput {
-	
+- (float)getScreenWidth {
+	return messengerInterfaceView.frame.size.width;
 }
 
-
+- (float)getScreenHeight {
+	return messengerInterfaceView.frame.size.height;
+}
 
 
 //オーバーライドするメソッド、特に何もさせない。

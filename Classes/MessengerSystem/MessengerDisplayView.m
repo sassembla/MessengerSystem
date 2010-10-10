@@ -43,6 +43,7 @@
 	m_connectionList = [connect copy];
 	
 	
+	
 	[self setNeedsDisplay];
 }
 
@@ -79,17 +80,17 @@
 		CGRect bRect = CGRectMake(b.frame.origin.x, b.frame.origin.y, b.frame.size.width, b.frame.size.height);
 		
 		CGContextSetLineWidth(context, 6.0);
-		CGContextSetRGBStrokeColor(context, 1, 1, 1, 0.3);//状態によって色を変える
+		CGContextSetRGBStrokeColor(context, 1, 1, 1, 0.3);
 		CGContextSetGrayFillColor(context, 1., 0.5);
 		
-		CGContextStrokeEllipseInRect(context, bRect);//アウトライン
-		CGContextFillEllipseInRect(context, CGRectMake(b.center.x-6, b.center.y-6, 12, 12));//矩形内に円を描く
+		CGContextStrokeEllipseInRect(context, bRect);//アウトラインの円を描く
+		CGContextFillEllipseInRect(context, CGRectMake(b.center.x-6, b.center.y-6, 12, 12));//矩形内に中心となる円を描く
 		
 		
 		UIColor * textCol = [UIColor whiteColor];
 		
-		//オブジェクトの名前を書く
 		
+		//UIDをのぞいたオブジェクトの名前を書く
 		[GlyphTable drawString:context 
 						 string:[key substringToIndex:[key length]-([[MessengerIDGenerator getMID] length]+1)]
 					  withFont:@"HiraKakuProN-W3"
@@ -103,6 +104,7 @@
 		//ラインを引く
 		for (id connectionKey in m_connectionList) {
 			if ([key isEqualToString:connectionKey]) {//一致するキーのラインを描く
+				
 				
 				NSArray * positionArray = [m_connectionList valueForKey:key];
 				
@@ -161,7 +163,9 @@
 						break;
 				}
 				
-				lineFromTo(context, CGPointMake(sx,sy), CGPointMake(ex, ey), col);
+				//ラインを描画
+				lineFromTo(context, CGPointMake(sx,sy), CGPointMake(ex, ey), col, 3.5, 0.2);
+				
 				
 				
 				/**
@@ -201,6 +205,8 @@
 			}
 		}
 	}
+	
+	
 }
 
 
@@ -324,13 +330,12 @@ CGPoint lineCrclCrsPt (float circleX, float circleY, float circleR,
 
 
 /**
- ラインを描画するメソッド
- αは固定。
+ CGPoint a, b間のラインを描画するメソッド
  */
-void lineFromTo(CGContextRef context, CGPoint start, CGPoint end, UIColor * color) {
-	CGContextSetLineWidth(context, 3.5);
+void lineFromTo(CGContextRef context, CGPoint start, CGPoint end, UIColor * color, float width, float alphaScale ) {
+	CGContextSetLineWidth(context, width);
 	
-	CGColorRef col  = CGColorCreateCopyWithAlpha([color CGColor], 0.2);
+	CGColorRef col  = CGColorCreateCopyWithAlpha([color CGColor], alphaScale);
 	
 	CGContextSetStrokeColorWithColor(context, col);
 	
@@ -427,6 +432,13 @@ void lineFromTo(CGContextRef context, CGPoint start, CGPoint end, UIColor * colo
 	}
 }
 
+- (void) setAnimation {
+	[UIView beginAnimations:@"setAnonymousAnimation" context:NULL];
+	[UIView setAnimationDuration:0.5];
+}
+- (void) commitAnimation {
+	[UIView commitAnimations];
+}
 
 
 

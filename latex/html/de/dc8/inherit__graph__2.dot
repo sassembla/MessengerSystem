@@ -1,7 +1,9 @@
 digraph G
 {
-  edge [fontname="FreeSans.ttf",fontsize="10",labelfontname="FreeSans.ttf",labelfontsize="10"];
-  node [fontname="FreeSans.ttf",fontsize="10",shape=record];
+  edge [fontname="FreeSans.ttf",fontsize="24",labelfontname="FreeSans.ttf",labelfontsize="24"];
+  node [fontname="FreeSans.ttf",fontsize="24",shape=record];
   rankdir=LR;
-  Node1 [label="MessengerDisplayView",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d39/interface_messenger_display_view.html"];
+  Node1 [label="MessengerSystem",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/dc9/interface_messenger_system.html"];
+  Node1 -> Node2 [dir=back,color="midnightblue",fontsize="24",style="solid",fontname="FreeSans.ttf"];
+  Node2 [label="MessengerViewController",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d34/interface_messenger_view_controller.html"];
 }

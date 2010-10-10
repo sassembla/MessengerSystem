@@ -69,6 +69,12 @@
 - (void) drawDataUpdate;
 
 /**
+ 発生した通信に対して、同調するインスタンスを表示する
+ */
+- (void) drawCallLineFrom:(NSString * )senderName withMID:(NSString * )senderMID to:(NSString * )addressName withMID:(NSString * )addressMID;
+
+
+/**
  NameとMIDのペアを作るメソッド
  */
 - (NSString * ) getMessengerInformationKey:(NSString * )name withMID:(NSString * )MID;
@@ -98,7 +104,6 @@
  ボタンが押された際のメソッド
  */
 - (void) tapped:(UIControlEvents * )event;
-- (void) resizeButton:(UIButton * )b;
 
 
 
@@ -140,6 +145,12 @@
 
 - (void) scaleResetX:(float)x withY:(float)y;
 
+
+/**
+ スクリーンサイズの取得
+ */
+- (float)getScreenWidth;
+- (float)getScreenHeight;
 
 
 //実行処理系(オーバーライドで無効化)

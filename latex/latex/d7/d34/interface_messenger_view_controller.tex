@@ -2,13 +2,12 @@
 \section{クラス MessengerViewController}
 \label{d7/d34/interface_messenger_view_controller}\index{MessengerViewController@{MessengerViewController}}
 }
-
-
-\hyperlink{interface_messenger_system}{MessengerSystem}を継承しています。
-
-
-
-MessengerViewControllerのコラボレーション図
+MessengerViewControllerに対する継承グラフ\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{d7/d34/interface_messenger_view_controller}
+\end{center}
+\end{figure}
 \subsection*{Public メソッド}
 \begin{DoxyCompactItemize}
 \item 
@@ -225,17 +224,7 @@ Dealloc \hypertarget{interface_messenger_view_controller_ab9c9343a0f520cdc1aa91b
 \label{d7/d34/interface_messenger_view_controller_ab9c9343a0f520cdc1aa91b3985b31f7a}
 通信してきた対象の情報をviwDictから削除するメソッド
 
-メッセンジャーの削除をビューに反映する 
-
-関数の呼び出しグラフ:
-
-
-
-
-呼出しグラフ:
-
-
-\hypertarget{interface_messenger_view_controller_aba89f37600bb5cc7258a034614257dc6}{
+メッセンジャーの削除をビューに反映する \hypertarget{interface_messenger_view_controller_aba89f37600bb5cc7258a034614257dc6}{
 \index{MessengerViewController@{MessengerViewController}!drawDataUpdate@{drawDataUpdate}}
 \index{drawDataUpdate@{drawDataUpdate}!MessengerViewController@{MessengerViewController}}
 \subsubsection[{drawDataUpdate}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (void) drawDataUpdate 
@@ -246,17 +235,7 @@ Dealloc \hypertarget{interface_messenger_view_controller_ab9c9343a0f520cdc1aa91b
 \label{d7/d34/interface_messenger_view_controller_aba89f37600bb5cc7258a034614257dc6}
 描画データのアップデート
 
-ドローデータの更新 
-
-関数の呼び出しグラフ:
-
-
-
-
-呼出しグラフ:
-
-
-\hypertarget{interface_messenger_view_controller_afa883d1d29e91d003087a0f4b839daf3}{
+ドローデータの更新 \hypertarget{interface_messenger_view_controller_afa883d1d29e91d003087a0f4b839daf3}{
 \index{MessengerViewController@{MessengerViewController}!getButtonList@{getButtonList}}
 \index{getButtonList@{getButtonList}!MessengerViewController@{MessengerViewController}}
 \subsubsection[{getButtonList}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (NSMutableDictionary $\ast$) getButtonList 
@@ -267,12 +246,7 @@ Dealloc \hypertarget{interface_messenger_view_controller_ab9c9343a0f520cdc1aa91b
 \label{d7/d34/interface_messenger_view_controller_afa883d1d29e91d003087a0f4b839daf3}
 ボタン、Messengerのリスト辞書を渡す
 
-ボタン用の辞書を取得する 
-
-呼出しグラフ:
-
-
-\hypertarget{interface_messenger_view_controller_a9c958b9ee93a81551b3aa4209eaa3c71}{
+ボタン用の辞書を取得する \hypertarget{interface_messenger_view_controller_a9c958b9ee93a81551b3aa4209eaa3c71}{
 \index{MessengerViewController@{MessengerViewController}!getMessengerInformationKey:withMID:@{getMessengerInformationKey:withMID:}}
 \index{getMessengerInformationKey:withMID:@{getMessengerInformationKey:withMID:}!MessengerViewController@{MessengerViewController}}
 \subsubsection[{getMessengerInformationKey:withMID:}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (NSString $\ast$) getMessengerInformationKey: 
@@ -282,12 +256,7 @@ Dealloc \hypertarget{interface_messenger_view_controller_ab9c9343a0f520cdc1aa91b
 \end{DoxyParamCaption}
 }}
 \label{d7/d34/interface_messenger_view_controller_a9c958b9ee93a81551b3aa4209eaa3c71}
-NameとMIDのペアを作るメソッド 
-
-呼出しグラフ:
-
-
-\hypertarget{interface_messenger_view_controller_ae7d3fbe4156df4e7f1539f50500f0919}{
+NameとMIDのペアを作るメソッド \hypertarget{interface_messenger_view_controller_ae7d3fbe4156df4e7f1539f50500f0919}{
 \index{MessengerViewController@{MessengerViewController}!getMessengerInterfaceView@{getMessengerInterfaceView}}
 \index{getMessengerInterfaceView@{getMessengerInterfaceView}!MessengerViewController@{MessengerViewController}}
 \subsubsection[{getMessengerInterfaceView}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (UIView $\ast$) getMessengerInterfaceView 
@@ -307,12 +276,7 @@ Viewを外部に返す \hypertarget{interface_messenger_view_controller_a2e4617f
 \end{DoxyParamCaption}
 }}
 \label{d7/d34/interface_messenger_view_controller_a2e4617fc57087279158f9df78fab0a87}
-View用の辞書を取得する 
-
-呼出しグラフ:
-
-
-\hypertarget{interface_messenger_view_controller_a2c2f7a46b94facbc66d66c7dd6da34bd}{
+View用の辞書を取得する \hypertarget{interface_messenger_view_controller_a2c2f7a46b94facbc66d66c7dd6da34bd}{
 \index{MessengerViewController@{MessengerViewController}!initMyMID@{initMyMID}}
 \index{initMyMID@{initMyMID}!MessengerViewController@{MessengerViewController}}
 \subsubsection[{initMyMID}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (void) initMyMID 
@@ -321,17 +285,7 @@ View用の辞書を取得する
 \end{DoxyParamCaption}
 }}
 \label{d7/d34/interface_messenger_view_controller_a2c2f7a46b94facbc66d66c7dd6da34bd}
-自分のMIDを初期化するメソッド 
-
-関数の呼び出しグラフ:
-
-
-
-
-呼出しグラフ:
-
-
-\hypertarget{interface_messenger_view_controller_a5728b61e9c4490af7aacddd874026bae}{
+自分のMIDを初期化するメソッド \hypertarget{interface_messenger_view_controller_a5728b61e9c4490af7aacddd874026bae}{
 \index{MessengerViewController@{MessengerViewController}!initMyParentData@{initMyParentData}}
 \index{initMyParentData@{initMyParentData}!MessengerViewController@{MessengerViewController}}
 \subsubsection[{initMyParentData}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (void) initMyParentData 
@@ -340,17 +294,7 @@ View用の辞書を取得する
 \end{DoxyParamCaption}
 }}
 \label{d7/d34/interface_messenger_view_controller_a5728b61e9c4490af7aacddd874026bae}
-myParent関連情報を初期化する 
-
-関数の呼び出しグラフ:
-
-
-
-
-呼出しグラフ:
-
-
-\hypertarget{interface_messenger_view_controller_a44c0a2552e50d6223a8230447be3e83a}{
+myParent関連情報を初期化する \hypertarget{interface_messenger_view_controller_a44c0a2552e50d6223a8230447be3e83a}{
 \index{MessengerViewController@{MessengerViewController}!initWithBodyID:withSelector:withName:@{initWithBodyID:withSelector:withName:}}
 \index{initWithBodyID:withSelector:withName:@{initWithBodyID:withSelector:withName:}!MessengerViewController@{MessengerViewController}}
 \subsubsection[{initWithBodyID:withSelector:withName:}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (id) initWithBodyID: 
@@ -374,12 +318,7 @@ myParent関連情報を初期化する
 \end{DoxyParamCaption}
 }}
 \label{d7/d34/interface_messenger_view_controller_a1ac23270dbc04a95b72dd16b2c201c5a}
-初期化メソッド 
-
-関数の呼び出しグラフ:
-
-
-\hypertarget{interface_messenger_view_controller_a2c415df83e46605177105d75c714e463}{
+初期化メソッド \hypertarget{interface_messenger_view_controller_a2c415df83e46605177105d75c714e463}{
 \index{MessengerViewController@{MessengerViewController}!innerPerform:@{innerPerform:}}
 \index{innerPerform:@{innerPerform:}!MessengerViewController@{MessengerViewController}}
 \subsubsection[{innerPerform:}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (void) innerPerform: 
@@ -388,12 +327,7 @@ myParent関連情報を初期化する
 \end{DoxyParamCaption}
 }}
 \label{d7/d34/interface_messenger_view_controller_a2c415df83e46605177105d75c714e463}
-内部処理実装 オーバーライドし、実行内容を限定する 
-
-関数の呼び出しグラフ:
-
-
-\hypertarget{interface_messenger_view_controller_a33bb3cca76fba84a3e5b480131e5faf1}{
+内部処理実装 オーバーライドし、実行内容を限定する \hypertarget{interface_messenger_view_controller_a33bb3cca76fba84a3e5b480131e5faf1}{
 \index{MessengerViewController@{MessengerViewController}!inputParent:@{inputParent:}}
 \index{inputParent:@{inputParent:}!MessengerViewController@{MessengerViewController}}
 \subsubsection[{inputParent:}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (void) inputParent: 
@@ -418,17 +352,7 @@ myParent関連情報を初期化する
 \label{d7/d34/interface_messenger_view_controller_aa30151ef1d95034a10fa31e9c8a7da22}
 メッセンジャーの生成情報をviewDictへと保持しておくメソッド
 
-メッセンジャーの誕生をビューに反映する 
-
-関数の呼び出しグラフ:
-
-
-
-
-呼出しグラフ:
-
-
-\hypertarget{interface_messenger_view_controller_a61c88e671203c5651b89394f3b300285}{
+メッセンジャーの誕生をビューに反映する \hypertarget{interface_messenger_view_controller_a61c88e671203c5651b89394f3b300285}{
 \index{MessengerViewController@{MessengerViewController}!resizeButton:@{resizeButton:}}
 \index{resizeButton:@{resizeButton:}!MessengerViewController@{MessengerViewController}}
 \subsubsection[{resizeButton:}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (void) resizeButton: 
@@ -455,12 +379,7 @@ myParent関連情報を初期化する
 \end{DoxyParamCaption}
 }}
 \label{d7/d34/interface_messenger_view_controller_a9a0f05d1d3a3685a3d3ce7632c2bc7ee}
-ビューからの直結イベント ズームインかリセットを行う 
-
-関数の呼び出しグラフ:
-
-
-\hypertarget{interface_messenger_view_controller_abab9347cc7ed46bd04978ca00e081a0e}{
+ビューからの直結イベント ズームインかリセットを行う \hypertarget{interface_messenger_view_controller_abab9347cc7ed46bd04978ca00e081a0e}{
 \index{MessengerViewController@{MessengerViewController}!setMyBodyID:@{setMyBodyID:}}
 \index{setMyBodyID:@{setMyBodyID:}!MessengerViewController@{MessengerViewController}}
 \subsubsection[{setMyBodyID:}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (void) setMyBodyID: 
@@ -472,11 +391,6 @@ myParent関連情報を初期化する
 自分のBodyIDをセットするメソッド 
 
 \hyperlink{interface_messenger_system_a2a5f63ed86009e8b451bbbb621e9a94b}{MessengerSystem}を再定義しています。
-
-
-
-呼出しグラフ:
-
 
 \hypertarget{interface_messenger_view_controller_ade8005d21b7d8df69ddd12fba7440f6b}{
 \index{MessengerViewController@{MessengerViewController}!setMyBodySelector:@{setMyBodySelector:}}
@@ -491,11 +405,6 @@ myParent関連情報を初期化する
 
 \hyperlink{interface_messenger_system_aafb5a2e5d48a09627f32a4d3c2e3fa29}{MessengerSystem}を再定義しています。
 
-
-
-呼出しグラフ:
-
-
 \hypertarget{interface_messenger_view_controller_afe36a73932b47fb2c60412c6f03f67ac}{
 \index{MessengerViewController@{MessengerViewController}!setMyName:@{setMyName:}}
 \index{setMyName:@{setMyName:}!MessengerViewController@{MessengerViewController}}
@@ -505,12 +414,7 @@ myParent関連情報を初期化する
 \end{DoxyParamCaption}
 }}
 \label{d7/d34/interface_messenger_view_controller_afe36a73932b47fb2c60412c6f03f67ac}
-自分の名称をセットするメソッド 
-
-呼出しグラフ:
-
-
-\hypertarget{interface_messenger_view_controller_a9d6939385be720d5335fbf5b095cd63c}{
+自分の名称をセットするメソッド \hypertarget{interface_messenger_view_controller_a9d6939385be720d5335fbf5b095cd63c}{
 \index{MessengerViewController@{MessengerViewController}!setMyParentName:@{setMyParentName:}}
 \index{setMyParentName:@{setMyParentName:}!MessengerViewController@{MessengerViewController}}
 \subsubsection[{setMyParentName:}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (void) setMyParentName: 
@@ -519,12 +423,7 @@ myParent関連情報を初期化する
 \end{DoxyParamCaption}
 }}
 \label{d7/d34/interface_messenger_view_controller_a9d6939385be720d5335fbf5b095cd63c}
-親の名称をセットするメソッド 
-
-呼出しグラフ:
-
-
-\hypertarget{interface_messenger_view_controller_a791916fe5a33b084e90d14cd12d9bc30}{
+親の名称をセットするメソッド \hypertarget{interface_messenger_view_controller_a791916fe5a33b084e90d14cd12d9bc30}{
 \index{MessengerViewController@{MessengerViewController}!setNameIndexDictionary@{setNameIndexDictionary}}
 \index{setNameIndexDictionary@{setNameIndexDictionary}!MessengerViewController@{MessengerViewController}}
 \subsubsection[{setNameIndexDictionary}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (void) setNameIndexDictionary 
@@ -533,17 +432,7 @@ myParent関連情報を初期化する
 \end{DoxyParamCaption}
 }}
 \label{d7/d34/interface_messenger_view_controller_a791916fe5a33b084e90d14cd12d9bc30}
-表示補助用のインデックス　X軸カウント 
-
-関数の呼び出しグラフ:
-
-
-
-
-呼出しグラフ:
-
-
-\hypertarget{interface_messenger_view_controller_aa75f66a06d37f03a7d2b51e9c7149051}{
+表示補助用のインデックス　X軸カウント \hypertarget{interface_messenger_view_controller_aa75f66a06d37f03a7d2b51e9c7149051}{
 \index{MessengerViewController@{MessengerViewController}!setNumberOfRelationship:@{setNumberOfRelationship:}}
 \index{setNumberOfRelationship:@{setNumberOfRelationship:}!MessengerViewController@{MessengerViewController}}
 \subsubsection[{setNumberOfRelationship:}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (void) setNumberOfRelationship: 
@@ -552,12 +441,7 @@ myParent関連情報を初期化する
 \end{DoxyParamCaption}
 }}
 \label{d7/d34/interface_messenger_view_controller_aa75f66a06d37f03a7d2b51e9c7149051}
-関係性の本数を返すメソッド 
-
-呼出しグラフ:
-
-
-\hypertarget{interface_messenger_view_controller_a3939f43ce30df6b8df0390712730282b}{
+関係性の本数を返すメソッド \hypertarget{interface_messenger_view_controller_a3939f43ce30df6b8df0390712730282b}{
 \index{MessengerViewController@{MessengerViewController}!setWorldX:withY:@{setWorldX:withY:}}
 \index{setWorldX:withY:@{setWorldX:withY:}!MessengerViewController@{MessengerViewController}}
 \subsubsection[{setWorldX:withY:}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (void) setWorldX: 
@@ -569,17 +453,7 @@ myParent関連情報を初期化する
 \label{d7/d34/interface_messenger_view_controller_a3939f43ce30df6b8df0390712730282b}
 移動、スケール関連
 
-平行移動、スケールに関する処理 
-
-関数の呼び出しグラフ:
-
-
-
-
-呼出しグラフ:
-
-
-\hypertarget{interface_messenger_view_controller_a6c8d083521df8a95e9e88612745d5981}{
+平行移動、スケールに関する処理 \hypertarget{interface_messenger_view_controller_a6c8d083521df8a95e9e88612745d5981}{
 \index{MessengerViewController@{MessengerViewController}!sortButtonsByParentOrder@{sortButtonsByParentOrder}}
 \index{sortButtonsByParentOrder@{sortButtonsByParentOrder}!MessengerViewController@{MessengerViewController}}
 \subsubsection[{sortButtonsByParentOrder}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (void) sortButtonsByParentOrder 
@@ -590,17 +464,7 @@ myParent関連情報を初期化する
 \label{d7/d34/interface_messenger_view_controller_a6c8d083521df8a95e9e88612745d5981}
 全ボタンの位置をソートする
 
-一番左からソートをかける 親子関係のラインから、キーに入っているオブジェクトに重み付け、m\_\-nameIndexDictionary 内のX軸カウントを先頭に持っていく 
-
-関数の呼び出しグラフ:
-
-
-
-
-呼出しグラフ:
-
-
-\hypertarget{interface_messenger_view_controller_a008c7cc6364c75b6f70ef3d79fa3a043}{
+一番左からソートをかける 親子関係のラインから、キーに入っているオブジェクトに重み付け、m\_\-nameIndexDictionary 内のX軸カウントを先頭に持っていく \hypertarget{interface_messenger_view_controller_a008c7cc6364c75b6f70ef3d79fa3a043}{
 \index{MessengerViewController@{MessengerViewController}!tapped:@{tapped:}}
 \index{tapped:@{tapped:}!MessengerViewController@{MessengerViewController}}
 \subsubsection[{tapped:}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (void) tapped: 
@@ -628,16 +492,6 @@ myParent関連情報を初期化する
 通信してきた対象の情報がアップデートされ、親情報が変更された
 
 正確に更新が行われていれば、線が残るような事は発生しない筈。 
-
-関数の呼び出しグラフ:
-
-
-
-
-呼出しグラフ:
-
-
-
 
 このクラスの説明は次のファイルから生成されました:\begin{DoxyCompactItemize}
 \item 

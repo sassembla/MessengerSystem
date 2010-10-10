@@ -1,0 +1,18 @@
+ANALYZE: /Users/sassembla/Desktop/TestKitTesting/Classes/coTestObject.m init
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/TestKitTesting/Classes/coTestObject.m init2
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/TestKitTesting/Classes/coTestObject.m init3
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/TestKitTesting/Classes/coTestObject.m init4
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/TestKitTesting/Classes/coTestObject.m init5
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/TestKitTesting/Classes/coTestObject.m setParent
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/TestKitTesting/Classes/coTestObject.m test:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/TestKitTesting/Classes/coTestObject.m forInvocaton:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/TestKitTesting/Classes/coTestObject.m dealloc
+In ActionCheckerMemoryManagement

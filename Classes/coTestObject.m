@@ -45,6 +45,17 @@
 	return self;
 }
 
+- (id) init5 {
+	if (self = [super init]) {
+		messenger = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(test:) withName:CHILD_5];
+		[messenger callMyself:@"遅延実行",
+		 [messenger withDelay:0.5],
+		 nil];
+		
+		
+	}
+	return self;
+}
 - (void) setParent {
 	[messenger inputParent:PARENTNAME];
 }
@@ -57,9 +68,23 @@
 	
 	
 	int n = [messenger getExecAsIntFromDict:dict];
-	NSLog(@"messengern_%d",n);
+	NSLog(@"messenger_n_%d",n);
 	
 	
+	
+	if ([[messenger getExecAsString:dict] isEqualToString:@"遅延実行"]) {
+		[messenger inputParent:CHILD_1];
+		
+		[messenger callMyself:@"遅延実行2",
+		 [messenger withDelay:0.2],
+		 nil];
+	}
+	
+	if ([[messenger getExecAsString:dict] isEqualToString:@"遅延実行2"]) {
+		[messenger callMyself:@"遅延実行2",
+		 [messenger withDelay:0.2],
+		 nil];
+	}
 	
 	
 	switch (n) {

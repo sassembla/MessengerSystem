@@ -12,7 +12,7 @@
 
 
 /**
- 親となるコントローラから、ボタンをセットされる対象。
+ 親となるコントローラから、ボタンをセットされる対象のUIView。
  ボタンの下敷きに情報、ラインを描く。
  
  */
@@ -25,6 +25,7 @@
 	NSMutableDictionary * m_drawList;
 	NSMutableDictionary * m_connectionList;
 	
+	
 	UIEvent * m_pinchEvent;
 	
 	CGFloat	m_lastPinchDist;//2点間の距離
@@ -36,9 +37,15 @@
 - (void) setControllerDelegate:(id)contID;
 
 - (void) updateDrawList:(NSMutableDictionary * )draw andConnectionList:(NSMutableDictionary * )connect;
+
+
+
 - (id)initWithMessengerDisplayFrame:(CGRect)frame;
 
-void lineFromTo(CGContextRef context, CGPoint start, CGPoint end, UIColor * color);
+- (void) setAnimation;
+- (void) commitAnimation;
+
+void lineFromTo(CGContextRef context, CGPoint start, CGPoint end, UIColor * color, float width, float alphaScale);
 
 
 float linePrmGetA(float cx, float cy, float px, float py);
