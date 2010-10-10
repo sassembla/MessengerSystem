@@ -1,0 +1,122 @@
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m innerPerform:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m sendPerform:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m sendPerform:withDelay:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m sendMessage:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m remoteInvocation:withDict:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m createdNotice
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m updatedNotice:withParentMID:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m killedNotice
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m setChildDictChildNameAsValue:withMIDAsKey:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m removeChildDictChildNameAsValue:withMIDAsKey:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m setPrivateRemoteInvocationFrom:withSelector:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m setRemoteInvocationFrom:withSelector:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m addCreationLog:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m saveLogForReceived:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m createLogForReply
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m saveToLogStore:log:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m setMyName:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m initMyMID
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m initMyParentData
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m resetMyParentData
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m setMyParentName:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m setMyParentMID:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m version
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m initWithBodyID:withSelector:withName:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m initWithManual
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m setMyBodyID:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m setMyBodySelector:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m inputParent:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m inputParent:withSpecifiedMID:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m removeFromParent
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m removeAllChild
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m callMyself:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m call:withExec:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m call:withSpecifiedMID:withExec:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m callParent:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m tag:val:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m withRemoteFrom:withSelector:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m withDelay:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m remoteInvocation:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m getLogStore
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m getChildDict
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m getExecAsString:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m getExecAsIntFromDict:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m getIntFromExec:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m getExecFromInt:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m FNVHash
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m SDBMHash
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m changeStrToNumber:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m changeNumberToStr:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m hasParent
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m hasChild
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m isIncludeRemote:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m getMyName
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m getMyBodyID
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m getMyBodySelector
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m getMyMID
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m getMyParentName
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m getMyParentMID
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m cancelPerform
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m isReleasable
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m dealloc
+In ActionCheckerMemoryManagement

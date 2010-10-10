@@ -144,6 +144,9 @@ MessengerSystem \-
 .RI "(void) - \fBremoveChildDictChildNameAsValue:withMIDAsKey:\fP"
 .br
 .ti -1c
+.RI "(NSDictionary *) - \fBsetPrivateRemoteInvocationFrom:withSelector:\fP"
+.br
+.ti -1c
 .RI "(NSDictionary *) - \fBsetRemoteInvocationFrom:withSelector:\fP"
 .br
 .ti -1c
@@ -238,7 +241,9 @@ MessengerSystem \-
 .SS "- (int) changeStrToNumber: (NSString *) str"ストリングの数値化
 .PP
 文字列の数値化 
-.SS "- (NSMutableDictionary *) getChildDict "m_childDictを返す 
+.SS "- (NSMutableDictionary *) getChildDict "子供辞書の取得
+.PP
+m_childDictを返す 
 .SS "- (int) getExecAsIntFromDict: (NSMutableDictionary *) dict"コマンド情報を数値で取得する 辞書からswitch文で使用する数値を取得する
 .PP
 実行処理名を指定、Int値を取得する この時点で飛び込んでくるストリングのポインタと同じ値を直前で出して、合致する値を出せればいいのか、、って定数じゃないが、、一致は出来る、、うーん。 
@@ -248,7 +253,9 @@ MessengerSystem \-
 .SS "- (int) getIntFromExec: (NSString *) exec"文字列からswitch文で使用する数値を取得する
 .PP
 NSStringからInt値を出す 
-.SS "- (NSMutableDictionary *) getLogStore "観察用にこのmessengerに書かれているログを取得するメソッド 
+.SS "- (NSMutableDictionary *) getLogStore "ログストアの取得
+.PP
+観察用にこのmessengerに書かれているログを取得するメソッド 
 .SS "- (id) getMyBodyID "クラスが持つ値の ゲッター
 .PP
 自分のBodyIDを返すメソッド 
@@ -271,9 +278,13 @@ body_id:このインスタンスを所持するオブジェクトのID body_sele
 .PP
 \fBMessengerViewController\fPで再定義されています。
 .SS "- (void) inputParent: (NSString *) parent(NSString *) mID"親へと自分が子供である事の通知を行い、返り値として親のMIDをmyParentMIDとして受け取るメソッド 親のMIDを特に特定できる場合に使用する。 
-.SS "- (BOOL) isIncludeRemote: (NSMutableDictionary *) dict"受け取ったデータに遠隔実行が含まれているか否か返す 
+.SS "- (BOOL) isIncludeRemote: (NSMutableDictionary *) dict"遠隔実行のコマンドがメッセージに含まれているか
+.PP
+受け取ったデータに遠隔実行が含まれているか否か返す 
 .SS "- (BOOL) isReleasable "メッセンジャーが解放可能かどうか、取得するメソッド 
-.SS "- (void) remoteInvocation: (NSMutableDictionary *) dict ..."遠隔実行実装 パブリック用 
+.SS "- (void) remoteInvocation: (NSMutableDictionary *) dict ..."遠隔実行実装
+.PP
+遠隔実行実装 パブリック用 
 .SS "- (void) removeAllChild "子供との関連性を解除する 自分の事を親に設定している全てのオブジェクトから離脱するブロードコールを行う。 
 .SS "- (void) removeFromParent "現在の親情報を削除する 
 .SS "- (void) setMyBodyID: (id) bodyID"自分のBodyIDをセットするメソッド 
@@ -282,7 +293,9 @@ body_id:このインスタンスを所持するオブジェクトのID body_sele
 .SS "- (void) setMyBodySelector: (SEL) body_selector"自分のBodyが提供するメソッドセレクターを、自分のセレクター用ポインタにセットするメソッド 
 .PP
 \fBMessengerViewController\fPで再定義されています。
-.SS "- (NSDictionary *) tag: (id) obj_tag(id) obj_value"tag valueメソッド 値にnilが入る事、 システムが使うのと同様のコマンドが入っている事に関しては、注意する。 
+.SS "- (NSDictionary *) tag: (id) obj_tag(id) obj_value"タグシステム
+.PP
+tag valueメソッド 値にnilが入る事、 システムが使うのと同様のコマンドが入っている事に関しては、注意する。 
 .SS "+ (NSString *) version "バージョンを返す 
 .SS "- (NSDictionary *) withDelay: (float) delay"遅延実行タグ tag-Valueと同形式でオプションを挿入するメソッド 
 .SS "- (NSDictionary *) withRemoteFrom: (id) mySelf(SEL) sel"遠隔実行タグ tag-Valueと同形式で遠隔実行オプションを挿入するメソッド 

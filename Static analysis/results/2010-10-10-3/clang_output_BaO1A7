@@ -1,0 +1,10 @@
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/GlyphTable/GlyphTable.m newFontTable
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/GlyphTable/GlyphTable.m freeFontTable
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/GlyphTable/GlyphTable.m readFontTableFromCGFont
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/GlyphTable/GlyphTable.m mapCharactersToGlyphsInFont
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/GlyphTable/GlyphTable.m drawString:string:withFont:withFontSize:withColor:atX:atY:
+In ActionCheckerMemoryManagement

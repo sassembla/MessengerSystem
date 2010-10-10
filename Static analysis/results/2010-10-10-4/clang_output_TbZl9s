@@ -1,0 +1,97 @@
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m application:didFinishLaunchingWithOptions:
+/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:43:24: warning: Potential leak of an object allocated on line 43 and stored into 'obj6'
+        coTestObject * obj6 = [[coTestObject alloc] init3];
+                              ^
+/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:42:24: warning: Potential leak of an object allocated on line 42 and stored into 'obj5'
+        coTestObject * obj5 = [[coTestObject alloc] init3];
+                              ^
+/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:39:24: warning: Potential leak of an object allocated on line 39 and stored into 'obj3'
+        coTestObject * obj3 = [[coTestObject alloc] init2];
+                              ^
+/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:44:24: warning: Potential leak of an object allocated on line 44 and stored into 'obj7'
+        coTestObject * obj7 = [[coTestObject alloc] init3];
+                              ^
+/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:37:24: warning: Potential leak of an object allocated on line 37 and stored into 'obj2'
+        coTestObject * obj2 = [[coTestObject alloc] init];
+                              ^
+/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:47:24: warning: Potential leak of an object allocated on line 47 and stored into 'obj9'
+        coTestObject * obj9 = [[coTestObject alloc] init5];
+                              ^
+/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:46:24: warning: Potential leak of an object allocated on line 46 and stored into 'obj8'
+        coTestObject * obj8 = [[coTestObject alloc] init4];
+                              ^
+/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:40:24: warning: Potential leak of an object allocated on line 40 and stored into 'obj4'
+        coTestObject * obj4 = [[coTestObject alloc] init2];
+                              ^
+/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:44:17: warning: Value stored to 'obj7' during its initialization is never read
+        coTestObject * obj7 = [[coTestObject alloc] init3];
+                       ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:43:17: warning: Value stored to 'obj6' during its initialization is never read
+        coTestObject * obj6 = [[coTestObject alloc] init3];
+                       ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:42:17: warning: Value stored to 'obj5' during its initialization is never read
+        coTestObject * obj5 = [[coTestObject alloc] init3];
+                       ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:40:17: warning: Value stored to 'obj4' during its initialization is never read
+        coTestObject * obj4 = [[coTestObject alloc] init2];
+                       ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:39:17: warning: Value stored to 'obj3' during its initialization is never read
+        coTestObject * obj3 = [[coTestObject alloc] init2];
+                       ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:37:17: warning: Value stored to 'obj2' during its initialization is never read
+        coTestObject * obj2 = [[coTestObject alloc] init];
+                       ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:47:17: warning: Value stored to 'obj9' during its initialization is never read
+        coTestObject * obj9 = [[coTestObject alloc] init5];
+                       ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:46:17: warning: Value stored to 'obj8' during its initialization is never read
+        coTestObject * obj8 = [[coTestObject alloc] init4];
+                       ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In ActionCheckerMemoryManagement
+/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:40:51: warning: 'autorelease' should be called right after alloc & init. Do not leave the responsibility of calling 'release' until later stages.
+        coTestObject * obj4 = [[coTestObject alloc] init2];
+                                                         ^
+/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:42:51: warning: 'autorelease' should be called right after alloc & init. Do not leave the responsibility of calling 'release' until later stages.
+        coTestObject * obj5 = [[coTestObject alloc] init3];
+                                                         ^
+/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:43:51: warning: 'autorelease' should be called right after alloc & init. Do not leave the responsibility of calling 'release' until later stages.
+        coTestObject * obj6 = [[coTestObject alloc] init3];
+                                                         ^
+/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:44:51: warning: 'autorelease' should be called right after alloc & init. Do not leave the responsibility of calling 'release' until later stages.
+        coTestObject * obj7 = [[coTestObject alloc] init3];
+                                                         ^
+/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:46:51: warning: 'autorelease' should be called right after alloc & init. Do not leave the responsibility of calling 'release' until later stages.
+        coTestObject * obj8 = [[coTestObject alloc] init4];
+                                                         ^
+/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:47:51: warning: 'autorelease' should be called right after alloc & init. Do not leave the responsibility of calling 'release' until later stages.
+        coTestObject * obj9 = [[coTestObject alloc] init5];
+                                                         ^
+/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:37:50: warning: 'autorelease' should be called right after alloc & init. Do not leave the responsibility of calling 'release' until later stages.
+        coTestObject * obj2 = [[coTestObject alloc] init];
+                                                        ^
+/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:39:51: warning: 'autorelease' should be called right after alloc & init. Do not leave the responsibility of calling 'release' until later stages.
+        coTestObject * obj3 = [[coTestObject alloc] init2];
+                                                         ^
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m ignition:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m test:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m applicationWillResignActive:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m applicationDidEnterBackground:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m applicationWillEnterForeground:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m applicationDidBecomeActive:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m applicationWillTerminate:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m applicationDidReceiveMemoryWarning:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m dealloc
+In ActionCheckerMemoryManagement
+In file included from /Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:9:
+/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.h:17:15: warning: the name of instance variable 'window' doesn't start with the 'm' prefix.
+    UIWindow *window;
+              ^
+25 diagnostics generated.

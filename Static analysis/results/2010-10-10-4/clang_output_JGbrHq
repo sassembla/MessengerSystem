@@ -1,0 +1,84 @@
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m initWithBodyID:withSelector:withName:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m initWithFrame:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m innerPerform:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m insertMessengerInformation:withMID:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m updateParentInformation:withMID:withParentName:withParentMID:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m deleteMessengerInformation:withMID:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m drawDataUpdate
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m drawCallLineFrom:withMID:to:withMID:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m setNumberOfRelationship:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m getNumberOfRelationship
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m setNameIndexDictionary
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m getNameIndexDictionary
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m sortButtonsByParentOrder
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m tapped:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m getMessengerInformationKey:withMID:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m getButtonList
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m getMessengerList
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m getMessengerInterfaceView
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m setMyName:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m setMyBodyID:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m setMyBodySelector:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m initMyMID
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m initMyParentData
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m setMyParentName:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m setWorldX:withY:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m moveWorldX:withY:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m setScale:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m getScale
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m scaleResetX:withY:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m getScreenWidth
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m getScreenHeight
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m inputParent:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m callMyself:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m call:withExec:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m callChild:withMID::
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m callParent:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m createdNotice
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m updatedNotice:withParentMID:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m killedNotice
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m dealloc
+In ActionCheckerMemoryManagement
+/Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m:66:1: warning: Cyclomatic complexity for method 'innerPerform:' is 22 (larger than threshold value of 20).
+- (void) innerPerform:(NSNotification * )notification {
+^
+1 diagnostic generated.

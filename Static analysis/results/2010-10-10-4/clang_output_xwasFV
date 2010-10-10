@@ -1,0 +1,34 @@
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m initWithMessengerDisplayFrame:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m setControllerDelegate:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m updateDrawList:andConnectionList:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m drawRect:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m linePrmGetA
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m linePrmGetB
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m linePrmGetC
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m lineCrclCrsPt
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m lineFromTo
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m touchesBegan:withEvent:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m touchesMoved:withEvent:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m touchesEnded:withEvent:
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m setAnimation
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m commitAnimation
+In ActionCheckerMemoryManagement
+ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m dealloc
+In ActionCheckerMemoryManagement
+/Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m:76:2: warning: Depth of loop nesting in ForStmt is 3 (larger than threshold value of 2).
+        for (int i = 0; i < [drawKeys count]; i++) {
+        ^
+1 diagnostic generated.

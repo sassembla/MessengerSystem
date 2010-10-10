@@ -43,7 +43,8 @@
 
 
 //遠隔実行
-- (NSDictionary * ) setRemoteInvocationFrom:(id)mySelf withSelector:(SEL)sel;
+- (NSDictionary * ) setPrivateRemoteInvocationFrom:(id)mySelf withSelector:(SEL)sel;//MessengerSystemの親決め限定の仕掛け
+- (NSDictionary * ) setRemoteInvocationFrom:(id)mySelf withSelector:(SEL)sel;//システム使用時に使われる一般的な遠隔実行メソッド
 
 
 
@@ -467,7 +468,7 @@
 	id invocation;
 	
 	
-	invocatorId = inv;//[invokeDict valueForKey:MS_RETURNID];
+	invocatorId = inv;
 	if (!invocatorId) {
 		NSAssert(FALSE, @"MS_RETURNIDが無い");
 		return;
@@ -588,19 +589,25 @@
 
 //遠隔実行
 /**
+ MessengerSystem間の親決めでのみ使用する、遠隔実行セットメソッド
+ */
+- (NSDictionary * ) setPrivateRemoteInvocationFrom:(id)mySelf withSelector:(SEL)sel {
+	
+	NSDictionary * retDict = [NSDictionary dictionaryWithObjectsAndKeys:
+							  @"DUMMY_POINTER",	MS_RETURNID, 
+							  [mySelf methodSignatureForSelector:sel],	MS_RETURNSIGNATURE, 
+							  NSStringFromSelector(sel),	MS_RETURNSELECTOR, 
+							  nil];
+	return retDict;
+}
+
+/**
  遠隔実行セットメソッド
  */
 - (NSDictionary * ) setRemoteInvocationFrom:(id)mySelf withSelector:(SEL)sel {
-	//フック
-	//特定のメソッドの実行を命令づける設定
-	//IMP func = [self methodForSelector:@selector(setMyParentMID:)];
-	//(*func)(self,@selector(setMyParentMID:),@"ついた");
-	
-	id inv = mySelf;
-	if (mySelf == self) inv = @"DUMMY_POINTER";//ここだけ、とても汚い遠隔実行のコード。メソッドを別けるべき。でもこうしないと、参照カウンタが増えてしまう。
 	
 	NSDictionary * retDict = [NSDictionary dictionaryWithObjectsAndKeys:
-							  inv,	MS_RETURNID, 
+							  mySelf,	MS_RETURNID, 
 							  [mySelf methodSignatureForSelector:sel],	MS_RETURNSIGNATURE, 
 							  NSStringFromSelector(sel),	MS_RETURNSELECTOR, 
 							  nil];
@@ -908,18 +915,19 @@
 	[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
 	[dict setValue:[self getMyMID] forKey:MS_SENDERMID];
 	
-	if (mID) [dict setValue:mID forKey:MS_SPECIFYMID];
+	
+	if (mID) [dict setValue:mID forKey:MS_SPECIFYMID];//特定の親宛であればキーを付ける
 	
 	 
-	//遠隔実装メソッドを設定
-	[dict setValue:[self setRemoteInvocationFrom:self withSelector:@selector(setMyParentMID:)] forKey:MS_RETURN];
+	//遠隔実装メソッドを設定 一般的なinvokeメソッドではなく、senderIDを偽装、カウンタが増えないようにしたものを使用する。
+	[dict setValue:[self setPrivateRemoteInvocationFrom:self withSelector:@selector(setMyParentMID:)] forKey:MS_RETURN];
 	
 	
 	//ログを作成する
 	[self addCreationLog:dict];
 	
 	//最終送信処理
-	[self sendPerform:dict];//プライベート版の遠隔実行で、相手から親登録を実行する。
+	[self sendPerform:dict];
 	
 	//この時点で親からの実行が完了。
 	[dict removeAllObjects];
@@ -1624,9 +1632,6 @@ unsigned int SDBMHash(char * str, unsigned int len) {
 - (void) dealloc {
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:OBSERVER_ID object:nil];//ノーティフィケーションから外す
-	
-	//予定している処理があったら、消す。 なかなか効果的にならない。
-	//そも、予定しているアクションの数が知りたい。
 
 	
 	if ([self hasChild]) {
@@ -1641,9 +1646,6 @@ unsigned int SDBMHash(char * str, unsigned int len) {
 	
 	[self killedNotice];
 
-	
-	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(sendPerform:) object:self];
-	
 	
 	//自分の名前	NSString
 //	NSAssert([myName retainCount] == 1, @"myName_%d",[myName retainCount]);

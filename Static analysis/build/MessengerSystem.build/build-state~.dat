@@ -1,0 +1,768 @@
+TMessengerSystem
+v7
+r0
+t308384385.455383
+cCheck dependencies
+cProcessInfoPlistFile "/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.app/Info.plist" TestKitTesting-Info.plist
+cCompileXIB /Users/sassembla/Desktop/MessengerSystem/MainWindow.xib
+cCompileC "Static analysis/build/MessengerSystem.build/Objects-normal/i386/MessengerViewController.o" /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m normal i386 objective-c com.apple.compilers.gcc.4_2
+cCompileC "Static analysis/build/MessengerSystem.build/Objects-normal/i386/GlyphTable.o" /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/GlyphTable/GlyphTable.m normal i386 objective-c com.apple.compilers.gcc.4_2
+cCompileC "Static analysis/build/MessengerSystem.build/Objects-normal/i386/MessengerDisplayView.o" /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m normal i386 objective-c com.apple.compilers.gcc.4_2
+cCompileC "Static analysis/build/MessengerSystem.build/Objects-normal/i386/coTestObject.o" /Users/sassembla/Desktop/MessengerSystem/Classes/coTestObject.m normal i386 objective-c com.apple.compilers.gcc.4_2
+cCompileC "Static analysis/build/MessengerSystem.build/Objects-normal/i386/MessengerIDGenerator.o" /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerIDGenerator.m normal i386 objective-c com.apple.compilers.gcc.4_2
+cCompileC "Static analysis/build/MessengerSystem.build/Objects-normal/i386/MessengerSystem.o" /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m normal i386 objective-c com.apple.compilers.gcc.4_2
+cCompileC "Static analysis/build/MessengerSystem.build/Objects-normal/i386/main.o" /Users/sassembla/Desktop/MessengerSystem/main.m normal i386 objective-c com.apple.compilers.gcc.4_2
+cCompileC "Static analysis/build/MessengerSystem.build/Objects-normal/i386/TestKitTestingAppDelegate.o" /Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m normal i386 objective-c com.apple.compilers.gcc.4_2
+cLd "/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.app/MessengerSystem" normal i386
+cGenerateDSYMFile "/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.app.dSYM" "/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.app/MessengerSystem"
+cTouch "/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.app"
+
+N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk
+c000000004C4EFB8B0000000000000132
+t1280244619
+s306
+
+N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics
+c000000004BFDFE39000000000027C7D0
+t1274936889
+s2607056
+
+N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk/System/Library/Frameworks/Foundation.framework/Foundation
+c000000004BFDFE7C000000000029D5D0
+t1274936956
+s2741712
+
+N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk/System/Library/Frameworks/Foundation.framework/Headers/Foundation.h
+c000000004BFDFE6E0000000000001466
+t1274936942
+s5222
+
+N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIKit.h
+c000000004C0470BB00000000000009CD
+t1275359419
+s2509
+
+N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk/System/Library/Frameworks/UIKit.framework/UIKit
+c000000004C0471620000000001D47210
+t1275359586
+s30700048
+
+N/Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/GlyphTable/GlyphTable.h
+c000000004CAA97FA00000000000001B3
+t1286248442
+s435
+i<Foundation/Foundation.h>
+i<UIKit/UIKit.h>
+
+N/Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/GlyphTable/GlyphTable.m
+c000000004CACFC290000000000002CE2
+t1286405161
+s11490
+i"GlyphTable.h"
+
+N/Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.h
+c000000004CB14EDF00000000000005BB
+t1286688479
+s1467
+i<UIKit/UIKit.h>
+
+N/Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m
+c000000004CB14E970000000000002B8F
+t1286688407
+s11151
+i"MessengerViewController.h"
+i"MessengerDisplayView.h"
+i"GlyphTable.h"
+i"MessengerIDGenerator.h"
+
+N/Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerIDGenerator.h
+c000000004C9060280000000000000196
+t1284530216
+s406
+i<Foundation/Foundation.h>
+
+N/Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerIDGenerator.m
+c000000004CA568C200000000000001D4
+t1285908674
+s468
+i"MessengerIDGenerator.h"
+
+N/Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.h
+c000000004CB15A770000000000002070
+t1286691447
+s8304
+i<Foundation/Foundation.h>
+
+N/Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m
+c000000004CB15A4C000000000000B0FF
+t1286691404
+s45311
+i"MessengerSystem.h"
+i"MessengerIDGenerator.h"
+
+N/Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.h
+c000000004CB14EC100000000000011A4
+t1286688449
+s4516
+i<Foundation/Foundation.h>
+i"MessengerSystem.h"
+i"MessengerDisplayView.h"
+i<UIKit/UIKit.h>
+
+N/Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m
+c000000004CB14ED200000000000052E4
+t1286688466
+s21220
+i"MessengerViewController.h"
+i"MessengerIDGenerator.h"
+
+N/Users/sassembla/Desktop/MessengerSystem/Classes/NameList.h
+c000000004CB122EB0000000000000100
+t1286677227
+s256
+
+N/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.h
+c000000004CAB21A80000000000000261
+t1286283688
+s609
+i<UIKit/UIKit.h>
+i"MessengerSystem.h"
+i"coTestObject.h"
+i"MessengerViewController.h"
+
+N/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m
+c000000004CB14F4300000000000010AD
+t1286688579
+s4269
+i"TestKitTestingAppDelegate.h"
+i"MessengerViewController.h"
+i"NameList.h"
+
+N/Users/sassembla/Desktop/MessengerSystem/Classes/coTestObject.h
+c000000004CB1230200000000000001C2
+t1286677250
+s450
+i<Foundation/Foundation.h>
+i"MessengerSystem.h"
+
+N/Users/sassembla/Desktop/MessengerSystem/Classes/coTestObject.m
+c000000004CB14AEA0000000000000901
+t1286687466
+s2305
+i"coTestObject.h"
+i"NameList.h"
+
+N/Users/sassembla/Desktop/MessengerSystem/MainWindow.xib
+c000000004C79EF0E000000000000212B
+t1283059470
+s8491
+
+N/Users/sassembla/Desktop/MessengerSystem/MessengerSystem_Prefix.pch
+c000000004C79EF0E00000000000000C5
+t1283059470
+s197
+i<Foundation/Foundation.h>
+i<UIKit/UIKit.h>
+
+N/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.app
+t1286691585
+s204
+
+N/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.app.dSYM
+t1286691585
+s102
+
+N/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.app/Info.plist
+t1286691574
+s629
+
+N/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.app/MainWindow.nib
+t1286691575
+s991
+
+N/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.app/MessengerSystem
+t1286691585
+s111380
+
+N/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.app/PkgInfo
+t1286691574
+s8
+
+N/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/Objects-normal/i386/GlyphTable.o
+t1286691579
+s20500
+
+N/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/Objects-normal/i386/MessengerDisplayView.o
+t1286691582
+s61164
+
+N/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/Objects-normal/i386/MessengerIDGenerator.o
+t1286691583
+s6760
+
+N/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/Objects-normal/i386/MessengerSystem.LinkFileList
+c000000004CB15AF600000000000003E1
+t1286691574
+s993
+
+N/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/Objects-normal/i386/MessengerSystem.o
+t1286691583
+s89452
+
+N/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/Objects-normal/i386/MessengerViewController.o
+t1286691580
+s86108
+
+N/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/Objects-normal/i386/TestKitTestingAppDelegate.o
+t1286691584
+s54228
+
+N/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/Objects-normal/i386/coTestObject.o
+t1286691583
+s16684
+
+N/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/Objects-normal/i386/main.o
+t1286691584
+s6308
+
+N/Users/sassembla/Desktop/MessengerSystem/main.m
+c000000004C930A7D0000000000000168
+t1284704893
+s360
+i<UIKit/UIKit.h>
+
+NTestKitTesting-Info.plist
+c000000004CAB21A8000000000000038D
+t1286283688
+s909
+
+CCheck dependencies
+r0
+lSLF07#2@18"Check dependencies308384373#308384374#0(0"0(0#1#0"5211871307329528832#0"0#
+
+CCompileC "Static analysis/build/MessengerSystem.build/Objects-normal/i386/GlyphTable.o" /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/GlyphTable/GlyphTable.m normal i386 objective-c com.apple.compilers.gcc.4_2
+s308384375.141232
+e308384381.447244
+r1
+xCompileC
+xStatic analysis/build/MessengerSystem.build/Objects-normal/i386/GlyphTable.o
+x/Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/GlyphTable/GlyphTable.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.gcc.4_2
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/GlyphTable/GlyphTable.m newFontTable
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/GlyphTable/GlyphTable.m freeFontTable
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/GlyphTable/GlyphTable.m readFontTableFromCGFont
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/GlyphTable/GlyphTable.m mapCharactersToGlyphsInFont
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/GlyphTable/GlyphTable.m drawString:string:withFont:withFontSize:withColor:atX:atY:
+oIn ActionCheckerMemoryManagement
+lSLF07#2@96"Compile /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/GlyphTable/GlyphTable.m308384375#308384381#0(793"ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/GlyphTable/GlyphTable.m newFontTableIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/GlyphTable/GlyphTable.m freeFontTableIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/GlyphTable/GlyphTable.m readFontTableFromCGFontIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/GlyphTable/GlyphTable.m mapCharactersToGlyphsInFontIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/GlyphTable/GlyphTable.m drawString:string:withFont:withFontSize:withColor:atX:atY:In ActionCheckerMemoryManagement0(0#0#88"/Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/GlyphTable/GlyphTable.m4643261056#1878"    cd /Users/sassembla/Desktop/MessengerSystem    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/Applications/AnalysisTool.app/Contents/Resources/llvm/bin:/bin:/usr/bin:."    /Applications/AnalysisTool.app/Contents/Resources/llvm/utils/ccc-analyzer -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote "/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/MessengerSystem-generated-files.hmap" "-I/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/MessengerSystem-own-target-headers.hmap" "-I/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/MessengerSystem-all-target-headers.hmap" -iquote "/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/MessengerSystem-project-headers.hmap" "-F/Users/sassembla/Desktop/MessengerSystem/Static analysis/build" "-I/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/include" "-I/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/DerivedSources/i386" "-I/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/DerivedSources" -include /Users/sassembla/Desktop/MessengerSystem/MessengerSystem_Prefix.pch -c /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/GlyphTable/GlyphTable.m -o "/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/Objects-normal/i386/GlyphTable.o"0#
+
+CCompileC "Static analysis/build/MessengerSystem.build/Objects-normal/i386/MessengerDisplayView.o" /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m normal i386 objective-c com.apple.compilers.gcc.4_2
+s308384381.447794
+e308384383.276194
+r1
+xCompileC
+xStatic analysis/build/MessengerSystem.build/Objects-normal/i386/MessengerDisplayView.o
+x/Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.gcc.4_2
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m initWithMessengerDisplayFrame:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m setControllerDelegate:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m updateDrawList:andConnectionList:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m drawRect:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m linePrmGetA
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m linePrmGetB
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m linePrmGetC
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m lineCrclCrsPt
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m lineFromTo
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m touchesBegan:withEvent:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m touchesMoved:withEvent:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m touchesEnded:withEvent:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m setAnimation
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m commitAnimation
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m dealloc
+oIn ActionCheckerMemoryManagement
+o/Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m:76:2: warning: Depth of loop nesting in ForStmt is 3 (larger than threshold value of 2).
+o        for (int i = 0; i < [drawKeys count]; i++) {
+o        ^
+o1 diagnostic generated.
+lSLF07#2@95"Compile /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m308384381#308384383#0(2482"ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m initWithMessengerDisplayFrame:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m setControllerDelegate:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m updateDrawList:andConnectionList:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m drawRect:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m linePrmGetAIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m linePrmGetBIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m linePrmGetCIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m lineCrclCrsPtIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m lineFromToIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m touchesBegan:withEvent:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m touchesMoved:withEvent:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m touchesEnded:withEvent:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m setAnimationIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m commitAnimationIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m deallocIn ActionCheckerMemoryManagement/Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m:76:2: warning: Depth of loop nesting in ForStmt is 3 (larger than threshold value of 2).        for (int i = 0; i < [drawKeys count]; i++) {        ^1 diagnostic generated.1(22@73"Depth of loop nesting in ForStmt is 3 (larger than threshold value of 2).308384383#2218#177#0(6@87"/Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m308381207#76#0#76#0#0"0(0#0#87"/Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m4644810864#1887"    cd /Users/sassembla/Desktop/MessengerSystem    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/Applications/AnalysisTool.app/Contents/Resources/llvm/bin:/bin:/usr/bin:."    /Applications/AnalysisTool.app/Contents/Resources/llvm/utils/ccc-analyzer -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote "/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/MessengerSystem-generated-files.hmap" "-I/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/MessengerSystem-own-target-headers.hmap" "-I/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/MessengerSystem-all-target-headers.hmap" -iquote "/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/MessengerSystem-project-headers.hmap" "-F/Users/sassembla/Desktop/MessengerSystem/Static analysis/build" "-I/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/include" "-I/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/DerivedSources/i386" "-I/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/DerivedSources" -include /Users/sassembla/Desktop/MessengerSystem/MessengerSystem_Prefix.pch -c /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerDisplayView.m -o "/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/Objects-normal/i386/MessengerDisplayView.o"0#
+
+CCompileC "Static analysis/build/MessengerSystem.build/Objects-normal/i386/MessengerIDGenerator.o" /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerIDGenerator.m normal i386 objective-c com.apple.compilers.gcc.4_2
+s308384383.276472
+e308384383.883393
+r1
+xCompileC
+xStatic analysis/build/MessengerSystem.build/Objects-normal/i386/MessengerIDGenerator.o
+x/Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerIDGenerator.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.gcc.4_2
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerIDGenerator.m getMID
+oIn ActionCheckerMemoryManagement
+lSLF07#2@95"Compile /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerIDGenerator.m308384383#308384383#0(137"ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerIDGenerator.m getMIDIn ActionCheckerMemoryManagement0(0#0#87"/Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerIDGenerator.m4645073152#1887"    cd /Users/sassembla/Desktop/MessengerSystem    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/Applications/AnalysisTool.app/Contents/Resources/llvm/bin:/bin:/usr/bin:."    /Applications/AnalysisTool.app/Contents/Resources/llvm/utils/ccc-analyzer -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote "/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/MessengerSystem-generated-files.hmap" "-I/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/MessengerSystem-own-target-headers.hmap" "-I/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/MessengerSystem-all-target-headers.hmap" -iquote "/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/MessengerSystem-project-headers.hmap" "-F/Users/sassembla/Desktop/MessengerSystem/Static analysis/build" "-I/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/include" "-I/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/DerivedSources/i386" "-I/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/DerivedSources" -include /Users/sassembla/Desktop/MessengerSystem/MessengerSystem_Prefix.pch -c /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerIDGenerator.m -o "/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/Objects-normal/i386/MessengerIDGenerator.o"0#
+
+CCompileC "Static analysis/build/MessengerSystem.build/Objects-normal/i386/MessengerSystem.o" /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m normal i386 objective-c com.apple.compilers.gcc.4_2
+s308384383.434371
+e308384384.548744
+r1
+xCompileC
+xStatic analysis/build/MessengerSystem.build/Objects-normal/i386/MessengerSystem.o
+x/Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.gcc.4_2
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m innerPerform:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m sendPerform:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m sendPerform:withDelay:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m sendMessage:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m remoteInvocation:withDict:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m createdNotice
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m updatedNotice:withParentMID:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m killedNotice
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m setChildDictChildNameAsValue:withMIDAsKey:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m removeChildDictChildNameAsValue:withMIDAsKey:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m setPrivateRemoteInvocationFrom:withSelector:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m setRemoteInvocationFrom:withSelector:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m addCreationLog:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m saveLogForReceived:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m createLogForReply
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m saveToLogStore:log:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m setMyName:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m initMyMID
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m initMyParentData
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m resetMyParentData
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m setMyParentName:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m setMyParentMID:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m version
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m initWithBodyID:withSelector:withName:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m initWithManual
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m setMyBodyID:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m setMyBodySelector:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m inputParent:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m inputParent:withSpecifiedMID:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m removeFromParent
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m removeAllChild
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m callMyself:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m call:withExec:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m call:withSpecifiedMID:withExec:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m callParent:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m tag:val:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m withRemoteFrom:withSelector:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m withDelay:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m remoteInvocation:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m getLogStore
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m getChildDict
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m getExecAsString:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m getExecAsIntFromDict:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m getIntFromExec:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m getExecFromInt:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m FNVHash
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m SDBMHash
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m changeStrToNumber:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m changeNumberToStr:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m hasParent
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m hasChild
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m isIncludeRemote:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m getMyName
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m getMyBodyID
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m getMyBodySelector
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m getMyMID
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m getMyParentName
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m getMyParentMID
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m cancelPerform
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m isReleasable
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m dealloc
+oIn ActionCheckerMemoryManagement
+lSLF07#2@90"Compile /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m308384383#308384384#0(8714"ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m innerPerform:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m sendPerform:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m sendPerform:withDelay:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m sendMessage:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m remoteInvocation:withDict:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m createdNoticeIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m updatedNotice:withParentMID:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m killedNoticeIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m setChildDictChildNameAsValue:withMIDAsKey:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m removeChildDictChildNameAsValue:withMIDAsKey:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m setPrivateRemoteInvocationFrom:withSelector:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m setRemoteInvocationFrom:withSelector:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m addCreationLog:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m saveLogForReceived:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m createLogForReplyIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m saveToLogStore:log:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m setMyName:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m initMyMIDIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m initMyParentDataIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m resetMyParentDataIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m setMyParentName:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m setMyParentMID:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m versionIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m initWithBodyID:withSelector:withName:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m initWithManualIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m setMyBodyID:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m setMyBodySelector:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m inputParent:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m inputParent:withSpecifiedMID:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m removeFromParentIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m removeAllChildIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m callMyself:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m call:withExec:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m call:withSpecifiedMID:withExec:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m callParent:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m tag:val:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m withRemoteFrom:withSelector:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m withDelay:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m remoteInvocation:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m getLogStoreIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m getChildDictIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m getExecAsString:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m getExecAsIntFromDict:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m getIntFromExec:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m getExecFromInt:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m FNVHashIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m SDBMHashIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m changeStrToNumber:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m changeNumberToStr:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m hasParentIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m hasChildIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m isIncludeRemote:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m getMyNameIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m getMyBodyIDIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m getMyBodySelectorIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m getMyMIDIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m getMyParentNameIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m getMyParentMIDIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m cancelPerformIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m isReleasableIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m deallocIn ActionCheckerMemoryManagement0(0#0#82"/Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m4307369280#1877"    cd /Users/sassembla/Desktop/MessengerSystem    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/Applications/AnalysisTool.app/Contents/Resources/llvm/bin:/bin:/usr/bin:."    /Applications/AnalysisTool.app/Contents/Resources/llvm/utils/ccc-analyzer -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote "/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/MessengerSystem-generated-files.hmap" "-I/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/MessengerSystem-own-target-headers.hmap" "-I/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/MessengerSystem-all-target-headers.hmap" -iquote "/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/MessengerSystem-project-headers.hmap" "-F/Users/sassembla/Desktop/MessengerSystem/Static analysis/build" "-I/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/include" "-I/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/DerivedSources/i386" "-I/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/DerivedSources" -include /Users/sassembla/Desktop/MessengerSystem/MessengerSystem_Prefix.pch -c /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerSystem.m -o "/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/Objects-normal/i386/MessengerSystem.o"0#
+
+CCompileC "Static analysis/build/MessengerSystem.build/Objects-normal/i386/MessengerViewController.o" /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m normal i386 objective-c com.apple.compilers.gcc.4_2
+s308384375.139035
+e308384382.040252
+r1
+xCompileC
+xStatic analysis/build/MessengerSystem.build/Objects-normal/i386/MessengerViewController.o
+x/Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.gcc.4_2
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m initWithBodyID:withSelector:withName:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m initWithFrame:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m innerPerform:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m insertMessengerInformation:withMID:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m updateParentInformation:withMID:withParentName:withParentMID:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m deleteMessengerInformation:withMID:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m drawDataUpdate
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m drawCallLineFrom:withMID:to:withMID:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m setNumberOfRelationship:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m getNumberOfRelationship
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m setNameIndexDictionary
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m getNameIndexDictionary
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m sortButtonsByParentOrder
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m tapped:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m getMessengerInformationKey:withMID:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m getButtonList
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m getMessengerList
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m getMessengerInterfaceView
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m setMyName:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m setMyBodyID:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m setMyBodySelector:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m initMyMID
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m initMyParentData
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m setMyParentName:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m setWorldX:withY:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m moveWorldX:withY:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m setScale:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m getScale
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m scaleResetX:withY:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m getScreenWidth
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m getScreenHeight
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m inputParent:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m callMyself:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m call:withExec:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m callChild:withMID::
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m callParent:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m createdNotice
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m updatedNotice:withParentMID:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m killedNotice
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m dealloc
+oIn ActionCheckerMemoryManagement
+o/Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m:66:1: warning: Cyclomatic complexity for method 'innerPerform:' is 22 (larger than threshold value of 20).
+o- (void) innerPerform:(NSNotification * )notification {
+o^
+o1 diagnostic generated.
+lSLF07#2@98"Compile /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m308384375#308384382#0(6401"ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m initWithBodyID:withSelector:withName:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m initWithFrame:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m innerPerform:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m insertMessengerInformation:withMID:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m updateParentInformation:withMID:withParentName:withParentMID:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m deleteMessengerInformation:withMID:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m drawDataUpdateIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m drawCallLineFrom:withMID:to:withMID:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m setNumberOfRelationship:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m getNumberOfRelationshipIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m setNameIndexDictionaryIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m getNameIndexDictionaryIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m sortButtonsByParentOrderIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m tapped:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m getMessengerInformationKey:withMID:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m getButtonListIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m getMessengerListIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m getMessengerInterfaceViewIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m setMyName:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m setMyBodyID:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m setMyBodySelector:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m initMyMIDIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m initMyParentDataIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m setMyParentName:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m setWorldX:withY:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m moveWorldX:withY:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m setScale:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m getScaleIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m scaleResetX:withY:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m getScreenWidthIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m getScreenHeightIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m inputParent:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m callMyself:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m call:withExec:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m callChild:withMID::In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m callParent:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m createdNoticeIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m updatedNotice:withParentMID:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m killedNoticeIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m deallocIn ActionCheckerMemoryManagement/Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m:66:1: warning: Cyclomatic complexity for method 'innerPerform:' is 22 (larger than threshold value of 20).- (void) innerPerform:(NSNotification * )notification {^1 diagnostic generated.1(22@91"Cyclomatic complexity for method 'innerPerform:' is 22 (larger than threshold value of 20).308384381#6121#198#0(6@90"/Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m308381266#66#0#66#0#0"0(0#0#90"/Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m4307473216#1893"    cd /Users/sassembla/Desktop/MessengerSystem    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/Applications/AnalysisTool.app/Contents/Resources/llvm/bin:/bin:/usr/bin:."    /Applications/AnalysisTool.app/Contents/Resources/llvm/utils/ccc-analyzer -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote "/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/MessengerSystem-generated-files.hmap" "-I/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/MessengerSystem-own-target-headers.hmap" "-I/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/MessengerSystem-all-target-headers.hmap" -iquote "/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/MessengerSystem-project-headers.hmap" "-F/Users/sassembla/Desktop/MessengerSystem/Static analysis/build" "-I/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/include" "-I/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/DerivedSources/i386" "-I/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/DerivedSources" -include /Users/sassembla/Desktop/MessengerSystem/MessengerSystem_Prefix.pch -c /Users/sassembla/Desktop/MessengerSystem/Classes/MessengerSystem/MessengerViewController.m -o "/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/Objects-normal/i386/MessengerViewController.o"0#
+
+CCompileC "Static analysis/build/MessengerSystem.build/Objects-normal/i386/TestKitTestingAppDelegate.o" /Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m normal i386 objective-c com.apple.compilers.gcc.4_2
+s308384384.453625
+e308384385.185101
+r1
+xCompileC
+xStatic analysis/build/MessengerSystem.build/Objects-normal/i386/TestKitTestingAppDelegate.o
+x/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.gcc.4_2
+o/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m: In function '-[TestKitTestingAppDelegate application:didFinishLaunchingWithOptions:]':
+o/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:47: warning: unused variable 'obj9'
+o/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:46: warning: unused variable 'obj8'
+o/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:44: warning: unused variable 'obj7'
+o/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:43: warning: unused variable 'obj6'
+o/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:42: warning: unused variable 'obj5'
+o/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:40: warning: unused variable 'obj4'
+o/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:39: warning: unused variable 'obj3'
+o/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:37: warning: unused variable 'obj2'
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m application:didFinishLaunchingWithOptions:
+o/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:43:24: warning: Potential leak of an object allocated on line 43 and stored into 'obj6'
+o        coTestObject * obj6 = [[coTestObject alloc] init3];
+o                              ^
+o/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:42:24: warning: Potential leak of an object allocated on line 42 and stored into 'obj5'
+o        coTestObject * obj5 = [[coTestObject alloc] init3];
+o                              ^
+o/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:39:24: warning: Potential leak of an object allocated on line 39 and stored into 'obj3'
+o        coTestObject * obj3 = [[coTestObject alloc] init2];
+o                              ^
+o/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:44:24: warning: Potential leak of an object allocated on line 44 and stored into 'obj7'
+o        coTestObject * obj7 = [[coTestObject alloc] init3];
+o                              ^
+o/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:37:24: warning: Potential leak of an object allocated on line 37 and stored into 'obj2'
+o        coTestObject * obj2 = [[coTestObject alloc] init];
+o                              ^
+o/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:47:24: warning: Potential leak of an object allocated on line 47 and stored into 'obj9'
+o        coTestObject * obj9 = [[coTestObject alloc] init5];
+o                              ^
+o/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:46:24: warning: Potential leak of an object allocated on line 46 and stored into 'obj8'
+o        coTestObject * obj8 = [[coTestObject alloc] init4];
+o                              ^
+o/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:40:24: warning: Potential leak of an object allocated on line 40 and stored into 'obj4'
+o        coTestObject * obj4 = [[coTestObject alloc] init2];
+o                              ^
+o/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:44:17: warning: Value stored to 'obj7' during its initialization is never read
+o        coTestObject * obj7 = [[coTestObject alloc] init3];
+o                       ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+o/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:43:17: warning: Value stored to 'obj6' during its initialization is never read
+o        coTestObject * obj6 = [[coTestObject alloc] init3];
+o                       ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+o/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:42:17: warning: Value stored to 'obj5' during its initialization is never read
+o        coTestObject * obj5 = [[coTestObject alloc] init3];
+o                       ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+o/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:40:17: warning: Value stored to 'obj4' during its initialization is never read
+o        coTestObject * obj4 = [[coTestObject alloc] init2];
+o                       ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+o/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:39:17: warning: Value stored to 'obj3' during its initialization is never read
+o        coTestObject * obj3 = [[coTestObject alloc] init2];
+o                       ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+o/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:37:17: warning: Value stored to 'obj2' during its initialization is never read
+o        coTestObject * obj2 = [[coTestObject alloc] init];
+o                       ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+o/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:47:17: warning: Value stored to 'obj9' during its initialization is never read
+o        coTestObject * obj9 = [[coTestObject alloc] init5];
+o                       ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+o/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:46:17: warning: Value stored to 'obj8' during its initialization is never read
+o        coTestObject * obj8 = [[coTestObject alloc] init4];
+o                       ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+oIn ActionCheckerMemoryManagement
+o/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:40:51: warning: 'autorelease' should be called right after alloc & init. Do not leave the responsibility of calling 'release' until later stages.
+o        coTestObject * obj4 = [[coTestObject alloc] init2];
+o                                                         ^
+o/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:42:51: warning: 'autorelease' should be called right after alloc & init. Do not leave the responsibility of calling 'release' until later stages.
+o        coTestObject * obj5 = [[coTestObject alloc] init3];
+o                                                         ^
+o/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:43:51: warning: 'autorelease' should be called right after alloc & init. Do not leave the responsibility of calling 'release' until later stages.
+o        coTestObject * obj6 = [[coTestObject alloc] init3];
+o                                                         ^
+o/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:44:51: warning: 'autorelease' should be called right after alloc & init. Do not leave the responsibility of calling 'release' until later stages.
+o        coTestObject * obj7 = [[coTestObject alloc] init3];
+o                                                         ^
+o/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:46:51: warning: 'autorelease' should be called right after alloc & init. Do not leave the responsibility of calling 'release' until later stages.
+o        coTestObject * obj8 = [[coTestObject alloc] init4];
+o                                                         ^
+o/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:47:51: warning: 'autorelease' should be called right after alloc & init. Do not leave the responsibility of calling 'release' until later stages.
+o        coTestObject * obj9 = [[coTestObject alloc] init5];
+o                                                         ^
+o/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:37:50: warning: 'autorelease' should be called right after alloc & init. Do not leave the responsibility of calling 'release' until later stages.
+o        coTestObject * obj2 = [[coTestObject alloc] init];
+o                                                        ^
+o/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:39:51: warning: 'autorelease' should be called right after alloc & init. Do not leave the responsibility of calling 'release' until later stages.
+o        coTestObject * obj3 = [[coTestObject alloc] init2];
+o                                                         ^
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m ignition:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m test:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m applicationWillResignActive:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m applicationDidEnterBackground:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m applicationWillEnterForeground:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m applicationDidBecomeActive:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m applicationWillTerminate:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m applicationDidReceiveMemoryWarning:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m dealloc
+oIn ActionCheckerMemoryManagement
+oIn file included from /Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:9:
+o/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.h:17:15: warning: the name of instance variable 'window' doesn't start with the 'm' prefix.
+o    UIWindow *window;
+o              ^
+o25 diagnostics generated.
+lSLF07#2@84"Compile /Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m308384384#308384385#0(9828"/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m: In function '-[TestKitTestingAppDelegate application:didFinishLaunchingWithOptions:]':/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:47: warning: unused variable 'obj9'/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:46: warning: unused variable 'obj8'/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:44: warning: unused variable 'obj7'/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:43: warning: unused variable 'obj6'/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:42: warning: unused variable 'obj5'/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:40: warning: unused variable 'obj4'/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:39: warning: unused variable 'obj3'/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:37: warning: unused variable 'obj2'ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m application:didFinishLaunchingWithOptions:/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:43:24: warning: Potential leak of an object allocated on line 43 and stored into 'obj6'        coTestObject * obj6 = [[coTestObject alloc] init3];                              ^/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:42:24: warning: Potential leak of an object allocated on line 42 and stored into 'obj5'        coTestObject * obj5 = [[coTestObject alloc] init3];                              ^/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:39:24: warning: Potential leak of an object allocated on line 39 and stored into 'obj3'        coTestObject * obj3 = [[coTestObject alloc] init2];                              ^/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:44:24: warning: Potential leak of an object allocated on line 44 and stored into 'obj7'        coTestObject * obj7 = [[coTestObject alloc] init3];                              ^/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:37:24: warning: Potential leak of an object allocated on line 37 and stored into 'obj2'        coTestObject * obj2 = [[coTestObject alloc] init];                              ^/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:47:24: warning: Potential leak of an object allocated on line 47 and stored into 'obj9'        coTestObject * obj9 = [[coTestObject alloc] init5];                              ^/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:46:24: warning: Potential leak of an object allocated on line 46 and stored into 'obj8'        coTestObject * obj8 = [[coTestObject alloc] init4];                              ^/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:40:24: warning: Potential leak of an object allocated on line 40 and stored into 'obj4'        coTestObject * obj4 = [[coTestObject alloc] init2];                              ^/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:44:17: warning: Value stored to 'obj7' during its initialization is never read        coTestObject * obj7 = [[coTestObject alloc] init3];                       ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:43:17: warning: Value stored to 'obj6' during its initialization is never read        coTestObject * obj6 = [[coTestObject alloc] init3];                       ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:42:17: warning: Value stored to 'obj5' during its initialization is never read        coTestObject * obj5 = [[coTestObject alloc] init3];                       ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:40:17: warning: Value stored to 'obj4' during its initialization is never read        coTestObject * obj4 = [[coTestObject alloc] init2];                       ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:39:17: warning: Value stored to 'obj3' during its initialization is never read        coTestObject * obj3 = [[coTestObject alloc] init2];                       ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:37:17: warning: Value stored to 'obj2' during its initialization is never read        coTestObject * obj2 = [[coTestObject alloc] init];                       ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:47:17: warning: Value stored to 'obj9' during its initialization is never read        coTestObject * obj9 = [[coTestObject alloc] init5];                       ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:46:17: warning: Value stored to 'obj8' during its initialization is never read        coTestObject * obj8 = [[coTestObject alloc] init4];                       ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~In ActionCheckerMemoryManagement/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:40:51: warning: 'autorelease' should be called right after alloc & init. Do not leave the responsibility of calling 'release' until later stages.        coTestObject * obj4 = [[coTestObject alloc] init2];                                                         ^/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:42:51: warning: 'autorelease' should be called right after alloc & init. Do not leave the responsibility of calling 'release' until later stages.        coTestObject * obj5 = [[coTestObject alloc] init3];                                                         ^/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:43:51: warning: 'autorelease' should be called right after alloc & init. Do not leave the responsibility of calling 'release' until later stages.        coTestObject * obj6 = [[coTestObject alloc] init3];                                                         ^/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:44:51: warning: 'autorelease' should be called right after alloc & init. Do not leave the responsibility of calling 'release' until later stages.        coTestObject * obj7 = [[coTestObject alloc] init3];                                                         ^/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:46:51: warning: 'autorelease' should be called right after alloc & init. Do not leave the responsibility of calling 'release' until later stages.        coTestObject * obj8 = [[coTestObject alloc] init4];                                                         ^/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:47:51: warning: 'autorelease' should be called right after alloc & init. Do not leave the responsibility of calling 'release' until later stages.        coTestObject * obj9 = [[coTestObject alloc] init5];                                                         ^/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:37:50: warning: 'autorelease' should be called right after alloc & init. Do not leave the responsibility of calling 'release' until later stages.        coTestObject * obj2 = [[coTestObject alloc] init];                                                        ^/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:39:51: warning: 'autorelease' should be called right after alloc & init. Do not leave the responsibility of calling 'release' until later stages.        coTestObject * obj3 = [[coTestObject alloc] init2];                                                         ^ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m ignition:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m test:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m applicationWillResignActive:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m applicationDidEnterBackground:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m applicationWillEnterForeground:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m applicationDidBecomeActive:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m applicationWillTerminate:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m applicationDidReceiveMemoryWarning:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m deallocIn ActionCheckerMemoryManagementIn file included from /Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m:9:/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.h:17:15: warning: the name of instance variable 'window' doesn't start with the 'm' prefix.    UIWindow *window;              ^25 diagnostics generated.33(22@22"Unused variable 'obj9'308384384#165#113#0(6@76"/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m308381379#47#0#47#0#19"unused variable '*'0(22@22"Unused variable 'obj8'308384384#278#113#0(6@76"/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m308381379#46#0#46#0#19"unused variable '*'0(22@22"Unused variable 'obj7'308384384#391#113#0(6@76"/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m308381379#44#0#44#0#19"unused variable '*'0(22@22"Unused variable 'obj6'308384384#504#113#0(6@76"/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m308381379#43#0#43#0#19"unused variable '*'0(22@22"Unused variable 'obj5'308384384#617#113#0(6@76"/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m308381379#42#0#42#0#19"unused variable '*'0(22@22"Unused variable 'obj4'308384384#730#113#0(6@76"/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m308381379#40#0#40#0#19"unused variable '*'0(22@22"Unused variable 'obj3'308384384#843#113#0(6@76"/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m308381379#39#0#39#0#19"unused variable '*'0(22@22"Unused variable 'obj2'308384384#956#113#0(6@76"/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m308381379#37#0#37#0#19"unused variable '*'0(22@71"Potential leak of an object allocated on line 43 and stored into 'obj6'308384385#1198#165#0(6@76"/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m308381379#43#0#43#0#0"0(22@71"Potential leak of an object allocated on line 42 and stored into 'obj5'308384385#1455#165#0(6@76"/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m308381379#42#0#42#0#0"0(22@71"Potential leak of an object allocated on line 39 and stored into 'obj3'308384385#1712#165#0(6@76"/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m308381379#39#0#39#0#0"0(22@71"Potential leak of an object allocated on line 44 and stored into 'obj7'308384385#1969#165#0(6@76"/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m308381379#44#0#44#0#0"0(22@71"Potential leak of an object allocated on line 37 and stored into 'obj2'308384385#2226#165#0(6@76"/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m308381379#37#0#37#0#0"0(22@71"Potential leak of an object allocated on line 47 and stored into 'obj9'308384385#2482#165#0(6@76"/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m308381379#47#0#47#0#0"0(22@71"Potential leak of an object allocated on line 46 and stored into 'obj8'308384385#2739#165#0(6@76"/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m308381379#46#0#46#0#0"0(22@71"Potential leak of an object allocated on line 40 and stored into 'obj4'308384385#2996#165#0(6@76"/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m308381379#40#0#40#0#0"0(22@62"Value stored to 'obj7' during its initialization is never read308384385#3253#156#0(6@76"/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m308381379#44#0#44#0#0"0(22@62"Value stored to 'obj6' during its initialization is never read308384385#3528#156#0(6@76"/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m308381379#43#0#43#0#0"0(22@62"Value stored to 'obj5' during its initialization is never read308384385#3803#156#0(6@76"/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m308381379#42#0#42#0#0"0(22@62"Value stored to 'obj4' during its initialization is never read308384385#4078#156#0(6@76"/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m308381379#40#0#40#0#0"0(22@62"Value stored to 'obj3' during its initialization is never read308384385#4353#156#0(6@76"/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m308381379#39#0#39#0#0"0(22@62"Value stored to 'obj2' during its initialization is never read308384385#4628#156#0(6@76"/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m308381379#37#0#37#0#0"0(22@62"Value stored to 'obj9' during its initialization is never read308384385#4901#156#0(6@76"/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m308381379#47#0#47#0#0"0(22@62"Value stored to 'obj8' during its initialization is never read308384385#5176#156#0(6@76"/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m308381379#46#0#46#0#0"0(22@129"'autorelease' should be called right after alloc & init. Do not leave the responsibility of calling 'release' until later stages.308384385#5484#223#0(6@76"/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m308381379#40#0#40#0#0"0(22@129"'autorelease' should be called right after alloc & init. Do not leave the responsibility of calling 'release' until later stages.308384385#5826#223#0(6@76"/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m308381379#42#0#42#0#0"0(22@129"'autorelease' should be called right after alloc & init. Do not leave the responsibility of calling 'release' until later stages.308384385#6168#223#0(6@76"/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m308381379#43#0#43#0#0"0(22@129"'autorelease' should be called right after alloc & init. Do not leave the responsibility of calling 'release' until later stages.308384385#6510#223#0(6@76"/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m308381379#44#0#44#0#0"0(22@129"'autorelease' should be called right after alloc & init. Do not leave the responsibility of calling 'release' until later stages.308384385#6852#223#0(6@76"/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m308381379#46#0#46#0#0"0(22@129"'autorelease' should be called right after alloc & init. Do not leave the responsibility of calling 'release' until later stages.308384385#7194#223#0(6@76"/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m308381379#47#0#47#0#0"0(22@129"'autorelease' should be called right after alloc & init. Do not leave the responsibility of calling 'release' until later stages.308384385#7536#223#0(6@76"/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m308381379#37#0#37#0#0"0(22@129"'autorelease' should be called right after alloc & init. Do not leave the responsibility of calling 'release' until later stages.308384385#7876#223#0(6@76"/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m308381379#39#0#39#0#0"0(22@73"The name of instance variable 'window' doesn't start with the 'm' prefix.308384385#9597#167#2(7@98"In file included from /Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m308384385#18446744073709551615#0#0(6@76"/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m308381379#9#0#9#0#0"0(13@153"The name of instance variable 'window' doesn't start with the 'm' prefix. in /Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.h308384385#18446744073709551615#0#0(6@76"/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.h307976488#17#0#17#0#0"0(6@76"/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.h307976488#17#0#17#0#0"0(0#0#76"/Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m4643440048#1881"    cd /Users/sassembla/Desktop/MessengerSystem    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/Applications/AnalysisTool.app/Contents/Resources/llvm/bin:/bin:/usr/bin:."    /Applications/AnalysisTool.app/Contents/Resources/llvm/utils/ccc-analyzer -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote "/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/MessengerSystem-generated-files.hmap" "-I/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/MessengerSystem-own-target-headers.hmap" "-I/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/MessengerSystem-all-target-headers.hmap" -iquote "/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/MessengerSystem-project-headers.hmap" "-F/Users/sassembla/Desktop/MessengerSystem/Static analysis/build" "-I/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/include" "-I/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/DerivedSources/i386" "-I/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/DerivedSources" -include /Users/sassembla/Desktop/MessengerSystem/MessengerSystem_Prefix.pch -c /Users/sassembla/Desktop/MessengerSystem/Classes/TestKitTestingAppDelegate.m -o "/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/Objects-normal/i386/TestKitTestingAppDelegate.o"0#
+
+CCompileC "Static analysis/build/MessengerSystem.build/Objects-normal/i386/coTestObject.o" /Users/sassembla/Desktop/MessengerSystem/Classes/coTestObject.m normal i386 objective-c com.apple.compilers.gcc.4_2
+s308384382.040484
+e308384383.434162
+r1
+xCompileC
+xStatic analysis/build/MessengerSystem.build/Objects-normal/i386/coTestObject.o
+x/Users/sassembla/Desktop/MessengerSystem/Classes/coTestObject.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.gcc.4_2
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/coTestObject.m init
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/coTestObject.m init2
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/coTestObject.m init3
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/coTestObject.m init4
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/coTestObject.m init5
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/coTestObject.m setParent
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/coTestObject.m test:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/coTestObject.m forInvocaton:
+oIn ActionCheckerMemoryManagement
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/coTestObject.m dealloc
+oIn ActionCheckerMemoryManagement
+lSLF07#2@71"Compile /Users/sassembla/Desktop/MessengerSystem/Classes/coTestObject.m308384382#308384383#0(1021"ANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/coTestObject.m initIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/coTestObject.m init2In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/coTestObject.m init3In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/coTestObject.m init4In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/coTestObject.m init5In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/coTestObject.m setParentIn ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/coTestObject.m test:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/coTestObject.m forInvocaton:In ActionCheckerMemoryManagementANALYZE: /Users/sassembla/Desktop/MessengerSystem/Classes/coTestObject.m deallocIn ActionCheckerMemoryManagement0(0#0#63"/Users/sassembla/Desktop/MessengerSystem/Classes/coTestObject.m4644612400#1855"    cd /Users/sassembla/Desktop/MessengerSystem    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/Applications/AnalysisTool.app/Contents/Resources/llvm/bin:/bin:/usr/bin:."    /Applications/AnalysisTool.app/Contents/Resources/llvm/utils/ccc-analyzer -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote "/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/MessengerSystem-generated-files.hmap" "-I/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/MessengerSystem-own-target-headers.hmap" "-I/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/MessengerSystem-all-target-headers.hmap" -iquote "/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/MessengerSystem-project-headers.hmap" "-F/Users/sassembla/Desktop/MessengerSystem/Static analysis/build" "-I/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/include" "-I/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/DerivedSources/i386" "-I/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/DerivedSources" -include /Users/sassembla/Desktop/MessengerSystem/MessengerSystem_Prefix.pch -c /Users/sassembla/Desktop/MessengerSystem/Classes/coTestObject.m -o "/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/Objects-normal/i386/coTestObject.o"0#
+
+CCompileC "Static analysis/build/MessengerSystem.build/Objects-normal/i386/main.o" /Users/sassembla/Desktop/MessengerSystem/main.m normal i386 objective-c com.apple.compilers.gcc.4_2
+s308384383.883582
+e308384384.453289
+r1
+xCompileC
+xStatic analysis/build/MessengerSystem.build/Objects-normal/i386/main.o
+x/Users/sassembla/Desktop/MessengerSystem/main.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.gcc.4_2
+oANALYZE: /Users/sassembla/Desktop/MessengerSystem/main.m main
+oIn ActionCheckerMemoryManagement
+lSLF07#2@55"Compile /Users/sassembla/Desktop/MessengerSystem/main.m308384383#308384384#0(95"ANALYZE: /Users/sassembla/Desktop/MessengerSystem/main.m mainIn ActionCheckerMemoryManagement0(0#0#47"/Users/sassembla/Desktop/MessengerSystem/main.m4643393328#1831"    cd /Users/sassembla/Desktop/MessengerSystem    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/Applications/AnalysisTool.app/Contents/Resources/llvm/bin:/bin:/usr/bin:."    /Applications/AnalysisTool.app/Contents/Resources/llvm/utils/ccc-analyzer -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote "/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/MessengerSystem-generated-files.hmap" "-I/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/MessengerSystem-own-target-headers.hmap" "-I/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/MessengerSystem-all-target-headers.hmap" -iquote "/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/MessengerSystem-project-headers.hmap" "-F/Users/sassembla/Desktop/MessengerSystem/Static analysis/build" "-I/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/include" "-I/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/DerivedSources/i386" "-I/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/DerivedSources" -include /Users/sassembla/Desktop/MessengerSystem/MessengerSystem_Prefix.pch -c /Users/sassembla/Desktop/MessengerSystem/main.m -o "/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/Objects-normal/i386/main.o"0#
+
+CCompileXIB /Users/sassembla/Desktop/MessengerSystem/MainWindow.xib
+s308384374.031609
+e308384375.138820
+r1
+xCompileXIB
+x/Users/sassembla/Desktop/MessengerSystem/MainWindow.xib
+lSLF07#2@25"CompileXIB MainWindow.xib308384374#308384375#0(0"0(0#0#55"/Users/sassembla/Desktop/MessengerSystem/MainWindow.xib4643469280#625"    cd /Users/sassembla/Desktop/MessengerSystem    setenv IBC_MINIMUM_COMPATIBILITY_VERSION 4.0    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/Applications/AnalysisTool.app/Contents/Resources/llvm/bin:/bin:/usr/bin:."    /Developer/usr/bin/ibtool --errors --warnings --notices --output-format human-readable-text --compile "/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.app/MainWindow.nib" /Users/sassembla/Desktop/MessengerSystem/MainWindow.xib --sdk /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk0#
+
+CGenerateDSYMFile "/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.app.dSYM" "/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.app/MessengerSystem"
+s308384385.400759
+e308384385.451778
+r1
+xGenerateDSYMFile
+x/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.app.dSYM
+x/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.app/MessengerSystem
+lSLF07#2@125"GenerateDSYMFile "Static analysis/build/MessengerSystem.app.dSYM" "Static analysis/build/MessengerSystem.app/MessengerSystem"308384385#308384385#0(0"0(0#0#98"/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.app/MessengerSystem4644609440#450"    cd /Users/sassembla/Desktop/MessengerSystem    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/Applications/AnalysisTool.app/Contents/Resources/llvm/bin:/bin:/usr/bin:."    /Developer/usr/bin/dsymutil "/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.app/MessengerSystem" -o "/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.app.dSYM"0#
+
+CLd "/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.app/MessengerSystem" normal i386
+s308384385.185691
+e308384385.400454
+r1
+xLd
+x/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.app/MessengerSystem
+xnormal
+xi386
+lSLF07#2@103"Link /Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.app/MessengerSystem308384385#308384385#0(0"0(0#0#0"4643410576#959"    cd /Users/sassembla/Desktop/MessengerSystem    setenv MACOSX_DEPLOYMENT_TARGET 10.6    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/Applications/AnalysisTool.app/Contents/Resources/llvm/bin:/bin:/usr/bin:."    /Applications/AnalysisTool.app/Contents/Resources/llvm/utils/ccc-analyzer -arch i386 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk "-L/Users/sassembla/Desktop/MessengerSystem/Static analysis/build" "-F/Users/sassembla/Desktop/MessengerSystem/Static analysis/build" -filelist "/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.build/Objects-normal/i386/MessengerSystem.LinkFileList" -mmacosx-version-min=10.6 -Xlinker -objc_abi_version -Xlinker 2 -framework Foundation -framework UIKit -framework CoreGraphics -o "/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.app/MessengerSystem"0#
+
+CProcessInfoPlistFile "/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.app/Info.plist" TestKitTesting-Info.plist
+s308384374.024793
+e308384374.031329
+r1
+xProcessInfoPlistFile
+x/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.app/Info.plist
+xTestKitTesting-Info.plist
+lSLF07#2@33"Process TestKitTesting-Info.plist308384374#308384374#0(0"0(0#0#66"/Users/sassembla/Desktop/MessengerSystem/TestKitTesting-Info.plist6998703125509010432#545"    cd /Users/sassembla/Desktop/MessengerSystem    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/Applications/AnalysisTool.app/Contents/Resources/llvm/bin:/bin:/usr/bin:."    builtin-infoPlistUtility TestKitTesting-Info.plist -genpkginfo "/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.app/PkgInfo" -expandbuildsettings -format binary -platform iphonesimulator -o "/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.app/Info.plist"0#
+
+CTouch "/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.app"
+s308384385.451933
+e308384385.455196
+r1
+xTouch
+x/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.app
+lSLF07#2@88"Touch /Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.app308384385#308384385#0(0"0(0#0#0"4307393104#331"    cd /Users/sassembla/Desktop/MessengerSystem    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/Applications/AnalysisTool.app/Contents/Resources/llvm/bin:/bin:/usr/bin:."    /usr/bin/touch -c "/Users/sassembla/Desktop/MessengerSystem/Static analysis/build/MessengerSystem.app"0#
+

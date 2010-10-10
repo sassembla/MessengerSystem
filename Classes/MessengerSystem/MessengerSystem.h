@@ -152,23 +152,31 @@
 
 
 
-//タグシステム
+/**
+ タグシステム
+ */
 - (NSDictionary * ) tag:(id)obj_tag val:(id)obj_value;
 - (NSDictionary * ) withRemoteFrom:(id)mySelf withSelector:(SEL)sel;//遠隔実行
 - (NSDictionary * ) withDelay:(float)delay;//遅延実行
 
 
-//遠隔実行実装
+/**
+ 遠隔実行実装
+ */
 - (void) remoteInvocation:(NSMutableDictionary * )dict, ...;
 
 
 
-//ログストアの取得
+/**
+ ログストアの取得
+ */
 - (NSMutableDictionary * ) getLogStore;//保存されたログ一覧を取得するメソッド
 
 
 
-//子供辞書の取得
+/**
+ 子供辞書の取得
+ */
 - (NSMutableDictionary * ) getChildDict;
 
 
@@ -212,7 +220,9 @@
 
 
 
-//遠隔実行のコマンドがメッセージに含まれているか
+/**
+ 遠隔実行のコマンドがメッセージに含まれているか
+ */
 - (BOOL) isIncludeRemote:(NSMutableDictionary * )dict;
 
 

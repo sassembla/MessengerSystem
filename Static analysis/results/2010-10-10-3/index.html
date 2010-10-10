@@ -1,0 +1,178 @@
+<html>
+<head>
+<title>MessengerSystem - scan-build results</title>
+<link type="text/css" rel="stylesheet" href="scanview.css"/>
+<script src="sorttable.js"></script>
+<script language='javascript' type="text/javascript">
+function SetDisplay(RowClass, DisplayVal)
+{
+  var Rows = document.getElementsByTagName("tr");
+  for ( var i = 0 ; i < Rows.length; ++i ) {
+    if (Rows[i].className == RowClass) {
+      Rows[i].style.display = DisplayVal;
+    }
+  }
+}
+
+function CopyCheckedStateToCheckButtons(SummaryCheckButton) {
+  var Inputs = document.getElementsByTagName("input");
+  for ( var i = 0 ; i < Inputs.length; ++i ) {
+    if (Inputs[i].type == "checkbox") {
+      if(Inputs[i] != SummaryCheckButton) {
+        Inputs[i].checked = SummaryCheckButton.checked;
+        Inputs[i].onclick();
+	  }
+    }
+  }
+}
+
+function returnObjById( id ) {
+    if (document.getElementById) 
+        var returnVar = document.getElementById(id);
+    else if (document.all)
+        var returnVar = document.all[id];
+    else if (document.layers) 
+        var returnVar = document.layers[id];
+    return returnVar; 
+}
+
+var NumUnchecked = 0;
+
+function ToggleDisplay(CheckButton, ClassName) {
+  if (CheckButton.checked) {
+    SetDisplay(ClassName, "");
+    if (--NumUnchecked == 0) {
+      returnObjById("AllBugsCheck").checked = true;
+    }
+  }
+  else {
+    SetDisplay(ClassName, "none");
+    NumUnchecked++;
+    returnObjById("AllBugsCheck").checked = false;
+  }
+}
+</script>
+<!-- SUMMARYENDHEAD -->
+</head>
+<body>
+<h1>MessengerSystem - scan-build results</h1>
+
+<table>
+<tr><th>User:</th><td>sassembla@sassembla.local</td></tr>
+<tr><th>Working Directory:</th><td>/Users/sassembla/Desktop/MessengerSystem</td></tr>
+<tr><th>Command Line:</th><td>xcodebuild 'CONFIGURATION_BUILD_DIR=/Users/sassembla/Desktop/MessengerSystem/Static analysis/build' 'CONFIGURATION_TEMP_DIR=/Users/sassembla/Desktop/MessengerSystem/Static analysis/build' -configuration Debug -sdk iphonesimulator4.0 -target MessengerSystem clean build</td></tr>
+<tr><th>Date:</th><td>Sun Oct 10 15:18:53 2010</td></tr>
+</table>
+<h2>Bug Summary</h2><table>
+<thead><tr><td>Bug Type</td><td>Quantity</td><td class="sorttable_nosort">Display?</td></tr></thead>
+<tr style="font-weight:bold"><td class="SUMM_DESC">All Bugs</td><td class="Q">27</td><td><center><input type="checkbox" id="AllBugsCheck" onClick="CopyCheckedStateToCheckButtons(this);" checked/></center></td></tr>
+<tr><th>AnalysisTool : Complexity</th><th colspan=2></th></tr>
+<tr><td class="SUMM_DESC">high cyclomatic complexity</td><td class="Q">1</td><td><center><input type="checkbox" onClick="ToggleDisplay(this,'bt_analysistool_complexity_high_cyclomatic_complexity');" checked/></center></td></tr>
+<tr><td class="SUMM_DESC">high loop nesting</td><td class="Q">1</td><td><center><input type="checkbox" onClick="ToggleDisplay(this,'bt_analysistool_complexity_high_loop_nesting');" checked/></center></td></tr>
+<tr><th>AnalysisTool : Memory management</th><th colspan=2></th></tr>
+<tr><td class="SUMM_DESC">'autorelease' not called after alloc & init</td><td class="Q">8</td><td><center><input type="checkbox" onClick="ToggleDisplay(this,'bt_analysistool_memory_management_autorelease_not_called_after_alloc_&_init');" checked/></center></td></tr>
+<tr><th>AnalysisTool : Naming conventions</th><th colspan=2></th></tr>
+<tr><td class="SUMM_DESC">ivar naming convention violation</td><td class="Q">1</td><td><center><input type="checkbox" onClick="ToggleDisplay(this,'bt_analysistool_naming_conventions_ivar_naming_convention_violation');" checked/></center></td></tr>
+<tr><th>Dead store</th><th colspan=2></th></tr>
+<tr><td class="SUMM_DESC">Dead initialization</td><td class="Q">8</td><td><center><input type="checkbox" onClick="ToggleDisplay(this,'bt_dead_store_dead_initialization');" checked/></center></td></tr>
+<tr><th>Memory (Core Foundation/Objective-C)</th><th colspan=2></th></tr>
+<tr><td class="SUMM_DESC">Leak</td><td class="Q">8</td><td><center><input type="checkbox" onClick="ToggleDisplay(this,'bt_memory_core_foundation_objective-c_leak');" checked/></center></td></tr>
+</table>
+<h2>Reports</h2>
+
+<table class="sortable" style="table-layout:automatic">
+<thead><tr>
+  <td>Bug Group</td>
+  <td class="sorttable_sorted">Bug Type<span id="sorttable_sortfwdind">&nbsp;&#x25BE;</span></td>
+  <td>File</td>
+  <td class="Q">Line</td>
+  <td class="Q">Path Length</td>
+  <td class="sorttable_nosort"></td>
+  <!-- REPORTBUGCOL -->
+</tr></thead>
+<tbody>
+<tr class="bt_analysistool_memory_management_autorelease_not_called_after_alloc_&_init"><td class="DESC">AnalysisTool : Memory management</td><td class="DESC">'autorelease' not called after alloc & init</td><td>TestKitTestingAppDelegate.m</td><td class="Q">37</td><td class="Q">1</td><td><a href="report-0Nt3ab.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-0Nt3ab.html" -->
+</tr>
+<tr class="bt_analysistool_memory_management_autorelease_not_called_after_alloc_&_init"><td class="DESC">AnalysisTool : Memory management</td><td class="DESC">'autorelease' not called after alloc & init</td><td>TestKitTestingAppDelegate.m</td><td class="Q">42</td><td class="Q">1</td><td><a href="report-6Jb5vg.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-6Jb5vg.html" -->
+</tr>
+<tr class="bt_analysistool_memory_management_autorelease_not_called_after_alloc_&_init"><td class="DESC">AnalysisTool : Memory management</td><td class="DESC">'autorelease' not called after alloc & init</td><td>TestKitTestingAppDelegate.m</td><td class="Q">43</td><td class="Q">1</td><td><a href="report-7B9DoN.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-7B9DoN.html" -->
+</tr>
+<tr class="bt_analysistool_memory_management_autorelease_not_called_after_alloc_&_init"><td class="DESC">AnalysisTool : Memory management</td><td class="DESC">'autorelease' not called after alloc & init</td><td>TestKitTestingAppDelegate.m</td><td class="Q">44</td><td class="Q">1</td><td><a href="report-bQYkD8.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-bQYkD8.html" -->
+</tr>
+<tr class="bt_analysistool_memory_management_autorelease_not_called_after_alloc_&_init"><td class="DESC">AnalysisTool : Memory management</td><td class="DESC">'autorelease' not called after alloc & init</td><td>TestKitTestingAppDelegate.m</td><td class="Q">39</td><td class="Q">1</td><td><a href="report-mbolVm.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-mbolVm.html" -->
+</tr>
+<tr class="bt_analysistool_memory_management_autorelease_not_called_after_alloc_&_init"><td class="DESC">AnalysisTool : Memory management</td><td class="DESC">'autorelease' not called after alloc & init</td><td>TestKitTestingAppDelegate.m</td><td class="Q">40</td><td class="Q">1</td><td><a href="report-mQdQC7.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-mQdQC7.html" -->
+</tr>
+<tr class="bt_analysistool_memory_management_autorelease_not_called_after_alloc_&_init"><td class="DESC">AnalysisTool : Memory management</td><td class="DESC">'autorelease' not called after alloc & init</td><td>TestKitTestingAppDelegate.m</td><td class="Q">46</td><td class="Q">1</td><td><a href="report-r6eBvL.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-r6eBvL.html" -->
+</tr>
+<tr class="bt_analysistool_memory_management_autorelease_not_called_after_alloc_&_init"><td class="DESC">AnalysisTool : Memory management</td><td class="DESC">'autorelease' not called after alloc & init</td><td>TestKitTestingAppDelegate.m</td><td class="Q">47</td><td class="Q">1</td><td><a href="report-uMEazq.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-uMEazq.html" -->
+</tr>
+<tr class="bt_dead_store_dead_initialization"><td class="DESC">Dead store</td><td class="DESC">Dead initialization</td><td>TestKitTestingAppDelegate.m</td><td class="Q">42</td><td class="Q">1</td><td><a href="report-1HGR5f.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-1HGR5f.html" -->
+</tr>
+<tr class="bt_dead_store_dead_initialization"><td class="DESC">Dead store</td><td class="DESC">Dead initialization</td><td>TestKitTestingAppDelegate.m</td><td class="Q">43</td><td class="Q">1</td><td><a href="report-5Q5z1b.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-5Q5z1b.html" -->
+</tr>
+<tr class="bt_dead_store_dead_initialization"><td class="DESC">Dead store</td><td class="DESC">Dead initialization</td><td>TestKitTestingAppDelegate.m</td><td class="Q">40</td><td class="Q">1</td><td><a href="report-7BUC0z.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-7BUC0z.html" -->
+</tr>
+<tr class="bt_dead_store_dead_initialization"><td class="DESC">Dead store</td><td class="DESC">Dead initialization</td><td>TestKitTestingAppDelegate.m</td><td class="Q">39</td><td class="Q">1</td><td><a href="report-cfXrGJ.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-cfXrGJ.html" -->
+</tr>
+<tr class="bt_dead_store_dead_initialization"><td class="DESC">Dead store</td><td class="DESC">Dead initialization</td><td>TestKitTestingAppDelegate.m</td><td class="Q">44</td><td class="Q">1</td><td><a href="report-Ial0Ey.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-Ial0Ey.html" -->
+</tr>
+<tr class="bt_dead_store_dead_initialization"><td class="DESC">Dead store</td><td class="DESC">Dead initialization</td><td>TestKitTestingAppDelegate.m</td><td class="Q">37</td><td class="Q">1</td><td><a href="report-kjPUY0.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-kjPUY0.html" -->
+</tr>
+<tr class="bt_dead_store_dead_initialization"><td class="DESC">Dead store</td><td class="DESC">Dead initialization</td><td>TestKitTestingAppDelegate.m</td><td class="Q">47</td><td class="Q">1</td><td><a href="report-mKi7TR.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-mKi7TR.html" -->
+</tr>
+<tr class="bt_dead_store_dead_initialization"><td class="DESC">Dead store</td><td class="DESC">Dead initialization</td><td>TestKitTestingAppDelegate.m</td><td class="Q">46</td><td class="Q">1</td><td><a href="report-SOz6Kz.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-SOz6Kz.html" -->
+</tr>
+<tr class="bt_memory_core_foundation_objective-c_leak"><td class="DESC">Memory (Core Foundation/Objective-C)</td><td class="DESC">Leak</td><td>TestKitTestingAppDelegate.m</td><td class="Q">43</td><td class="Q">2</td><td><a href="report-55KUg1.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-55KUg1.html" -->
+</tr>
+<tr class="bt_memory_core_foundation_objective-c_leak"><td class="DESC">Memory (Core Foundation/Objective-C)</td><td class="DESC">Leak</td><td>TestKitTestingAppDelegate.m</td><td class="Q">44</td><td class="Q">2</td><td><a href="report-5mpyMY.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-5mpyMY.html" -->
+</tr>
+<tr class="bt_memory_core_foundation_objective-c_leak"><td class="DESC">Memory (Core Foundation/Objective-C)</td><td class="DESC">Leak</td><td>TestKitTestingAppDelegate.m</td><td class="Q">47</td><td class="Q">2</td><td><a href="report-Gkr0el.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-Gkr0el.html" -->
+</tr>
+<tr class="bt_memory_core_foundation_objective-c_leak"><td class="DESC">Memory (Core Foundation/Objective-C)</td><td class="DESC">Leak</td><td>TestKitTestingAppDelegate.m</td><td class="Q">40</td><td class="Q">2</td><td><a href="report-iwqBQG.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-iwqBQG.html" -->
+</tr>
+<tr class="bt_memory_core_foundation_objective-c_leak"><td class="DESC">Memory (Core Foundation/Objective-C)</td><td class="DESC">Leak</td><td>TestKitTestingAppDelegate.m</td><td class="Q">39</td><td class="Q">2</td><td><a href="report-jJYXja.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-jJYXja.html" -->
+</tr>
+<tr class="bt_memory_core_foundation_objective-c_leak"><td class="DESC">Memory (Core Foundation/Objective-C)</td><td class="DESC">Leak</td><td>TestKitTestingAppDelegate.m</td><td class="Q">46</td><td class="Q">2</td><td><a href="report-L8Q7hu.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-L8Q7hu.html" -->
+</tr>
+<tr class="bt_memory_core_foundation_objective-c_leak"><td class="DESC">Memory (Core Foundation/Objective-C)</td><td class="DESC">Leak</td><td>TestKitTestingAppDelegate.m</td><td class="Q">42</td><td class="Q">2</td><td><a href="report-WP7vAW.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-WP7vAW.html" -->
+</tr>
+<tr class="bt_memory_core_foundation_objective-c_leak"><td class="DESC">Memory (Core Foundation/Objective-C)</td><td class="DESC">Leak</td><td>TestKitTestingAppDelegate.m</td><td class="Q">54</td><td class="Q">2</td><td><a href="report-ZgWUug.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-ZgWUug.html" -->
+</tr>
+<tr class="bt_analysistool_complexity_high_cyclomatic_complexity"><td class="DESC">AnalysisTool : Complexity</td><td class="DESC">high cyclomatic complexity</td><td>MessengerSystem<span class="W"> </span>/MessengerViewController.m</td><td class="Q">66</td><td class="Q">1</td><td><a href="report-O2TOLL.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-O2TOLL.html" -->
+</tr>
+<tr class="bt_analysistool_complexity_high_loop_nesting"><td class="DESC">AnalysisTool : Complexity</td><td class="DESC">high loop nesting</td><td>MessengerSystem<span class="W"> </span>/MessengerDisplayView.m</td><td class="Q">76</td><td class="Q">1</td><td><a href="report-5H1m25.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-5H1m25.html" -->
+</tr>
+<tr class="bt_analysistool_naming_conventions_ivar_naming_convention_violation"><td class="DESC">AnalysisTool : Naming conventions</td><td class="DESC">ivar naming convention violation</td><td>TestKitTestingAppDelegate.h</td><td class="Q">17</td><td class="Q">1</td><td><a href="report-oChuat.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-oChuat.html" -->
+</tr>
+</tbody>
+</table>
+
+</body></html>
