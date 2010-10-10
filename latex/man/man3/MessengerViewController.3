@@ -1,4 +1,4 @@
-.TH "MessengerViewController" 3 "Sat Oct 9 2010" "Version 1.0" "MessengerSystem" \" -*- nroff -*-
+.TH "MessengerViewController" 3 "Sun Oct 10 2010" "Version 1.0" "MessengerSystem" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -30,6 +30,9 @@ MessengerViewController \-
 .RI "(void) - \fBdrawDataUpdate\fP"
 .br
 .ti -1c
+.RI "(void) - \fBdrawCallLineFrom:withMID:to:withMID:\fP"
+.br
+.ti -1c
 .RI "(NSString *) - \fBgetMessengerInformationKey:withMID:\fP"
 .br
 .ti -1c
@@ -49,9 +52,6 @@ MessengerViewController \-
 .br
 .ti -1c
 .RI "(void) - \fBtapped:\fP"
-.br
-.ti -1c
-.RI "(void) - \fBresizeButton:\fP"
 .br
 .ti -1c
 .RI "(void) - \fBsetMyName:\fP"
@@ -94,6 +94,12 @@ MessengerViewController \-
 .br
 .ti -1c
 .RI "(void) - \fBscaleResetX:withY:\fP"
+.br
+.ti -1c
+.RI "(float) - \fBgetScreenWidth\fP"
+.br
+.ti -1c
+.RI "(float) - \fBgetScreenHeight\fP"
 .br
 .ti -1c
 .RI "(void) - \fBinputParent:\fP"
@@ -169,6 +175,9 @@ MessengerViewController \-
 .SS "- (void) deleteMessengerInformation: (NSString *) senderName(NSString *) senderMID"通信してきた対象の情報をviwDictから削除するメソッド
 .PP
 メッセンジャーの削除をビューに反映する 
+.SS "- (void) drawCallLineFrom: (NSString *) senderName(NSString *) senderMID(NSString *) addressName(NSString *) addressMID"発生した通信に対して、同調するインスタンスを表示する
+.PP
+通信の発生を確認し、表示するメソッド 
 .SS "- (void) drawDataUpdate "描画データのアップデート
 .PP
 ドローデータの更新 
@@ -180,6 +189,9 @@ MessengerViewController \-
 .PP
 Viewを外部に返す 
 .SS "- (NSMutableDictionary *) getMessengerList "View用の辞書を取得する 
+.SS "- (float) getScreenWidth "スクリーンサイズの取得
+.PP
+スクリーン情報取得 
 .SS "- (void) initMyMID "自分のMIDを初期化するメソッド 
 .SS "- (void) initMyParentData "myParent関連情報を初期化する 
 .SS "- (id) initWithBodyID: (id) body_id(SEL) body_selector(NSString *) name"使用禁止の初期化メソッド 
@@ -193,13 +205,6 @@ Viewを外部に返す
 .SS "- (void) insertMessengerInformation: (NSString *) senderName(NSString *) senderMID"メッセンジャーの生成情報をviewDictへと保持しておくメソッド
 .PP
 メッセンジャーの誕生をビューに反映する 
-.SS "- (void) resizeButton: (UIButton *) b"ボタンのインフォメーションを書き換え、再度描画 
-.PP
-ここからのラインを確認する。 通信の宛先に繋がっているラインをピックアップ、 別途アップデートにかける。どうでもいいか。
-.PP
-第一優先を色、完了 第二優先を→、線の上につける、かなあ、 第三優先を拡大縮小にしようか。画面のピッチに対する倍率を持てばいい。
-.PP
-グローバル基点と、グローバルスケールを持つ。アップデートをタッチ離したときに取ればいい。
 .SS "- (void) scaleResetX: (float) x(float) y"ビューからの直結イベント ズームインかリセットを行う 
 .SS "- (void) setMyBodyID: (id) bodyID"自分のBodyIDをセットするメソッド 
 .PP

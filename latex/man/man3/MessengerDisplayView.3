@@ -1,4 +1,4 @@
-.TH "MessengerDisplayView" 3 "Sat Oct 9 2010" "Version 1.0" "MessengerSystem" \" -*- nroff -*-
+.TH "MessengerDisplayView" 3 "Sun Oct 10 2010" "Version 1.0" "MessengerSystem" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -19,6 +19,12 @@ MessengerDisplayView \-
 .br
 .ti -1c
 .RI "(id) - \fBinitWithMessengerDisplayFrame:\fP"
+.br
+.ti -1c
+.RI "(void) - \fBsetAnimation\fP"
+.br
+.ti -1c
+.RI "(void) - \fBcommitAnimation\fP"
 .br
 .ti -1c
 .RI "(void) - \fBlineFromTo\fP"
@@ -63,10 +69,10 @@ MessengerDisplayView \-
 .in -1c
 .SH "説明"
 .PP 
-親となるコントローラから、ボタンをセットされる対象。 ボタンの下敷きに情報、ラインを描く。 
+親となるコントローラから、ボタンをセットされる対象のUIView。 ボタンの下敷きに情報、ラインを描く。 
 .SH "関数"
 .PP 
-.SS "- (void) lineFromTo (CGContextRef) context(CGPoint) start(CGPoint) end(UIColor *) color"ラインを描画するメソッド αは固定。 
+.SS "- (void) lineFromTo (CGContextRef) context(CGPoint) start(CGPoint) end(UIColor *) color(float) width(float) alphaScale"CGPoint a, b間のラインを描画するメソッド 
 .SS "- (float) linePrmGetA (float) cx(float) cy(float) px(float) py"2点間を通る線について、座標からax+by+c = 0 を出すメソッド 
 .SS "- (void) setControllerDelegate: (id) contID"コントローラのIDをセットする 
 .SS "- (void) updateDrawList: (NSMutableDictionary *) draw(NSMutableDictionary *) connect"辞書を受け取り自己の描画リストを更新する 

@@ -65,7 +65,11 @@ Public メソッド</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">(void)&nbsp;</td><td class="memItemRight" valign="bottom">- <a class="el" href="../../d8/d39/interface_messenger_display_view.html#a3790ae1de28d367eb7ec15ec8ed545fb">updateDrawList:andConnectionList:</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a35cd00c1a534e3f94111e8ba45bd9cc6"></a><!-- doxytag: member="MessengerDisplayView::initWithMessengerDisplayFrame:" ref="a35cd00c1a534e3f94111e8ba45bd9cc6" args="(CGRect frame)" -->
 (id)&nbsp;</td><td class="memItemRight" valign="bottom">- <b>initWithMessengerDisplayFrame:</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">(void)&nbsp;</td><td class="memItemRight" valign="bottom">- <a class="el" href="../../d8/d39/interface_messenger_display_view.html#ad4866b13411e41cdb68d3c92053277eb">lineFromTo</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a59ab35bd5336dd47f2ae7782e79c0ee7"></a><!-- doxytag: member="MessengerDisplayView::setAnimation" ref="a59ab35bd5336dd47f2ae7782e79c0ee7" args="()" -->
+(void)&nbsp;</td><td class="memItemRight" valign="bottom">- <b>setAnimation</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0420927cb1db6723109a55e248d960ce"></a><!-- doxytag: member="MessengerDisplayView::commitAnimation" ref="a0420927cb1db6723109a55e248d960ce" args="()" -->
+(void)&nbsp;</td><td class="memItemRight" valign="bottom">- <b>commitAnimation</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">(void)&nbsp;</td><td class="memItemRight" valign="bottom">- <a class="el" href="../../d8/d39/interface_messenger_display_view.html#abb984db49dc97bad42145686da9b9251">lineFromTo</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">(float)&nbsp;</td><td class="memItemRight" valign="bottom">- <a class="el" href="../../d8/d39/interface_messenger_display_view.html#ac1379b56ac2e7d2b572e147e81971e90">linePrmGetA</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a71965f56d6a2665d3f71b0c4ecfe13d0"></a><!-- doxytag: member="MessengerDisplayView::linePrmGetB" ref="a71965f56d6a2665d3f71b0c4ecfe13d0" args="(float cx, float cy, float px, float py)" -->
 (float)&nbsp;</td><td class="memItemRight" valign="bottom">- <b>linePrmGetB</b></td></tr>
@@ -91,9 +95,9 @@ CGFloat&nbsp;</td><td class="memItemRight" valign="bottom"><b>m_lastPinchDist</b
 CGPoint&nbsp;</td><td class="memItemRight" valign="bottom"><b>m_lastPoint</b></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>説明</h2>
-<p>親となるコントローラから、ボタンをセットされる対象。 ボタンの下敷きに情報、ラインを描く。 </p>
+<p>親となるコントローラから、ボタンをセットされる対象のUIView。 ボタンの下敷きに情報、ラインを描く。 </p>
 <hr/><h2>関数</h2>
-<a class="anchor" id="ad4866b13411e41cdb68d3c92053277eb"></a><!-- doxytag: member="MessengerDisplayView::lineFromTo" ref="ad4866b13411e41cdb68d3c92053277eb" args="(CGContextRef context, CGPoint start, CGPoint end, UIColor *color)" -->
+<a class="anchor" id="abb984db49dc97bad42145686da9b9251"></a><!-- doxytag: member="MessengerDisplayView::lineFromTo" ref="abb984db49dc97bad42145686da9b9251" args="(CGContextRef context, CGPoint start, CGPoint end, UIColor *color, float width, float alphaScale)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -119,7 +123,19 @@ CGPoint&nbsp;</td><td class="memItemRight" valign="bottom"><b>m_lastPoint</b></t
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">(UIColor *)&nbsp;</td>
-          <td class="paramname"> <em>color</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>color</em></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">(float)&nbsp;</td>
+          <td class="paramname"> <em>width</em></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">(float)&nbsp;</td>
+          <td class="paramname"> <em>alphaScale</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -129,7 +145,7 @@ CGPoint&nbsp;</td><td class="memItemRight" valign="bottom"><b>m_lastPoint</b></t
       </table>
 </div>
 <div class="memdoc">
-<p>ラインを描画するメソッド αは固定。 </p>
+<p>CGPoint a, b間のラインを描画するメソッド </p>
 
 </div>
 </div>
@@ -239,7 +255,7 @@ CGPoint&nbsp;</td><td class="memItemRight" valign="bottom"><b>m_lastPoint</b></t
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>MessengerSystemに対してSat Oct 9 2010 21:53:27に生成されました。&nbsp;
+<hr class="footer"/><address class="footer"><small>MessengerSystemに対してSun Oct 10 2010 14:40:35に生成されました。&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

@@ -23,6 +23,8 @@ MessengerViewControllerに対する継承グラフ\begin{figure}[H]
 \item 
 (void) -\/ \hyperlink{interface_messenger_view_controller_aba89f37600bb5cc7258a034614257dc6}{drawDataUpdate}
 \item 
+(void) -\/ \hyperlink{interface_messenger_view_controller_acfc602cab1e37653e205cc03bf909095}{drawCallLineFrom:withMID:to:withMID:}
+\item 
 (NSString $\ast$) -\/ \hyperlink{interface_messenger_view_controller_a9c958b9ee93a81551b3aa4209eaa3c71}{getMessengerInformationKey:withMID:}
 \item 
 (NSMutableDictionary $\ast$) -\/ \hyperlink{interface_messenger_view_controller_afa883d1d29e91d003087a0f4b839daf3}{getButtonList}
@@ -39,8 +41,6 @@ MessengerViewControllerに対する継承グラフ\begin{figure}[H]
 (UIView $\ast$) -\/ \hyperlink{interface_messenger_view_controller_ae7d3fbe4156df4e7f1539f50500f0919}{getMessengerInterfaceView}
 \item 
 (void) -\/ \hyperlink{interface_messenger_view_controller_a008c7cc6364c75b6f70ef3d79fa3a043}{tapped:}
-\item 
-(void) -\/ \hyperlink{interface_messenger_view_controller_a61c88e671203c5651b89394f3b300285}{resizeButton:}
 \item 
 (void) -\/ \hyperlink{interface_messenger_view_controller_afe36a73932b47fb2c60412c6f03f67ac}{setMyName:}
 \item 
@@ -81,6 +81,13 @@ MessengerViewControllerに対する継承グラフ\begin{figure}[H]
 
 \item 
 (void) -\/ \hyperlink{interface_messenger_view_controller_a9a0f05d1d3a3685a3d3ce7632c2bc7ee}{scaleResetX:withY:}
+\item 
+(float) -\/ \hyperlink{interface_messenger_view_controller_aa76c05b79b38d78ee26b4fb8be95d6eb}{getScreenWidth}
+\item 
+\hypertarget{interface_messenger_view_controller_ac972de3488458cbf0f7c60b46fde71ad}{
+(float) -\/ {\bfseries getScreenHeight}}
+\label{d7/d34/interface_messenger_view_controller_ac972de3488458cbf0f7c60b46fde71ad}
+
 \item 
 (void) -\/ \hyperlink{interface_messenger_view_controller_a33bb3cca76fba84a3e5b480131e5faf1}{inputParent:}
 \item 
@@ -224,7 +231,21 @@ Dealloc \hypertarget{interface_messenger_view_controller_ab9c9343a0f520cdc1aa91b
 \label{d7/d34/interface_messenger_view_controller_ab9c9343a0f520cdc1aa91b3985b31f7a}
 通信してきた対象の情報をviwDictから削除するメソッド
 
-メッセンジャーの削除をビューに反映する \hypertarget{interface_messenger_view_controller_aba89f37600bb5cc7258a034614257dc6}{
+メッセンジャーの削除をビューに反映する \hypertarget{interface_messenger_view_controller_acfc602cab1e37653e205cc03bf909095}{
+\index{MessengerViewController@{MessengerViewController}!drawCallLineFrom:withMID:to:withMID:@{drawCallLineFrom:withMID:to:withMID:}}
+\index{drawCallLineFrom:withMID:to:withMID:@{drawCallLineFrom:withMID:to:withMID:}!MessengerViewController@{MessengerViewController}}
+\subsubsection[{drawCallLineFrom:withMID:to:withMID:}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (void) drawCallLineFrom: 
+\begin{DoxyParamCaption}
+\item[{dummy(NSString $\ast$)}]{ senderName}
+\item[{withMID:(NSString $\ast$)}]{ senderMID}
+\item[{to:(NSString $\ast$)}]{ addressName}
+\item[{withMID:(NSString $\ast$)}]{ addressMID}
+\end{DoxyParamCaption}
+}}
+\label{d7/d34/interface_messenger_view_controller_acfc602cab1e37653e205cc03bf909095}
+発生した通信に対して、同調するインスタンスを表示する
+
+通信の発生を確認し、表示するメソッド \hypertarget{interface_messenger_view_controller_aba89f37600bb5cc7258a034614257dc6}{
 \index{MessengerViewController@{MessengerViewController}!drawDataUpdate@{drawDataUpdate}}
 \index{drawDataUpdate@{drawDataUpdate}!MessengerViewController@{MessengerViewController}}
 \subsubsection[{drawDataUpdate}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (void) drawDataUpdate 
@@ -276,7 +297,18 @@ Viewを外部に返す \hypertarget{interface_messenger_view_controller_a2e4617f
 \end{DoxyParamCaption}
 }}
 \label{d7/d34/interface_messenger_view_controller_a2e4617fc57087279158f9df78fab0a87}
-View用の辞書を取得する \hypertarget{interface_messenger_view_controller_a2c2f7a46b94facbc66d66c7dd6da34bd}{
+View用の辞書を取得する \hypertarget{interface_messenger_view_controller_aa76c05b79b38d78ee26b4fb8be95d6eb}{
+\index{MessengerViewController@{MessengerViewController}!getScreenWidth@{getScreenWidth}}
+\index{getScreenWidth@{getScreenWidth}!MessengerViewController@{MessengerViewController}}
+\subsubsection[{getScreenWidth}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (float) getScreenWidth 
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+}}
+\label{d7/d34/interface_messenger_view_controller_aa76c05b79b38d78ee26b4fb8be95d6eb}
+スクリーンサイズの取得
+
+スクリーン情報取得 \hypertarget{interface_messenger_view_controller_a2c2f7a46b94facbc66d66c7dd6da34bd}{
 \index{MessengerViewController@{MessengerViewController}!initMyMID@{initMyMID}}
 \index{initMyMID@{initMyMID}!MessengerViewController@{MessengerViewController}}
 \subsubsection[{initMyMID}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (void) initMyMID 
@@ -352,24 +384,7 @@ myParent関連情報を初期化する \hypertarget{interface_messenger_view_con
 \label{d7/d34/interface_messenger_view_controller_aa30151ef1d95034a10fa31e9c8a7da22}
 メッセンジャーの生成情報をviewDictへと保持しておくメソッド
 
-メッセンジャーの誕生をビューに反映する \hypertarget{interface_messenger_view_controller_a61c88e671203c5651b89394f3b300285}{
-\index{MessengerViewController@{MessengerViewController}!resizeButton:@{resizeButton:}}
-\index{resizeButton:@{resizeButton:}!MessengerViewController@{MessengerViewController}}
-\subsubsection[{resizeButton:}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (void) resizeButton: 
-\begin{DoxyParamCaption}
-\item[{dummy(UIButton $\ast$)}]{ b}
-\end{DoxyParamCaption}
-}}
-\label{d7/d34/interface_messenger_view_controller_a61c88e671203c5651b89394f3b300285}
-ボタンのインフォメーションを書き換え、再度描画 
-
-ここからのラインを確認する。 通信の宛先に繋がっているラインをピックアップ、 別途アップデートにかける。どうでもいいか。
-
-第一優先を色、完了 第二優先を→、線の上につける、かなあ、 第三優先を拡大縮小にしようか。画面のピッチに対する倍率を持てばいい。
-
-グローバル基点と、グローバルスケールを持つ。アップデートをタッチ離したときに取ればいい。
-
-\hypertarget{interface_messenger_view_controller_a9a0f05d1d3a3685a3d3ce7632c2bc7ee}{
+メッセンジャーの誕生をビューに反映する \hypertarget{interface_messenger_view_controller_a9a0f05d1d3a3685a3d3ce7632c2bc7ee}{
 \index{MessengerViewController@{MessengerViewController}!scaleResetX:withY:@{scaleResetX:withY:}}
 \index{scaleResetX:withY:@{scaleResetX:withY:}!MessengerViewController@{MessengerViewController}}
 \subsubsection[{scaleResetX:withY:}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (void) scaleResetX: 
