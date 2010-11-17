@@ -106,7 +106,7 @@
 	
 	NSMutableDictionary * dict = (NSMutableDictionary *)[notification userInfo];
 	NSLog(@"到達している_%@", dict);
-	
+	[parent getExecAsString:dict]
 	NSString * exec = [dict valueForKey:MS_EXECUTE];
 	
 	if ([exec isEqualToString:TEST_PARENT_INVOKE]) {
