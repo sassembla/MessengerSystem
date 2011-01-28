@@ -33,15 +33,15 @@
 /* Begin PBXFileReference section */
 		1321AF58124745DD00C5D3F6 /* MessengerDisplayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessengerDisplayView.h; sourceTree = "<group>"; };
 		1321AF59124745DD00C5D3F6 /* MessengerDisplayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessengerDisplayView.m; sourceTree = "<group>"; };
-		134551B1122A4D0200E348F5 /* MessengerSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessengerSystem.h; sourceTree = "<group>"; };
-		134551B2122A4D0200E348F5 /* MessengerSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessengerSystem.m; sourceTree = "<group>"; };
+		134551B1122A4D0200E348F5 /* MessengerSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessengerSystem.h; path = Classes/MessengerSystem/MessengerSystem.h; sourceTree = "<group>"; };
+		134551B2122A4D0200E348F5 /* MessengerSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MessengerSystem.m; path = Classes/MessengerSystem/MessengerSystem.m; sourceTree = "<group>"; };
 		134551B4122A4D1600E348F5 /* MessengerSystemTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessengerSystemTest.m; sourceTree = "<group>"; };
 		13455449122A6A0A00E348F5 /* coTestObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coTestObject.h; sourceTree = "<group>"; };
 		1345544A122A6A0A00E348F5 /* coTestObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = coTestObject.m; sourceTree = "<group>"; };
 		137DA955122A26D500FB5497 /* TestBundle.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestBundle.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		137DA956122A26D500FB5497 /* TestBundle-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TestBundle-Info.plist"; sourceTree = "<group>"; };
-		13A2E99212407C6E007685AD /* MessengerIDGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessengerIDGenerator.h; sourceTree = "<group>"; };
-		13A2E99312407C6E007685AD /* MessengerIDGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessengerIDGenerator.m; sourceTree = "<group>"; };
+		13A2E99212407C6E007685AD /* MessengerIDGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessengerIDGenerator.h; path = Classes/MessengerSystem/MessengerIDGenerator.h; sourceTree = "<group>"; };
+		13A2E99312407C6E007685AD /* MessengerIDGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MessengerIDGenerator.m; path = Classes/MessengerSystem/MessengerIDGenerator.m; sourceTree = "<group>"; };
 		13A9E95B123D2F5800981224 /* NameList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NameList.h; sourceTree = "<group>"; };
 		13AC407C123CB3E700AAF658 /* MessengerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessengerViewController.h; sourceTree = "<group>"; };
 		13AC407D123CB3E700AAF658 /* MessengerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessengerViewController.m; sourceTree = "<group>"; };
@@ -98,16 +98,9 @@
 		134551B0122A4D0200E348F5 /* MessengerSystem */ = {
 			isa = PBXGroup;
 			children = (
-				13B64BD6124BB93100D9E800 /* GlyphTable */,
-				134551B1122A4D0200E348F5 /* MessengerSystem.h */,
-				134551B2122A4D0200E348F5 /* MessengerSystem.m */,
+				211C111212F2CDCE00329BD0 /* MessengerSystem+Visualizer */,
+				211C111112F2CDA900329BD0 /* MessengerSystemCore */,
 				134551B4122A4D1600E348F5 /* MessengerSystemTest.m */,
-				13AC407C123CB3E700AAF658 /* MessengerViewController.h */,
-				13AC407D123CB3E700AAF658 /* MessengerViewController.m */,
-				13A2E99212407C6E007685AD /* MessengerIDGenerator.h */,
-				13A2E99312407C6E007685AD /* MessengerIDGenerator.m */,
-				1321AF58124745DD00C5D3F6 /* MessengerDisplayView.h */,
-				1321AF59124745DD00C5D3F6 /* MessengerDisplayView.m */,
 			);
 			name = MessengerSystem;
 			path = Classes/MessengerSystem;
@@ -129,6 +122,30 @@
 				137DA955122A26D500FB5497 /* TestBundle.octest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		211C111112F2CDA900329BD0 /* MessengerSystemCore */ = {
+			isa = PBXGroup;
+			children = (
+				13A2E99212407C6E007685AD /* MessengerIDGenerator.h */,
+				13A2E99312407C6E007685AD /* MessengerIDGenerator.m */,
+				134551B1122A4D0200E348F5 /* MessengerSystem.h */,
+				134551B2122A4D0200E348F5 /* MessengerSystem.m */,
+			);
+			name = MessengerSystemCore;
+			path = ../..;
+			sourceTree = "<group>";
+		};
+		211C111212F2CDCE00329BD0 /* MessengerSystem+Visualizer */ = {
+			isa = PBXGroup;
+			children = (
+				13B64BD6124BB93100D9E800 /* GlyphTable */,
+				13AC407C123CB3E700AAF658 /* MessengerViewController.h */,
+				13AC407D123CB3E700AAF658 /* MessengerViewController.m */,
+				1321AF58124745DD00C5D3F6 /* MessengerDisplayView.h */,
+				1321AF59124745DD00C5D3F6 /* MessengerDisplayView.m */,
+			);
+			name = "MessengerSystem+Visualizer";
 			sourceTree = "<group>";
 		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {

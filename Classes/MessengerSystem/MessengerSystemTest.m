@@ -104,10 +104,24 @@
  */
 - (void) m_testParent:(NSNotification * )notification {
 	
-	NSMutableDictionary * dict = (NSMutableDictionary *)[notification userInfo];
-	NSLog(@"到達している_%@", dict);
-	[parent getExecAsString:dict]
-	NSString * exec = [dict valueForKey:MS_EXECUTE];
+	NSMutableDictionary * dict = [parent getTagValueDictionaryFromNotification:notification];	
+	
+	
+	
+	[parent showMessengerPackage:notification];
+	
+	
+	
+	NSString * exec = [parent getExecAsString:dict];//辞書からの取得
+	
+	NSString * exec1 = [dict valueForKey:MS_EXECUTE];//直接キーを指定して取得
+	
+	NSString * exec2 = [parent getExecFromNortification:notification];//notificationからの取得
+	
+	
+	STAssertEquals(exec,exec1, @"m_testParent_一致しない_0,1");
+	STAssertEquals(exec,exec2, @"m_testParent_一致しない_0,2");
+	STAssertEquals(exec1,exec2, @"m_testParent_一致しない_1,2");
 	
 	if ([exec isEqualToString:TEST_PARENT_INVOKE]) {
 		[parent remoteInvocation:dict, @"遠隔実行で親から子供の、子供から指定されたメソッド実行にて実行しています。", nil];
@@ -156,7 +170,7 @@
 	
 	NSString * exec = [dict valueForKey:MS_EXECUTE];
 	NSLog(@"exec1_%@",exec);
-		
+	
 }
 
 /**
@@ -209,6 +223,7 @@
  自分自身へのテスト
  */
 - (void) testCallMyself {
+	
 	[parent callMyself:@"To Myself!!",nil];
 	
 	//送信記録と受信記録が残る筈。
@@ -226,8 +241,8 @@
 	NSLog(@"code_retainCount_%d", [code retainCount]);//この時点で１ならOK、というレベル。
 	NSLog(@"code_%@", code);
 	//[code release];//リリースしちゃいけないのか！
-//	NSLog(@"code_retainCount2_%d", [code retainCount]);//releaseした後でも１を保つが、参照すると吹っ飛ぶ。
-
+	//	NSLog(@"code_retainCount2_%d", [code retainCount]);//releaseした後でも１を保つが、参照すると吹っ飛ぶ。
+	
 	
 	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
 	STAssertTrue([child_0 retainCount] == 1, [NSString stringWithFormat:@"解放準備ができていない1_%d", [child_0 retainCount]]);
@@ -305,8 +320,8 @@
 	
 	NSMutableDictionary * dict = [parent getChildDict];
 	STAssertEquals([dict valueForKey:[child_0 getMyMID]], [child_0 getMyName], [NSString stringWithFormat:@"多分なにやらまちがえたんかも_%@", dict]);
-
-//	STAssertTrue([child_0 retainCount] == 1, @"testGetChildDict　カウントがおかしい_%d", [child_0 retainCount]);
+	
+	//	STAssertTrue([child_0 retainCount] == 1, @"testGetChildDict　カウントがおかしい_%d", [child_0 retainCount]);
 	[child_0 release];
 }
 
@@ -327,8 +342,8 @@
 	NSDictionary * m_logDict = [child_0 getLogStore];
 	
 	STAssertTrue([m_logDict count] == 2, [NSString stringWithFormat:@"内容が合致しません_%d", [m_logDict count]]);
-
-//	STAssertTrue([child_0 retainCount] == 1, @"testCreateLog　カウントがおかしい_%d", [child_0 retainCount]);
+	
+	//	STAssertTrue([child_0 retainCount] == 1, @"testCreateLog　カウントがおかしい_%d", [child_0 retainCount]);
 	[child_0 release];//でてない,,,
 	NSLog(@"突破してる");
 }
@@ -432,7 +447,7 @@
 	
 	[child_0 inputParent:TEST_PARENT_NAME];//発信、親認定で+2件
 	
-
+	
 	NSDictionary * parentLogDict = [parent getLogStore];//親の辞書には、子供Aからの通信で1件、存在しない子供Bへの最初の書き込みで0件 1
 	STAssertTrue([parentLogDict count] == 1, [NSString stringWithFormat:@"testCallToNotChild_親の内容1_内容が合致しません_%d", [parentLogDict count]]);	
 	
@@ -456,7 +471,7 @@
 	[child_0 inputParent:TEST_PARENT_NAME];//発信、親認定で+2件
 	[child_2 inputParent:TEST_PARENT_NAME];//発信、親認定で+2件
 	[child_3 inputParent:TEST_PARENT_NAME];//発信、親認定で+2件
-
+	
 	[parent call:TEST_CHILD_NAME_0 withExec:TEST_EXEC, nil];
 	[parent call:TEST_CHILD_NAME_2 withExec:TEST_EXEC, nil];
 	[parent call:TEST_CHILD_NAME_3 withExec:TEST_EXEC, nil];
@@ -621,7 +636,7 @@
 	
 	
 	//親に送る系の命令は、child_2からは0、0からはparentに行くはず。
-//	STAssertTrue([child_2 retainCount] == 1, @"testChild_s_child　カウントがおかしい_%d", [child_2 retainCount]);
+	//	STAssertTrue([child_2 retainCount] == 1, @"testChild_s_child　カウントがおかしい_%d", [child_2 retainCount]);
 	[child_2 release];
 }
 
@@ -846,7 +861,7 @@
 	[child_0 callMyself:@"テスト",
 	 [child_0 withDelay:0.3],
 	 nil];
-		
+	
 	[parent removeAllChild];//ここで親が消える、送信記録１件
 	
 	STAssertTrue([logDP count] == 2, @"親のログ件数が増えている、受け取ってしまっている3？_%d", [logDP count]);
@@ -891,7 +906,7 @@
 	[parent callMyself:@"テスト",//+2
 	 [child_0 withDelay:0.3],
 	 nil];
-
+	
 	STAssertTrue([logDP count] == 3, @"送信できてない1_%d", [logDP count]);
 	
 	STAssertTrue([logD count] == 2, @"送信できてない1_%d", [logD count]);
@@ -932,7 +947,7 @@
 	 nil];
 	
 	[child_0 removeFromParent];//ここで親から消える、送信記録１件
-
+	
 	STAssertTrue([logDP count] == 4, @"親のログ件数が増えている、受け取ってしまっている3？_%d", [logDP count]);
 	STAssertTrue([logD count] == 3, @"送信できてない3_%d", [logD count]);
 	
@@ -1019,7 +1034,7 @@
 	 nil];
 	
 	[parent removeAllChild];//ここで親が消える、送信記録１件
-
+	
 	STAssertTrue([logDP count] == 4, @"親のログ件数が増えている、受け取ってしまっている3？_%d", [logDP count]);
 	STAssertTrue([logD count] == 3, @"送信できてない3_%d", [logD count]);
 	STAssertTrue([[child_0 getMyParentName] isEqualToString:MS_DEFAULT_PARENTNAME], @"親の名前がデフォルトになっていない");
@@ -1102,7 +1117,7 @@
 	[child_00 callMyself:@"時間差",
 	 [child_00 withDelay:0.5],
 	 nil];
-		
+	
 	[parent callMyself:@"観測者",
 	 [parent withDelay:0.5],
 	 nil];
@@ -1215,19 +1230,19 @@
 	
 	STAssertTrue([mMessengerList count] == 1, [NSString stringWithFormat:@"ViewDict件数が合っていない1_%d", [mMessengerList count]]);
 	STAssertTrue([mButtonList count] == 1, [NSString stringWithFormat:@"m_buttonList件数が合っていない1_%d", [mButtonList count]]);
-
+	
 	MessengerSystem * parent2 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testParent:) withName:TEST_PARENT_NAME_2];
 	
 	STAssertTrue([mMessengerList count] == 2, [NSString stringWithFormat:@"ViewDict件数が合っていない2_%d", [mMessengerList count]]);
 	STAssertTrue([mButtonList count] == 2, [NSString stringWithFormat:@"m_buttonList件数が合っていない2_%d", [mButtonList count]]);
-
+	
 	
 	[child_0 inputParent:TEST_PARENT_NAME];//親子関係を成立、
 	
 	
 	STAssertTrue([mMessengerList count] == 3, [NSString stringWithFormat:@"ViewDict件数が合っていない3_%d", [mMessengerList count]]);
 	STAssertTrue([mButtonList count] == 3, [NSString stringWithFormat:@"m_buttonList件数が合っていない3_%d", [mButtonList count]]);
-
+	
 	//このタイミングで、ラインは一本
 	
 	[child_0 removeFromParent];//一件成立している親子関係を破壊
@@ -1402,7 +1417,7 @@
 	MessengerSystem * mes2 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:@"テスト１"];
 	MessengerSystem * mes3 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:@"テスト２"];
 	MessengerSystem * mes4 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:@"テスト３"];
-
+	
 	//件数が3件ならOK
 	STAssertTrue([[mView getNameIndexDictionary] count] == 3, @"件数が一致しない");
 	
@@ -1523,13 +1538,10 @@
 }
 
 
-
-
 /**
  ビュー上のボタンがタップされたら色が変わったりする処理
  */
 - (void) testButtonTapped{
-	
 	
 }
 

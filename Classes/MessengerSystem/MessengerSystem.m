@@ -86,14 +86,14 @@
 	//コマンド名について確認
 	NSString * commandName = [dict valueForKey:MS_CATEGOLY];
 	if (!commandName) {
-//		NSLog(@"コマンドが無いため、何の処理も行われずに帰る");
+		//		NSLog(@"コマンドが無いため、何の処理も行われずに帰る");
 		return;
 	}
 	
 	//送信者名
 	NSString * senderName = [dict valueForKey:MS_SENDERNAME];
 	if (!senderName) {//送信者不詳であれば無視する
-//		NSLog(@"送信者NAME不詳");
+		//		NSLog(@"送信者NAME不詳");
 		return;
 	}
 	
@@ -101,7 +101,7 @@
 	//送信者MID
 	NSString * senderMID = [dict valueForKey:MS_SENDERMID];
 	if (!senderMID) {//送信者不詳であれば無視する
-//		NSLog(@"送信者ID不詳");
+		//		NSLog(@"送信者ID不詳");
 		return;
 	}
 	
@@ -109,7 +109,7 @@
 	//宛名確認
 	NSString * address = [dict valueForKey:MS_ADDRESS_NAME];
 	if (!address) {
-//		NSLog(@"宛名が無い_%@ Iam_%@", commandName, [self getMyName]);
+		//		NSLog(@"宛名が無い_%@ Iam_%@", commandName, [self getMyName]);
 		return;
 	}
 	
@@ -123,7 +123,7 @@
 		//メッセージIDについて確認
 		NSString * messageID = [recievedLogDict valueForKey:MS_LOG_MESSAGEID];
 		if (!messageID) {
-//			NSLog(@"メッセージIDが無いため、何の処理も行われずに帰る");
+			//			NSLog(@"メッセージIDが無いため、何の処理も行われずに帰る");
 			return;
 		}		
 	}
@@ -162,12 +162,12 @@
 		
 		
 		if (![senderName isEqualToString:[self getMyName]]) {
-//			NSLog(@"MS_CATEGOLY_LOCAL 名称が違う_%@", [self getMyName]);
+			//			NSLog(@"MS_CATEGOLY_LOCAL 名称が違う_%@", [self getMyName]);
 			return;
 		}
 		
 		if (![senderMID isEqualToString:[self getMyMID]]) {//MIDが異なれば処理をしない
-//			NSLog(@"名前が同様の異なるMIDを持つオブジェクト");
+			//			NSLog(@"名前が同様の異なるMIDを持つオブジェクト");
 			return;
 		}
 		
@@ -192,9 +192,9 @@
 	if ([commandName isEqualToString:MS_CATEGOLY_CALLCHILD]) {
 		//宛名が自分の事でなかったら帰る
 		if (![address isEqualToString:[self getMyName]]) {
-//			NSLog(@"自分宛ではないので却下_From_%@,	To_%@,	Iam_%@", senderName, address, [self getMyName]);
+			//			NSLog(@"自分宛ではないので却下_From_%@,	To_%@,	Iam_%@", senderName, address, [self getMyName]);
 			return;
-		
+			
 		}
 		
 		
@@ -236,7 +236,7 @@
 	if ([commandName isEqualToString:MS_CATEGOLY_CALLPARENT]) {//親に送られたメッセージ
 		
 		if (![address isEqualToString:[self getMyName]]) {//送信者の指定した宛先が自分か
-//			NSLog(@"MS_CATEGOLY_CALLPARENT_宛先ではないMessnegerが受け取った");
+			//			NSLog(@"MS_CATEGOLY_CALLPARENT_宛先ではないMessnegerが受け取った");
 			return;
 		}
 		
@@ -244,14 +244,14 @@
 		//宛先MIDのキーがあるか
 		NSString * calledParentMSID = [dict valueForKey:MS_ADDRESS_MID];
 		if (!calledParentMSID) {
-//			NSLog(@"親のMIDの入力が無ければ無効");
+			//			NSLog(@"親のMIDの入力が無ければ無効");
 			return;//値が無ければ無視する
 		}
 		
 		
 		//自分のMIDと一致するか
 		if (![calledParentMSID isEqualToString:[self getMyMID]]) {
-//			NSLog(@"同名の親が存在するが、呼ばれている親と異なるため無効");
+			//			NSLog(@"同名の親が存在するが、呼ばれている親と異なるため無効");
 			return;
 		}
 		
@@ -307,7 +307,7 @@
 					
 					return;
 				}
-					  
+				
 				if ([invocatorId hasParent]) {
 					NSAssert(FALSE, @"親が既に存在している");//現在は複数の親を許容する仕様ではないので、エラーとして発生させる
 				}
@@ -320,7 +320,7 @@
 					return;
 				}
 			}
-
+			
 			
 			
 			//受信時にログに受信記録を付け、保存する
@@ -372,7 +372,7 @@
 	
 	//子供解消のコマンドが届いた
 	if ([commandName isEqualToString:MS_CATEGOLY_REMOVE_CHILD]) {
-//		NSLog(@"MS_CATEGOLY_REMOVE_CHILD到着");
+		//		NSLog(@"MS_CATEGOLY_REMOVE_CHILD到着");
 		
 		//自分自身を除外
 		if ([[self getMyMID] isEqualToString:senderMID]) {
@@ -451,7 +451,7 @@
 /**
  遠隔実行発行メソッド
  プライベート版、可変長引数受付
-*/
+ */
 - (void) remoteInvocation:(id)inv withDict:(NSMutableDictionary * )dict, ... {
 	
 	if (![self isIncludeRemote:dict]) {
@@ -687,7 +687,7 @@
 	
 	[m_logDict setValue:
 	 [NSString stringWithFormat:@"%@ %@", name, [value valueForKey:[key objectAtIndex:0]]] 
-			   forKey:
+				 forKey:
 	 [NSString stringWithFormat:@"%@ %@", [[[MessengerIDGenerator getMID] copy] autorelease], [NSDate date]]
 	 ];
 	
@@ -841,7 +841,7 @@
 	 ・だれかと親子になってみる
 	 
 	 ・親子間でメッセージ
-		子から親、親から子
+	 子から親、親から子
 	 
 	 ・親から複数の子にメッセージ
 	 
@@ -918,7 +918,7 @@
 	
 	if (mID) [dict setValue:mID forKey:MS_SPECIFYMID];//特定の親宛であればキーを付ける
 	
-	 
+	
 	//遠隔実装メソッドを設定 一般的なinvokeメソッドではなく、senderIDを偽装、カウンタが増えないようにしたものを使用する。
 	[dict setValue:[self setPrivateRemoteInvocationFrom:self withSelector:@selector(setMyParentMID:)] forKey:MS_RETURN];
 	
@@ -950,15 +950,15 @@
 	[dict setValue:[self getMyParentName] forKey:MS_ADDRESS_NAME];
 	[dict setValue:[self getMyParentMID] forKey:MS_ADDRESS_MID];
 	
-//	NSLog(@"[[self getMyParentName] hash]_%d", [[self getMyParentName] hash]);
-//	NSLog(@"[[dict valueForKey:MS_ADDRESS_NAME] hash]_%d", [[dict valueForKey:MS_ADDRESS_NAME] hash]);
+	//	NSLog(@"[[self getMyParentName] hash]_%d", [[self getMyParentName] hash]);
+	//	NSLog(@"[[dict valueForKey:MS_ADDRESS_NAME] hash]_%d", [[dict valueForKey:MS_ADDRESS_NAME] hash]);
 	
 	[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
 	[dict setValue:[self getMyMID] forKey:MS_SENDERMID];
 	
 	//ログを作成する
 	[self addCreationLog:dict];
-
+	
 	//最終送信処理
 	[self sendPerform:dict];//送信に失敗すると、親子関係は終了しない。この部分でエラーが出るのがたより。
 	
@@ -967,7 +967,7 @@
 	
 	//更新通知
 	[self updatedNotice:[self getMyParentName] withParentMID:[self getMyParentMID]];
-
+	
 }
 
 /**
@@ -987,7 +987,7 @@
 	
 	//ログを作成する
 	[self addCreationLog:dict];
-
+	
 	//最終送信処理
 	[self sendPerform:dict];
 	
@@ -1148,7 +1148,7 @@
 	va_end(ap);
 	
 	[self sendMessage:dict];
-
+	
 }
 
 /**
@@ -1451,7 +1451,7 @@ unsigned int SDBMHash(char * str, unsigned int len) {
 	//ret = FNVHash(bytes,length);
 	
 	return ret;
-
+	
 }
 
 
@@ -1502,7 +1502,7 @@ unsigned int SDBMHash(char * str, unsigned int len) {
 			
 		}  ;
 	}
-
+	
 	/**
 	 数字の4文字をまとめて処理している。最小で1,とかなので、足したものから複合するしかない。或る意味暗号。
 	 */
@@ -1520,6 +1520,33 @@ unsigned int SDBMHash(char * str, unsigned int len) {
 }
 
 
+/**
+ Messengerが搬送している中身をNSLogで表示する。
+ not tested
+ */
+- (void) showMessengerPackage:(NSNotification * )nort {
+	NSLog(@"showMessengerPackage_%@_", [nort userInfo]);
+}
+
+
+/**
+ 自分コマンドのDictionaryをnortから直接取得するメソッド
+ */
+- (NSMutableDictionary * ) getTagValueDictionaryFromNotification:(NSNotification * )nort {
+	NSMutableDictionary * dict = (NSMutableDictionary * )[nort userInfo];
+	
+	return dict;
+}
+
+
+/**
+ Execをnortから直接取得するメソッド
+ */
+- (NSString * ) getExecFromNortification:(NSNotification * )nort {
+	NSMutableDictionary * dict = [self getTagValueDictionaryFromNotification:nort];
+	
+	return [self getExecAsString:dict];
+}
 
 
 
@@ -1632,37 +1659,37 @@ unsigned int SDBMHash(char * str, unsigned int len) {
 - (void) dealloc {
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:OBSERVER_ID object:nil];//ノーティフィケーションから外す
-
+	
 	
 	if ([self hasChild]) {
-//		NSLog(@"子供がいる_%@",[self getMyName]);
+		//		NSLog(@"子供がいる_%@",[self getMyName]);
 		[self removeAllChild];
 	}
 	
 	if ([self hasParent]) {
-//		NSLog(@"親がいる_%@",[self getMyName]);
+		//		NSLog(@"親がいる_%@",[self getMyName]);
 		[self removeFromParent];
 	}
 	
 	[self killedNotice];
-
+	
 	
 	//自分の名前	NSString
-//	NSAssert([myName retainCount] == 1, @"myName_%d",[myName retainCount]);
+	//	NSAssert([myName retainCount] == 1, @"myName_%d",[myName retainCount]);
 	myName = nil;
 	
 	
 	//自分のID	NSString
-//	NSAssert([myMID retainCount] == 1, @"myMID_%d",[myMID retainCount]);
+	//	NSAssert([myMID retainCount] == 1, @"myMID_%d",[myMID retainCount]);
 	myMID = nil;
 	
 	
 	//親の名前	NSString
-//	NSAssert([myParentName retainCount] == 1, @"myParentName_%d",[myParentName retainCount]);
+	//	NSAssert([myParentName retainCount] == 1, @"myParentName_%d",[myParentName retainCount]);
 	myParentName = nil;
 	
 	//親のID		NSString
-//	NSAssert([myParentMID retainCount] == 1, @"myParentMID_%d",[myParentMID retainCount]);
+	//	NSAssert([myParentMID retainCount] == 1, @"myParentMID_%d",[myParentMID retainCount]);
 	myParentMID = nil;
 	
 	
@@ -1672,7 +1699,7 @@ unsigned int SDBMHash(char * str, unsigned int len) {
 	[m_childDict release];
 	
 	//ログ削除
-//	NSAssert([m_logDict count] == 0, @"logDict_%d",[m_logDict count]);
+	//	NSAssert([m_logDict count] == 0, @"logDict_%d",[m_logDict count]);
 	[m_logDict removeAllObjects];
 	NSAssert([m_logDict count] == 0, @"logDict_%d",[m_logDict count]);
 	[m_logDict release];

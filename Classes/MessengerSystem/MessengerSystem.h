@@ -11,30 +11,31 @@
 
 
 //(@"0.5.0")//10/09/20 3:46:51
-#define MS_VERSION	(@"0.8.0")//10/10/01 21:49:34
-
+//(@"0.8.0")//10/10/01 21:49:34
+#define MS_VERSION	(@"0.9.0")//10/12/02 19:38:49
 
 
 
 //カテゴリ系タグ メッセージの種類を用途ごとに分ける
 #define MS_CATEGOLY	(@"MESSENGER_SYSTEM_COMMAND")//コマンドに類するキー
-	#define MS_CATEGOLY_LOCAL			(@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_LOCAL")//自分呼び出し
-	#define MS_CATEGOLY_CALLCHILD		(@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_CALL_CHILD")//子供呼び出し
-	#define	MS_CATEGOLY_CALLPARENT		(@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_CALL_PARENT")//親呼び出し
-	#define MS_CATEGOLY_PARENTSEARCH	(@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_PARENTSEARCH")//親探索
-	#define MS_CATEGOLY_REMOVE_PARENT	(@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_REMOVEPARENT")//親の登録を消す
-	#define MS_CATEGOLY_REMOVE_CHILD	(@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_REMOVECHILD")//子供の登録を消す
+#define MS_CATEGOLY_LOCAL			(@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_LOCAL")//自分呼び出し
+#define MS_CATEGOLY_CALLCHILD		(@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_CALL_CHILD")//子供呼び出し
+#define	MS_CATEGOLY_CALLPARENT		(@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_CALL_PARENT")//親呼び出し
+#define MS_CATEGOLY_PARENTSEARCH	(@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_PARENTSEARCH")//親探索
+#define MS_CATEGOLY_REMOVE_PARENT	(@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_REMOVEPARENT")//親の登録を消す
+#define MS_CATEGOLY_REMOVE_CHILD	(@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_REMOVECHILD")//子供の登録を消す
 
 
 //通知系タグ
-	#define	MS_NOTICE_CREATED		(@"MESSENGER_SYSTEM_COMMAND:NOTICE_CREATED")//自分の発生を通知
-	#define MS_NOTICE_UPDATE		(@"MESSENGER_SYSTEM_COMMAND:NOTICE_UPDATED")//自分の関係性更新を通知
-	#define MS_NOTICE_DEATH			(@"MESSENGER_SYSTEM_COMMAND:NOTICE_DEATH")//自分の削除を通知
+#define	MS_NOTICE_CREATED		(@"MESSENGER_SYSTEM_COMMAND:NOTICE_CREATED")//自分の発生を通知
+#define MS_NOTICE_UPDATE		(@"MESSENGER_SYSTEM_COMMAND:NOTICE_UPDATED")//自分の関係性更新を通知
+#define MS_NOTICE_DEATH			(@"MESSENGER_SYSTEM_COMMAND:NOTICE_DEATH")//自分の削除を通知
 
 
-//送信者名、送信者MIDにかんするタグ
+//送信者名、送信者MIDに関するタグ
 #define MS_SENDERNAME	(@"MESSENGER_SYSTEM_COMMAND:LOGGED_SENDER_NAME")//自分の名前に類するキー
 #define MS_SENDERMID	(@"MESSENGER_SYSTEM_COMMAND:LOGGED_SENDER_MID")//自分固有のMIDに類するキー
+
 
 //実行内容に関するタグ
 #define MS_ADDRESS_NAME	(@"MESSENGER_SYSTEM_COMMAND:ADDRESS_NAME")//宛先名に類するキー
@@ -47,11 +48,13 @@
 #define MS_PARENTNAME	(@"MESSENGER_SYSTEM_COMMAND:PARENT_NAME")//親の名前に類するキー
 #define MS_PARENTMID	(@"MESSENGER_SYSTEM_COMMAND:PARENT_MID")//親の固有MIDに類するキー
 
+
 //メソッド実行オプションに関するタグ
 #define MS_RETURN		(@"MESSENGER_SYSTEM_COMMAND:RETURN")//フック実行に類するキー
-	#define MS_RETURNID				(@"MESSENGER_SYSTEM_COMMAND:RETURN_ID")//フック実行メソッドのidに類するキー
-	#define MS_RETURNSIGNATURE		(@"MESSENGER_SYSTEM_COMMAND:RETURN_SIGNATURE")//フック実行メソッドのSignature指定に類するキー
-	#define MS_RETURNSELECTOR		(@"MESSENGER_SYSTEM_COMMAND:RETURN_SELECTOR")//フック実行メソッドのSelector指定に類するキー
+#define MS_RETURNID				(@"MESSENGER_SYSTEM_COMMAND:RETURN_ID")//フック実行メソッドのidに類するキー
+#define MS_RETURNSIGNATURE		(@"MESSENGER_SYSTEM_COMMAND:RETURN_SIGNATURE")//フック実行メソッドのSignature指定に類するキー
+#define MS_RETURNSELECTOR		(@"MESSENGER_SYSTEM_COMMAND:RETURN_SELECTOR")//フック実行メソッドのSelector指定に類するキー
+
 
 //遅延実行に関するタグ
 #define MS_DELAY		(@"MESSENGER_SYSTEM_COMMAND:DELAY")//遅延実行
@@ -206,6 +209,24 @@
  数値の文字列化
  */
 - (NSString * ) changeNumberToStr:(int)num;
+
+/**
+ メッセージの内容を表示する
+ */
+- (void) showMessengerPackage:(NSNotification * )nort; 
+
+/**
+ Execに紐づいているTagValueDictionaryの内容をNotificationから取得する
+ */
+- (NSMutableDictionary * ) getTagValueDictionaryFromNotification:(NSNotification * )nort;
+
+/**
+ Execの内容をNSNotificationから取得する
+ */
+- (NSString * ) getExecFromNortification:(NSNotification * )nort;
+
+
+
 
 
 /**
