@@ -13,7 +13,7 @@
 //(@"0.5.0")//10/09/20 3:46:51
 //(@"0.8.0")//10/10/01 21:49:34
 //(@"0.9.0")//10/12/02 19:38:49
-#define MS_VERSION	(@"0.9.1")//11/04/26 18:01:26
+#define MS_VERSION	(@"0.9.1")//11/04/27 10:48:54
 
 
 //カテゴリ系タグ メッセージの種類を用途ごとに分ける
@@ -175,11 +175,13 @@
 
 - (NSDictionary * ) withLockBefore:(NSString * )lockValue;//ロック(実行前)(exec)
 - (NSDictionary * ) withLockBefore:(NSString * )lockValue withKeyName:(NSString * )keyName;//ロック(実行前)(valious)
+- (NSDictionary * ) withLocksBefore:(NSString * )firstLockValue, ...;//ロック(実行前)(exec)(複数キー)
+- (NSDictionary * ) withLocksBeforeWithKeyNames:(NSString * )firstLockValue, ...;//ロック(実行前)(valious)(複数キー)
 
 - (NSDictionary * ) withLockAfter:(NSString * )lockValue;//ロック(実行後)(exec)
 - (NSDictionary * ) withLockAfter:(NSString * )lockValue withKeyName:(NSString * )keyName;//ロック(実行後)(valious)
-- (NSDictionary * ) withLocksAfter:(NSString * )firstLockValue, ...;
-- (NSDictionary * ) withLocksAfterWithKeyNames:(NSString * )firstLockValue, ...;
+- (NSDictionary * ) withLocksAfter:(NSString * )firstLockValue, ...;//ロック(実行後)(exec)(複数キー)
+- (NSDictionary * ) withLocksAfterWithKeyNames:(NSString * )firstLockValue, ...;//ロック(実行後)(valious)(複数キー)
 
 
 /**

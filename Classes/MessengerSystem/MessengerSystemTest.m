@@ -50,6 +50,7 @@
 
 #define TEST_EXEC_LOCKED_BEFORE	(@"TEST_EXEC_LOCKED_BEFORE")
 #define TEST_EXEC_LOCKED_MAIN	(@"TEST_EXEC_LOCKED_MAIN")
+#define TEST_EXEC_LOCKED_MAIN_2	(@"TEST_EXEC_LOCKED_MAIN_2")
 #define TEST_EXEC_LOCKED_AFTER	(@"TEST_EXEC_LOCKED_AFTER")
 
 #define TEST_EXEC_LOCKED_MULTI		(@"TEST_EXEC_LOCKED_MULTI")
@@ -60,6 +61,8 @@
 {
 	MessengerSystem * parent;
 	MessengerSystem * child_persis;
+	
+	NSMutableArray * m_orderArray;
 }
 
 - (void) m_testParent:(NSNotification * )notification;
@@ -139,8 +142,13 @@
 	if ([exec isEqualToString:TEST_PARENT_INVOKE]) {
 		[parent remoteInvocation:dict, @"遠隔実行で親から子供の、子供から指定されたメソッド実行にて実行しています。", nil];
 	}
-	if ([exec isEqualToString:TEST_EXEC_LOCKED_MAIN] || [exec isEqualToString:TEST_EXEC_LOCKED_BEFORE] || [exec isEqualToString:TEST_EXEC_LOCKED_AFTER]) {
-		NSLog(@"起動_%@", exec);
+	if ([exec isEqualToString:TEST_EXEC_LOCKED_MAIN] || [exec isEqualToString:TEST_EXEC_LOCKED_MAIN_2] || [exec isEqualToString:TEST_EXEC_LOCKED_BEFORE] || [exec isEqualToString:TEST_EXEC_LOCKED_AFTER]) {
+		//数字の少ないものから順に削って行く
+		if (m_orderArray) {
+			if ([[m_orderArray objectAtIndex:0] isEqualToString:exec]) {
+				[m_orderArray removeObjectAtIndex:0];
+			}
+		}
 	}
 }
 
@@ -1672,7 +1680,7 @@
 }
 
 
-- (void) testLockExecuteBoth {
+- (void) testUnlockExecuteBoth {
 	[parent callMyself:TEST_EXEC_LOCKED_BEFORE,
 	 [parent withLockBefore:TEST_LOCKKEY withKeyName:TEST_LOCKNAME],
 	 nil];
@@ -1728,6 +1736,12 @@
  Before > After > MAIN　のはず。
  */
 - (void) testLockExecuteChain_B_A_M {
+	m_orderArray = [[NSMutableArray alloc]initWithObjects:				
+					TEST_EXEC_LOCKED_BEFORE,
+					TEST_EXEC_LOCKED_AFTER,
+					TEST_EXEC_LOCKED_MAIN,
+					nil];
+	
 	[parent callMyself:TEST_EXEC_LOCKED_BEFORE,
 	 [parent withLockBefore:TEST_EXEC_LOCKED_MAIN],
 	 nil];
@@ -1746,6 +1760,8 @@
 	 
 	NSDictionary * lockStore = [parent getLockAfterStore];
 	STAssertTrue([lockStore count] == 0, @"not 0");
+	
+	STAssertTrue([m_orderArray count] == 0, @"not 0");
 }
 
 /**
@@ -1755,7 +1771,11 @@
  MAIN > Before > After　のはず。Afterに対してのBeforeが存在しているので、Beforeが先に消化される。
  */
 - (void) testLockExecuteChain_M_B_A {
-	//m_chainCheckArray = [[NSArray alloc]initWithObjects:TEST_EXEC_LOCKED_MAIN, TEST_EXEC_LOCKED_BEFORE, TEST_EXEC_LOCKED_AFTER, nil];
+	m_orderArray = [[NSMutableArray alloc]initWithObjects:
+						 TEST_EXEC_LOCKED_MAIN,
+						 TEST_EXEC_LOCKED_BEFORE,
+						 TEST_EXEC_LOCKED_AFTER,
+						 nil];
 	
 	[parent callMyself:TEST_EXEC_LOCKED_BEFORE,
 	 [parent withLockBefore:TEST_EXEC_LOCKED_AFTER],
@@ -1776,7 +1796,10 @@
 	NSDictionary * lockStore = [parent getLockAfterStore];
 	STAssertTrue([lockStore count] == 0, @"not 0");
 	
+	STAssertTrue([m_orderArray count] == 0, @"not 0");
 }
+
+
 
 
 
@@ -1817,7 +1840,10 @@
 	STAssertTrue([lockStore count] == 0, @"not 0");
 	
 	[parent callMyself:TEST_EXEC_LOCKED,
-	 [parent withLocksAfterWithKeyNames:<#(NSString *)firstLockValue#>:MS_EXECUTE],
+	 [parent withLocksAfterWithKeyNames:
+	  TEST_EXEC_LOCKED_MULTI, TEST_LOCKKEY,
+	  TEST_EXEC_LOCKED_MULTI_2, TEST_LOCKKEY_2,
+	  nil],
 	 nil];
 	
 	STAssertTrue([lockStore count] == 1, @"not 1");
@@ -1828,11 +1854,145 @@
 	NSDictionary * lockStore = [parent getLockAfterStore];
 	
 	[parent callMyself:TEST_EXEC_LOCKED,
-	 [parent withLockAfter:TEST_EXEC_2 withKeyName:MS_EXECUTE],
+	 [parent withLocksAfterWithKeyNames:
+	  TEST_EXEC_LOCKED_MULTI, TEST_LOCKKEY,
+	  TEST_EXEC_LOCKED_MULTI_2, TEST_LOCKKEY_2, 
+	  nil],
 	 nil];
 	
 	NSDictionary * locksDict = [lockStore objectForKey:[[lockStore allKeys]objectAtIndex:0]];
-	STAssertTrue([locksDict count] == 2, @"not 2");
+	
+	STAssertTrue([locksDict count] == 3, @"not 3");
+}
+
+- (void) testUnlockValiousNotExecMultiWithOneMessage {
+	[parent callMyself:TEST_EXEC_LOCKED,
+	 [parent withLocksAfterWithKeyNames:
+	  TEST_EXEC_LOCKED_MULTI, TEST_LOCKKEY,
+	  TEST_EXEC_LOCKED_MULTI_2, TEST_LOCKKEY_2,
+	  nil],
+	 nil];
+	
+	NSDictionary * currentLog = [parent getLogStore];
+	int num = [currentLog count];
+	
+	[parent callMyself:TEST_EXEC_2, 
+	 [parent tag:TEST_LOCKKEY val:TEST_EXEC_LOCKED_MULTI],
+	 [parent tag:TEST_LOCKKEY_2 val:TEST_EXEC_LOCKED_MULTI_2],
+	 nil];
+	
+	STAssertTrue(num+4 == [currentLog count], @"only allow creationLog & send. not equal %d", [currentLog count] - num);
+	
+	NSDictionary * lockStore = [parent getLockAfterStore];
+	STAssertTrue([lockStore count] == 0, @"not 0");
+}
+
+- (void) testUnlockValiousNotExecMultiWithTwoMessage {
+	[parent callMyself:TEST_EXEC_LOCKED,
+	 [parent withLocksAfterWithKeyNames:
+	  TEST_EXEC_LOCKED_MULTI, TEST_LOCKKEY,
+	  TEST_EXEC_LOCKED_MULTI_2, TEST_LOCKKEY_2,
+	  nil],
+	 nil];
+	
+	NSDictionary * currentLog = [parent getLogStore];
+	int num = [currentLog count];
+	
+	[parent callMyself:TEST_EXEC_2, 
+	 [parent tag:TEST_LOCKKEY val:TEST_EXEC_LOCKED_MULTI],
+	 nil];
+	
+	STAssertTrue(num+2 == [currentLog count], @"only allow creationLog & send. not equal %d", [currentLog count] - num);
+	
+	[parent callMyself:TEST_EXEC_3,
+	 [parent tag:TEST_LOCKKEY_2 val:TEST_EXEC_LOCKED_MULTI_2],
+	 nil];
+	
+	STAssertTrue(num+6 == [currentLog count], @"only allow creationLog & send. not equal %d", [currentLog count] - num);
+	
+	NSDictionary * lockStore = [parent getLockAfterStore];
+	STAssertTrue([lockStore count] == 0, @"not 0");
+}
+
+
+
+
+/**
+ 複数ロックでの連鎖のテスト1
+ MAINをキーに、Beforeが発動したら、その発動後にAfterが発動する。
+ 発生順は、
+ MAIN > Before > After > MAIN2　のはず。
+ */
+- (void) testLockExecuteChain_M_B_A_M2 {
+	m_orderArray = [[NSMutableArray alloc]initWithObjects:
+					TEST_EXEC_LOCKED_MAIN,
+					TEST_EXEC_LOCKED_BEFORE,
+					TEST_EXEC_LOCKED_AFTER,
+					TEST_EXEC_LOCKED_MAIN_2,
+					nil];
+	
+	[parent callMyself:TEST_EXEC_LOCKED_BEFORE,
+	 [parent withLocksBefore:TEST_EXEC_LOCKED_MAIN, TEST_EXEC_LOCKED_MAIN_2, nil],
+	 nil];
+	
+	[parent callMyself:TEST_EXEC_LOCKED_AFTER,
+	 [parent withLockAfter:TEST_EXEC_LOCKED_BEFORE],
+	 nil];
+	
+	NSDictionary * currentLog = [parent getLogStore];
+	int num = [currentLog count];
+	
+	[parent callMyself:TEST_EXEC_LOCKED_MAIN, 
+	 nil];
+	
+	[parent callMyself:TEST_EXEC_LOCKED_MAIN_2, 
+	 nil];
+	
+	STAssertTrue(num+8 == [currentLog count], @"only allow creationLog & send. not equal %d", [currentLog count] - num);
+	
+	NSDictionary * lockStore = [parent getLockAfterStore];
+	STAssertTrue([lockStore count] == 0, @"not 0");
+	
+	STAssertTrue([m_orderArray count] == 0, @"not 0");
+}
+
+/**
+ 複数ロックでの連鎖のテスト2
+ Beforeが発動したら、その発動後にAfterが発動する。
+ 発生順は、
+ MAIN > MAIN2_Before > After　のはず。Afterに対してのBeforeが存在しているので、Beforeが先に消化される。
+ */
+- (void) testLockExecuteChain_M_M2_B_A {
+	m_orderArray = [[NSMutableArray alloc]initWithObjects:
+					TEST_EXEC_LOCKED_MAIN,
+					TEST_EXEC_LOCKED_MAIN_2,
+					TEST_EXEC_LOCKED_BEFORE,
+					TEST_EXEC_LOCKED_AFTER,
+					nil];
+	
+	[parent callMyself:TEST_EXEC_LOCKED_BEFORE,
+	 [parent withLockBefore:TEST_EXEC_LOCKED_AFTER],
+	 nil];
+	
+	[parent callMyself:TEST_EXEC_LOCKED_AFTER,
+	 [parent withLocksAfter:TEST_EXEC_LOCKED_MAIN, TEST_EXEC_LOCKED_MAIN_2, nil],
+	 nil];
+	
+	NSDictionary * currentLog = [parent getLogStore];
+	int num = [currentLog count];
+	
+	[parent callMyself:TEST_EXEC_LOCKED_MAIN, 
+	 nil];
+	
+	[parent callMyself:TEST_EXEC_LOCKED_MAIN_2, 
+	 nil];
+	
+	STAssertTrue(num+8 == [currentLog count], @"only allow creationLog & send. not equal %d", [currentLog count] - num);
+	
+	NSDictionary * lockStore = [parent getLockAfterStore];
+	STAssertTrue([lockStore count] == 0, @"not 0");
+	
+	STAssertTrue([m_orderArray count] == 0, @"not 0");
 }
 
 
