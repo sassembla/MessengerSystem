@@ -23,6 +23,8 @@
 #import "MessengerSystem.h"
 #import "MessengerViewController.h"
 
+#import "TimeMine.h"
+
 
 #define TEST_PARENT_NAME (@"parent_0")
 #define TEST_CHILDPERSIS_NAME (@"child_persis")//グローバルで所持する子供
@@ -35,12 +37,23 @@
 
 #define TEST_FAIL_PARENT_NAME (@"failParent")
 
-#define TEST_EXEC (@"testExec")
+#define TEST_EXEC	(@"testExec")
 #define TEST_EXEC_2 (@"testExec_2")
 #define TEST_EXEC_3 (@"testExec_3")
-#define TEST_PARENT_INVOKE	(@"testParentExec")
+#define TEST_PARENT_INVOKE		(@"testParentExec")
 #define TEST_PARENT_MULTICHILD	(@"子だくさん")
 
+#define TEST_EXEC_LOCKED	(@"TEST_EXEC_LOCKED")
+#define TEST_LOCKKEY		(@"TEST_LOCKKEY")
+#define TEST_LOCKKEY_2		(@"TEST_LOCKKEY_2")
+#define TEST_LOCKNAME		(@"TEST_LOCKNAME")
+
+#define TEST_EXEC_LOCKED_BEFORE	(@"TEST_EXEC_LOCKED_BEFORE")
+#define TEST_EXEC_LOCKED_MAIN	(@"TEST_EXEC_LOCKED_MAIN")
+#define TEST_EXEC_LOCKED_AFTER	(@"TEST_EXEC_LOCKED_AFTER")
+
+#define TEST_EXEC_LOCKED_MULTI		(@"TEST_EXEC_LOCKED_MULTI")
+#define TEST_EXEC_LOCKED_MULTI_2	(@"TEST_EXEC_LOCKED_MULTI_2")
 
 
 @interface MessengerSystemTest : SenTestCase
@@ -126,7 +139,9 @@
 	if ([exec isEqualToString:TEST_PARENT_INVOKE]) {
 		[parent remoteInvocation:dict, @"遠隔実行で親から子供の、子供から指定されたメソッド実行にて実行しています。", nil];
 	}
-	
+	if ([exec isEqualToString:TEST_EXEC_LOCKED_MAIN] || [exec isEqualToString:TEST_EXEC_LOCKED_BEFORE] || [exec isEqualToString:TEST_EXEC_LOCKED_AFTER]) {
+		NSLog(@"起動_%@", exec);
+	}
 }
 
 /**
@@ -1547,6 +1562,278 @@
 
 
 
+/**
+ ロック関連
+ */
+- (void) testSetWithLock {
+	NSDictionary * currentLog = [parent getLogStore];
+	int num = [currentLog count];
+	
+	[parent callMyself:TEST_EXEC,
+	 [parent withLockAfter:TEST_EXEC_2 withKeyName:MS_EXECUTE],
+	 nil];
+	
+	STAssertTrue(num == [currentLog count]-1, @"only allow creationLog. not equal %d", [currentLog count] - num);
+}
+
+
+
+- (void) testSetWithLockDefault {
+	NSDictionary * currentLog = [parent getLogStore];
+	int num = [currentLog count];
+	
+	[parent callMyself:TEST_EXEC,
+	 [parent withLockAfter:TEST_EXEC_2],
+	 nil];
+	
+	STAssertTrue(num == [currentLog count]-1, @"only allow creationLog. not equal %d", [currentLog count] - num);
+}
+
+
+- (void) testGetLockStore {
+	
+	NSDictionary * lockStore = [parent getLockAfterStore];
+	STAssertTrue([lockStore count] == 0, @"not 0");
+	
+	[parent callMyself:TEST_EXEC_LOCKED,
+	 [parent withLockAfter:TEST_EXEC_2 withKeyName:MS_EXECUTE],
+	 nil];
+	
+	STAssertTrue([lockStore count] == 1, @"not 1");
+}
+
+
+- (void) testGetLockStoreInsideCount {
+	NSDictionary * lockStore = [parent getLockAfterStore];
+	
+	[parent callMyself:TEST_EXEC_LOCKED,
+	 [parent withLockAfter:TEST_EXEC_2 withKeyName:MS_EXECUTE],
+	 nil];
+	
+	NSDictionary * locksDict = [lockStore objectForKey:[[lockStore allKeys]objectAtIndex:0]];
+	STAssertTrue([locksDict count] == 2, @"not 2");
+}
+
+
+/**
+ 解錠実行、execをキーとしてセット、
+ */
+- (void) testUnlockDefault {
+	[parent callMyself:TEST_EXEC_LOCKED,
+	 [parent withLockAfter:TEST_EXEC_2],
+	 nil];
+	
+	NSDictionary * currentLog = [parent getLogStore];
+	int num = [currentLog count];
+	
+	[parent callMyself:TEST_EXEC_2, nil];
+	
+	STAssertTrue(num+4 == [currentLog count], @"only allow creationLog & send. not equal %d", [currentLog count] - num);
+	
+	NSDictionary * lockStore = [parent getLockAfterStore];
+	STAssertTrue([lockStore count] == 0, @"not 0");
+}
+
+
+
+- (void) testUnlockValious {
+	[parent callMyself:TEST_EXEC_LOCKED,
+	 [parent withLockAfter:TEST_EXEC_2 withKeyName:MS_EXECUTE],
+	 nil];
+	
+	NSDictionary * currentLog = [parent getLogStore];
+	int num = [currentLog count];
+	
+	[parent callMyself:TEST_EXEC_2, nil];
+	
+	STAssertTrue(num+4 == [currentLog count], @"only allow creationLog & send. not equal %d", [currentLog count] - num);
+	
+	NSDictionary * lockStore = [parent getLockAfterStore];
+	STAssertTrue([lockStore count] == 0, @"not 0");
+}
+
+
+- (void) testUnlockValiousNotExec {
+	[parent callMyself:TEST_EXEC_LOCKED,
+	 [parent withLockAfter:TEST_LOCKKEY withKeyName:TEST_LOCKNAME],
+	 nil];
+	
+	NSDictionary * currentLog = [parent getLogStore];
+	int num = [currentLog count];
+	
+	[parent callMyself:TEST_EXEC_2, 
+	 [parent tag:TEST_LOCKNAME val:TEST_LOCKKEY],
+	 nil];
+	
+	STAssertTrue(num+4 == [currentLog count], @"only allow creationLog & send. not equal %d", [currentLog count] - num);
+	
+	NSDictionary * lockStore = [parent getLockAfterStore];
+	STAssertTrue([lockStore count] == 0, @"not 0");
+}
+
+
+- (void) testLockExecuteBoth {
+	[parent callMyself:TEST_EXEC_LOCKED_BEFORE,
+	 [parent withLockBefore:TEST_LOCKKEY withKeyName:TEST_LOCKNAME],
+	 nil];
+	
+	[parent callMyself:TEST_EXEC_LOCKED_AFTER,
+	 [parent withLockAfter:TEST_LOCKKEY withKeyName:TEST_LOCKNAME],
+	 nil];
+	
+	NSDictionary * currentLog = [parent getLogStore];
+	int num = [currentLog count];
+	
+	[parent callMyself:TEST_EXEC_LOCKED_MAIN, 
+	 [parent tag:TEST_LOCKNAME val:TEST_LOCKKEY],
+	 nil];
+	
+	STAssertTrue(num+6 == [currentLog count], @"only allow creationLog & send. not equal %d", [currentLog count] - num);
+	
+	NSDictionary * lockStore = [parent getLockAfterStore];
+	STAssertTrue([lockStore count] == 0, @"not 0");
+}
+
+
+/**
+ 実行順番のテスト
+ */
+- (void) testLockExecuteBothWithOrder {
+	[parent callMyself:TEST_EXEC_LOCKED_BEFORE,
+	 [parent withLockBefore:TEST_LOCKKEY withKeyName:TEST_LOCKNAME],
+	 nil];
+	
+	[parent callMyself:TEST_EXEC_LOCKED_AFTER,
+	 [parent withLockAfter:TEST_LOCKKEY withKeyName:TEST_LOCKNAME],
+	 nil];
+	
+	NSDictionary * currentLog = [parent getLogStore];
+	int num = [currentLog count];
+	
+	[parent callMyself:TEST_EXEC_LOCKED_MAIN, 
+	 [parent tag:TEST_LOCKNAME val:TEST_LOCKKEY],
+	 nil];
+	
+	STAssertTrue(num+6 == [currentLog count], @"only allow creationLog & send. not equal %d", [currentLog count] - num);
+	
+	NSDictionary * lockStore = [parent getLockAfterStore];
+	STAssertTrue([lockStore count] == 0, @"not 0");
+}
+
+
+/**
+ 連鎖のテスト1
+ MAINをキーに、Beforeが発動したら、その発動後にAfterが発動する。
+ 発生順は、
+ Before > After > MAIN　のはず。
+ */
+- (void) testLockExecuteChain_B_A_M {
+	[parent callMyself:TEST_EXEC_LOCKED_BEFORE,
+	 [parent withLockBefore:TEST_EXEC_LOCKED_MAIN],
+	 nil];
+	 
+	[parent callMyself:TEST_EXEC_LOCKED_AFTER,
+	 [parent withLockAfter:TEST_EXEC_LOCKED_BEFORE],
+	 nil];
+	 
+	NSDictionary * currentLog = [parent getLogStore];
+	int num = [currentLog count];
+	
+	[parent callMyself:TEST_EXEC_LOCKED_MAIN, 
+	 nil];
+	 
+	STAssertTrue(num+6 == [currentLog count], @"only allow creationLog & send. not equal %d", [currentLog count] - num);
+	 
+	NSDictionary * lockStore = [parent getLockAfterStore];
+	STAssertTrue([lockStore count] == 0, @"not 0");
+}
+
+/**
+ 連鎖のテスト2
+ Beforeが発動したら、その発動後にAfterが発動する。
+ 発生順は、
+ MAIN > Before > After　のはず。Afterに対してのBeforeが存在しているので、Beforeが先に消化される。
+ */
+- (void) testLockExecuteChain_M_B_A {
+	//m_chainCheckArray = [[NSArray alloc]initWithObjects:TEST_EXEC_LOCKED_MAIN, TEST_EXEC_LOCKED_BEFORE, TEST_EXEC_LOCKED_AFTER, nil];
+	
+	[parent callMyself:TEST_EXEC_LOCKED_BEFORE,
+	 [parent withLockBefore:TEST_EXEC_LOCKED_AFTER],
+	 nil];
+	
+	[parent callMyself:TEST_EXEC_LOCKED_AFTER,
+	 [parent withLockAfter:TEST_EXEC_LOCKED_MAIN],
+	 nil];
+	
+	NSDictionary * currentLog = [parent getLogStore];
+	int num = [currentLog count];
+	
+	[parent callMyself:TEST_EXEC_LOCKED_MAIN, 
+	 nil];
+	
+	STAssertTrue(num+6 == [currentLog count], @"only allow creationLog & send. not equal %d", [currentLog count] - num);
+	
+	NSDictionary * lockStore = [parent getLockAfterStore];
+	STAssertTrue([lockStore count] == 0, @"not 0");
+	
+}
+
+
+
+/**
+ 複数のロック
+ */
+- (void) testSetWithLockMulti {
+	NSDictionary * currentLog = [parent getLogStore];
+	int num = [currentLog count];
+	
+	[parent callMyself:TEST_EXEC,
+	 [parent withLocksAfterWithKeyNames:
+	  TEST_EXEC_LOCKED_MULTI, TEST_LOCKKEY,
+	  TEST_EXEC_LOCKED_MULTI_2, TEST_LOCKKEY_2,
+	  nil],
+	 nil];
+	
+	STAssertTrue(num == [currentLog count]-1, @"only allow creationLog. not equal %d", [currentLog count] - num);
+}
+
+
+- (void) testSetWithLockMultiDefault {
+	NSDictionary * currentLog = [parent getLogStore];
+	int num = [currentLog count];
+	
+	[parent callMyself:TEST_EXEC,
+	 [parent withLocksAfter:TEST_EXEC_LOCKED_MULTI, TEST_EXEC_LOCKED_MULTI_2, nil],
+	 nil];
+	
+	STAssertTrue(num == [currentLog count]-1, @"only allow creationLog. not equal %d", [currentLog count] - num);
+}
+
+
+
+- (void) testGetLockStoreMulti {
+	
+	NSDictionary * lockStore = [parent getLockAfterStore];
+	STAssertTrue([lockStore count] == 0, @"not 0");
+	
+	[parent callMyself:TEST_EXEC_LOCKED,
+	 [parent withLocksAfterWithKeyNames:<#(NSString *)firstLockValue#>:MS_EXECUTE],
+	 nil];
+	
+	STAssertTrue([lockStore count] == 1, @"not 1");
+}
+
+
+- (void) testGetLockStoreInsideCountMulti {
+	NSDictionary * lockStore = [parent getLockAfterStore];
+	
+	[parent callMyself:TEST_EXEC_LOCKED,
+	 [parent withLockAfter:TEST_EXEC_2 withKeyName:MS_EXECUTE],
+	 nil];
+	
+	NSDictionary * locksDict = [lockStore objectForKey:[[lockStore allKeys]objectAtIndex:0]];
+	STAssertTrue([locksDict count] == 2, @"not 2");
+}
 
 
 

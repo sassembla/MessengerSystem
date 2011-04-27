@@ -26,6 +26,7 @@
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		21EA22661366BCDB00EE6B4F /* TimeMine.m in Sources */ = {isa = PBXBuildFile; fileRef = 21EA22651366BCDB00EE6B4F /* TimeMine.m */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 /* End PBXBuildFile section */
@@ -52,6 +53,8 @@
 		1D3623250D0F684500981E51 /* TestKitTestingAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestKitTestingAppDelegate.m; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* MessengerSystem.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MessengerSystem.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		21EA22641366BCDB00EE6B4F /* TimeMine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeMine.h; sourceTree = "<group>"; };
+		21EA22651366BCDB00EE6B4F /* TimeMine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeMine.m; sourceTree = "<group>"; };
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		28AD733E0D9D9553002E5188 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -98,6 +101,7 @@
 		134551B0122A4D0200E348F5 /* MessengerSystem */ = {
 			isa = PBXGroup;
 			children = (
+				21EA22631366BCDB00EE6B4F /* TimeMine */,
 				211C111212F2CDCE00329BD0 /* MessengerSystem+Visualizer */,
 				211C111112F2CDA900329BD0 /* MessengerSystemCore */,
 				134551B4122A4D1600E348F5 /* MessengerSystemTest.m */,
@@ -147,6 +151,16 @@
 			);
 			name = "MessengerSystem+Visualizer";
 			sourceTree = "<group>";
+		};
+		21EA22631366BCDB00EE6B4F /* TimeMine */ = {
+			isa = PBXGroup;
+			children = (
+				21EA22641366BCDB00EE6B4F /* TimeMine.h */,
+				21EA22651366BCDB00EE6B4F /* TimeMine.m */,
+			);
+			name = TimeMine;
+			path = Classes/TimeMine;
+			sourceTree = SOURCE_ROOT;
 		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
@@ -298,6 +312,7 @@
 				13AC407E123CB3E700AAF658 /* MessengerViewController.m in Sources */,
 				13B64BD9124BB94000D9E800 /* GlyphTable.m in Sources */,
 				134551B5122A4D1600E348F5 /* MessengerSystemTest.m in Sources */,
+				21EA22661366BCDB00EE6B4F /* TimeMine.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

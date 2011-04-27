@@ -10,6 +10,8 @@
 #import "MessengerIDGenerator.h"
 
 
+#import "TimeMine.h"
+
 
 
 /**
@@ -45,6 +47,12 @@
 //遠隔実行
 - (NSDictionary * ) setPrivateRemoteInvocationFrom:(id)mySelf withSelector:(SEL)sel;//MessengerSystemの親決め限定の仕掛け
 - (NSDictionary * ) setRemoteInvocationFrom:(id)mySelf withSelector:(SEL)sel;//システム使用時に使われる一般的な遠隔実行メソッド
+
+//ロック機構
+- (void) setLockBefore:(NSDictionary * )dict;
+- (void) checkUnlockBefore:(NSDictionary * )dict;
+- (void) setLockAfter:(NSDictionary * )dict;
+- (void) checkUnlockAfter:(NSDictionary * )dict;
 
 
 
@@ -194,7 +202,6 @@
 		if (![address isEqualToString:[self getMyName]]) {
 			//			NSLog(@"自分宛ではないので却下_From_%@,	To_%@,	Iam_%@", senderName, address, [self getMyName]);
 			return;
-			
 		}
 		
 		
@@ -295,7 +302,7 @@
 			return;//値が無ければ無視する
 		}
 		
-		NSLog(@"自分以外の誰かが、自分をparentとして設定しようと通信してきている。_%@", calledParentName);
+		
 		if ([calledParentName isEqualToString:[self getMyName]]) {//それが自分だったら
 			
 			id invocatorId = [notification object];
@@ -316,7 +323,6 @@
 				
 				//特定MIDが無い場合、親は先着順で設定される。既に子供が自分と同名の親にアクセスし、そのMIDを持っている場合があり得るため、ここで子供の持っている親MIDを確認する必要がある
 				if ([invocatorId hasParent]) {
-					NSLog(@"すでに親が存在している、先着順");
 					return;
 				}
 			}
@@ -425,8 +431,10 @@
 }
 
 
+
+
 /**
- ログを取り、実行する。
+ メッセージの送信
  */
 - (void) sendMessage:(NSMutableDictionary * )dict {
 	
@@ -440,8 +448,32 @@
 		return;
 	}
 	
+	//ロック指定がされていたら、実行せず潜る
+	if ([dict valueForKey:MS_LOCK_BEFORE]) {
+		[self setLockBefore:dict];
+		return;
+	}
+	if ([dict valueForKey:MS_LOCK_AFTER]) {
+		[self setLockAfter:dict];
+		return;
+	}
+	
+	
+	
+	if (0 < [m_lockBeforeDict count]) {
+		[self checkUnlockBefore:dict];
+	}
+	
+	
 	//通常の送信を行う
 	[self sendPerform:dict];
+	
+	
+	
+	if (0 < [m_lockAfterDict count]) {
+		[self checkUnlockAfter:dict];
+	}
+	
 }
 
 
@@ -512,6 +544,90 @@
 	[invocation invoke];//実行
 	
 }
+
+/**
+ ロックのセットを行う
+ */
+- (void) setLockBefore:(NSDictionary * )dict {
+	
+	NSMutableDictionary * locksDictionary = [[NSMutableDictionary alloc]init];
+	
+	for (NSDictionary * lock_KeyDict in [dict valueForKey:MS_LOCK_BEFORE]) {
+		id key = [[lock_KeyDict allKeys] objectAtIndex:0];
+		[locksDictionary setObject:[lock_KeyDict valueForKey:key] forKey:key];
+	}
+	
+	[locksDictionary setObject:[dict valueForKey:MS_EXECUTE] forKey:MS_LOCK_PLANNEDEXEC];
+	
+	[m_lockBeforeDict setObject:locksDictionary
+				   forKey:[MessengerIDGenerator getMID]];
+}
+- (void) setLockAfter:(NSDictionary * )dict {
+	
+	NSMutableDictionary * locksDictionary = [[NSMutableDictionary alloc]init];
+	
+	for (NSDictionary * lock_KeyDict in [dict valueForKey:MS_LOCK_AFTER]) {
+		id key = [[lock_KeyDict allKeys] objectAtIndex:0];
+		[locksDictionary setObject:[lock_KeyDict valueForKey:key] forKey:key];
+	}
+	
+	[locksDictionary setObject:[dict valueForKey:MS_EXECUTE] forKey:MS_LOCK_PLANNEDEXEC];
+	
+	[m_lockAfterDict setObject:locksDictionary
+				   forKey:[MessengerIDGenerator getMID]];
+}
+
+/**
+ ロックの解除チェックを行う
+ */
+- (void) checkUnlockBefore:(NSDictionary * )dict {
+	for (NSString * lockKey in [m_lockBeforeDict allKeys]) {
+		
+		//ID
+		NSMutableDictionary * currentLocksDictionary = [m_lockBeforeDict valueForKey:lockKey];
+		
+		for (NSString * key in [currentLocksDictionary allKeys]) {
+			if ([dict valueForKey:key] && [[dict valueForKey:key] isEqualToString:[currentLocksDictionary valueForKey:key]]) {
+				[currentLocksDictionary removeObjectForKey:key];
+			}
+			
+			if ([[currentLocksDictionary allKeys] count] == 1 && [[[currentLocksDictionary allKeys]objectAtIndex:0] isEqualToString:MS_LOCK_PLANNEDEXEC]) {
+				NSString * exec = [[currentLocksDictionary valueForKey:MS_LOCK_PLANNEDEXEC] copy];
+				[currentLocksDictionary removeAllObjects];
+				[m_lockBeforeDict removeObjectForKey:lockKey];
+				
+				[self callMyself:exec, nil];
+			}
+			
+			
+		}
+	}	
+}
+- (void) checkUnlockAfter:(NSDictionary * )dict {
+	
+	for (NSString * lockKey in [m_lockAfterDict allKeys]) {
+		
+		//ID
+		NSMutableDictionary * currentLocksDictionary = [m_lockAfterDict valueForKey:lockKey];
+		
+		for (NSString * key in [currentLocksDictionary allKeys]) {
+			if ([dict valueForKey:key] && [[dict valueForKey:key] isEqualToString:[currentLocksDictionary valueForKey:key]]) {
+				[currentLocksDictionary removeObjectForKey:key];
+			}
+			
+			if ([[currentLocksDictionary allKeys] count] == 1 && [[[currentLocksDictionary allKeys]objectAtIndex:0] isEqualToString:MS_LOCK_PLANNEDEXEC]) {
+				NSString * exec = [[currentLocksDictionary valueForKey:MS_LOCK_PLANNEDEXEC] copy];
+				[currentLocksDictionary removeAllObjects];
+				[m_lockAfterDict removeObjectForKey:lockKey];
+				
+				[self callMyself:exec, nil];
+			}
+			
+			
+		}
+	}
+}
+
 
 /**
  自分が作成完了した事をお知らせする
@@ -605,7 +721,6 @@
  遠隔実行セットメソッド
  */
 - (NSDictionary * ) setRemoteInvocationFrom:(id)mySelf withSelector:(SEL)sel {
-	
 	NSDictionary * retDict = [NSDictionary dictionaryWithObjectsAndKeys:
 							  mySelf,	MS_RETURNID, 
 							  [mySelf methodSignatureForSelector:sel],	MS_RETURNSIGNATURE, 
@@ -679,7 +794,6 @@
 
 /**
  可変長ログストア入力
- アウトプットは後で考えよう。
  */
 - (void) saveToLogStore:(NSString * )name log:(NSDictionary * )value {
 	
@@ -812,11 +926,16 @@
 		
 		[self initMyMID];
 		[self initMyParentData];
+		
+		
 	}
 	
 	m_childDict = [[NSMutableDictionary alloc] init];
 	m_logDict = [[NSMutableDictionary alloc] init];
 	
+	m_lockBeforeDict = [[NSMutableDictionary alloc]init];	
+	m_lockAfterDict = [[NSMutableDictionary alloc]init];
+
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(innerPerform:) name:OBSERVER_ID object:nil];
 	
 	[self createdNotice];
@@ -1251,6 +1370,88 @@
 }
 
 
+/*
+ ロック実行タグ
+ */
+- (NSDictionary * ) withLockBefore:(NSString * )lockValue {
+	return [self withLockBefore:lockValue withKeyName:MS_EXECUTE];
+}
+- (NSDictionary * ) withLockBefore:(NSString * )lockValue withKeyName:(NSString * )keyName {
+	NSAssert(lockValue, @"lockValue is nil");
+	NSAssert(keyName, @"keyName is nil");
+	
+	NSArray * singleLockArray = [NSArray arrayWithObjects:
+								 [NSDictionary dictionaryWithObject:lockValue forKey:keyName],
+								 nil];
+	return [NSDictionary dictionaryWithObject:singleLockArray forKey:MS_LOCK_BEFORE];
+}
+
+
+//After
+- (NSDictionary * ) withLockAfter:(NSString * )lockValue {
+	return [self withLockAfter:lockValue withKeyName:MS_EXECUTE];
+}
+- (NSDictionary * ) withLockAfter:(NSString * )lockValue withKeyName:(NSString * )keyName {
+	NSAssert(lockValue, @"lockValue is nil");
+	NSAssert(keyName, @"keyName is nil");
+	
+	NSArray * singleLockArray = [NSArray arrayWithObjects:
+								 [NSDictionary dictionaryWithObject:lockValue forKey:keyName],
+								 nil];
+	return [NSDictionary dictionaryWithObject:singleLockArray forKey:MS_LOCK_AFTER];
+}
+- (NSDictionary * ) withLocksAfter:(NSString * )firstLockValue, ... {
+	NSAssert(firstLockValue, @"firstLockValue is nil");
+	
+	NSMutableArray * multiLockArray = [[NSMutableArray alloc]init];
+	
+	va_list ap;
+	NSString * lockValue;
+	
+	
+	va_start(ap, firstLockValue);
+	lockValue = firstLockValue;
+	
+	while (lockValue) {
+		
+		[multiLockArray addObject:[NSDictionary dictionaryWithObject:lockValue forKey:MS_EXECUTE]];
+		
+		lockValue = va_arg(ap, id);
+	}
+	va_end(ap);
+	
+	return [NSDictionary dictionaryWithObject:multiLockArray forKey:MS_LOCK_AFTER];
+}
+
+- (NSDictionary * ) withLocksAfterWithKeyNames:(NSString * )firstLockValue, ... {
+	NSAssert(firstLockValue, @"firstLockValue is nil");
+	
+	NSMutableArray * multiLockArray = [[NSMutableArray alloc]init];
+	
+	va_list ap;
+	NSString * lockValue;
+	NSString * keyName;
+	
+	va_start(ap, firstLockValue);
+	lockValue = firstLockValue;
+	keyName = va_arg(ap, id);
+	while (lockValue) {
+		NSLog(@"lockValue_%@", lockValue);
+		NSLog(@"keyName_%@", keyName);
+		[multiLockArray addObject:[NSDictionary dictionaryWithObject:lockValue forKey:keyName]];
+		
+		lockValue = va_arg(ap, id);
+		keyName = va_arg(ap, id);
+	}
+	va_end(ap);
+	
+	return [NSDictionary dictionaryWithObject:multiLockArray forKey:MS_LOCK_AFTER];
+}
+
+
+
+
+
 
 //遠隔実行実装
 /**
@@ -1348,8 +1549,20 @@
 
 
 
+//ロック辞書の取得
+/**
+ m_lockBeforeDictを返す
+ */
+- (NSMutableDictionary * ) getLockBeforeStore {
+	return m_lockBeforeDict;
+}
 
-
+/**
+ m_lockAfterDictを返す
+ */
+- (NSMutableDictionary * ) getLockAfterStore {
+	return m_lockAfterDict;
+}
 
 
 /**
@@ -1703,6 +1916,16 @@ unsigned int SDBMHash(char * str, unsigned int len) {
 	[m_logDict removeAllObjects];
 	NSAssert([m_logDict count] == 0, @"logDict_%d",[m_logDict count]);
 	[m_logDict release];
+	
+	
+	//ロックの削除
+	[m_lockBeforeDict removeAllObjects];
+	NSAssert([m_lockBeforeDict count] == 0, @"m_lockBeforeDict_%d",[m_lockBeforeDict count]);
+	[m_lockBeforeDict release];
+	
+	[m_lockAfterDict removeAllObjects];
+	NSAssert([m_lockAfterDict count] == 0, @"m_lockAfterDict_%d",[m_lockAfterDict count]);
+	[m_lockAfterDict release];
 	
 	
     [super dealloc];

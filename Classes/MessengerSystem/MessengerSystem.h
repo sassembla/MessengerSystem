@@ -12,8 +12,8 @@
 
 //(@"0.5.0")//10/09/20 3:46:51
 //(@"0.8.0")//10/10/01 21:49:34
-#define MS_VERSION	(@"0.9.0")//10/12/02 19:38:49
-
+//(@"0.9.0")//10/12/02 19:38:49
+#define MS_VERSION	(@"0.9.1")//11/04/26 18:01:26
 
 
 //カテゴリ系タグ メッセージの種類を用途ごとに分ける
@@ -58,6 +58,12 @@
 
 //遅延実行に関するタグ
 #define MS_DELAY		(@"MESSENGER_SYSTEM_COMMAND:DELAY")//遅延実行
+
+
+//ロック機構に関するタグ
+#define MS_LOCK_AFTER			(@"MESSENGER_SYSTEM_COMMAND:LOCK_AFTER")//ロック機構
+#define MS_LOCK_BEFORE			(@"MESSENGER_SYSTEM_COMMAND:LOCK_BEFORE")//ロック機構
+#define MS_LOCK_PLANNEDEXEC		(@"MESSENGER_SYSTEM_COMMAND:LOCK_PLANNEDEXEC")//ロック解除後に行われる動作
 
 
 //logに関するタグ
@@ -109,6 +115,11 @@
 	
 	//ログ取り用の辞書				NSMutableDictionary
 	NSMutableDictionary * m_logDict;
+	
+	
+	//ロック機構用の辞書
+	NSMutableDictionary * m_lockBeforeDict;
+	NSMutableDictionary * m_lockAfterDict;
 }
 
 
@@ -162,6 +173,14 @@
 - (NSDictionary * ) withRemoteFrom:(id)mySelf withSelector:(SEL)sel;//遠隔実行
 - (NSDictionary * ) withDelay:(float)delay;//遅延実行
 
+- (NSDictionary * ) withLockBefore:(NSString * )lockValue;//ロック(実行前)(exec)
+- (NSDictionary * ) withLockBefore:(NSString * )lockValue withKeyName:(NSString * )keyName;//ロック(実行前)(valious)
+
+- (NSDictionary * ) withLockAfter:(NSString * )lockValue;//ロック(実行後)(exec)
+- (NSDictionary * ) withLockAfter:(NSString * )lockValue withKeyName:(NSString * )keyName;//ロック(実行後)(valious)
+- (NSDictionary * ) withLocksAfter:(NSString * )firstLockValue, ...;
+- (NSDictionary * ) withLocksAfterWithKeyNames:(NSString * )firstLockValue, ...;
+
 
 /**
  遠隔実行実装
@@ -181,6 +200,14 @@
  子供辞書の取得
  */
 - (NSMutableDictionary * ) getChildDict;
+
+
+
+/**
+ ロック辞書の取得
+ */
+- (NSMutableDictionary * ) getLockBeforeStore;
+- (NSMutableDictionary * ) getLockAfterStore;
 
 
 
