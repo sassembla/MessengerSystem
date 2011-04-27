@@ -597,6 +597,7 @@
 				[m_lockBeforeDict removeObjectForKey:lockKey];
 				
 				[self callMyself:exec, nil];
+				break;
 			}
 			
 			
@@ -604,21 +605,18 @@
 	}	
 }
 - (void) checkUnlockAfter:(NSDictionary * )dict {
-	
 	for (NSString * lockKey in [m_lockAfterDict allKeys]) {
-		NSLog(@"dict_%@",dict);
+		
 		//ID
 		NSMutableDictionary * currentLocksDictionary = [m_lockAfterDict valueForKey:lockKey];
-		NSLog(@"currentLocksDictionary_%@", currentLocksDictionary);
 		for (NSString * key in [currentLocksDictionary allKeys]) {
 			
-			NSLog(@"key_%@", key);
-			NSLog(@"left_%@", [dict valueForKey:key]);
-			NSLog(@"right_%@", [currentLocksDictionary valueForKey:key]);
+//			NSLog(@"key_%@", key);
+//			NSLog(@"left_%@", [dict valueForKey:key]);
+//			NSLog(@"right_%@", [currentLocksDictionary valueForKey:key]);
 			
 			if ([dict valueForKey:key] && [[dict valueForKey:key] isEqualToString:[currentLocksDictionary valueForKey:key]]) {
 				[currentLocksDictionary removeObjectForKey:key];
-				NSLog(@"currentLocksDictionary_removed_%@", currentLocksDictionary);
 			}
 			
 			if ([[currentLocksDictionary allKeys] count] == 1 && [[[currentLocksDictionary allKeys]objectAtIndex:0] isEqualToString:MS_LOCK_PLANNEDEXEC]) {
@@ -627,9 +625,8 @@
 				[m_lockAfterDict removeObjectForKey:lockKey];
 				
 				[self callMyself:exec, nil];
+				break;
 			}
-			
-			
 		}
 	}
 }
@@ -1391,26 +1388,26 @@
 								 nil];
 	return [NSDictionary dictionaryWithObject:singleLockArray forKey:MS_LOCK_BEFORE];
 }
-- (NSDictionary * ) withLocksBefore:(NSString * )firstLockValue, ... {
-	NSAssert(firstLockValue, @"firstLockValue is nil");
-	
-	NSMutableArray * multiLockArray = [[NSMutableArray alloc]init];
-	
-	va_list ap;
-	NSString * lockValue = firstLockValue;
-	
-	va_start(ap, firstLockValue);
-	
-	while (lockValue) {
-		
-		[multiLockArray addObject:[NSDictionary dictionaryWithObject:lockValue forKey:MS_EXECUTE]];
-		
-		lockValue = va_arg(ap, id);
-	}
-	va_end(ap);
-	
-	return [NSDictionary dictionaryWithObject:multiLockArray forKey:MS_LOCK_BEFORE];
-}
+//- (NSDictionary * ) withLocksBefore:(NSString * )firstLockValue, ... {
+//	NSAssert(firstLockValue, @"firstLockValue is nil");
+//	
+//	NSMutableArray * multiLockArray = [[NSMutableArray alloc]init];
+//	
+//	va_list ap;
+//	NSString * lockValue = firstLockValue;
+//	
+//	va_start(ap, firstLockValue);
+//	
+//	while (lockValue) {
+//		
+//		[multiLockArray addObject:[NSDictionary dictionaryWithObject:lockValue forKey:MS_EXECUTE]];
+//		
+//		lockValue = va_arg(ap, id);
+//	}
+//	va_end(ap);
+//	
+//	return [NSDictionary dictionaryWithObject:multiLockArray forKey:MS_LOCK_BEFORE];
+//}
 
 - (NSDictionary * ) withLocksBeforeWithKeyNames:(NSString * )firstLockValue, ... {
 	NSAssert(firstLockValue, @"firstLockValue is nil");
@@ -1450,26 +1447,26 @@
 								 nil];
 	return [NSDictionary dictionaryWithObject:singleLockArray forKey:MS_LOCK_AFTER];
 }
-- (NSDictionary * ) withLocksAfter:(NSString * )firstLockValue, ... {
-	NSAssert(firstLockValue, @"firstLockValue is nil");
-	
-	NSMutableArray * multiLockArray = [[NSMutableArray alloc]init];
-	
-	va_list ap;
-	NSString * lockValue = firstLockValue;
-	
-	va_start(ap, firstLockValue);
-	
-	while (lockValue) {
-		
-		[multiLockArray addObject:[NSDictionary dictionaryWithObject:lockValue forKey:MS_EXECUTE]];
-		
-		lockValue = va_arg(ap, id);
-	}
-	va_end(ap);
-	
-	return [NSDictionary dictionaryWithObject:multiLockArray forKey:MS_LOCK_AFTER];
-}
+//- (NSDictionary * ) withLocksAfter:(NSString * )firstLockValue, ... {
+//	NSAssert(firstLockValue, @"firstLockValue is nil");
+//	
+//	NSMutableArray * multiLockArray = [[NSMutableArray alloc]init];
+//	
+//	va_list ap;
+//	NSString * lockValue = firstLockValue;
+//	
+//	va_start(ap, firstLockValue);
+//	
+//	while (lockValue) {
+//		
+//		[multiLockArray addObject:[NSDictionary dictionaryWithObject:lockValue forKey:MS_EXECUTE]];
+//		
+//		lockValue = va_arg(ap, id);
+//	}
+//	va_end(ap);
+//	
+//	return [NSDictionary dictionaryWithObject:multiLockArray forKey:MS_LOCK_AFTER];
+//}
 
 - (NSDictionary * ) withLocksAfterWithKeyNames:(NSString * )firstLockValue, ... {
 	NSAssert(firstLockValue, @"firstLockValue is nil");
