@@ -1915,6 +1915,15 @@
 }
 
 
+/**
+ 個別のドメインに根ざしたExecの制作を行う。
+ 特定のMessenger搭載クラスが、特定のExec定義を持つことを想定する。
+ */
+- (void) testDomainExecCreation {
+    STFail(@"not yet implemented");
+}
+
+
 //- (void) testUnlockValiousNotExecMultiWithTwoMessageDefault {
 //	[parent callMyself:TEST_EXEC_LOCKED,
 //	 [parent withLocksAfter:

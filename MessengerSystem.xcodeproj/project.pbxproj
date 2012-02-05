@@ -359,7 +359,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = TestBundle;
-				SDKROOT = iphonesimulator4.0;
+				SDKROOT = iphoneos;
 				VERSIONING_SYSTEM = "";
 				WRAPPER_EXTENSION = octest;
 			};
