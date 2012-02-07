@@ -159,10 +159,19 @@
 - (void) removeFromParent;//自分→親の関係を解除するメソッド
 - (void) removeAllChild;//自分→子の関係を解除するメソッド
 
-- (void) callMyself:(NSString * )exec, ...;//自分自身への通信メソッド
-- (void) call:(NSString * )childName withExec:(NSString * )exec, ...;//特定の子への通信用メソッド
-- (void) call:(NSString * )childName withSpecifiedMID:(NSString * )mID withExec:(NSString * )exec, ...;//特定の子への通信用メソッド childのMIDを用いる。
-- (void) callParent:(NSString * )exec, ...;//親への通信用メソッド
+
+//NSString * version
+- (void) callMyself:(NSString * )exec, ... NS_REQUIRES_NIL_TERMINATION;//自分自身への通信メソッド
+- (id) call:(NSString * )childName withExec:(NSString * )exec, ... NS_REQUIRES_NIL_TERMINATION;//特定の子への通信用メソッド
+- (void) call:(NSString * )childName withSpecifiedMID:(NSString * )mID withExec:(NSString * )exec, ... NS_REQUIRES_NIL_TERMINATION;//特定の子への通信用メソッド childのMIDを用いる。
+- (void) callParent:(NSString * )exec, ... NS_REQUIRES_NIL_TERMINATION;//親への通信用メソッド
+
+
+//int version
+- (void) callMyselfWithIndex:(int)index, ... NS_REQUIRES_NIL_TERMINATION;
+- (void) call:(NSString * )childName withIndex:(int)index, ... NS_REQUIRES_NIL_TERMINATION;
+- (void) call:(NSString * )childName withSpecifiedMID:(NSString * )mID withIndex:(int)index, ... NS_REQUIRES_NIL_TERMINATION;
+- (void) callParentWithIndex:(int)index, ... NS_REQUIRES_NIL_TERMINATION;
 
 
 
@@ -219,6 +228,11 @@
 - (NSString * ) getExecAsString:(NSMutableDictionary * )dict; 
 
 /**
+ コマンド情報をintで取得する
+ */
+- (int) getExecAsInt:(NSDictionary * )dict;
+
+/**
  コマンド情報を数値で取得する
  辞書からswitch文で使用する数値を取得する
  */
@@ -242,20 +256,22 @@
 /**
  メッセージの内容を表示する
  */
-- (void) showMessengerPackage:(NSNotification * )nort; 
+- (void) showMessengerPackage:(NSNotification * )notif; 
 
 /**
  Execに紐づいているTagValueDictionaryの内容をNotificationから取得する
  */
-- (NSMutableDictionary * ) getTagValueDictionaryFromNotification:(NSNotification * )nort;
+- (NSMutableDictionary * ) getTagValueDictionaryFromNotification:(NSNotification * )notif;
 
 /**
  Execの内容をNSNotificationから取得する
  */
-- (NSString * ) getExecFromNortification:(NSNotification * )nort;
+- (NSString * ) getExecFromNotification:(NSNotification * )notif;
 
-
-
+/**
+ Execの内容をintとしてNSNotificationから取得する
+ */
+- (int) getExecAsIndexFromNotification:(NSNotification * )notif;
 
 
 /**

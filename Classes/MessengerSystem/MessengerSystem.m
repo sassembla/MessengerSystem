@@ -228,6 +228,9 @@
 			//設定されたbodyのメソッドを実行
 			IMP func = [[self getMyBodyID] methodForSelector:[self getMyBodySelector]];
 			(*func)([self getMyBodyID], [self getMyBodySelector], notification);
+            
+            //ここで返り値を得ればOK = messengerから取り出せるようになってればいい。送り返す機構をつけるか。要件がまとめられそう。
+            
 			return;
 		}
 		
@@ -1163,7 +1166,7 @@
  特定の名前のmessengerへの通信を行うメソッド
  異なる名前の親から子へのメッセージ限定
  */
-- (void) call:(NSString * )childName withExec:(NSString * )exec, ... {
+- (id) call:(NSString * )childName withExec:(NSString * )exec, ... {
 	
 	NSAssert(![childName isEqualToString:[self getMyName]], @"自分自身/同名の子供達へのメッセージブロードキャストをこのメソッドで行う事はできません。　callMyselfメソッドを使用してください");
 	NSAssert(![childName isEqualToString:MS_DEFAULT_PARENTNAME], @"システムで予約してあるデフォルトの名称です。　この名称を使ってのシステム使用は、その、なんだ、お勧めしません。");
@@ -1213,7 +1216,9 @@
 	va_end(ap);
 	
 	[self sendMessage:dict];
-	
+    
+//    if () return something
+	return nil;
 }
 
 /**
@@ -1329,6 +1334,218 @@
 	NSAssert(false, @"親設定が無い");
 }
 
+
+
+//数値化Version
+
+
+/**
+ 自分自身のmessengerへと通信を行うメソッド
+ */
+- (void) callMyselfWithIndex:(int)index, ... {
+	NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:5];
+	
+	[dict setValue:MS_CATEGOLY_LOCAL forKey:MS_CATEGOLY];
+	[dict setValue:[self getMyName] forKey:MS_ADDRESS_NAME];
+	
+	[dict setValue:[NSNumber numberWithInt:index] forKey:MS_EXECUTE];
+	[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
+	[dict setValue:[self getMyMID] forKey:MS_SENDERMID];
+	
+	va_list ap;
+	id kvDict;
+	
+	//NSLog(@"start_%@", exec);
+	
+	va_start(ap, index);
+	kvDict = va_arg(ap, id);
+	
+	while (kvDict) {
+		//NSLog(@"kvDict_%@", kvDict);
+		
+		for (id key in kvDict) {
+			//					NSLog(@"[kvDict valueForKey:key]_%@, key_%@", [kvDict valueForKey:key], key);
+			[dict setValue:[kvDict valueForKey:key] forKey:key];
+		}
+		
+		kvDict = va_arg(ap, id);
+	}
+	va_end(ap);
+	
+	
+	[self sendMessage:dict];
+}
+
+
+
+/**
+ 特定の名前のmessengerへの通信を行うメソッド
+ 異なる名前の親から子へのメッセージ限定
+ */
+- (void) call:(NSString * )childName withIndex:(int)index, ... {
+	NSAssert(![childName isEqualToString:[self getMyName]], @"自分自身/同名の子供達へのメッセージブロードキャストをこのメソッドで行う事はできません。　callMyselfメソッドを使用してください");
+	NSAssert(![childName isEqualToString:MS_DEFAULT_PARENTNAME], @"システムで予約してあるデフォルトの名称です。　この名称を使ってのシステム使用は、その、なんだ、お勧めしません。");
+	
+	
+	//特定のvalが含まれているか
+	NSArray * arrays = [[self getChildDict] allValues];
+	for (int i = 0; i <= [arrays count]; i++) {
+		if (i == [arrays count]) {
+			NSAssert1(FALSE, @"Without MID call先に指定したmessengerが存在しないか、未知のものです。本messengerを親とした設定を行うよう、子から親を指定してください。_%@",childName);
+			return;
+		}
+		
+		if ([[arrays objectAtIndex:i] isEqualToString:childName]) {
+			break;
+		}
+	}
+	
+	
+	NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:5];
+	
+	[dict setValue:MS_CATEGOLY_CALLCHILD forKey:MS_CATEGOLY];
+	[dict setValue:childName forKey:MS_ADDRESS_NAME];
+	
+	[dict setValue:[NSNumber numberWithInt:index] forKey:MS_EXECUTE];
+	[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
+	[dict setValue:[self getMyMID] forKey:MS_SENDERMID];
+	
+	va_list ap;
+	id kvDict;
+	
+	//NSLog(@"start_%@", exec);
+	
+	va_start(ap, index);
+	kvDict = va_arg(ap, id);
+	
+	while (kvDict) {
+		//NSLog(@"kvDict_%@", kvDict);
+		
+		for (id key in kvDict) {
+			//					NSLog(@"[kvDict valueForKey:key]_%@, key_%@", [kvDict valueForKey:key], key);
+			[dict setValue:[kvDict valueForKey:key] forKey:key];
+		}
+		
+		kvDict = va_arg(ap, id);
+	}
+	va_end(ap);
+	
+	[self sendMessage:dict];
+    
+}
+
+/**
+ 特定の子への通信を行うメソッド、特にMIDを使い、相手を最大限特定する。
+ */
+- (void) call:(NSString * )childName withSpecifiedMID:(NSString * )mID withIndex:(int)index, ... {
+    NSAssert(![childName isEqualToString:[self getMyName]], @"自分自身/同名の子供達へのメッセージブロードキャストをこのメソッドで行う事はできません。　callMyselfメソッドを使用してください");
+	NSAssert(![childName isEqualToString:MS_DEFAULT_PARENTNAME], @"システムで予約してあるデフォルトの名称です。　この名称を使ってのシステム使用は、その、なんだ、お勧めしません。");
+	NSAssert(mID ,@"mIDはnilでないNSStringである必要があります");
+	
+	//MIDキーが含まれているか、その値がchildNameと一致するか
+	NSString * val = [[self getChildDict] valueForKey:mID];
+	if (!val) {
+		NSAssert1(FALSE, @"with MID call先に指定したmessengerが存在しないか、未知のものです。本messengerを親とした設定を行うよう、子から親を指定してください。_%@",childName);
+		return;
+	}
+	
+	if (![val isEqualToString:childName]) {
+		NSAssert1(FALSE, @"with MID call先に指定したmessengerの名称とMIDのペアが一致しません_%@",childName);
+		return;
+	}
+	
+	
+	NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:6];
+	
+	[dict setValue:MS_CATEGOLY_CALLCHILD forKey:MS_CATEGOLY];
+	[dict setValue:childName forKey:MS_ADDRESS_NAME];
+	
+	[dict setValue:[NSNumber numberWithInt:index] forKey:MS_EXECUTE];
+	[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
+	[dict setValue:[self getMyMID] forKey:MS_SENDERMID];
+	
+	[dict setValue:mID forKey:MS_SPECIFYMID];
+	
+	
+	va_list ap;
+	id kvDict;
+	
+	//NSLog(@"start_%@", exec);
+	
+	va_start(ap, index);
+	kvDict = va_arg(ap, id);
+	
+	while (kvDict) {
+		//NSLog(@"kvDict_%@", kvDict);
+		
+		for (id key in kvDict) {
+			//					NSLog(@"[kvDict valueForKey:key]_%@, key_%@", [kvDict valueForKey:key], key);
+			[dict setValue:[kvDict valueForKey:key] forKey:key];
+		}
+		
+		kvDict = va_arg(ap, id);
+	}
+	va_end(ap);
+	
+	[self sendMessage:dict];
+
+}
+
+/**
+  親への通信を行うメソッド
+ */
+- (void) callParentWithIndex:(int)index, ... {
+    
+	//親が居たら
+	if ([self getMyParentName]) {
+		NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:5];
+		
+		
+		[dict setValue:MS_CATEGOLY_CALLPARENT forKey:MS_CATEGOLY];
+		[dict setValue:[self getMyParentName] forKey:MS_ADDRESS_NAME];
+		[dict setValue:[self getMyParentMID] forKey:MS_ADDRESS_MID];
+		
+		
+		[dict setValue:[NSNumber numberWithInt:index] forKey:MS_EXECUTE];
+		[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
+		[dict setValue:[self getMyMID] forKey:MS_SENDERMID];
+		
+		
+		//tag付けされた要素以外は無視するように設定
+		//可変長配列に与えられた要素を処理する。
+		
+		va_list vp;//可変引数のポインタになる変数
+		id kvDict;//可変長引数から辞書を取り出すときに使用するポインタ
+		
+		//NSLog(@"start_%@", exec);
+		
+		va_start(vp, index);//vpを可変長配列のポインタとして初期化する
+		kvDict = va_arg(vp, id);//vpから現在の可変長配列のヘッドにあるidを抽出し、kvDictに代入。この時点でkvDictは可変長配列のトップの要素のidを持っている。
+		
+		while (kvDict) {//存在していなければnull、可変長引数の終了の合図。
+			
+			//NSLog(@"kvDict_%@", kvDict);
+			
+			for (id key in kvDict) {
+				
+				//NSLog(@"[kvDict valueForKey:key]_%@, key_%@", [kvDict valueForKey:key], key);
+				//型チェック、kvDict型で無ければ無視する必要がある。
+				if (true) [dict setValue:[kvDict valueForKey:key] forKey:key];
+				
+			}
+			
+			kvDict = va_arg(vp, id);//次の値を読み出す
+		}
+		
+		va_end(vp);//終了処理
+		
+		[self sendMessage:dict];
+		
+		return;
+	}
+	
+	NSAssert(false, @"親設定が無い");
+}
 
 
 
@@ -1617,6 +1834,14 @@
 
 
 /**
+ 実行処理名を指定、int値を取得する
+ */
+- (int) getExecAsInt:(NSDictionary * )dict {
+    return [[dict valueForKey:MS_EXECUTE] intValue];
+}
+
+
+/**
  実行処理名を指定、Int値を取得する
  この時点で飛び込んでくるストリングのポインタと同じ値を直前で出して、合致する値を出せればいいのか、、って定数じゃないが、、一致は出来る、、うーん。
  */
@@ -1639,9 +1864,11 @@
 }
 
 
+
+
+
 /**
  FNVアルゴリズム
- 複合できそうな気がするんだけどね。
  */
 unsigned int FNVHash(char * str, unsigned int len)
 {
@@ -1780,30 +2007,39 @@ unsigned int SDBMHash(char * str, unsigned int len) {
  Messengerが搬送している中身をNSLogで表示する。
  not tested
  */
-- (void) showMessengerPackage:(NSNotification * )nort {
-	NSLog(@"showMessengerPackage_%@_", [nort userInfo]);
+- (void) showMessengerPackage:(NSNotification * )notif {
+	NSLog(@"showMessengerPackage_%@_", [notif userInfo]);
 }
 
 
 /**
- 自分コマンドのDictionaryをnortから直接取得するメソッド
+ 自分コマンドのDictionaryをnotifから直接取得するメソッド
  */
-- (NSMutableDictionary * ) getTagValueDictionaryFromNotification:(NSNotification * )nort {
-	NSMutableDictionary * dict = (NSMutableDictionary * )[nort userInfo];
+- (NSMutableDictionary * ) getTagValueDictionaryFromNotification:(NSNotification * )notif {
+	NSMutableDictionary * dict = (NSMutableDictionary * )[notif userInfo];
 	
 	return dict;
 }
 
 
 /**
- Execをnortから直接取得するメソッド
+ Execをnotifから直接取得するメソッド
  */
-- (NSString * ) getExecFromNortification:(NSNotification * )nort {
-	NSMutableDictionary * dict = [self getTagValueDictionaryFromNotification:nort];
+- (NSString * ) getExecFromNotification:(NSNotification * )notif {
+	NSMutableDictionary * dict = [self getTagValueDictionaryFromNotification:notif];
 	
 	return [self getExecAsString:dict];
 }
 
+
+/**
+ Exec(数値)をnotifから直接取得するメソッド
+ Execを数値として解釈する。 
+ */
+- (int) getExecAsIndexFromNotification:(NSNotification * )notif {
+    NSMutableDictionary * dict = [self getTagValueDictionaryFromNotification:notif];
+    return [self getExecAsInt:dict];
+}
 
 
 

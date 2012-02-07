@@ -57,6 +57,12 @@
 #define TEST_EXEC_LOCKED_MULTI_2	(@"TEST_EXEC_LOCKED_MULTI_2")
 
 
+#define TEST_CLASS_A    (@"TEST_CLASS_A")
+
+#define TEST_RET_RESULT (@"TEST_RET_RESULT")
+
+
+
 @interface MessengerSystemTest : SenTestCase
 {
 	MessengerSystem * parent;
@@ -77,6 +83,97 @@
 - (void) sayHello:(NSString * )str;
 
 @end
+
+
+
+
+enum execTypeEnum//衝突性の担保が出来ない。index値がhashであっても、難しい。まあでもhashを使うって言うのはありかなー、、生成時にキーがつけられればなー。createKeyみたいな。
+{
+    ClassA_EXEC_0 = 0,
+    ClassA_EXEC_1,
+    EXEC_2,
+    EXEC_3,
+    EXEC_4
+};
+
+
+/**
+ ExecNameSpaceテスト用の外部クラスの定義
+ */
+@interface ClassA : NSObject {
+    MessengerSystem * messenger;
+}
+- (id) initClassA;
+- (NSDictionary * ) receiveLog;
+@end
+
+
+
+@implementation ClassA
+
+/*
+ 初期化
+ */
+- (id) initClassA {
+    if (self = [super init]) {
+        messenger = [[MessengerSystem alloc]initWithBodyID:self withSelector:@selector(receiver:) withName:TEST_CLASS_A];
+        [messenger inputParent:TEST_PARENT_NAME];
+    }
+    return self;
+}
+
+/*
+ レシーバ
+ */
+- (void) receiver:(NSNotification * ) notif {
+    NSLog(@"received    ClassA  %@", notif);
+    int index = [messenger getExecAsIndexFromNotification:notif];
+    
+    switch (index) {
+        case ClassA_EXEC_0:
+            break;
+            
+        case ClassA_EXEC_1:
+            NSLog(@"good.");
+            break;
+        case 100:
+            NSLog(@"どうなるか");
+            break;
+        default:
+            NSLog(@"hazure  %d", [messenger getExecAsIndexFromNotification:notif]);
+            break;
+    }
+    
+    
+}
+
+
+
+@interface ClassB {
+    
+}
+@end
+
+@implementation ClassB 
+
+@end
+
+<#methods#>
+
+@end
+
+- (NSDictionary * ) receiveLog {
+    return [messenger getLogStore];
+}
+
+
+- (void) dealloc {
+    [messenger release];
+}
+
+@end
+
+
 
 
 
@@ -132,7 +229,7 @@
 	
 	NSString * exec1 = [dict valueForKey:MS_EXECUTE];//直接キーを指定して取得
 	
-	NSString * exec2 = [parent getExecFromNortification:notification];//notificationからの取得
+	NSString * exec2 = [parent getExecFromNotification:notification];//notificationからの取得
 	
 	
 	STAssertEquals(exec,exec1, @"m_testParent_一致しない_0,1");
@@ -1915,13 +2012,36 @@
 }
 
 
+
 /**
  個別のドメインに根ざしたExecの制作を行う。
  特定のMessenger搭載クラスが、特定のExec定義を持つことを想定する。
  */
 - (void) testDomainExecCreation {
-    STFail(@"not yet implemented");
+    
+    ClassA * a = [[ClassA alloc]initClassA];
+   
+    
+    int count = [[a receiveLog] count];
+    
+    
+    //ここにクラスAのExecを書く
+    [parent call:TEST_CLASS_A withIndex:ClassA_EXEC_1, nil];
+
+    //届いていたら、ClassAのログが１件増えている筈
+    STAssertTrue([[a receiveLog] count] == count+1, @"not incremeted...");
 }
+
+
+- (void) testGetRetValue {
+    ClassA * a = [[ClassA alloc]initClassA];
+    id t = [parent call:TEST_CLASS_A withExec:TEST_EXEC, nil];
+}
+
+
+
+
+
 
 
 //- (void) testUnlockValiousNotExecMultiWithTwoMessageDefault {
