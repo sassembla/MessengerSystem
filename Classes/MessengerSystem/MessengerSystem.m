@@ -91,9 +91,9 @@
 - (void) innerPerform:(NSNotification * )notification {
 	NSMutableDictionary * dict = (NSMutableDictionary *)[notification userInfo];
 	
-	//コマンド名について確認
-	NSString * commandName = [dict valueForKey:MS_CATEGOLY];
-	if (!commandName) {
+	//カテゴリについて確認
+	NSString * categolyName = [dict valueForKey:MS_CATEGOLY];
+	if (!categolyName) {
 		//		NSLog(@"コマンドが無いため、何の処理も行われずに帰る");
 		return;
 	}
@@ -113,7 +113,7 @@
 		return;
 	}
 	
-	
+	//here
 	//宛名確認
 	NSString * address = [dict valueForKey:MS_ADDRESS_NAME];
 	if (!address) {
@@ -145,8 +145,7 @@
 	 3,スレッドが触っているコンテナID、、まだ取れていない
 	 */
 	
-	
-	//	pid_t pid = getpid();//駄目、ぐっはあ、うーん。　惜しい。プロセスIDでは駄目か！?　それとも行けるのか
+	//	pid_t pid = getpid();
 	//	pid_t ppid = getppid();
 	//	
 	//	
@@ -162,11 +161,10 @@
 	
 	
 	//カテゴリごとの処理に移行
-	//クリティカルなケースであっても、ThreadIDで対応できる筈。現在実行中の、Threadからみて未完了の処理とそれをIDする機能、というのが或る筈なんだ。
 	
 	
 	//LPC
-	if ([commandName isEqualToString:MS_CATEGOLY_LOCAL]) {
+	if ([categolyName isEqualToString:MS_CATEGOLY_LOCAL]) {
 		
 		
 		if (![senderName isEqualToString:[self getMyName]]) {
@@ -197,7 +195,7 @@
 	
 	
 	//親から子供に向けてのコールを受け取った
-	if ([commandName isEqualToString:MS_CATEGOLY_CALLCHILD]) {
+	if ([categolyName isEqualToString:MS_CATEGOLY_CALLCHILD]) {
 		//宛名が自分の事でなかったら帰る
 		if (![address isEqualToString:[self getMyName]]) {
 			//			NSLog(@"自分宛ではないので却下_From_%@,	To_%@,	Iam_%@", senderName, address, [self getMyName]);
@@ -243,7 +241,7 @@
 	
 	
 	//子供から親に向けてのコールを受け取った
-	if ([commandName isEqualToString:MS_CATEGOLY_CALLPARENT]) {//親に送られたメッセージ
+	if ([categolyName isEqualToString:MS_CATEGOLY_CALLPARENT]) {//親に送られたメッセージ
 		
 		if (![address isEqualToString:[self getMyName]]) {//送信者の指定した宛先が自分か
 			//			NSLog(@"MS_CATEGOLY_CALLPARENT_宛先ではないMessnegerが受け取った");
@@ -278,6 +276,25 @@
 		
 		return;
 	}
+    
+    
+    //返り値のカテゴリが届いた
+    if ([categolyName isEqualToString:MS_CATEGOLY_CALLBACK_FROM_CHILD]) {
+        
+        //自分宛かどうか、先ず名前で判断
+		if (![address isEqualToString:[self getMyName]]) {
+			return;
+		}
+        
+        //ログ
+        [self saveLogForReceived:recievedLogDict];
+        
+        m_callbackDict = [self getTagValueDictionaryFromNotification:notification];
+        
+        return;
+    }
+
+    
 	
 	
 	
@@ -285,7 +302,7 @@
 	
 	
 	//親探索のサーチが届いた
-	if ([commandName isEqualToString:MS_CATEGOLY_PARENTSEARCH]) {
+	if ([categolyName isEqualToString:MS_CATEGOLY_PARENTSEARCH]) {
 		
 		//自分宛かどうか、先ず名前で判断
 		if (![address isEqualToString:[self getMyName]]) {
@@ -354,7 +371,7 @@
 	
 	
 	//親解消のコマンドが届いた
-	if ([commandName isEqualToString:MS_CATEGOLY_REMOVE_PARENT]) {
+	if ([categolyName isEqualToString:MS_CATEGOLY_REMOVE_PARENT]) {
 		
 		//自分宛かどうか、先ず名前で判断
 		if (![address isEqualToString:[self getMyName]]) {
@@ -380,7 +397,7 @@
 	}
 	
 	//子供解消のコマンドが届いた
-	if ([commandName isEqualToString:MS_CATEGOLY_REMOVE_CHILD]) {
+	if ([categolyName isEqualToString:MS_CATEGOLY_REMOVE_CHILD]) {
 		//		NSLog(@"MS_CATEGOLY_REMOVE_CHILD到着");
 		
 		//自分自身を除外
@@ -412,9 +429,9 @@
 		return;
 	}
 	
+    	
 	
-	
-	NSAssert1(false, @"MessengerSystem_innerPerform_想定外のコマンド_%@",commandName);
+	NSAssert1(false, @"MessengerSystem_innerPerform_想定外のカテゴリ_%@",categolyName);
 }
 
 /**
@@ -1177,7 +1194,7 @@
 	for (int i = 0; i <= [arrays count]; i++) {
 		if (i == [arrays count]) {
 			NSAssert1(FALSE, @"Without MID call先に指定したmessengerが存在しないか、未知のものです。本messengerを親とした設定を行うよう、子から親を指定してください。_%@",childName);
-			return;
+			return nil;
 		}
 		
 		if ([[arrays objectAtIndex:i] isEqualToString:childName]) {
@@ -1216,8 +1233,10 @@
 	va_end(ap);
 	
 	[self sendMessage:dict];
+
+    //m_callbackDictがあれば返す
+    if (m_callbackDict) return m_callbackDict;
     
-//    if () return something
 	return nil;
 }
 
@@ -1335,8 +1354,68 @@
 }
 
 
+/**
+ callかcallParentで呼ばれた側が、callbackを行う。
+ */
+- (void) callback:(NSNotification * )notif, ... {
+    NSMutableDictionary * sourceDict = (NSMutableDictionary *)[notif userInfo];
+	
+	//送信者MID
+	NSString * senderMID = [sourceDict valueForKey:MS_SENDERMID];
+	
+    
+	//送信者名    
+    NSString * parentOrChild = [sourceDict valueForKey:MS_SENDERNAME];
+    NSString * categolyName = [sourceDict valueForKey:MS_CATEGOLY];
+    
+    
+    NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:5];
+    
+    
+    //自分が子供で、親から呼ばれた
+    if ([categolyName isEqualToString:MS_CATEGOLY_CALLCHILD]) {
+        NSAssert([parentOrChild isEqualToString:[self getMyParentName]], @"一致しない親へのcallback name");
+        NSAssert([senderMID isEqualToString:[self getMyParentMID]], @"一致しない親へのcallback mid");
+        
+		[dict setValue:MS_CATEGOLY_CALLBACK forKey:MS_CATEGOLY];
+		[dict setValue:[self getMyParentName] forKey:MS_ADDRESS_NAME];
+		[dict setValue:[self getMyParentMID] forKey:MS_ADDRESS_MID];
+    }
+    
+    if ([categolyName isEqualToString:MS_CATEGOLY_CALLPARENT]) {        
+        [dict setValue:MS_CATEGOLY_CALLBACK forKey:MS_CATEGOLY];
+		[dict setValue:parentOrChild forKey:MS_ADDRESS_NAME];
+    }
+    
+    //共通処理
+    {
+		[dict setValue:[self getMyName] forKey:MS_SENDERNAME];
+		[dict setValue:[self getMyMID] forKey:MS_SENDERMID];
+		
+		va_list vp;//可変引数のポインタになる変数
+		id kvDict;//可変長引数から辞書を取り出すときに使用するポインタ
+		
+		va_start(vp, notif);//vpを可変長配列のポインタとして初期化する
+		kvDict = va_arg(vp, id);//vpから現在の可変長配列のヘッドにあるidを抽出し、kvDictに代入。この時点でkvDictは可変長配列のトップの要素のidを持っている。
+		
+		while (kvDict) {//存在していなければnull、可変長引数の終了の合図。
+			
+			for (id key in kvDict) {
+				if (true) [dict setValue:[kvDict valueForKey:key] forKey:key];
+			}
+			
+			kvDict = va_arg(vp, id);//次の値を読み出す
+		}
+		
+		va_end(vp);//終了処理
+		NSLog(@"dict    %@", dict);
+		[self sendMessage:dict];
+    }
+}
 
-//数値化Version
+
+
+//数値化Version(deprecated)
 
 
 /**

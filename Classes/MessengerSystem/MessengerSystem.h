@@ -13,7 +13,8 @@
 //(@"0.5.0")//10/09/20 3:46:51
 //(@"0.8.0")//10/10/01 21:49:34
 //(@"0.9.0")//10/12/02 19:38:49
-#define MS_VERSION	(@"0.9.2")//11/04/27 22:49:33 Lock added.
+//(@"0.9.2")//11/04/27 22:49:33 Lock added.
+#define MS_VERSION  (@"1.0.0")//12/02/07 20:11:16   callback added
 
 
 //カテゴリ系タグ メッセージの種類を用途ごとに分ける
@@ -21,9 +22,12 @@
 #define MS_CATEGOLY_LOCAL			(@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_LOCAL")//自分呼び出し
 #define MS_CATEGOLY_CALLCHILD		(@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_CALL_CHILD")//子供呼び出し
 #define	MS_CATEGOLY_CALLPARENT		(@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_CALL_PARENT")//親呼び出し
+#define MS_CATEGOLY_CALLBACK_FROM_CHILD        (@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_CALLBACK_FROM_CHILD")//呼び主(親)へと返答
+#define MS_CATEGOLY_CALLBACK_FROM_PARENT        (@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_CALLBACK_FROM_PARENT")//呼び主(子)へと返答
 #define MS_CATEGOLY_PARENTSEARCH	(@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_PARENTSEARCH")//親探索
 #define MS_CATEGOLY_REMOVE_PARENT	(@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_REMOVEPARENT")//親の登録を消す
 #define MS_CATEGOLY_REMOVE_CHILD	(@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_REMOVECHILD")//子供の登録を消す
+#define MS_CATEGOLY_CALLBACK        (@"MESSENGER_SYSTEM_COMMAND:CATEGOLY_CALLBACK")//呼び主へと返答
 
 
 //通知系タグ
@@ -120,6 +124,9 @@
 	//ロック機構用の辞書
 	NSMutableDictionary * m_lockBeforeDict;
 	NSMutableDictionary * m_lockAfterDict;
+    
+    //返り値反映用辞書
+    NSDictionary * m_callbackDict;
 }
 
 
@@ -165,13 +172,14 @@
 - (id) call:(NSString * )childName withExec:(NSString * )exec, ... NS_REQUIRES_NIL_TERMINATION;//特定の子への通信用メソッド
 - (void) call:(NSString * )childName withSpecifiedMID:(NSString * )mID withExec:(NSString * )exec, ... NS_REQUIRES_NIL_TERMINATION;//特定の子への通信用メソッド childのMIDを用いる。
 - (void) callParent:(NSString * )exec, ... NS_REQUIRES_NIL_TERMINATION;//親への通信用メソッド
+- (void) callback:(NSNotification * )notif, ... NS_REQUIRES_NIL_TERMINATION;//返り値の返信用メソッド
 
 
 //int version
-- (void) callMyselfWithIndex:(int)index, ... NS_REQUIRES_NIL_TERMINATION;
-- (void) call:(NSString * )childName withIndex:(int)index, ... NS_REQUIRES_NIL_TERMINATION;
-- (void) call:(NSString * )childName withSpecifiedMID:(NSString * )mID withIndex:(int)index, ... NS_REQUIRES_NIL_TERMINATION;
-- (void) callParentWithIndex:(int)index, ... NS_REQUIRES_NIL_TERMINATION;
+- (void) callMyselfWithIndex:(int)index, ... NS_REQUIRES_NIL_TERMINATION DEPRECATED_ATTRIBUTE;
+- (void) call:(NSString * )childName withIndex:(int)index, ... NS_REQUIRES_NIL_TERMINATION DEPRECATED_ATTRIBUTE;
+- (void) call:(NSString * )childName withSpecifiedMID:(NSString * )mID withIndex:(int)index, ... NS_REQUIRES_NIL_TERMINATION DEPRECATED_ATTRIBUTE;
+- (void) callParentWithIndex:(int)index, ... NS_REQUIRES_NIL_TERMINATION DEPRECATED_ATTRIBUTE;
 
 
 

@@ -59,6 +59,7 @@
 
 #define TEST_CLASS_A    (@"TEST_CLASS_A")
 
+#define TEST_CLASS_B    (@"TEST_CLASS_B")
 #define TEST_RET_RESULT (@"TEST_RET_RESULT")
 
 
@@ -148,20 +149,6 @@ enum execTypeEnum//衝突性の担保が出来ない。index値がhashであっ�
 }
 
 
-
-@interface ClassB {
-    
-}
-@end
-
-@implementation ClassB 
-
-@end
-
-<#methods#>
-
-@end
-
 - (NSDictionary * ) receiveLog {
     return [messenger getLogStore];
 }
@@ -172,6 +159,54 @@ enum execTypeEnum//衝突性の担保が出来ない。index値がhashであっ�
 }
 
 @end
+
+
+
+
+
+
+@interface ClassB:NSObject {
+    MessengerSystem * messenger;
+}
+- (id) initClassB; 
+
+@end
+
+
+@implementation ClassB 
+
+- (id) initClassB {
+    if (self = [super init]) {
+        messenger = [[MessengerSystem alloc]initWithBodyID:self withSelector:@selector(receiver:) withName:TEST_CLASS_B];
+        [messenger inputParent:TEST_PARENT_NAME];
+    }
+    return self;
+}
+
+- (void) receiver:(NSNotification * ) notif {
+    NSString * exec = [messenger getExecFromNotification:notif];
+    if ([exec isEqualToString:TEST_EXEC]) {
+        
+        //返すのに必要な条件は、
+        /*
+         返す相手=親か子供
+         その時のExec?→retで新造できる
+         値→tag-valueを使用(idだと型がわかんないので。ただし値のみ使用する。かなあ、、、dictを返してもらった方が良いかもね。うん。)
+         */
+        
+        //値を返す用のもの
+        [messenger callback:notif,
+         [messenger tag:@"タグ" val:@"値"],
+         nil];
+        
+        //retで返すと、汚染がでかい。却下。
+        //        return TEST_RET_RESULT;
+    }
+
+}
+@end
+
+
 
 
 
@@ -2032,10 +2067,21 @@ enum execTypeEnum//衝突性の担保が出来ない。index値がhashであっ�
     STAssertTrue([[a receiveLog] count] == count+1, @"not incremeted...");
 }
 
-
+/**
+ 返り値を得るcallパターンのテスト
+ */
 - (void) testGetRetValue {
-    ClassA * a = [[ClassA alloc]initClassA];
-    id t = [parent call:TEST_CLASS_A withExec:TEST_EXEC, nil];
+    ClassB * b = [[ClassB alloc]initClassB];
+    
+    NSLog(@"testGetRetValue開始");
+    
+    
+    NSLog(@"TEST_CLASS_B　が受け取った");
+    NSDictionary * t = [parent call:TEST_CLASS_B withExec:TEST_EXEC, nil];
+    
+    STAssertNotNil(t, @"callbackParam is not ", t);
+    NSLog(@"callback is   %@", t);
+    
 }
 
 
