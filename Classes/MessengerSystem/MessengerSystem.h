@@ -169,9 +169,9 @@
 
 //NSString * version
 - (void) callMyself:(NSString * )exec, ... NS_REQUIRES_NIL_TERMINATION;//自分自身への通信メソッド
-- (id) call:(NSString * )childName withExec:(NSString * )exec, ... NS_REQUIRES_NIL_TERMINATION;//特定の子への通信用メソッド
-- (void) call:(NSString * )childName withSpecifiedMID:(NSString * )mID withExec:(NSString * )exec, ... NS_REQUIRES_NIL_TERMINATION;//特定の子への通信用メソッド childのMIDを用いる。
-- (void) callParent:(NSString * )exec, ... NS_REQUIRES_NIL_TERMINATION;//親への通信用メソッド
+- (NSDictionary * ) call:(NSString * )childName withExec:(NSString * )exec, ... NS_REQUIRES_NIL_TERMINATION;//特定の子への通信用メソッド
+- (NSDictionary * ) call:(NSString * )childName withSpecifiedMID:(NSString * )mID withExec:(NSString * )exec, ... NS_REQUIRES_NIL_TERMINATION;//特定の子への通信用メソッド childのMIDを用いる。
+- (NSDictionary * ) callParent:(NSString * )exec, ... NS_REQUIRES_NIL_TERMINATION;//親への通信用メソッド
 - (void) callback:(NSNotification * )notif, ... NS_REQUIRES_NIL_TERMINATION;//返り値の返信用メソッド
 
 

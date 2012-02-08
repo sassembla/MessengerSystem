@@ -14,7 +14,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "2079"
          endingLineNumber = "2079"
-         landmarkName = "-testGetRetValue"
+         landmarkName = "-testUnlockValiousNotExecMultiWithTwoMessage"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -28,8 +28,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "188"
          endingLineNumber = "188"
-         landmarkName = "-receiver:"
-         landmarkType = "5">
+         landmarkName = "@interface ClassB"
+         landmarkType = "2">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
@@ -42,7 +42,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "1366"
          endingLineNumber = "1366"
-         landmarkName = "-callback:"
+         landmarkName = "-callParent:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -56,7 +56,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "1375"
          endingLineNumber = "1375"
-         landmarkName = "-callback:"
+         landmarkName = "-callParent:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -84,8 +84,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "2083"
          endingLineNumber = "2083"
-         landmarkName = "-testGetRetValue"
-         landmarkType = "5">
+         landmarkName = "@implementation MessengerSystemTest"
+         landmarkType = "3">
       </FileBreakpoint>
    </FileBreakpoints>
 </Bucket>
