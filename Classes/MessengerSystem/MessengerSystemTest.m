@@ -59,8 +59,22 @@
 
 #define TEST_CLASS_A    (@"TEST_CLASS_A")
 
+//callback
 #define TEST_CLASS_B    (@"TEST_CLASS_B")
 #define TEST_RET_RESULT (@"TEST_RET_RESULT")
+#define TEST_EXEC_CALLBACK  (@"TEST_EXEC_CALLBACK")
+
+#define TEST_TAG_CALLBACK   (@"TEST_TAG_CALLBACK")
+#define TEST_VALUE_CALLBACK (@"TEST_VALUE_CALLBACK")
+
+#define TEST_EXEC_CALLBACK_1    (@"TEST_EXEC_CALLBACK_1")
+#define TEST_TAG_CALLBACK_1     (@"TEST_TAG_CALLBACK_1")
+#define TEST_VALUE_CALLBACK_1   (@"TEST_VALUE_CALLBACK_1")
+
+#define TEST_EXEC_CALLBACK_2    (@"TEST_EXEC_CALLBACK_2")
+#define TEST_TAG_CALLBACK_2     (@"TEST_TAG_CALLBACK_2")
+#define TEST_VALUE_CALLBACK_2   (@"TEST_VALUE_CALLBACK_2")
+
 
 
 
@@ -169,7 +183,8 @@ enum execTypeEnum//衝突性の担保が出来ない。index値がhashであっ�
     MessengerSystem * messenger;
 }
 - (id) initClassB; 
-
+- (id) initClassBAsParent;
+- (NSString * )mId; 
 @end
 
 
@@ -183,27 +198,46 @@ enum execTypeEnum//衝突性の担保が出来ない。index値がhashであっ�
     return self;
 }
 
+- (id) initClassBAsParent {
+    if (self = [super init]) {
+        messenger = [[MessengerSystem alloc]initWithBodyID:self withSelector:@selector(receiver:) withName:TEST_CLASS_B];
+    }
+    return self;
+}
+
 - (void) receiver:(NSNotification * ) notif {
     NSString * exec = [messenger getExecFromNotification:notif];
-    if ([exec isEqualToString:TEST_EXEC]) {
-        
-        //返すのに必要な条件は、
-        /*
-         返す相手=親か子供
-         その時のExec?→retで新造できる
-         値→tag-valueを使用(idだと型がわかんないので。ただし値のみ使用する。かなあ、、、dictを返してもらった方が良いかもね。うん。)
-         */
-        
-        //値を返す用のもの
+    
+    //返す相手が親のケース
+    if ([exec isEqualToString:TEST_EXEC_CALLBACK]) {
         [messenger callback:notif,
-         [messenger tag:@"タグ" val:@"値"],
+         [messenger tag:TEST_TAG_CALLBACK val:TEST_VALUE_CALLBACK],
          nil];
         
         //retで返すと、汚染がでかい。却下。
         //        return TEST_RET_RESULT;
     }
-
+    
+    //返す相手が親のケース specifiedIdで送られてきたもの
+    if ([exec isEqualToString:TEST_EXEC_CALLBACK_1]) {
+        [messenger callback:notif,
+         [messenger tag:TEST_TAG_CALLBACK_1 val:TEST_VALUE_CALLBACK_1],
+         nil];
+    }
+    
+    //返す相手が子供のケース
+    if ([exec isEqualToString:TEST_EXEC_CALLBACK_2]) {
+        [messenger callback:notif,
+         [messenger tag:TEST_TAG_CALLBACK_2 val:TEST_VALUE_CALLBACK_2],
+         nil];
+    }
+    
 }
+
+- (NSString * )mId {
+    return [messenger getMyMID];
+}
+
 @end
 
 
@@ -2067,23 +2101,64 @@ enum execTypeEnum//衝突性の担保が出来ない。index値がhashであっ�
     STAssertTrue([[a receiveLog] count] == count+1, @"not incremeted...");
 }
 
+
+
+//callback
 /**
  返り値を得るcallパターンのテスト
+ 親が子供にメッセージを投げ、子供がそれを返す
  */
-- (void) testGetRetValue {
+- (void) testCallbackFromChildToParent {
     ClassB * b = [[ClassB alloc]initClassB];
+    NSDictionary * currentCallbackDict = [parent call:TEST_CLASS_B withExec:TEST_EXEC_CALLBACK, nil];
     
-    NSLog(@"testGetRetValue開始");
+    STAssertNotNil(currentCallbackDict, @"callbackParam is not ", currentCallbackDict);
+    NSLog(@"callback is   %@", currentCallbackDict);
     
+    STAssertNotNil([currentCallbackDict valueForKey:TEST_TAG_CALLBACK], @"not contained. %@", currentCallbackDict);
     
-    NSLog(@"TEST_CLASS_B　が受け取った");
-    NSDictionary * t = [parent call:TEST_CLASS_B withExec:TEST_EXEC, nil];
-    
-    STAssertNotNil(t, @"callbackParam is not ", t);
-    NSLog(@"callback is   %@", t);
-    
+    STAssertTrue([[currentCallbackDict valueForKey:TEST_TAG_CALLBACK] isEqualToString:TEST_VALUE_CALLBACK], 
+                 @"not match. %@", [currentCallbackDict valueForKey:TEST_TAG_CALLBACK]);
 }
 
+/**
+ 返り値を得るcallパターンのテスト
+ 親が子供にメッセージを投げ、子供がそれを返す
+ 特定の子供バージョン
+ */
+- (void) testCallbackFromChildToParentWithSpecifiedId {
+    ClassB * b = [[ClassB alloc]initClassB];
+    NSDictionary * currentCallbackDict = [parent call:TEST_CLASS_B withSpecifiedMID:[b mId] withExec:TEST_EXEC_CALLBACK_1, nil];
+    
+    STAssertNotNil(currentCallbackDict, @"callbackParam is not ", currentCallbackDict);
+    NSLog(@"callback is   %@", currentCallbackDict);
+    
+    STAssertNotNil([currentCallbackDict valueForKey:TEST_TAG_CALLBACK_1], @"not contained. %@", currentCallbackDict);
+    
+    STAssertTrue([[currentCallbackDict valueForKey:TEST_TAG_CALLBACK_1] isEqualToString:TEST_VALUE_CALLBACK_1], 
+                 @"not match. %@", [currentCallbackDict valueForKey:TEST_TAG_CALLBACK_1]);
+}
+
+
+
+/**
+ 返り値を得るcallパターンのテスト
+  子供が親にメッセージを投げ、親がそれを返す
+ */
+- (void) testGetRetValueFromParentToChild {
+    ClassB * b = [[ClassB alloc]initClassBAsParent];
+    [parent inputParent:TEST_CLASS_B];
+    
+    NSDictionary * currentCallbackDict = [parent callParent:TEST_EXEC_CALLBACK_2, nil];
+    
+    STAssertNotNil(currentCallbackDict, @"callbackParam is not ", currentCallbackDict);
+    NSLog(@"callback is   %@", currentCallbackDict);
+    
+    STAssertNotNil([currentCallbackDict valueForKey:TEST_TAG_CALLBACK_2], @"not contained. %@", currentCallbackDict);
+    
+    STAssertTrue([[currentCallbackDict valueForKey:TEST_TAG_CALLBACK_2] isEqualToString:TEST_VALUE_CALLBACK_2], 
+                 @"not match. %@", [currentCallbackDict valueForKey:TEST_TAG_CALLBACK_2]);
+}
 
 
 

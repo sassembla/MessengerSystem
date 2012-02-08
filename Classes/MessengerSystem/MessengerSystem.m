@@ -226,13 +226,8 @@
 			//設定されたbodyのメソッドを実行
 			IMP func = [[self getMyBodyID] methodForSelector:[self getMyBodySelector]];
 			(*func)([self getMyBodyID], [self getMyBodySelector], notification);
-            
-            //ここで返り値を得ればOK = messengerから取り出せるようになってればいい。送り返す機構をつけるか。要件がまとめられそう。
-            
 			return;
 		}
-		
-		
 		
 		//対象ではなかった
 		return;
@@ -278,7 +273,8 @@
 	}
     
     
-    //返り値のカテゴリが届いた
+    //返り値系 カテゴリが届いた
+    //子供から親へのcallback
     if ([categolyName isEqualToString:MS_CATEGOLY_CALLBACK_FROM_CHILD]) {
         
         //自分宛かどうか、先ず名前で判断
@@ -286,14 +282,68 @@
 			return;
 		}
         
-        //ログ
-        [self saveLogForReceived:recievedLogDict];
-        
-        m_callbackDict = [self getTagValueDictionaryFromNotification:notification];
+        //宛先MIDのキーがあるか
+		NSString * calledParentMSID = [dict valueForKey:MS_ADDRESS_MID];
+		if (!calledParentMSID) {
+			return;//値が無ければ無視する
+		}
+		
+		
+		//自分のMIDと一致するか
+		if (![calledParentMSID isEqualToString:[self getMyMID]]) {
+			return;
+		}
+		
+		for (id key in [self getChildDict]) {//子供リストに含まれていなければ実行しないし、受け取らない。
+			if ([[[self getChildDict] objectForKey:key] isEqualToString:senderName]) {
+				[self saveLogForReceived:recievedLogDict];
+				
+				//設定されたbodyのメソッドを実行
+				m_callbackDict = [self getTagValueDictionaryFromNotification:notification];
+				
+                return;
+			}
+		}
         
         return;
     }
 
+    //親から子供へのcallback
+    if ([categolyName isEqualToString:MS_CATEGOLY_CALLBACK_FROM_PARENT]) {
+        
+        //自分宛かどうか、先ず名前で判断
+		if (![address isEqualToString:[self getMyName]]) {
+			return;
+		}
+        
+        //オプションでの特定MID宛先がある場合、合致する場合のみ処理を進める
+		NSString * specifiedMID = [dict valueForKey:MS_SPECIFYMID];
+		if (specifiedMID) {//特定MID宛先があり、自分宛ではない
+			if (![specifiedMID isEqualToString:[self getMyMID]]) {
+				return;
+			}
+		}
+		
+		
+		//送信者の名前と受信者の名前が同一であれば、抜ける 送信側で既に除外済み
+		if ([senderName isEqualToString:[self getMyName]]) {
+			NSAssert(false, @"同名の子供はブロードキャストの対象に出来ない");
+		}
+		
+		
+		if ([senderName isEqualToString:[self getMyParentName]]) {//送信者が自分の親の場合のみ、処理を進める
+			//ログ
+			[self saveLogForReceived:recievedLogDict];
+			
+			m_callbackDict = [self getTagValueDictionaryFromNotification:notification];
+            
+			return;
+		}
+
+        return;
+    }
+
+    
     
 	
 	
@@ -1183,7 +1233,7 @@
  特定の名前のmessengerへの通信を行うメソッド
  異なる名前の親から子へのメッセージ限定
  */
-- (id) call:(NSString * )childName withExec:(NSString * )exec, ... {
+- (NSDictionary * ) call:(NSString * )childName withExec:(NSString * )exec, ... {
 	
 	NSAssert(![childName isEqualToString:[self getMyName]], @"自分自身/同名の子供達へのメッセージブロードキャストをこのメソッドで行う事はできません。　callMyselfメソッドを使用してください");
 	NSAssert(![childName isEqualToString:MS_DEFAULT_PARENTNAME], @"システムで予約してあるデフォルトの名称です。　この名称を使ってのシステム使用は、その、なんだ、お勧めしません。");
@@ -1243,7 +1293,7 @@
 /**
  特定の子への通信を行うメソッド、特にMIDを使い、相手を最大限特定する。
  */
-- (void) call:(NSString * )childName withSpecifiedMID:(NSString * )mID withExec:(NSString * )exec, ... {
+- (NSDictionary * ) call:(NSString * )childName withSpecifiedMID:(NSString * )mID withExec:(NSString * )exec, ... {
 	NSAssert(![childName isEqualToString:[self getMyName]], @"自分自身/同名の子供達へのメッセージブロードキャストをこのメソッドで行う事はできません。　callMyselfメソッドを使用してください");
 	NSAssert(![childName isEqualToString:MS_DEFAULT_PARENTNAME], @"システムで予約してあるデフォルトの名称です。　この名称を使ってのシステム使用は、その、なんだ、お勧めしません。");
 	NSAssert(mID ,@"mIDはnilでないNSStringである必要があります");
@@ -1252,12 +1302,12 @@
 	NSString * val = [[self getChildDict] valueForKey:mID];
 	if (!val) {
 		NSAssert1(FALSE, @"with MID call先に指定したmessengerが存在しないか、未知のものです。本messengerを親とした設定を行うよう、子から親を指定してください。_%@",childName);
-		return;
+		return nil;
 	}
 	
 	if (![val isEqualToString:childName]) {
 		NSAssert1(FALSE, @"with MID call先に指定したmessengerの名称とMIDのペアが一致しません_%@",childName);
-		return;
+		return nil;
 	}
 	
 	
@@ -1294,13 +1344,17 @@
 	va_end(ap);
 	
 	[self sendMessage:dict];
-	
+    
+    //m_callbackDictがあれば返す
+    if (m_callbackDict) return m_callbackDict;
+
+    return nil;
 }
 
 /**
  親への通信を行うメソッド
  */
-- (void) callParent:(NSString * )exec, ... {
+- (NSDictionary * ) callParent:(NSString * )exec, ... {
 	
 	//親が居たら
 	if ([self getMyParentName]) {
@@ -1347,10 +1401,14 @@
 		
 		[self sendMessage:dict];
 		
-		return;
+        //m_callbackDictがあれば返す
+        if (m_callbackDict) return m_callbackDict;
+
+		return nil;
 	}
 	
 	NSAssert(false, @"親設定が無い");
+    return nil;
 }
 
 
@@ -1377,13 +1435,14 @@
         NSAssert([parentOrChild isEqualToString:[self getMyParentName]], @"一致しない親へのcallback name");
         NSAssert([senderMID isEqualToString:[self getMyParentMID]], @"一致しない親へのcallback mid");
         
-		[dict setValue:MS_CATEGOLY_CALLBACK forKey:MS_CATEGOLY];
+		[dict setValue:MS_CATEGOLY_CALLBACK_FROM_CHILD forKey:MS_CATEGOLY];
 		[dict setValue:[self getMyParentName] forKey:MS_ADDRESS_NAME];
 		[dict setValue:[self getMyParentMID] forKey:MS_ADDRESS_MID];
     }
     
+    //自分が親で、子供から呼ばれた
     if ([categolyName isEqualToString:MS_CATEGOLY_CALLPARENT]) {        
-        [dict setValue:MS_CATEGOLY_CALLBACK forKey:MS_CATEGOLY];
+        [dict setValue:MS_CATEGOLY_CALLBACK_FROM_PARENT forKey:MS_CATEGOLY];
 		[dict setValue:parentOrChild forKey:MS_ADDRESS_NAME];
     }
     
