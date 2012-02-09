@@ -9,54 +9,12 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "Classes/MessengerSystem/MessengerSystemTest.m"
-         timestampString = "350303772.102117"
+         timestampString = "350461910.223487"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "2079"
-         endingLineNumber = "2079"
+         startingLineNumber = "2140"
+         endingLineNumber = "2140"
          landmarkName = "-testUnlockValiousNotExecMultiWithTwoMessage"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "Classes/MessengerSystem/MessengerSystemTest.m"
-         timestampString = "350303776.792772"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "188"
-         endingLineNumber = "188"
-         landmarkName = "@interface ClassB"
-         landmarkType = "2">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "Classes/MessengerSystem/MessengerSystem.m"
-         timestampString = "350305014.471372"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1366"
-         endingLineNumber = "1366"
-         landmarkName = "-callParent:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "Classes/MessengerSystem/MessengerSystem.m"
-         timestampString = "350305014.471372"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1375"
-         endingLineNumber = "1375"
-         landmarkName = "-callParent:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -72,20 +30,6 @@
          endingLineNumber = "92"
          landmarkName = "-innerPerform:"
          landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "Classes/MessengerSystem/MessengerSystemTest.m"
-         timestampString = "350305360.10493"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "2083"
-         endingLineNumber = "2083"
-         landmarkName = "@implementation MessengerSystemTest"
-         landmarkType = "3">
       </FileBreakpoint>
    </FileBreakpoints>
 </Bucket>

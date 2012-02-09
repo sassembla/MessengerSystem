@@ -61,6 +61,8 @@
 
 //callback
 #define TEST_CLASS_B    (@"TEST_CLASS_B")
+#define TEST_CLASS_B_AS_PARENT  (@"TEST_CLASS_B_AS_PARENT")
+#define TEST_CLASS_B_AS_PARENT_2  (@"TEST_CLASS_B_AS_PARENT_2")
 #define TEST_RET_RESULT (@"TEST_RET_RESULT")
 #define TEST_EXEC_CALLBACK  (@"TEST_EXEC_CALLBACK")
 
@@ -75,8 +77,8 @@
 #define TEST_TAG_CALLBACK_2     (@"TEST_TAG_CALLBACK_2")
 #define TEST_VALUE_CALLBACK_2   (@"TEST_VALUE_CALLBACK_2")
 
-
-
+#define TEST_EXEC_CALLBACK_TO_PARENT    (@"TEST_EXEC_CALLBACK_TO_PARENT")
+#define TEST_TAG_CALLBACK_RECURSIVE     (@"TEST_TAG_CALLBACK_RECURSIVE")
 
 @interface MessengerSystemTest : SenTestCase
 {
@@ -182,9 +184,14 @@ enum execTypeEnum//衝突性の担保が出来ない。index値がhashであっ�
 @interface ClassB:NSObject {
     MessengerSystem * messenger;
 }
+
 - (id) initClassB; 
 - (id) initClassBAsParent;
-- (NSString * )mId; 
+- (id) initClassBAsParent2;
+
+- (NSString * )mId;
+- (MessengerSystem * )messenger;
+
 @end
 
 
@@ -200,7 +207,14 @@ enum execTypeEnum//衝突性の担保が出来ない。index値がhashであっ�
 
 - (id) initClassBAsParent {
     if (self = [super init]) {
-        messenger = [[MessengerSystem alloc]initWithBodyID:self withSelector:@selector(receiver:) withName:TEST_CLASS_B];
+        messenger = [[MessengerSystem alloc]initWithBodyID:self withSelector:@selector(receiver:) withName:TEST_CLASS_B_AS_PARENT];
+    }
+    return self;
+}
+
+- (id) initClassBAsParent2 {
+    if (self = [super init]) {
+        messenger = [[MessengerSystem alloc]initWithBodyID:self withSelector:@selector(receiver:) withName:TEST_CLASS_B_AS_PARENT_2];
     }
     return self;
 }
@@ -212,6 +226,7 @@ enum execTypeEnum//衝突性の担保が出来ない。index値がhashであっ�
     if ([exec isEqualToString:TEST_EXEC_CALLBACK]) {
         [messenger callback:notif,
          [messenger tag:TEST_TAG_CALLBACK val:TEST_VALUE_CALLBACK],
+         [messenger tag:@"id" val:[messenger getMyMID]],
          nil];
         
         //retで返すと、汚染がでかい。却下。
@@ -231,13 +246,20 @@ enum execTypeEnum//衝突性の担保が出来ない。index値がhashであっ�
          [messenger tag:TEST_TAG_CALLBACK_2 val:TEST_VALUE_CALLBACK_2],
          nil];
     }
-    
+
 }
 
 - (NSString * )mId {
     return [messenger getMyMID];
 }
 
+- (MessengerSystem * )messenger {
+    return messenger;
+}
+
+- (void) dealloc {
+    [messenger release];
+}
 @end
 
 
@@ -316,6 +338,17 @@ enum execTypeEnum//衝突性の担保が出来ない。index値がhashであっ�
 			}
 		}
 	}
+    
+    //親が居る場合の返し、さらに子に聞く
+    if ([exec isEqualToString:TEST_EXEC_CALLBACK_TO_PARENT]) {
+        NSDictionary * currentCallback = [parent call:TEST_CLASS_B withExec:TEST_EXEC_CALLBACK, nil];
+
+        //currentCallbackには値が入っている
+        
+        [parent callback:notification, 
+         [parent tag:TEST_TAG_CALLBACK_RECURSIVE val:currentCallback],
+         nil];
+    }
 }
 
 /**
@@ -491,10 +524,19 @@ enum execTypeEnum//衝突性の担保が出来ない。index値がhashであっ�
  わざと存在しない親の名前を指定した際のテスト
  こういうのは、failになるような条件で書いて、Failかどうかを判定するのがいいんだろうか。判断を考えないとな。
  */
-//- (void) testInputToParentfailure {
-//	[child_0 inputParent:TEST_FAIL_PARENT_NAME];
-//	STFail(@"到達してはいけない");
-//}
+- (void) testInputToParentfailure {
+    MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
+    
+    @try {
+        [child_0 inputParent:TEST_FAIL_PARENT_NAME];
+        STFail(@"到達してはいけない");
+    }
+    @catch (NSException *exception) {}
+    @finally {
+        [child_0 release];
+    }
+	
+}
 
 
 
@@ -532,9 +574,8 @@ enum execTypeEnum//衝突性の担保が出来ない。index値がhashであっ�
 	
 	STAssertTrue([m_logDict count] == 2, [NSString stringWithFormat:@"内容が合致しません_%d", [m_logDict count]]);
 	
-	//	STAssertTrue([child_0 retainCount] == 1, @"testCreateLog　カウントがおかしい_%d", [child_0 retainCount]);
-	[child_0 release];//でてない,,,
-	NSLog(@"突破してる");
+	STAssertTrue([child_0 retainCount] == 1, @"testCreateLog　カウントがおかしい_%d", [child_0 retainCount]);
+	[child_0 release];
 }
 
 /**
@@ -759,12 +800,13 @@ enum execTypeEnum//衝突性の担保が出来ない。index値がhashであっ�
 
 //複数存在系の確認
 /**
- 親が複数いるケース
+ 親が複数いる場合の処理
+ inputの瞬間は親が居ないのでエラーにならない
  */
 - (void) testMultiParent {
 	MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
 	
-	[child_0 inputParent:TEST_PARENT_NAME];//2件
+	[child_0 inputParent:TEST_PARENT_NAME];//1件
 	MessengerSystem * parent2 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testParent:) withName:TEST_PARENT_NAME];
 	
 	
@@ -781,7 +823,26 @@ enum execTypeEnum//衝突性の担保が出来ない。index値がhashであっ�
 	[parent2 release];
 }
 
-
+/**
+ 親が複数居る状態でのinputParent
+ 特定のエラーを吐いて停止する
+ */
+- (void) testMultiParentWithError {
+    MessengerSystem * child_0 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testChild0:) withName:TEST_CHILD_NAME_0];
+	MessengerSystem * parent2 = [[MessengerSystem alloc] initWithBodyID:self withSelector:@selector(m_testParent:) withName:TEST_PARENT_NAME];
+	
+    @try {
+        [child_0 inputParent:TEST_PARENT_NAME];//2件
+        STFail(@"到達できてはいけない");
+    }
+    @catch (NSException *exception) {}
+    @finally {
+        [child_0 release];
+        [parent2 release];
+    }
+    
+	
+}
 
 
 
@@ -2082,6 +2143,10 @@ enum execTypeEnum//衝突性の担保が出来ない。index値がhashであっ�
 
 
 
+
+
+
+
 /**
  個別のドメインに根ざしたExecの制作を行う。
  特定のMessenger搭載クラスが、特定のExec定義を持つことを想定する。
@@ -2093,7 +2158,6 @@ enum execTypeEnum//衝突性の担保が出来ない。index値がhashであっ�
     
     int count = [[a receiveLog] count];
     
-    
     //ここにクラスAのExecを書く
     [parent call:TEST_CLASS_A withIndex:ClassA_EXEC_1, nil];
 
@@ -2103,7 +2167,14 @@ enum execTypeEnum//衝突性の担保が出来ない。index値がhashであっ�
 
 
 
+
+
+
+
 //callback
+
+
+
 /**
  返り値を得るcallパターンのテスト
  親が子供にメッセージを投げ、子供がそれを返す
@@ -2112,13 +2183,15 @@ enum execTypeEnum//衝突性の担保が出来ない。index値がhashであっ�
     ClassB * b = [[ClassB alloc]initClassB];
     NSDictionary * currentCallbackDict = [parent call:TEST_CLASS_B withExec:TEST_EXEC_CALLBACK, nil];
     
-    STAssertNotNil(currentCallbackDict, @"callbackParam is not ", currentCallbackDict);
+    STAssertNotNil(currentCallbackDict, @"callbackParam is nil ", currentCallbackDict);
     NSLog(@"callback is   %@", currentCallbackDict);
     
     STAssertNotNil([currentCallbackDict valueForKey:TEST_TAG_CALLBACK], @"not contained. %@", currentCallbackDict);
     
     STAssertTrue([[currentCallbackDict valueForKey:TEST_TAG_CALLBACK] isEqualToString:TEST_VALUE_CALLBACK], 
                  @"not match. %@", [currentCallbackDict valueForKey:TEST_TAG_CALLBACK]);
+    
+    [b release];
 }
 
 /**
@@ -2130,13 +2203,15 @@ enum execTypeEnum//衝突性の担保が出来ない。index値がhashであっ�
     ClassB * b = [[ClassB alloc]initClassB];
     NSDictionary * currentCallbackDict = [parent call:TEST_CLASS_B withSpecifiedMID:[b mId] withExec:TEST_EXEC_CALLBACK_1, nil];
     
-    STAssertNotNil(currentCallbackDict, @"callbackParam is not ", currentCallbackDict);
+    STAssertNotNil(currentCallbackDict, @"callbackParam is nil ", currentCallbackDict);
     NSLog(@"callback is   %@", currentCallbackDict);
     
     STAssertNotNil([currentCallbackDict valueForKey:TEST_TAG_CALLBACK_1], @"not contained. %@", currentCallbackDict);
     
     STAssertTrue([[currentCallbackDict valueForKey:TEST_TAG_CALLBACK_1] isEqualToString:TEST_VALUE_CALLBACK_1], 
                  @"not match. %@", [currentCallbackDict valueForKey:TEST_TAG_CALLBACK_1]);
+    
+    [b release];
 }
 
 
@@ -2145,21 +2220,160 @@ enum execTypeEnum//衝突性の担保が出来ない。index値がhashであっ�
  返り値を得るcallパターンのテスト
   子供が親にメッセージを投げ、親がそれを返す
  */
-- (void) testGetRetValueFromParentToChild {
+- (void) testCallbackFromParentToChild {
     ClassB * b = [[ClassB alloc]initClassBAsParent];
-    [parent inputParent:TEST_CLASS_B];
+    [parent inputParent:TEST_CLASS_B_AS_PARENT];
     
     NSDictionary * currentCallbackDict = [parent callParent:TEST_EXEC_CALLBACK_2, nil];
     
-    STAssertNotNil(currentCallbackDict, @"callbackParam is not ", currentCallbackDict);
+    STAssertNotNil(currentCallbackDict, @"callbackParam is nil ", currentCallbackDict);
     NSLog(@"callback is   %@", currentCallbackDict);
     
     STAssertNotNil([currentCallbackDict valueForKey:TEST_TAG_CALLBACK_2], @"not contained. %@", currentCallbackDict);
     
     STAssertTrue([[currentCallbackDict valueForKey:TEST_TAG_CALLBACK_2] isEqualToString:TEST_VALUE_CALLBACK_2], 
                  @"not match. %@", [currentCallbackDict valueForKey:TEST_TAG_CALLBACK_2]);
+    [b release];
 }
 
+
+
+
+//callbackの使い道に関するテスト(複数の値の受け渡し、実体を持った場合の処理など)
+- (void) testCallbackGetValue {
+    ClassB * b = [[ClassB alloc]initClassB];
+    NSDictionary * currentCallbackDict = [parent call:TEST_CLASS_B withExec:TEST_EXEC_CALLBACK, nil];
+   
+    NSString * value = [currentCallbackDict valueForKey:TEST_TAG_CALLBACK];
+    
+    //評価を行ってみる
+    @try {
+        if ([value isEqualToString:@"something"]) {
+            NSLog(@"has problem! must not be equal");
+        }
+        
+        if ([value isEqualToString:TEST_VALUE_CALLBACK]) {
+            NSLog(@"match");
+        }
+    }
+    @catch (NSException *exception) {
+        STFail(@"error occured %@", exception);
+    }
+    @finally {}
+    
+    
+    //値の浅いコピーを行ってみる
+    @try {
+        NSString * str = [NSString stringWithString:value];
+        NSLog(@"str %@", str);
+    }
+    @catch (NSException *exception) {
+        STFail(@"error occured2 %@", exception);
+    }
+    @finally {}
+    
+    
+    //値の深いコピーを行ってみる
+    @try {
+        NSString * str2 = [[NSString alloc]initWithString:value];
+        NSLog(@"str2    %@", str2);
+    }
+    @catch (NSException *exception) {
+        STFail(@"error occured2 %@", exception);
+    }
+    @finally {}
+    
+    [b release];
+}
+
+
+/**
+ 混乱しそうな多数回のcallback
+ */
+- (void) testCallbackMulti {
+    
+    
+//    連続で答えを得る
+//    その答えが順を満たす事を試す
+    ClassB * b = [[ClassB alloc]initClassB];
+
+    //1
+    NSDictionary * currentCallbackDict = [parent call:TEST_CLASS_B withExec:TEST_EXEC_CALLBACK, nil];
+   
+    STAssertTrue([[currentCallbackDict valueForKey:TEST_TAG_CALLBACK] isEqualToString:TEST_VALUE_CALLBACK], 
+                 @"not match. %@", [currentCallbackDict valueForKey:TEST_TAG_CALLBACK]);
+    
+    //2
+    NSDictionary * currentCallbackDict_1 = [parent call:TEST_CLASS_B withExec:TEST_EXEC_CALLBACK_1, nil];
+    STAssertTrue([[currentCallbackDict_1 valueForKey:TEST_TAG_CALLBACK_1] isEqualToString:TEST_VALUE_CALLBACK_1], 
+                 @"not match. %@", [currentCallbackDict_1 valueForKey:TEST_TAG_CALLBACK_1]);
+    
+    
+    //3
+    NSDictionary * currentCallbackDict_2 = [parent call:TEST_CLASS_B withExec:TEST_EXEC_CALLBACK, nil];
+    STAssertTrue([[currentCallbackDict_2 valueForKey:TEST_TAG_CALLBACK] isEqualToString:TEST_VALUE_CALLBACK], 
+                 @"not match. %@", [currentCallbackDict_2 valueForKey:TEST_TAG_CALLBACK]);
+    
+    [b release];
+}
+
+/**
+ 複数の子供から返事が来るので上書きされてしまうケース(上書きされた事をどう通知するか)
+    案1：エラー
+    案2：しれっと返す
+ 案2 しれっと返す、を採用。Identityを入れれば判別できる筈。 countで何人が応えたか、は入れられるかもしれない。
+ */
+- (void) testCallbackFromMultiChild {
+    //子供2人
+    ClassB * b = [[ClassB alloc]initClassB];
+    ClassB * b2 = [[ClassB alloc]initClassB];
+    
+    NSDictionary * currentCallbackDict = [parent call:TEST_CLASS_B withExec:TEST_EXEC_CALLBACK, nil];
+    
+    //このとき、実行の内容からして、currentCallbackDictのidには、b2が入る筈
+    STAssertTrue([[currentCallbackDict valueForKey:@"id"] isEqualToString:[b2 mId]], @"not match,  %@", currentCallbackDict);
+    
+    [b release];
+    [b2 release];
+}
+
+
+
+
+/**
+ 多層的なcallback
+ のテスト中に発覚した、名前が違うクラスMessengerで特定Messengerを挟むとメッセージが送れるにも関わらずhasChildが0を返すバグ
+ */
+- (void) testCallbackRecursive {
+    //子供役
+    ClassB * b = [[ClassB alloc]initClassB];
+    
+    //親役
+    ClassB * bParent = [[ClassB alloc]initClassBAsParent2];
+    [parent inputParent:TEST_CLASS_B_AS_PARENT_2];
+    
+    //この時点で、bParent > parent > b
+    STAssertTrue([[bParent messenger] hasChild], @"no child");
+    
+    NSDictionary * finalResult = [[bParent messenger] call:TEST_PARENT_NAME withExec:TEST_EXEC_CALLBACK_TO_PARENT, nil];
+    STAssertNotNil([finalResult valueForKey:TEST_TAG_CALLBACK_RECURSIVE], @"finalResult is nil... %@", finalResult);
+    NSLog(@"[finalResult valueForKey:TEST_TAG_CALLBACK_RECURSIVE]   %@", [finalResult valueForKey:TEST_TAG_CALLBACK_RECURSIVE]);
+    
+    [b release];
+    [bParent release];
+}
+
+
+
+
+
+/**
+ 遅延+key-value Observing
+ ろくな事にならないので、キーワードで封印。
+ */
+- (void) testCallbackWithDelay {
+    
+}
 
 
 

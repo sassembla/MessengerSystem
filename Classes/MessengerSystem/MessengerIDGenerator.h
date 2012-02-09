@@ -18,5 +18,7 @@
 @interface MessengerIDGenerator : NSObject {
 
 }
+
 + (NSString * ) getMID;
+
 @end
