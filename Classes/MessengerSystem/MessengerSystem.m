@@ -386,14 +386,14 @@
 				}
 				
 				if ([invocatorId hasParent]) {
-					NSAssert(FALSE, @"親が既に存在している");//現在は複数の親を許容する仕様ではないので、エラーとして発生させる
+					NSAssert(FALSE, @"親が既に存在している specified    %@", [self getMyName]);//現在は複数の親を許容する仕様ではないので、エラーとして発生させる
 				}
 				
 			} else {
 				
 				//特定MIDが無い場合、親は先着順で設定される。既に子供が自分と同名の親にアクセスし、そのMIDを持っている場合があり得るため、ここで子供の持っている親MIDを確認する必要がある
 				if ([invocatorId hasParent]) {
-					NSAssert(FALSE, @"親が既に存在している");//現在は複数の親を許容する仕様ではないので、エラーとして発生させる
+					NSAssert(FALSE, @"親が既に存在している    %@", [self getMyName]);//現在は複数の親を許容する仕様ではないので、エラーとして発生させる
 				}
 			}
 			

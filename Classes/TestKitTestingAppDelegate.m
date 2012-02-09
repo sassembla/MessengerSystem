@@ -34,13 +34,13 @@
 	
 	m_objectOv = [[coTestObject alloc] init];
 	
-	coTestObject * obj2 = [[coTestObject alloc] init];
+//	coTestObject * obj2 = [[coTestObject alloc] init];
 	
 	coTestObject * obj3 = [[coTestObject alloc] init2];
-	coTestObject * obj4 = [[coTestObject alloc] init2];
+//	coTestObject * obj4 = [[coTestObject alloc] init2];
 	
-	coTestObject * obj5 = [[coTestObject alloc] init3];
-	coTestObject * obj6 = [[coTestObject alloc] init3];
+//	coTestObject * obj5 = [[coTestObject alloc] init3];
+//	coTestObject * obj6 = [[coTestObject alloc] init3];
 	coTestObject * obj7 = [[coTestObject alloc] init3];
 	
 	coTestObject * obj8 = [[coTestObject alloc] init4];

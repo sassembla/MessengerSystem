@@ -80,6 +80,8 @@
 #define TEST_EXEC_CALLBACK_TO_PARENT    (@"TEST_EXEC_CALLBACK_TO_PARENT")
 #define TEST_TAG_CALLBACK_RECURSIVE     (@"TEST_TAG_CALLBACK_RECURSIVE")
 
+#define TEST_EXEC_CALLBACK_BY_CHILD_MULTITIMES  (@"TEST_EXEC_CALLBACK_BY_CHILD_MULTITIMES")
+
 @interface MessengerSystemTest : SenTestCase
 {
 	MessengerSystem * parent;
@@ -246,6 +248,21 @@ enum execTypeEnum//衝突性の担保が出来ない。index値がhashであっ�
          [messenger tag:TEST_TAG_CALLBACK_2 val:TEST_VALUE_CALLBACK_2],
          nil];
     }
+    
+    if ([exec isEqualToString:TEST_EXEC_CALLBACK_BY_CHILD_MULTITIMES]) {
+        [messenger callback:notif, 
+         [messenger tag:@"tag1" val:@"val1"],
+         nil];
+        
+        [messenger callback:notif, 
+         [messenger tag:@"tag2" val:@"val2"],
+         nil];
+        
+        [messenger callback:notif, 
+         [messenger tag:@"tag3" val:@"val3"],
+         nil];
+    }
+
 
 }
 
@@ -349,6 +366,7 @@ enum execTypeEnum//衝突性の担保が出来ない。index値がhashであっ�
          [parent tag:TEST_TAG_CALLBACK_RECURSIVE val:currentCallback],
          nil];
     }
+    
 }
 
 /**
@@ -2356,11 +2374,26 @@ enum execTypeEnum//衝突性の担保が出来ない。index値がhashであっ�
     STAssertTrue([[bParent messenger] hasChild], @"no child");
     
     NSDictionary * finalResult = [[bParent messenger] call:TEST_PARENT_NAME withExec:TEST_EXEC_CALLBACK_TO_PARENT, nil];
+    
+    
     STAssertNotNil([finalResult valueForKey:TEST_TAG_CALLBACK_RECURSIVE], @"finalResult is nil... %@", finalResult);
     NSLog(@"[finalResult valueForKey:TEST_TAG_CALLBACK_RECURSIVE]   %@", [finalResult valueForKey:TEST_TAG_CALLBACK_RECURSIVE]);
     
     [b release];
     [bParent release];
+}
+
+/**
+ 複数回callbackされる場合の挙動
+ */
+- (void) testCallbackByMultiTimes {
+    ClassB * b = [[ClassB alloc]initClassB];
+    
+    NSDictionary * callbackDict = [parent call:TEST_CLASS_B withExec:TEST_EXEC_CALLBACK_BY_CHILD_MULTITIMES  , nil];
+    
+    STAssertNotNil([callbackDict valueForKey:@"tag3"], @"not contained   callbackDict    %@", callbackDict);
+    
+    STAssertTrue([[callbackDict valueForKey:@"tag3"] isEqualToString:@"val3"], @"not match... tag3   is  %@", [callbackDict valueForKey:@"tag3"]);
 }
 
 
