@@ -9,11 +9,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "Classes/MessengerSystem/MessengerSystemTest.m"
-         timestampString = "350478011.22539"
+         timestampString = "350565622.869524"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "2158"
-         endingLineNumber = "2158"
+         startingLineNumber = "2195"
+         endingLineNumber = "2195"
          landmarkName = "-testUnlockValiousNotExecMultiWithTwoMessage"
          landmarkType = "5">
       </FileBreakpoint>
@@ -29,6 +29,20 @@
          startingLineNumber = "92"
          endingLineNumber = "92"
          landmarkName = "-innerPerform:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "Classes/MessengerSystem/MessengerSystem.m"
+         timestampString = "350565622.869524"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "1445"
+         endingLineNumber = "1445"
+         landmarkName = "-callback:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

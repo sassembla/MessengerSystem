@@ -233,33 +233,33 @@
 /**
  コマンド情報を文字列で取得する
  */
-- (NSString * ) getExecAsString:(NSMutableDictionary * )dict; 
+- (NSString * ) getExecAsString:(NSMutableDictionary * )dict DEPRECATED_ATTRIBUTE; 
 
 /**
  コマンド情報をintで取得する
  */
-- (int) getExecAsInt:(NSDictionary * )dict;
+- (int) getExecAsInt:(NSDictionary * )dict DEPRECATED_ATTRIBUTE;
 
 /**
  コマンド情報を数値で取得する
  辞書からswitch文で使用する数値を取得する
  */
-- (int) getExecAsIntFromDict:(NSMutableDictionary * )dict;
+- (int) getExecAsIntFromDict:(NSMutableDictionary * )dict DEPRECATED_ATTRIBUTE;
 
 /**
  文字列からswitch文で使用する数値を取得する
  */
-- (int) getIntFromExec:(NSString * )exec;
+- (int) getIntFromExec:(NSString * )exec DEPRECATED_ATTRIBUTE;
 
 /**
  ストリングの数値化
  */
-- (int) changeStrToNumber:(NSString * )str;
+- (int) changeStrToNumber:(NSString * )str DEPRECATED_ATTRIBUTE;
 
 /**
  数値の文字列化
  */
-- (NSString * ) changeNumberToStr:(int)num;
+- (NSString * ) changeNumberToStr:(int)num DEPRECATED_ATTRIBUTE;
 
 /**
  メッセージの内容を表示する
@@ -279,7 +279,9 @@
 /**
  Execの内容をintとしてNSNotificationから取得する
  */
-- (int) getExecAsIndexFromNotification:(NSNotification * )notif;
+- (int) getExecAsIndexFromNotification:(NSNotification * )notif DEPRECATED_ATTRIBUTE;
+
+
 
 
 /**
@@ -291,6 +293,11 @@
 //子供の有無を確認する
 - (BOOL) hasChild;
 
+
+//Prefix付きのExecの使用を強制する設定
+- (void) useExecPrefix;
+- (void) offExecPrefix;
+- (BOOL) isUseExecPrefix;
 
 
 

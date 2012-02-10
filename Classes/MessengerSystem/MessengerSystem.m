@@ -999,8 +999,6 @@
 		
 		[self initMyMID];
 		[self initMyParentData];
-		
-		
 	}
 	
 	m_childDict = [[NSMutableDictionary alloc] init];
@@ -1191,6 +1189,14 @@
 }
 
 
+
+
+
+
+
+
+
+//call
 
 /**
  自分自身のmessengerへと通信を行うメソッド
@@ -1416,18 +1422,34 @@
  callかcallParentで呼ばれた側が、callbackを行う。
  */
 - (void) callback:(NSNotification * )notif, ... {
+    
+    //Notificationが欲しい情報を保持しているかどうかチェック
     NSMutableDictionary * sourceDict = (NSMutableDictionary *)[notif userInfo];
-	
+	NSLog(@"sourceDict  %@", sourceDict);
+    
+    
 	//送信者MID
 	NSString * senderMID = [sourceDict valueForKey:MS_SENDERMID];
-	
+	NSAssert(senderMID, @"senderMID is nil");
+    
     
 	//送信者名    
     NSString * parentOrChild = [sourceDict valueForKey:MS_SENDERNAME];
+    NSAssert(parentOrChild, @"parentOrChild is nil");
+    
+    //categolyName
     NSString * categolyName = [sourceDict valueForKey:MS_CATEGOLY];
+    NSAssert(categolyName, @"categolyName is nil");
+    
+    //遅延実行があったら、値を返せない旨でAssertFalse
+    if ([sourceDict valueForKey:MS_DELAY]) {
+        NSAssert(false, @"this callback was called with -withDelay- keyword. not approrval in this version yet.");
+    }
+    
     
     
     NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:5];
+    
     
     
     //自分が子供で、親から呼ばれた
@@ -1467,7 +1489,6 @@
 		}
 		
 		va_end(vp);//終了処理
-		NSLog(@"dict    %@", dict);
 		[self sendMessage:dict];
     }
 }
@@ -1916,10 +1937,6 @@
 	[invocation invoke];//実行
 	
 }
-
-
-
-
 
 
 //ログストアの取得

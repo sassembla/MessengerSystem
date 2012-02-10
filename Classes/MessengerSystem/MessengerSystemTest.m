@@ -82,6 +82,16 @@
 
 #define TEST_EXEC_CALLBACK_BY_CHILD_MULTITIMES  (@"TEST_EXEC_CALLBACK_BY_CHILD_MULTITIMES")
 
+#define TEST_EXEC_CALLBACK_WITH_DELAY   (@"TEST_EXEC_CALLBACK_WITH_DELAY")
+
+
+
+//executionPrefix
+#define TEST_CLASS_ClassMessengerExecutionPrefix    (@"TEST_CLASS_ClassMessengerExecutionPrefix")
+
+#define ClassMessengerExecutionPrefix_EXEC_1    (@"ClassMessengerExecutionPrefix_EXEC_1")
+
+
 @interface MessengerSystemTest : SenTestCase
 {
 	MessengerSystem * parent;
@@ -263,6 +273,11 @@ enum execTypeEnum//衝突性の担保が出来ない。index値がhashであっ�
          nil];
     }
 
+    if ([exec isEqualToString:TEST_EXEC_CALLBACK_WITH_DELAY]) {
+        [messenger callback:notif, 
+         [messenger tag:@"tag1" val:@"val1"],
+        nil];
+    }
 
 }
 
@@ -278,6 +293,28 @@ enum execTypeEnum//衝突性の担保が出来ない。index値がhashであっ�
     [messenger release];
 }
 @end
+
+
+@interface ClassMessengerExecutionPrefix : NSObject {
+    MessengerSystem * messenger;
+}
+- (id) initClassMessengerExecutionPrefix;
+
+@end
+
+@implementation ClassMessengerExecutionPrefix 
+
+- (id) initClassMessengerExecutionPrefix {
+    if (self = [super init]) {
+        messenger = [[MessengerSystem alloc]initWithBodyID:self withSelector:@selector(receiver:) withName:TEST_CLASS_ClassMessengerExecutionPrefix];
+    }
+    return self;
+}
+
+
+@end
+
+
 
 
 
@@ -2161,6 +2198,128 @@ enum execTypeEnum//衝突性の担保が出来ない。index値がhashであっ�
 
 
 
+//- (void) testUnlockValiousNotExecMultiWithTwoMessageDefault {
+//	[parent callMyself:TEST_EXEC_LOCKED,
+//	 [parent withLocksAfter:
+//	  TEST_EXEC_LOCKED_MULTI,
+//	  TEST_EXEC_LOCKED_MULTI_2,
+//	  nil],
+//	 nil];
+//	
+//	NSDictionary * lockStore = [parent getLockAfterStore];
+//	NSDictionary * locksDict = [lockStore objectForKey:[[lockStore allKeys]objectAtIndex:0]];
+//	STAssertTrue([locksDict count] == 2, @"not 2");
+//	
+//	
+//	NSDictionary * currentLog = [parent getLogStore];
+//	int num = [currentLog count];
+//	
+//	[parent callMyself:TEST_EXEC_LOCKED_MULTI, 
+//	 nil];
+//	
+//	STAssertTrue(num+2 == [currentLog count], @"only allow creationLog & send. not equal %d", [currentLog count] - num);
+//
+//	locksDict = [lockStore objectForKey:[[lockStore allKeys]objectAtIndex:0]];
+//	STAssertTrue([locksDict count] == 1, @"not 1");
+//	
+//	
+//	
+//	
+//	[parent callMyself:TEST_EXEC_LOCKED_MULTI_2,
+//	 nil];
+//	
+//	STAssertTrue(num+6 == [currentLog count], @"only allow creationLog & send. not equal %d", [currentLog count] - num);
+//	STAssertTrue([lockStore count] == 0, @"not 0");
+//	
+//}
+
+
+
+
+
+///**
+// 複数ロックでの連鎖のテスト1
+// MAINをキーに、Beforeが発動したら、その発動後にAfterが発動する。
+// 発生順は、
+// MAIN > Before > After > MAIN2　のはず。
+// */
+//- (void) testLockExecuteChain_M_B_A_M2 {
+//	m_orderArray = [[NSMutableArray alloc]initWithObjects:
+//					TEST_EXEC_LOCKED_MAIN,
+//					TEST_EXEC_LOCKED_BEFORE,
+//					TEST_EXEC_LOCKED_AFTER,
+//					TEST_EXEC_LOCKED_MAIN_2,
+//					nil];
+//	
+//	[parent callMyself:TEST_EXEC_LOCKED_BEFORE,
+//	 [parent withLocksBefore:TEST_EXEC_LOCKED_MAIN, TEST_EXEC_LOCKED_MAIN_2, nil],
+//	 nil];
+//	
+//	[parent callMyself:TEST_EXEC_LOCKED_AFTER,
+//	 [parent withLockAfter:TEST_EXEC_LOCKED_BEFORE],
+//	 nil];
+//	
+//	NSDictionary * currentLog = [parent getLogStore];
+//	int num = [currentLog count];
+//	
+//	[parent callMyself:TEST_EXEC_LOCKED_MAIN, 
+//	 nil];
+//	
+//	[parent callMyself:TEST_EXEC_LOCKED_MAIN_2, 
+//	 nil];
+//	
+//	STAssertTrue(num+8 == [currentLog count], @"only allow creationLog & send. not equal %d", [currentLog count] - num);
+//	
+//	NSDictionary * lockStore = [parent getLockAfterStore];
+//	STAssertTrue([lockStore count] == 0, @"not 0");
+//	
+//	STAssertTrue([m_orderArray count] == 0, @"not 0");
+//}
+
+///**
+// 複数ロックでの連鎖のテスト2
+// Beforeが発動したら、その発動後にAfterが発動する。
+// 発生順は、
+// MAIN > MAIN2_Before > After　のはず。Afterに対してのBeforeが存在しているので、Beforeが先に消化される。
+// */
+//- (void) testLockExecuteChain_M_M2_B_A {
+//	m_orderArray = [[NSMutableArray alloc]initWithObjects:
+//					TEST_EXEC_LOCKED_MAIN,
+//					TEST_EXEC_LOCKED_MAIN_2,
+//					TEST_EXEC_LOCKED_BEFORE,
+//					TEST_EXEC_LOCKED_AFTER,
+//					nil];
+//	
+//	[parent callMyself:TEST_EXEC_LOCKED_BEFORE,
+//	 [parent withLockBefore:TEST_EXEC_LOCKED_AFTER],
+//	 nil];
+//	
+//	[parent callMyself:TEST_EXEC_LOCKED_AFTER,
+//	 [parent withLocksAfter:TEST_EXEC_LOCKED_MAIN, TEST_EXEC_LOCKED_MAIN_2, nil],
+//	 nil];
+//	
+//	NSDictionary * currentLog = [parent getLogStore];
+//	int num = [currentLog count];
+//	
+//	[parent callMyself:TEST_EXEC_LOCKED_MAIN, 
+//	 nil];
+//	
+//	[parent callMyself:TEST_EXEC_LOCKED_MAIN_2, 
+//	 nil];
+//	
+//	STAssertTrue(num+8 == [currentLog count], @"only allow creationLog & send. not equal %d", [currentLog count] - num);
+//	
+//	NSDictionary * lockStore = [parent getLockAfterStore];
+//	STAssertTrue([lockStore count] == 0, @"not 0");
+//	
+//	STAssertTrue([m_orderArray count] == 0, @"not 0");
+//}
+
+
+
+
+
+
 
 
 
@@ -2405,129 +2564,93 @@ enum execTypeEnum//衝突性の担保が出来ない。index値がhashであっ�
  ろくな事にならないので、キーワードで封印。
  */
 - (void) testCallbackWithDelay {
+    ClassB * b = [[ClassB alloc]initClassB];
+   
+    NSDictionary * currentCallbackDict = [parent call:TEST_CLASS_B withExec:TEST_EXEC_CALLBACK_WITH_DELAY, 
+                                          [parent withDelay:0.1],
+                                          nil];
+   
+    @try {
+        while (true) {
+            [[NSRunLoop currentRunLoop]runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
+        }
+    }
+    @catch (NSException *exception) {
+        NSLog(@"exceptionが発生する事を正とする");
+    }
+    @finally {
+        [b release];
+    }    
+
+}
+
+//exec命名の仕様化
+/**
+ Execの命名Prefixを仕組み化する
+ - (void) useExecPrefix;
+ - (void) offExecPrefix;
+ - (BOOL) isUseExecPrefix;
+ */
+- (void) testMessengerExecutionPrefixMode_use {
+    [parent useExecPrefix];
     
+    STAssertTrue([parent isUseExecPrefix], @"not match");
+}
+
+- (void) testMessengerExecutionPrefixMode_unuse {
+    [parent offExecPrefix];
+    
+    STAssertTrue(![parent isUseExecPrefix], @"not match");
+}
+
+- (void) testMessengerExecutionPrefixMode_toBeUnuse {
+    [parent useExecPrefix];
+    [parent offExecPrefix];
+    STAssertTrue(![parent isUseExecPrefix], @"not match");
+}
+
+- (void) testMessengerExecutionPrefixMode_toBeUse {
+    [parent offExecPrefix];
+    [parent useExecPrefix];
+    STAssertTrue([parent isUseExecPrefix], @"not match");
+}
+
+/**
+ 実際にExecに対して採用して、Prefix付きのExecで動く事をTestする
+ */
+- (void) testMessengerExecutionPrefixValid {
+    ClassMessengerExecutionPrefix * cPrefix = [[ClassMessengerExecutionPrefix alloc] initClassMessengerExecutionPrefix];
+    [parent useExecPrefix];
+    
+    [parent call:TEST_CLASS_ClassMessengerExecutionPrefix withExec:ClassMessengerExecutionPrefix_EXEC_1, nil];
+    
+    //noError
+    [cPrefix release];
+}
+
+
+/**
+  実際にExecに対して採用して、Prefix付きのExecが無いので動かない事をTestする
+ */
+- (void) testtestMessengerExecutionPrefixInvalid {
+    ClassMessengerExecutionPrefix * cPrefix = [[ClassMessengerExecutionPrefix alloc] initClassMessengerExecutionPrefix];
+    [parent useExecPrefix];
+    
+    @try {
+        [parent call:TEST_CLASS_ClassMessengerExecutionPrefix withExec:ClassMessengerExecutionPrefix_EXEC_1, nil];
+        STFail(@"should not approach here");
+    }
+    @catch (NSException *exception) {}
+    @finally {
+        [cPrefix release];
+    }
 }
 
 
 
 
 
-//- (void) testUnlockValiousNotExecMultiWithTwoMessageDefault {
-//	[parent callMyself:TEST_EXEC_LOCKED,
-//	 [parent withLocksAfter:
-//	  TEST_EXEC_LOCKED_MULTI,
-//	  TEST_EXEC_LOCKED_MULTI_2,
-//	  nil],
-//	 nil];
-//	
-//	NSDictionary * lockStore = [parent getLockAfterStore];
-//	NSDictionary * locksDict = [lockStore objectForKey:[[lockStore allKeys]objectAtIndex:0]];
-//	STAssertTrue([locksDict count] == 2, @"not 2");
-//	
-//	
-//	NSDictionary * currentLog = [parent getLogStore];
-//	int num = [currentLog count];
-//	
-//	[parent callMyself:TEST_EXEC_LOCKED_MULTI, 
-//	 nil];
-//	
-//	STAssertTrue(num+2 == [currentLog count], @"only allow creationLog & send. not equal %d", [currentLog count] - num);
-//
-//	locksDict = [lockStore objectForKey:[[lockStore allKeys]objectAtIndex:0]];
-//	STAssertTrue([locksDict count] == 1, @"not 1");
-//	
-//	
-//	
-//	
-//	[parent callMyself:TEST_EXEC_LOCKED_MULTI_2,
-//	 nil];
-//	
-//	STAssertTrue(num+6 == [currentLog count], @"only allow creationLog & send. not equal %d", [currentLog count] - num);
-//	STAssertTrue([lockStore count] == 0, @"not 0");
-//	
-//}
 
-
-
-
-
-///**
-// 複数ロックでの連鎖のテスト1
-// MAINをキーに、Beforeが発動したら、その発動後にAfterが発動する。
-// 発生順は、
-// MAIN > Before > After > MAIN2　のはず。
-// */
-//- (void) testLockExecuteChain_M_B_A_M2 {
-//	m_orderArray = [[NSMutableArray alloc]initWithObjects:
-//					TEST_EXEC_LOCKED_MAIN,
-//					TEST_EXEC_LOCKED_BEFORE,
-//					TEST_EXEC_LOCKED_AFTER,
-//					TEST_EXEC_LOCKED_MAIN_2,
-//					nil];
-//	
-//	[parent callMyself:TEST_EXEC_LOCKED_BEFORE,
-//	 [parent withLocksBefore:TEST_EXEC_LOCKED_MAIN, TEST_EXEC_LOCKED_MAIN_2, nil],
-//	 nil];
-//	
-//	[parent callMyself:TEST_EXEC_LOCKED_AFTER,
-//	 [parent withLockAfter:TEST_EXEC_LOCKED_BEFORE],
-//	 nil];
-//	
-//	NSDictionary * currentLog = [parent getLogStore];
-//	int num = [currentLog count];
-//	
-//	[parent callMyself:TEST_EXEC_LOCKED_MAIN, 
-//	 nil];
-//	
-//	[parent callMyself:TEST_EXEC_LOCKED_MAIN_2, 
-//	 nil];
-//	
-//	STAssertTrue(num+8 == [currentLog count], @"only allow creationLog & send. not equal %d", [currentLog count] - num);
-//	
-//	NSDictionary * lockStore = [parent getLockAfterStore];
-//	STAssertTrue([lockStore count] == 0, @"not 0");
-//	
-//	STAssertTrue([m_orderArray count] == 0, @"not 0");
-//}
-
-///**
-// 複数ロックでの連鎖のテスト2
-// Beforeが発動したら、その発動後にAfterが発動する。
-// 発生順は、
-// MAIN > MAIN2_Before > After　のはず。Afterに対してのBeforeが存在しているので、Beforeが先に消化される。
-// */
-//- (void) testLockExecuteChain_M_M2_B_A {
-//	m_orderArray = [[NSMutableArray alloc]initWithObjects:
-//					TEST_EXEC_LOCKED_MAIN,
-//					TEST_EXEC_LOCKED_MAIN_2,
-//					TEST_EXEC_LOCKED_BEFORE,
-//					TEST_EXEC_LOCKED_AFTER,
-//					nil];
-//	
-//	[parent callMyself:TEST_EXEC_LOCKED_BEFORE,
-//	 [parent withLockBefore:TEST_EXEC_LOCKED_AFTER],
-//	 nil];
-//	
-//	[parent callMyself:TEST_EXEC_LOCKED_AFTER,
-//	 [parent withLocksAfter:TEST_EXEC_LOCKED_MAIN, TEST_EXEC_LOCKED_MAIN_2, nil],
-//	 nil];
-//	
-//	NSDictionary * currentLog = [parent getLogStore];
-//	int num = [currentLog count];
-//	
-//	[parent callMyself:TEST_EXEC_LOCKED_MAIN, 
-//	 nil];
-//	
-//	[parent callMyself:TEST_EXEC_LOCKED_MAIN_2, 
-//	 nil];
-//	
-//	STAssertTrue(num+8 == [currentLog count], @"only allow creationLog & send. not equal %d", [currentLog count] - num);
-//	
-//	NSDictionary * lockStore = [parent getLockAfterStore];
-//	STAssertTrue([lockStore count] == 0, @"not 0");
-//	
-//	STAssertTrue([m_orderArray count] == 0, @"not 0");
-//}
 
 
 
